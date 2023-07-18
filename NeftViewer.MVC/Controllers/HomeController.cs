@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NeftViewer.BL.Services.Contracts;
+using NeftViewer.Data.Models;
 using NeftViewer.MVC.Models;
 using System.Diagnostics;
 
@@ -7,14 +9,20 @@ namespace NeftViewer.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUserService _userService;
+        public HomeController(ILogger<HomeController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         public IActionResult Index()
         {
+            User user = new User();
+            user.Name="Fox";
+            user.Age = 32;
+            _userService.AddUser(user);
+            _userService.CommitChangesAsync();
             return View();
         }
 
