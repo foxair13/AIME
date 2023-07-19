@@ -32,9 +32,9 @@ namespace NeftViewer.Data.Repositories
         {
             return await _dbContext.Set<TModel>().ToListAsync();
         }
-        public virtual async Task<TModel> GetAsync(int? id)
+        public virtual async Task<TModel> GetAsync(string? id)
         {
-            if (id.HasValue)
+            if (id!="")
             {
                 return await _dbContext.Set<TModel>().FindAsync(id);
             }
@@ -54,7 +54,7 @@ namespace NeftViewer.Data.Repositories
             _dbContext.SaveChanges();
             return res;
         }
-        public virtual EntityEntry<TModel> DeleteByID(int id)
+        public virtual EntityEntry<TModel> DeleteByID(string id)
         {
             var obj = _dbContext.Set<TModel>().Find(id);
             if (obj != null)

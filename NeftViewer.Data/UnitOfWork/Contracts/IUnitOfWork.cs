@@ -10,7 +10,7 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
 {
     public interface IUnitOfWork
     {
-        IGenericRepository<User> Users { get; }
+        IGenericRepository<AspNetUsers> AspNetUsers { get; }
         Task CommitAsync();
     }
 }

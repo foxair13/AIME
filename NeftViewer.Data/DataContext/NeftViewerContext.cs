@@ -11,7 +11,7 @@ namespace NeftViewer.Data.DataContext
 {
     public partial class NeftViewerContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<AspNetUsers> Users { get; set; }
         public DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         public DbSet<AspNetRoles> AspNetRoles { get; set; }
         public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
@@ -47,7 +47,7 @@ namespace NeftViewer.Data.DataContext
        .IsRequired();
             modelBuilder.Entity<AspNetUserTokens>().HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
             modelBuilder.Entity<AspNetUserRoles>().HasKey(e => new { e.UserId, e.RoleId });
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

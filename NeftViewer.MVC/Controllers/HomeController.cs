@@ -9,20 +9,20 @@ namespace NeftViewer.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserService _userService;
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+        private readonly IAspNetUsersService _userService;
+        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService)
         {
             _logger = logger;
-            _userService = userService;
+            _userService = aspNetUsersService;
         }
 
         public IActionResult Index()
         {
-            User user = new User();
-            user.Name="Fox";
-            user.Age = 32;
-            _userService.AddUser(user);
-            _userService.CommitChangesAsync();
+            //AspNetUsers user = new AspNetUsers();
+            //user.="Fox";
+            //user.Age = 32;
+            //_userService.AddUser(user);
+            //_userService.CommitChangesAsync();
             return View();
         }
 

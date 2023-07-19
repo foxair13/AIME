@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Configuration
 {
-    public class UserConfiguration:IEntityTypeConfiguration<User>
+    public class AspNetUsersConfiguration:IEntityTypeConfiguration<AspNetUsers>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<AspNetUsers> builder)
         {
             builder.Property(p => p.Id).IsRequired();
         }

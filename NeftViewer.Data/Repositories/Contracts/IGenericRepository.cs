@@ -13,12 +13,12 @@ namespace NeftViewer.Data.Repositories.Contracts
 
         Task<IEnumerable<TModel>> GetAllAsync();
 
-        Task<TModel> GetAsync(int? id);
+        Task<TModel> GetAsync(string? id);
 
         EntityEntry<TModel> Update(TModel obj);
 
         EntityEntry<TModel> Delete(TModel obj);
-        EntityEntry<TModel> DeleteByID(int id);
+        EntityEntry<TModel> DeleteByID(string id);
         bool DeleteRange(IEnumerable<TModel> objs);
         bool AddRange(IEnumerable<TModel> objs);
     }

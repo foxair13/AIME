@@ -17,13 +17,13 @@ namespace NeftViewer.Data.UnitOfWork
 
         public UnitOfWork(
             NeftViewerContext context,
-            IGenericRepository<User> UserRepository
+            IGenericRepository<AspNetUsers> AspNetUsersRepository
             )
         {
             _context = context;
-            Users = UserRepository;
+            AspNetUsers = AspNetUsersRepository;
         }
-        public IGenericRepository<User> Users { get; }
+        public IGenericRepository<AspNetUsers> AspNetUsers { get; }
 
 
 
