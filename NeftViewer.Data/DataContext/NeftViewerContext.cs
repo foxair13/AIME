@@ -12,6 +12,13 @@ namespace NeftViewer.Data.DataContext
     public partial class NeftViewerContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
          : base(options)
         {
@@ -27,6 +34,19 @@ namespace NeftViewer.Data.DataContext
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AspNetRoleClaims>()
+        .HasOne(r => r.AspNetRoles)
+        .WithMany(rc => rc.RoleClaims)
+        .HasForeignKey(r => r.RoleId)
+        .IsRequired();
+            modelBuilder.Entity<AspNetUserClaims>()
+       .HasOne(u => u.AspNetUsers)
+       .WithMany(uc => uc.UserClaims)
+       .HasForeignKey(u => u.UserId)
+       .HasPrincipalKey(u => u.Id)
+       .IsRequired();
+            modelBuilder.Entity<AspNetUserTokens>().HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+            modelBuilder.Entity<AspNetUserRoles>().HasKey(e => new { e.UserId, e.RoleId });
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             OnModelCreatingPartial(modelBuilder);
         }
