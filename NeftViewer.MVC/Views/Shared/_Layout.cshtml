@@ -1,50 +1,99 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" dir="ltr" class="dark chrome windows fontawesome-i2svg-active fontawesome-i2svg-complete">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
     <title>@ViewData["Title"] - NeftViewer.MVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/NeftViewer.MVC.styles.css" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <title>Белоруснефть-Нефтехимпроект</title>
+ @*   <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">*@
+
+
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NeftViewer.MVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+    <div class="main" id="top">
+        <div class="navbar navbar-vertical navbar-expand-lg">
+            <!-- Контент вертикальной навигации -->
+            <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+                <div class="navbar-vertical-content">
+                    <!-- Ваш контент для вертикальной навигации здесь -->
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - NeftViewer.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="navbar-vertical-footer">
+                <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center" id="toggleMenuButton">
+                    <span class="uil uil-left-arrow-to-left fs-0"></span>
+                    <span class="uil uil-arrow-from-right fs-0"></span>
+                     <span class="navbar-vertical-footer-text ms-2">скрыть меню</span>
+                </button>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <div class="navbar navbar-vertical navbar-expand-rg">
+            <!-- Контент вертикальной навигации -->
+            <div class="collapse navbar-collapse" id="navbarVerticalCollapser1">
+                <div class="navbar-vertical-content">
+                    <!-- Ваш контент для вертикальной навигации здесь -->
+                </div>
+            </div>
+            <div class="navbar-vertical-footerrg">
+                
+            </div>
+        </div>
+
+        <div class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="navbar-logo">
+                    <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
+                            aria-controls="navbarVerticalCollapse" aria-expanded="false"
+                            aria-label="Toggle Navigation">
+                        <span class="navbar-toggle-icon">
+                            <span class="toggle-line"></span>
+                        </span>
+                    </button>
+                    <a class="navbar-brand me-1 me-sm-3" href="https://nhp.by/">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                @*<img src="./Phoenix_files/logo.png"
+                                     alt="Белоруснефть-Нефтехимпроект" width="27">*@
+                                <p class="logo-text ms-2 d-none d-sm-block">Белоруснефть-Нефтехимпроект</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <!-- Основной контент -->
+            <div class="row gx-6">
+                <div class="col-12 col-xl-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+        <div class="footer position-absolute">
+            <div class="row g-0 justify-content-between align-items-center h-100">
+                <div class="col-12 col-sm-auto text-center">
+                    <p class="mb-0 mt-2 mt-sm-0 text-900">
+                        Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
+                    </p>
+                </div>
+                <div class="col-12 col-sm-auto text-center">
+                    <p class="mb-0 text-600">v1.0.0</p>
+                </div>
+            </div>
+        </div>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
 </body>
 </html>
