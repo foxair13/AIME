@@ -20,7 +20,44 @@
             <!-- Контент вертикальной навигации -->
             <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
                 <div class="navbar-vertical-content">
-                    <!-- Ваш контент для вертикальной навигации здесь -->
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item border-top border-300">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Вкладка 1
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Вкладка 2
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Вкладка 3
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="navbar-vertical-footer">
@@ -38,9 +75,7 @@
                     <!-- Ваш контент для вертикальной навигации здесь -->
                 </div>
             </div>
-            <div class="navbar-vertical-footerrg">
-                
-            </div>
+          
         </div>
 
         <div class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
@@ -58,8 +93,8 @@
                     <a class="navbar-brand me-1 me-sm-3" href="https://nhp.by/">
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center">
-                                <img width="300px" src="~/img/logo.png"
-                                     alt="Белоруснефть-Нефтехимпроект" width="27">
+                                <img width="200px" src="~/img/logo.png"
+                                     alt="Белоруснефть-Нефтехимпроект" >
                                 
                             </div>
                         </div>
@@ -84,84 +119,14 @@
                        role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
                        aria-expanded="false">
                         <div class="avatar avatar-l ">
-                            <img class="rounded-circle " src="assets/img/team/40x40/57.webp" alt="" />
+                       
+                            <img class="rounded-circle " src="~/img/avatar.png" alt="" />
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
                          aria-labelledby="navbarDropdownUser">
                         <div class="card position-relative border-0">
-                            <div class="card-body p-0">
-                                <div class="text-center pt-4 pb-3">
-                                    <div class="avatar avatar-xl ">
-                                        <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="" />
-                                    </div>
-                                    <h6 class="mt-2 text-black">Jerry Seinfield</h6>
-                                </div>
-                                <div class="mb-3 mx-3">
-                                    <input class="form-control form-control-sm"
-                                           id="statusUpdateInput" type="text" placeholder="Update your status" />
-                                </div>
-                            </div>
-                            <div class="overflow-auto scrollbar" style="height: 10rem;">
-                                <ul class="nav d-flex flex-column mb-2 pb-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="user"></span><span>Profile</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="pie-chart"></span>Dashboard
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="lock"></span>Posts &amp; Activity
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="settings"></span>Settings &amp; Privacy
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="help-circle"></span>Help Center
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="globe"></span>Language
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-footer p-0 border-top">
-                                <ul class="nav d-flex flex-column my-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link px-3" href="#!">
-                                            <span class="me-2 text-900"
-                                                  data-feather="user-plus"></span>Add another account
-                                        </a>
-                                    </li>
-                                </ul>
-                                <hr />
-                                <div class="px-3">
-                                    <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
-                                       href="#!"> <span class="me-2" data-feather="log-out"> </span>Sign out</a>
-                                </div>
-                                <div class="my-2 text-center fw-bold fs--2 text-600">
-                                    <a class="text-600 me-1"
-                                       href="#!">Privacy policy</a>&bull;<a class="text-600 mx-1"
-                                                                            href="#!">Terms</a>&bull;<a class="text-600 ms-1" href="#!">Cookies</a>
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
                 </li>
