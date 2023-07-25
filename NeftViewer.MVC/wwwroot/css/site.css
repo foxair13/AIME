@@ -5790,6 +5790,7 @@ textarea.form-control-lg {
 
 @media(min-width: 992px) {
     .navbar-expand-lg {
+        flex: 1;
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
         -webkit-box-pack: start;
@@ -5797,6 +5798,7 @@ textarea.form-control-lg {
         justify-content: flex-start
     }
     .navbar-expand-rg {
+        flex: 1;
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
         -webkit-box-pack: start;
@@ -24631,7 +24633,9 @@ html {
 .content {
     min-height: 100vh;
     padding: calc(var(--phoenix-navbar-top-height) + 2rem) 1.5rem 6.375rem 1.5rem;
-    padding-bottom: 6rem
+    padding-bottom: 6rem;
+    flex: 2;
+    margin-right: 15%
 }
 
 @media(min-width: 576px) {
