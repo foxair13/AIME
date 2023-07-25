@@ -9,6 +9,8 @@ using NeftViewer.Data.UnitOfWork;
 using NeftViewer.MVC.Data;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.BL;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +26,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//          .AddCookie(options =>
+//          {
+//              options.LoginPath = "/Identity/Account/Login"; // ”кажите URL страницы входа
+//          });
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
