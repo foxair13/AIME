@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Models;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 
 namespace NeftViewer.MVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

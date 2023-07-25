@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr" class="dark chrome windows fontawesome-i2svg-active fontawesome-i2svg-complete">
 <head>
     <meta charset="utf-8" />
@@ -17,178 +20,142 @@
 </head>
 <body>
     <div class="main" id="top">
-        <div class="navbar navbar-vertical navbar-expand-lg">
-            <!-- Контент вертикальной навигации -->
-            <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-                <div class="navbar-vertical-content">
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item border-top border-300">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Вкладка 1
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body pt-0">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Вкладка 2
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body pt-0">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Вкладка 3
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body pt-0">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar-vertical-footer">
-                <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center" id="toggleMenuButton">
-                    <span class="uil uil-left-arrow-to-left fs-0"></span>
-                    <span class="uil uil-arrow-from-right fs-0"></span>
-                    <span class="navbar-vertical-footer-text ms-2">скрыть меню</span>
-                </button>
-            </div>
-        </div>
-        <div class="navbar navbar-vertical navbar-expand-rg">
-            <!-- Контент вертикальной навигации -->
-@*            <h2 class="accordion-header" id="headingOne">
-                erngwnenhtjjejyjopekok
-            </h2>*@
-            <div class="collapse navbar-collapse" id="navbarVerticalCollapser1">
-                <div class="navbar-vertical-content">
-                    <!-- Ваш контент для вертикальной навигации здесь -->
-                </div>
-            </div>
-
-        </div>
-
-        <div class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
-            <div class="collapse navbar-collapse justify-content-between">
-                <div class="navbar-logo">
-                    <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
-                            aria-controls="navbarVerticalCollapse" aria-expanded="false"
-                            aria-label="Toggle Navigation">
-                        <span class="navbar-toggle-icon">
-                            <span class="toggle-line"></span>
-                        </span>
-                    </button>
-
-                    <a class="navbar-brand me-1 me-sm-3" href="https://nhp.by/">
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center">
-                                <img width="200px" src="~/img/logo.png"
-                                     alt="Белоруснефть-Нефтехимпроект">
-
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="footer navbar-bottom fixed-bottom">
-                <div class="row g-0 align-items-center h-100">
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 mt-2 mt-sm-0 text-900">
-                            Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
-                        </p>
-                    </div>
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 text-600">v1.0.0</p>
-                    </div>
-                </div>
-            </div>
-            <ul class="navbar-nav navbar-nav-icons flex-row">
-                <li class="nav-item dropdown">
-                    <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!"
-                       role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
-                       aria-expanded="false">
-                        <div class="avatar avatar-l ">
-
-                            <img class="rounded-circle " src="~/img/avatar.png" alt="" />
-
-
-
-                        </div>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
-                         aria-labelledby="navbarDropdownUser">
-                        <div class="card position-relative border-0">
-                            <div class="card-body p-0">
-                                <div class="text-center pt-4 pb-3">
-                                    <div class="avatar avatar-xl ">
-                                        <img class="rounded-circle " src="~/img/avatar.png" alt="" />
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="navbar navbar-vertical navbar-expand-lg">
+                <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+                    <div class="navbar-vertical-content">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item border-top border-300">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Вкладка 1
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
                                     </div>
-                                    <h6 class="mt-2 text-black">Иванов Иван Иванович</h6>
                                 </div>
-
                             </div>
-                            <div class="overflow-auto scrollbar" style="height: 10rem;">
-                                <ul class="nav d-flex flex-column mb-2 pb-1">
-                                    <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="user"></span><span>Данные профиля</span></a></li>
-
-                                </ul>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Вкладка 2
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-footer p-0 border-top">
-                                <ul class="nav d-flex flex-column my-3">
-                                    <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="user-plus"></span>Сброс пароля</a></li>
-                                </ul>
-                                <hr />
-                                <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Выход</a></div>
-                                <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1" href="#!">Политика безопасности</a>&bull;<a class="text-600 mx-1" href="#!">Публичное соглашение</a>&bull;</div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Вкладка 3
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <div class="content">
-            <!-- Основной контент -->
-            <div class="row gx-6">
-                <div class="col-12 col-xl-12">
-                    @RenderBody()
+                </div>
+                <div class="navbar-vertical-footer">
+                    <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center" id="toggleMenuButton">
+                        <span class="uil uil-left-arrow-to-left fs-0"></span>
+                        <span class="uil uil-arrow-from-right fs-0"></span>
+                        <span class="navbar-vertical-footer-text ms-2">скрыть меню</span>
+                    </button>
                 </div>
             </div>
-            <div class="footer position-absolute">
-                <div class="row g-0 justify-content-between align-items-center h-100">
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 mt-2 mt-sm-0 text-900">
-                            Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
-                        </p>
+            <div class="navbar navbar-vertical navbar-expand-rg">
+                <!-- Контент вертикальной навигации -->
+                <div class="collapse navbar-collapse" id="navbarVerticalCollapser1">
+                    <div class="navbar-vertical-content">
+                        <!-- Ваш контент для вертикальной навигации здесь -->
                     </div>
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 text-600">v1.0.0</p>
+                </div>
+
+            </div>
+
+            <div class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+                <div class="collapse navbar-collapse justify-content-between">
+                    <div class="navbar-logo">
+                        <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
+                                aria-controls="navbarVerticalCollapse" aria-expanded="false"
+                                aria-label="Toggle Navigation">
+                            <span class="navbar-toggle-icon">
+                                <span class="toggle-line"></span>
+                            </span>
+                        </button>
+
+                        <a class="navbar-brand me-1 me-sm-3" href="https://nhp.by/">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img width="200px" src="~/img/logo.png"
+                                         alt="Белоруснефть-Нефтехимпроект">
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer navbar-bottom fixed-bottom">
+                    <div class="row g-0 align-items-center h-100">
+                        <div class="col-12 col-sm-auto text-center">
+                            <p class="mb-0 mt-2 mt-sm-0 text-900">
+                                Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
+                            </p>
+                        </div>
+                        <div class="col-12 col-sm-auto text-center">
+                            <p class="mb-0 text-600">v1.0.0</p>
+                        </div>
+                    </div>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+            <div class="content">
+                <!-- Основной контент -->
+                <div class="row gx-6">
+                    <div class="col-12 col-xl-12">
+                        @RenderBody()
+                    </div>
+                </div>
+                <div class="footer position-absolute">
+                    <div class="row g-0 justify-content-between align-items-center h-100">
+                        <div class="col-12 col-sm-auto text-center">
+                            <p class="mb-0 mt-2 mt-sm-0 text-900">
+                                Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
+                            </p>
+                        </div>
+                        <div class="col-12 col-sm-auto text-center">
+                            <p class="mb-0 text-600">v1.0.0</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-        <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
+            <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
 
 
 
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+          
+        }else
+        {
+            <div class="container">
+                @RenderBody()
+
+            </div>
+        }
         @await RenderSectionAsync("Scripts", required: false)
     </div>
 </body>
