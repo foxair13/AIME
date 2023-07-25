@@ -10,7 +10,8 @@
     <title>@ViewData["Title"] - NeftViewer.MVC</title>
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <title>Белоруснефть-Нефтехимпроект</title>
-   
+    <link href="~/lib/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
+
 
 
 </head>
@@ -29,7 +30,6 @@
                             </h2>
                             <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body pt-0">
-                                   
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,6 @@
                             </h2>
                             <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body pt-0">
-                                   
                                 </div>
                             </div>
                         </div>
@@ -53,7 +52,6 @@
                             </h2>
                             <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body pt-0">
-                                   
                                 </div>
                             </div>
                         </div>
@@ -64,7 +62,7 @@
                 <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center" id="toggleMenuButton">
                     <span class="uil uil-left-arrow-to-left fs-0"></span>
                     <span class="uil uil-arrow-from-right fs-0"></span>
-                     <span class="navbar-vertical-footer-text ms-2">скрыть меню</span>
+                    <span class="navbar-vertical-footer-text ms-2">скрыть меню</span>
                 </button>
             </div>
         </div>
@@ -75,7 +73,7 @@
                     <!-- Ваш контент для вертикальной навигации здесь -->
                 </div>
             </div>
-          
+
         </div>
 
         <div class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
@@ -89,13 +87,13 @@
                             <span class="toggle-line"></span>
                         </span>
                     </button>
-             
+
                     <a class="navbar-brand me-1 me-sm-3" href="https://nhp.by/">
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center">
                                 <img width="200px" src="~/img/logo.png"
-                                     alt="Белоруснефть-Нефтехимпроект" >
-                                
+                                     alt="Белоруснефть-Нефтехимпроект">
+
                             </div>
                         </div>
                     </a>
@@ -119,14 +117,39 @@
                        role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
                        aria-expanded="false">
                         <div class="avatar avatar-l ">
-                       
+
                             <img class="rounded-circle " src="~/img/avatar.png" alt="" />
+
+
+
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
                          aria-labelledby="navbarDropdownUser">
                         <div class="card position-relative border-0">
-                          
+                            <div class="card-body p-0">
+                                <div class="text-center pt-4 pb-3">
+                                    <div class="avatar avatar-xl ">
+                                        <img class="rounded-circle " src="~/img/avatar.png" alt="" />
+                                    </div>
+                                    <h6 class="mt-2 text-black">Иванов Иван Иванович</h6>
+                                </div>
+
+                            </div>
+                            <div class="overflow-auto scrollbar" style="height: 10rem;">
+                                <ul class="nav d-flex flex-column mb-2 pb-1">
+                                    <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="user"></span><span>Данные профиля</span></a></li>
+
+                                </ul>
+                            </div>
+                            <div class="card-footer p-0 border-top">
+                                <ul class="nav d-flex flex-column my-3">
+                                    <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-900" data-feather="user-plus"></span>Сброс пароля</a></li>
+                                </ul>
+                                <hr />
+                                <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Выход</a></div>
+                                <div class="my-2 text-center fw-bold fs--2 text-600"><a class="text-600 me-1" href="#!">Политика безопасности</a>&bull;<a class="text-600 mx-1" href="#!">Публичное соглашение</a>&bull;</div>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -136,7 +159,6 @@
             <!-- Основной контент -->
             <div class="row gx-6">
                 <div class="col-12 col-xl-12">
-                    <i class="fa-solid fa-circle-nodes">dfgdfg</i>
                     @RenderBody()
                 </div>
             </div>
@@ -154,10 +176,14 @@
             </div>
         </div>
 
-        <script src="~/js/popper.min.js"></script>
+
+
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-     
+        <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
+
+
+
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
