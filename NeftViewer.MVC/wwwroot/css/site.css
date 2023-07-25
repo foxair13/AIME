@@ -10,7 +10,7 @@
     --phoenix-gray-800: #3e465b;
     --phoenix-gray-900: #31374a;
     --phoenix-gray-1000: #222834;
-    --phoenix-gray-1100: #33495e;
+    --phoenix-gray-1100: #141824;
     --phoenix-gray-soft-rgb: 245, 247, 250;
     --phoenix-gray-100-rgb: 239, 242, 246;
     --phoenix-gray-200-rgb: 227, 230, 237;
@@ -34,7 +34,7 @@
     --phoenix-800: #3e465b;
     --phoenix-900: #31374a;
     --phoenix-1000: #222834;
-    --phoenix-1100: #33495e;
+    --phoenix-1100: #141824;
     --phoenix-facebook: #3c5a99;
     --phoenix-google-plus: #dd4b39;
     --phoenix-twitter: #1da1f2;
@@ -54,7 +54,7 @@
     --phoenix-warning: #e5780b;
     --phoenix-danger: #ed2000;
     --phoenix-light: #eff2f6;
-    --phoenix-dark: #33495e;
+    --phoenix-dark: #141824;
     --phoenix-primary-soft: #f5f8ff;
     --phoenix-primary-100: #e5edff;
     --phoenix-primary-200: #adc5ff;
@@ -208,7 +208,7 @@
     --phoenix-navbar-vertical-collapsed-menu-bg: #fff;
     --phoenix-navbar-vertical-collapsed-menu-color: #222834;
     --phoenix-hamburger-menu-color: #6e7891;
-    --phoenix-navbar-top-bg-color: #213343;
+    --phoenix-navbar-top-bg-color: #fff;
     --phoenix-btn-hover-border-color: transparent;
     --phoenix-btn-active-border-color: transparent;
     --phoenix-list-group-bg: #fff;
@@ -279,7 +279,7 @@
 
         :root:not(.dark) .navbar-darker:not(.dark) .navbar-top-collapse.show, :root.light:not(.dark) .navbar-darker:not(.dark) .navbar-top-collapse.show, :root .light:not(.dark) .navbar-darker:not(.dark) .navbar-top-collapse.show {
             --phoenix-navbar-top-link-color: #9fa6bc;
-            --phoenix-navbar-top-menu-bg-color: #33495e;
+            --phoenix-navbar-top-menu-bg-color: #141824;
             --phoenix-navbar-top-border-color: #373e53;
             --phoenix-navbar-top-link-hover-color: #cbd0dd;
             --phoenix-navbar-top-link-hover-bg: #222834;
@@ -292,7 +292,7 @@
     }
 
         :root.dual-nav:not(.dark) .navbar-darker .search-box, :root.light.dual-nav:not(.dark) .navbar-darker .search-box, :root .light.dual-nav:not(.dark) .navbar-darker .search-box {
-            --phoenix-input-bg: #33495e;
+            --phoenix-input-bg: #141824;
             --phoenix-input-border-color: #373e53
         }
 
@@ -312,7 +312,7 @@
 
     :root .badge-phoenix-secondary, :root.light .badge-phoenix-secondary, :root .light .badge-phoenix-secondary {
         --phoenix-badge-bg: #e3e6ed;
-        --phoenix-badge-color: #33495e;
+        --phoenix-badge-color: #141824;
         --phoenix-badge-border-color: #cbd0dd
     }
 
@@ -355,7 +355,7 @@
         --phoenix-navbar-vertical-collapsed-menu-color: #9fa6bc;
         --phoenix-logo-text: #eff2f6;
         --phoenix-navbar-footer-border-color: #31374a;
-        --phoenix-navbar-top-bg-color: #213343;
+        --phoenix-navbar-top-bg-color: #141824;
         --phoenix-nav-link-color: #8a94ad;
         --phoenix-theme-control-toggle-bg: rgba(255, 204, 133, 0.18);
         --phoenix-theme-control-toggle-hover-bg: rgba(229, 120, 11, 0.7);
@@ -452,7 +452,7 @@
     --phoenix-info-300: #60c6ff;
     --phoenix-info-500: #0097eb;
     --phoenix-info-600: #005585;
-    --phoenix-white: #33495e;
+    --phoenix-white: #141824;
     --phoenix-black: #eff2f6;
     --phoenix-soft-rgb: 15, 17, 26;
     --phoenix-100-rgb: 34, 40, 52;
@@ -503,44 +503,44 @@
     --phoenix-info-600-rgb: 0, 85, 133;
     --phoenix-white-rgb: 20, 24, 36;
     --phoenix-black-rgb: 239, 242, 246;
-    --phoenix-white: #33495e;
+    --phoenix-white: #141824;
     --phoenix-black: #eff2f6;
     --phoenix-white-rgb: 20, 24, 36;
     --phoenix-black-rgb: 239, 242, 246;
     --phoenix-body-color: #9fa6bc;
     --phoenix-body-bg: #0f111a;
-    --phoenix-input-bg: #33495e;
+    --phoenix-input-bg: #141824;
     --phoenix-input-border-color: #373e53;
     --phoenix-input-group-addon-bg: #31374a;
     --phoenix-navbar-vertical-border-color: #31374a;
     --phoenix-navbar-footer-border-color: #31374a;
-    --phoenix-navbar-top-bg-color: #213343;
+    --phoenix-navbar-top-bg-color: #141824;
     --phoenix-link-color: #85a9ff;
     --phoenix-link-hover-color: #3874ff;
-    --phoenix-avatar-status-border-color: #33495e;
+    --phoenix-avatar-status-border-color: #141824;
     --phoenix-avatar-name-color: #85a9ff;
     --phoenix-list-sort-icon: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNyA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMS4xMjkzIDQuOTkwMjNDMC42OTEwMTYgNC45OTAyMyAwLjQ3MTg3NSA1LjUwODIgMC43OTA2MjUgNS44MDcwM0wzLjE2MTMzIDguMTc3NzNDMy4zNDA2MiA4LjM3Njk1IDMuNjM5NDUgOC4zNzY5NSAzLjgzODY3IDguMTc3NzNMNi4yMDkzNyA1LjgwNzAzQzYuNTA4MiA1LjUwODIgNi4yODkwNiA0Ljk5MDIzIDUuODcwNyA0Ljk5MDIzSDEuMTI5M1pNNi4yMDkzNyAyLjg5ODQ0TDMuODM4NjcgMC41Mjc3MzVDMy42Mzk0NSAwLjM0ODQzOCAzLjM0MDYyIDAuMzQ4NDM4IDMuMTYxMzMgMC41Mjc3MzVMMC43OTA2MjUgMi44OTg0NEMwLjQ3MTg3NSAzLjIxNzE5IDAuNjkxMDE2IDMuNzE1MjMgMS4xMjkzIDMuNzE1MjNINS44NzA3QzYuMjg5MDYgMy43MTUyMyA2LjUwODIgMy4yMTcxOSA2LjIwOTM3IDIuODk4NDRaIiBmaWxsPSIjM0U0NjVCIi8+Cjwvc3ZnPgo=");
     --phoenix-tinymce-tox-tbtn-enabled-icon-color: var(--phoenix-gray-1000);
     --phoenix-choices-item-bg: rgba(133, 169, 255, 0.25);
     --phoenix-choices-item-color: var(--phoenix-gray-1000);
-    --phoenix-choices-item-has-no-choices-bg: #33495e;
+    --phoenix-choices-item-has-no-choices-bg: #141824;
     --phoenix-docs-language-bg: #222834;
     --phoenix-form-select-indicator: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik03NS4zNDggMTI3LjE5MkM3Mi40MzgxIDEyNy4xOTIgNjkuODUxNCAxMjYuMjIyIDY3LjkxMTUgMTI0LjI4Mkw1LjgzMjE1IDYyLjIwMjNDMS42Mjg4NyA1OC4zMjIzIDEuNjI4ODcgNTEuNTMyNCA1LjgzMjE1IDQ3LjY1MjVDOS43MTIxMSA0My40NDkyIDE2LjUwMiA0My40NDkyIDIwLjM4MiA0Ny42NTI1TDc1LjM0OCAxMDIuMjk1TDEyOS45OTEgNDcuNjUyNUMxMzMuODcxIDQzLjQ0OTIgMTQwLjY2MSA0My40NDkyIDE0NC41NDEgNDcuNjUyNUMxNDguNzQ0IDUxLjUzMjQgMTQ4Ljc0NCA1OC4zMjIzIDE0NC41NDEgNjIuMjAyM0w4Mi40NjEzIDEyNC4yODJDODAuNTIxMyAxMjYuMjIyIDc3LjkzNDcgMTI3LjE5MiA3NS4zNDggMTI3LjE5MloiIGZpbGw9IiM5RkE2QkMiLz4KPC9zdmc+Cg==");
     --phoenix-theme-wizard-nav-item-circle-bg: #222834;
     --phoenix-logo-text: #eff2f6;
     --phoenix-flatpickr-calendar-input-bg: var(--phoenix-input-bg);
-    --phoenix-flatpickr-calendar-bg: #33495e;
+    --phoenix-flatpickr-calendar-bg: #141824;
     --phoenix-flatpickr-current-month-color: #cbd0dd;
     --phoenix-flatpickr-weekday-color: #cbd0dd;
     --phoenix-flatpickr-calendar-day-hover-bg: #222834;
     --phoenix-flatpickr-weekend-days-color: #e5780b;
     --phoenix-flatpickr-today-color: #31374a;
     --phoenix-flatpickr-calendar-day-selected-bg: rgba(56, 116, 255, 0.2);
-    --phoenix-calendar-bg: #33495e;
+    --phoenix-calendar-bg: #141824;
     --phoenix-calendar-border-color: #0f111a;
-    --phoenix-list-group-bg: #33495e;
+    --phoenix-list-group-bg: #141824;
     --phoenix-navbar-top-link-color: #9fa6bc;
-    --phoenix-navbar-top-menu-bg-color: #33495e;
+    --phoenix-navbar-top-menu-bg-color: #141824;
     --phoenix-navbar-top-border-color: #31374a;
     --phoenix-navbar-top-link-hover-color: #cbd0dd;
     --phoenix-navbar-top-link-hover-bg: #222834;
@@ -548,7 +548,7 @@
     --phoenix-navbar-top-dropdown-color: #8a94ad;
     --phoenix-dual-nav-border-color: #31374a;
     --phoenix-dual-nav-first-layer-bg: #0f111a;
-    --phoenix-navbar-vertical-bg-color: #33495e;
+    --phoenix-navbar-vertical-bg-color: #141824;
     --phoenix-navbar-vertical-label-color: #6e7891;
     --phoenix-navbar-vertical-link-color: #9fa6bc;
     --phoenix-navbar-vertical-link-hover-color: #eff2f6;
@@ -566,12 +566,12 @@
     --phoenix-theme-control-toggle-hover-color: #f5f8ff;
     --bs-scrollbar-bg: rgba(49, 55, 74, 0.6);
     --phoenix-kanban-bg: #0f111a;
-    --phoenix-kanban-column-bg: #33495e;
+    --phoenix-kanban-column-bg: #141824;
     --phoenix-ghost-bg: #0f111a;
     --phoenix-drag-bg: #1c222c;
     --phoenix-kanban-column-hover-bg: #1c222c;
     --phoenix-leaflet-bar-bg: #373e53;
-    --phoenix-leaflet-popup-content-wrapper-bg: #33495e
+    --phoenix-leaflet-popup-content-wrapper-bg: #141824
 }
 
     .dark .text-success-100, .dark .picmo__popupContainer.picmo__light .text-success-100 {
@@ -875,7 +875,7 @@
     }
 
     .dark .dropdown-menu, .dark .picmo__popupContainer.picmo__light .dropdown-menu {
-        --phoenix-dropdown-bg: #33495e;
+        --phoenix-dropdown-bg: #141824;
         --phoenix-dropdown-border-color: #373e53;
         --phoenix-dropdown-divider-bg: #373e53;
         --phoenix-dropdown-link-hover-bg: #222834;
@@ -884,7 +884,7 @@
     }
 
     .dark .modal-content, .dark .picmo__popupContainer.picmo__light .modal-content {
-        --phoenix-modal-bg: #33495e
+        --phoenix-modal-bg: #141824
     }
 
     .dark .accordion, .dark .picmo__popupContainer.picmo__light .accordion {
@@ -896,7 +896,7 @@
     }
 
     .dark .popover, .dark .picmo__popupContainer.picmo__light .popover {
-        --phoenix-popover-bg: #33495e;
+        --phoenix-popover-bg: #141824;
         --phoenix-popover-border-color: #373e53;
         --phoenix-popover-body-color: #cbd0dd;
         --phoenix-popover-header-bg: #0f111a
@@ -910,7 +910,7 @@
     }
 
     .dark .offcanvas, .dark .picmo__popupContainer.picmo__light .offcanvas {
-        --phoenix-offcanvas-bg: #33495e
+        --phoenix-offcanvas-bg: #141824
     }
 
     .dark .progress, .dark .picmo__popupContainer.picmo__light .progress {
@@ -936,7 +936,7 @@
         --phoenix-navbar-vertical-link-icon-color: #9fa6bc;
         --phoenix-navbar-vertical-collapsed-menu-bg: #222834;
         --phoenix-navbar-vertical-collapsed-menu-color: #9fa6bc;
-        --phoenix-navbar-top-bg-color: #213343;
+        --phoenix-navbar-top-bg-color: #222834;
         --phoenix-nav-link-color: #8a94ad;
         --phoenix-input-bg: #222834;
         --phoenix-input-border-color: #373e53
@@ -3785,7 +3785,7 @@ progress {
 
 .table-dark {
     --phoenix-table-color: #fff;
-    --phoenix-table-bg: #33495e;
+    --phoenix-table-bg: #141824;
     --phoenix-table-border-color: #2c2f3a;
     --phoenix-table-striped-bg: #20242f;
     --phoenix-table-striped-color: #fff;
@@ -6348,7 +6348,7 @@ textarea.form-control-lg {
     --phoenix-accordion-btn-focus-box-shadow: 0 0 0 0.25rem transparent;
     --phoenix-accordion-body-padding-x: 0;
     --phoenix-accordion-body-padding-y: 0.5rem;
-    --phoenix-accordion-active-color: #33495e;
+    --phoenix-accordion-active-color: #141824;
     --phoenix-accordion-active-bg: transparent
 }
 
@@ -24185,10 +24185,10 @@ input::-webkit-contacts-auto-fill-button {
 }
 
 .btn-soft-secondary {
-    --phoenix-btn-color: #33495e;
+    --phoenix-btn-color: #141824;
     --phoenix-btn-bg: #f5f7fa;
     --phoenix-btn-border-color: #f5f7fa;
-    --phoenix-btn-hover-color: #33495e;
+    --phoenix-btn-hover-color: #141824;
     --phoenix-btn-hover-bg: #e3e6ed;
     --phoenix-btn-hover-border-color: #f6f8fb;
     --phoenix-btn-focus-shadow-rgb: 211, 214, 218;
@@ -24858,7 +24858,7 @@ html {
 }
 
 .dark .subtask-checkbox, .dark .picmo__popupContainer.picmo__light .subtask-checkbox {
-    background-color: #33495e
+    background-color: #141824
 }
 
     .dark .subtask-checkbox:checked {
@@ -25893,7 +25893,7 @@ span.flatpickr-weekday, .flatpickr-weekdaycontainer, .flatpickr-months .flatpick
 
         .flatpickr-months .flatpickr-month .flatpickr-current-month .flatpickr-monthDropdown-months {
             font-weight: 700;
-            color: #33495e
+            color: #141824
         }
 
         .flatpickr-months .flatpickr-month .flatpickr-current-month .cur-month:hover, .flatpickr-months .flatpickr-month .flatpickr-current-month .cur-month:focus, .flatpickr-months .flatpickr-month .flatpickr-current-month .numInputWrapper:hover, .flatpickr-months .flatpickr-month .flatpickr-current-month .numInputWrapper:focus {
@@ -26056,7 +26056,7 @@ html[dir=rtl] .googlemap .gm-style-iw.gm-style-iw-c button[title=Close] {
 
 .dark .picmo__picker.picmo__picker {
     color-scheme: dark;
-    --background-color: #33495e
+    --background-color: #141824
 }
 
 .picmo__picker.picmo__picker .picmo__searchField {
@@ -26064,7 +26064,7 @@ html[dir=rtl] .googlemap .gm-style-iw.gm-style-iw-c button[title=Close] {
 }
 
 .dark .picmo__picker.picmo__picker .picmo__searchField {
-    --search-focus-background-color: #33495e
+    --search-focus-background-color: #141824
 }
 
 .picmo__picker.picmo__picker section {
@@ -26757,11 +26757,11 @@ html[dir=rtl] .googlemap .gm-style-iw.gm-style-iw-c button[title=Close] {
 }
 
 .fc .fc-timegrid .text-dark .fc-event-main:after {
-    background-color: #33495e !important
+    background-color: #141824 !important
 }
 
 .fc .text-dark .fc-event-main:after {
-    background-color: #33495e !important
+    background-color: #141824 !important
 }
 
 .fc .text-dark.fc-v-event {
@@ -27414,7 +27414,7 @@ h3, .h3 {
     }
 
 .alert-soft-secondary {
-    --phoenix-alert-color: #33495e;
+    --phoenix-alert-color: #141824;
     --phoenix-alert-bg: #f5f7fa;
     --phoenix-alert-border-color: #f5f7fa
 }
@@ -27534,9 +27534,9 @@ h3, .h3 {
     }
 
 .alert-outline-dark {
-    --phoenix-alert-color: #33495e;
+    --phoenix-alert-color: #141824;
     --phoenix-alert-bg: transparent;
-    --phoenix-alert-border-color: #33495e
+    --phoenix-alert-border-color: #141824
 }
 
     .alert-outline-dark .alert-link {
@@ -27614,7 +27614,7 @@ h3, .h3 {
     }
 
 .alert-phoenix-dark {
-    --phoenix-alert-color: #33495e;
+    --phoenix-alert-color: #141824;
     --phoenix-alert-bg: var(--phoenix-white);
     --phoenix-alert-border-color: var(--phoenix-gray-300)
 }
@@ -27695,8 +27695,8 @@ h3, .h3 {
 
 .alert-dark {
     --phoenix-alert-color: #cbd0dd;
-    --phoenix-alert-bg: #33495e;
-    --phoenix-alert-border-color: #33495e
+    --phoenix-alert-bg: #141824;
+    --phoenix-alert-border-color: #141824
 }
 
     .alert-dark .alert-link {
@@ -28103,7 +28103,7 @@ h3, .h3 {
 }
 
 .dark .navbar-dark.light .form-control {
-    background-color: #33495e;
+    background-color: #141824;
     border-color: #373e53
 }
 
@@ -32561,13 +32561,13 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs {
     }
 
 .accordion-item {
-    border-bottom: 1px solid var(--phoenix-gray-300);#33495e
+    border-bottom: 1px solid var(--phoenix-gray-300);
     padding: .5rem
 }
 
 .standard-accordion .accordion-button {
     padding: .5rem 0;
-    color: #33495e
+    color: #141824
 }
 
     .standard-accordion .accordion-button::before {
@@ -32608,7 +32608,7 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs {
 }
 
 .iconic-accordion .accordion-button {
-    color: #33495e;
+    color: #141824;
     padding: .5rem 0;
     margin: .25rem 0
 }
@@ -33809,13 +33809,13 @@ a[href].bg-200:hover, a[href].bg-200:focus {
     }
 
 .badge-light-secondary {
-    color: #33495e;
+    color: #141824;
     background-color: #e3e6ed
 }
 
     .badge-light-secondary[href]:hover, .badge-light-secondary[href]:focus {
         text-decoration: none;
-        color: #33495e
+        color: #141824
     }
 
 .badge-light-success {
@@ -33882,7 +33882,7 @@ a[href].bg-200:hover, a[href].bg-200:focus {
 }
 
 .badge-phoenix-secondary[href]:hover, .badge-phoenix-secondary[href]:focus {
-    color: #33495e
+    color: #141824
 }
 
 .badge-phoenix-success[href]:hover, .badge-phoenix-success[href]:focus {
@@ -34545,7 +34545,7 @@ a[href].bg-200:hover, a[href].bg-200:focus {
 }
 
 .icon-indicator-dark::before {
-    background-color: #33495e
+    background-color: #141824
 }
 
 .icon-indicator-fill::before {
@@ -35692,11 +35692,11 @@ a[href].bg-200:hover, a[href].bg-200:focus {
 }
 
 .dark .dark__bg-1100, .dark .picmo__popupContainer.picmo__light .dark__bg-1100 {
-    background-color: #33495e !important
+    background-color: #141824 !important
 }
 
 .dark .dark__text-1100, .dark .picmo__popupContainer.picmo__light .dark__text-1100 {
-    color: #33495e !important
+    color: #141824 !important
 }
 
 .dark .dark__bg-facebook, .dark .picmo__popupContainer.picmo__light .dark__bg-facebook {
@@ -35852,11 +35852,11 @@ a[href].bg-200:hover, a[href].bg-200:focus {
 }
 
 .dark .dark__bg-dark, .dark .picmo__popupContainer.picmo__light .dark__bg-dark {
-    background-color: #33495e !important
+    background-color: #141824 !important
 }
 
 .dark .dark__text-dark, .dark .picmo__popupContainer.picmo__light .dark__text-dark {
-    color: #33495e !important
+    color: #141824 !important
 }
 
 .dark .dark__bg-primary-soft, .dark .picmo__popupContainer.picmo__light .dark__bg-primary-soft {
@@ -36920,7 +36920,7 @@ a[href].bg-200:hover, a[href].bg-200:focus {
             }
 
 .dark .deals .deals-col .deals-items-container .sortable-ghost::before {
-    background-color: #33495e
+    background-color: #141824
 }
 
 .deals .deals-col .deals-items-container .sortable-drag .card {
