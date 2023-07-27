@@ -32,6 +32,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 //              options.LoginPath = "/Identity/Account/Login"; // ”кажите URL страницы входа
 //          });
 builder.Services.AddControllersWithViews();
+builder.Services.AddResponseCaching();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

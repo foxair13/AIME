@@ -38,4 +38,8 @@
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

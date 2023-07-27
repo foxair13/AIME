@@ -4,8 +4,59 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
 
+
+<div class="row flex-center min-vh-100 py-5">
+    <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3">
+        <a class="d-flex flex-center text-decoration-none mb-4">
+            <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+                <img src="~/img/logo.png" alt="phoenix" width="158">
+            </div>
+        </a>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="text-center mb-7">
+                <h3 class="text-1000">Регистрация</h3>
+                <p class="text-700">Что бы создать новую учетную запись</p>
+            </div>
+            <div class="position-relative mt-4">
+                <hr class="bg-200">
+                <div class="divider-content-center">Введите данные для регистрации</div>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3 text-start">
+                <label class="form-label" for="name">ФИО</label><input class="form-control"
+                                                                       id="name" type="text" placeholder="Name">
+            </div>
+            <div class="mb-3 text-start">
+                <label class="form-label" for="email">Ваш Email</label><input class="form-control" id="email" type="email" placeholder="name@example.com">
+                <span class="fas fa-user text-900 fs--1 form-icon"></span>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="password">Пароль</label><input class="form-control form-icon-input" id="password" type="password" placeholder="Пароль">
+                 <span class="fas fa-lock text-900 fs--1 form-icon"></span> 
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="confirmPassword">Подтвердить пароль</label><input class="form-control form-icon-input" id="confirmPassword" type="password"
+                                                                                                     placeholder="Подтвердить пароль">
+                    <span class="fas fa-lock text-900 fs--1 form-icon"></span>
+                </div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" id="termsService" type="checkbox"><label class="form-label fs--1 text-none" for="termsService">
+                    Я принимаю <a href="">политику безопасности </a>и
+                    <a href="">публичное соглашение</a>
+                </label>
+            </div><button class="btn btn-primary w-100 mb-3">
+                Регистрация
+            </button>
+            <div class="text-center"><a class="fs--1 fw-bold" href="">Войти</a></div>
+        </form>
+    </div>
+</div>
+
+
+@*
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -39,8 +90,10 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }
@@ -60,7 +113,7 @@
             }
         </section>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
