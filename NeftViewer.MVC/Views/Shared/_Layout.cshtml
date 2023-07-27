@@ -14,15 +14,12 @@
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <title>Белоруснефть-Нефтехимпроект</title>
     <link href="~/lib/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
-
-
-
 </head>
 <body>
     <div class="main" id="top">
         @if (SignInManager.IsSignedIn(User))
         {
-            <div class="navbar navbar-vertical navbar-expand-lg">
+            <div class="navbar navbar-vertical navbar-expand-lg" id="navbar-expand-lg-id">
                 <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
                     <div class="navbar-vertical-content">
                         <div class="accordion" id="accordionExample">
@@ -70,7 +67,8 @@
                     </button>
                 </div>
             </div>
-            <div class="navbar navbar-vertical navbar-expand-rg">
+            <div class="navbar navbar-vertical navbar-expand-rg" id="navbar-expand-rg-id">
+                <h2>TestTestTestTestTestTestTestTestTest</h2>
                 <!-- Контент вертикальной навигации -->
                 <div class="collapse navbar-collapse" id="navbarVerticalCollapser1">
                     <div class="navbar-vertical-content">
@@ -97,10 +95,13 @@
                                 <div class="d-flex align-items-center">
                                     <img width="200px" src="~/img/logo.png"
                                          alt="Белоруснефть-Нефтехимпроект">
-
                                 </div>
                             </div>
                         </a>
+
+                        <button class="btn" id="btnLeftId" data-target="navbar-expand-lg-id">Свернуть левый sidebar</button>
+                        <button class="btn" id="btnRightId" data-target="navbar-expand-rg-id">Свернуть правый sidebar</button>
+                        <button class="btn" id="btnAllId">Свернуть все</button>
                     </div>
                 </div>
                 <div class="footer navbar-bottom fixed-bottom">
@@ -117,7 +118,7 @@
                 </div>
                 <partial name="_LoginPartial" />
             </div>
-            <div class="content">
+            <div class="content" id="contentId">
                 <!-- Основной контент -->
                 <div class="row gx-6">
                     <div class="col-12 col-xl-12">
@@ -138,14 +139,8 @@
                 </div>
             </div>
 
-
-
             <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
             <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
-
-
-
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
           
@@ -157,6 +152,6 @@
             </div>
         }
         @await RenderSectionAsync("Scripts", required: false)
-    </div>
+        </div>
 </body>
 </html>
