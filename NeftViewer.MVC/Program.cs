@@ -11,6 +11,7 @@ using NeftViewer.BL.Services.Contracts;
 using NeftViewer.BL;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using NeftViewer.BL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,12 @@ builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(connectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IGenericRepository<AspNetUsers>, AspNetUsersRepository>();
+builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
+builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
+builder.Services.AddScoped<IActionService, ActionService>();
+builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(connectionString));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -29,9 +34,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 //          .AddCookie(options =>
 //          {
-//              options.LoginPath = "/Identity/Account/Login"; // Укажите URL страницы входа
+//              options.LoginPath = "/Identity/Account/Login"; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //          });
 builder.Services.AddControllersWithViews();
+builder.Services.AddResponseCaching();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

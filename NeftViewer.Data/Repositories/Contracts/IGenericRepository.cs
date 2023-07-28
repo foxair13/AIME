@@ -14,7 +14,7 @@ namespace NeftViewer.Data.Repositories.Contracts
         Task<IEnumerable<TModel>> GetAllAsync();
 
         Task<TModel> GetAsync(string? id);
-
+        Task<TModel> GetAsync(int id);
         EntityEntry<TModel> Update(TModel obj);
 
         EntityEntry<TModel> Delete(TModel obj);

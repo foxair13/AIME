@@ -17,15 +17,19 @@ namespace NeftViewer.Data.UnitOfWork
 
         public UnitOfWork(
             NeftViewerContext context,
-            IGenericRepository<AspNetUsers> AspNetUsersRepository
+            IGenericRepository<AspNetUsers> AspNetUsersRepository,
+             IGenericRepository<Models.Action> ActionRepository,
+             IGenericRepository<ActionRole> ActionRoleRepository
             )
         {
             _context = context;
             AspNetUsers = AspNetUsersRepository;
+            Action = ActionRepository;
+            ActionRole = ActionRoleRepository;
         }
         public IGenericRepository<AspNetUsers> AspNetUsers { get; }
-
-
+        public IGenericRepository<Models.Action> Action { get; }
+        public IGenericRepository<ActionRole> ActionRole { get; }
 
         public async Task CommitAsync()
         {

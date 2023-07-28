@@ -40,6 +40,14 @@ namespace NeftViewer.Data.Repositories
             }
             return null;
         }
+        public virtual async Task<TModel> GetAsync(int id)
+        {
+            if (id != null)
+            {
+                return await _dbContext.Set<TModel>().FindAsync(id);
+            }
+            return null;
+        }
 
         public virtual EntityEntry<TModel> Update(TModel obj)
         {
