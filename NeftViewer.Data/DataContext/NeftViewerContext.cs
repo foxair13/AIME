@@ -19,6 +19,8 @@ namespace NeftViewer.Data.DataContext
         public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
         public DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public DbSet<Models.Action> Actions { get; set; }
+        public DbSet<ActionRole> ActionRoles { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
          : base(options)
         {
@@ -48,7 +50,11 @@ namespace NeftViewer.Data.DataContext
             modelBuilder.Entity<AspNetUserTokens>().HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
             modelBuilder.Entity<AspNetUserRoles>().HasKey(e => new { e.UserId, e.RoleId });
             modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
+            modelBuilder.ApplyConfiguration(new ActionConfiguration());
+            modelBuilder.ApplyConfiguration(new ActionRoleConfiguration());
             OnModelCreatingPartial(modelBuilder);
+           
+           
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

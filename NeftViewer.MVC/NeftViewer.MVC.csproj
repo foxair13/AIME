@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NeftViewer.BL\NeftViewer.BL.csproj" />
+    <ProjectReference Include="..\NeftViewer.Core\NeftViewer.Core.csproj" />
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
   </ItemGroup>
 
