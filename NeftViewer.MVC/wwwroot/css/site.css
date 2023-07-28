@@ -5801,6 +5801,7 @@ textarea.form-control-lg {
 
     .navbar-expand-lg.collapsed {
         transform: translateX(-100%);
+        margin-left: 0px !important;
     }
 
     .navbar-expand-rg {
@@ -5816,6 +5817,7 @@ textarea.form-control-lg {
     
     .navbar-expand-rg.collapsed {
         transform: translateX(100%);
+        margin-right: 0px !important;
     }
 
         .navbar-expand-lg .navbar-nav {
@@ -24649,6 +24651,19 @@ html {
     padding-bottom: 6rem;
     flex: 2;
     margin-right: 15.875rem;
+}
+
+.content.collapsed {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.content.collapsed-left {
+    margin-left: 0px !important;
+}
+
+.content.collapsed-right {
+    margin-right: 0px !important;
 }
 
 @media(min-width: 576px) {

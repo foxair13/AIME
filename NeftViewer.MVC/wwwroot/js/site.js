@@ -1,23 +1,32 @@
-﻿const myElement = document.getElementById("navbar-expand-rg-id");
-const myElementWidth = myElement.clientWidth;
-const content = document.getElementById("contentId");
-content.style.marginRight = myElementWidth + "px";
+﻿const navbarExpandLeft = document.getElementById("navbar-expand-lg-id");
+const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
+const navbarExpandLeftWidth = navbarExpandLeft.clientWidth;
+const navbarExpandRightWidth = navbarExpandRight.clientWidth;
+const contentElement = document.getElementById("contentId");
+contentElement.style.marginLeft = navbarExpandLeftWidth + "px";
+contentElement.style.marginRight = navbarExpandRightWidth + "px";
 
-const buttons = document.querySelectorAll('.btn');
-buttons.forEach(button => {
-    button.addEventListener('click', function () {
-        const targetId = this.dataset.target;
-        const targetElement = document.getElementById(targetId);
+const btnLeft = document.getElementById('btnLeftId');
+btnLeft.addEventListener('click', function () {
+    if (contentElement) {
+        navbarExpandLeft.classList.toggle('collapsed');
+        contentElement.classList.toggle('collapsed-left');
+    }
+});
 
-        if (targetElement) {
-            targetElement.classList.toggle('collapsed');
-        }
-    });
+const btnRight = document.getElementById('btnRightId');
+btnRight.addEventListener('click', function () {
+    if (contentElement) {
+        navbarExpandRight.classList.toggle('collapsed');
+        contentElement.classList.toggle('collapsed-right');
+    }
 });
 
 document.getElementById('btnAllId').addEventListener('click', function () {
     const buttonLeft = document.getElementById('btnLeftId');
     const buttonRight = document.getElementById('btnRightId');
+    //const contentFullScreen = document.querySelector('.content');
     buttonLeft.click();
     buttonRight.click();
+/*    contentFullScreen.classList.toggle('collapsed');*/
 });

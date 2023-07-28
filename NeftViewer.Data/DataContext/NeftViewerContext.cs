@@ -19,6 +19,12 @@ namespace NeftViewer.Data.DataContext
         public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public DbSet<AspNetUsers> AspNetUsers { get; set; }
         public DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public DbSet<Criterias> Criterias { get; set; }
+        public DbSet<Customers> Customers { get; set; }
+        public DbSet<IndicatorValues> IndicatorValues { get; set; }
+        public DbSet<ObjectOnRoad> ObjectOnRoad { get; set; }
+        public DbSet<Objects> Objects { get; set; }
+        public DbSet<Roads> Roads { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
          : base(options)
         {
@@ -34,11 +40,12 @@ namespace NeftViewer.Data.DataContext
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRoleClaims>()
-        .HasOne(r => r.AspNetRoles)
-        .WithMany(rc => rc.RoleClaims)
-        .HasForeignKey(r => r.RoleId)
-        .IsRequired();
+            modelBuilder.Entity<AspNetUserClaims>()
+       .HasOne(u => u.AspNetUsers)
+       .WithMany(uc => uc.UserClaims)
+       .HasForeignKey(u => u.UserId)
+       .HasPrincipalKey(u => u.Id)
+       .IsRequired();            
             modelBuilder.Entity<AspNetUserClaims>()
        .HasOne(u => u.AspNetUsers)
        .WithMany(uc => uc.UserClaims)

@@ -9,7 +9,7 @@ namespace NeftViewer.Data.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Indicator { get; set; }
     }
