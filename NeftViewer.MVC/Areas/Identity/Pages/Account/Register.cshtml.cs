@@ -75,37 +75,46 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Поле Email обязательно для заполнения.")]
+            [EmailAddress(ErrorMessage = "Введите корректный адрес электронной почты.")]
             [Display(Name = "Email")]
+            [Remote("IsAlreadySigned", "Register", HttpMethod = "POST", ErrorMessage = "Данный пользователь уже зарегестрирован")]
             public string Email { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Поле пароль обязательно для заполнения.")]
+            [StringLength(100, ErrorMessage = "Значение {0} должно быть не менее {2} и не более {1} символов длиной.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Пароль")]
             public string Password { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+            [Required(ErrorMessage = "Поле подтверждение пароля обязательно для заполнения.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Подтверждение пароля")]
+            [Compare("Password", ErrorMessage = "Пароль и подтверждение пароля не совпадают.")]
             public string ConfirmPassword { get; set; }
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if (User.Identity.IsAuthenticated)
+            {
+                return LocalRedirect("~/Home/Index"); // Измените "~/", если требуется перенаправление на другой URL
+            }
+            return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -122,7 +131,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Пользователь создал новую учетную запись с паролем.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -168,9 +177,9 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($"Не удается создать экземпляр объекта. '{nameof(IdentityUser)}'. " +
+                    $"Убедитесь, что '{nameof(IdentityUser)}' не является абстрактным классом и имеет конструктор без параметров, или " +
+                    $"переопределите страницу регистрации в /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -178,7 +187,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException("Стандартный интерфейс пользователя требует пользовательское хранилище с поддержкой электронной почты.");
             }
             return (IUserEmailStore<IdentityUser>)_userStore;
         }

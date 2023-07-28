@@ -29,7 +29,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 //          .AddCookie(options =>
 //          {
-//              options.LoginPath = "/Identity/Account/Login"; // Укажите URL страницы входа
+//              options.LoginPath = "/Identity/Account/Login"; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 //          });
 builder.Services.AddControllersWithViews();
 builder.Services.AddResponseCaching();
