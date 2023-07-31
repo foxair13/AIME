@@ -1,0 +1,30 @@
+﻿@model NeftViewer.MVC.Models.RoleViewModel
+
+@{
+    ViewData["Title"] = "Создание роли";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card border border-primary">
+    <div class="card-body">
+        <h5 class="card-title">@ViewData["Title"]</h5>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<a asp-action="Index" class="btn btn-link">Вернуться назад</a>
+

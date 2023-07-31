@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace NeftViewer.MVC.Areas.Identity.Pages.Account
 {
+
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

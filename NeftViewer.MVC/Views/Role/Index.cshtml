@@ -1,0 +1,46 @@
+﻿@model IEnumerable<NeftViewer.MVC.Models.RoleViewModel>
+
+@{
+    ViewData["Title"] = "Таблица 'Роли'";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card border border-primary">
+    <div class="card-body">
+        <h5 class="card-title">@ViewData["Title"]</h5>
+        <div class="mb-3">
+            <a asp-action="Create" class="btn  btn-soft-success me-1 mb-1">Добавить роль</a>
+        </div>
+
+        <div id="tableExample2" >
+            <div class="table-responsive">
+                <table class="table table-sm fs--1 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="sort border-top" data-sort="RoleName">
+                                @Html.DisplayNameFor(model => model.RoleName)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle RoleName">
+                                    @Html.DisplayFor(modelItem => item.RoleName)
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end pe-0">
+                                    <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a> |
+                                    <a asp-action="Details" class="btn btn-soft-info me-1 mb-1" asp-route-id="@item.Id">Просмотр</a> |
+                                    <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-" asp-route-id="@item.Id">Удалить</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.DataContext;
+using NeftViewer.MVC.Models;
 
 namespace NeftViewer.MVC.Data
 {
@@ -15,5 +16,6 @@ namespace NeftViewer.MVC.Data
         {
             base.OnModelCreating(builder);
         }
+  
     }
 }

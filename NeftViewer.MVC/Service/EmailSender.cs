@@ -1,8 +1,9 @@
-﻿using MimeKit;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using MimeKit;
 
 namespace NeftViewer.MVC.Service
 {
-    public class EmailSender
+    public class EmailSender: IEmailSender
     {
         public EmailSender()
         {

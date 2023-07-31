@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Core.ActionFilters;
 using NeftViewer.Data.Models;
+using NeftViewer.Data.UnitOfWork.Contracts;
 using NeftViewer.MVC.Models;
 using System.Diagnostics;
 
 namespace NeftViewer.MVC.Controllers
 {
 
-    [Authorize]
-    //[CustomAuthorize]
+
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,14 +22,10 @@ namespace NeftViewer.MVC.Controllers
             _logger = logger;
             _userService = aspNetUsersService;
         }
-
+        [CustomAuthorize("HomeIndex")]
         public IActionResult Index()
         {
-            //AspNetUsers user = new AspNetUsers();
-            //user.="Fox";
-            //user.Age = 32;
-            //_userService.AddUser(user);
-            //_userService.CommitChangesAsync();
+
             return View();
         }
 
