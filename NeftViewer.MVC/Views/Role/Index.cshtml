@@ -4,7 +4,9 @@
     ViewData["Title"] = "Таблица 'Роли'";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section HeadArea {
+    <link href="~/lib/datatables/datatables.min.css" type="text/css" rel="stylesheet" />
+}
 
 <div class="card border border-primary">
     <div class="card-body">
@@ -13,22 +15,22 @@
             <a asp-action="Create" class="btn  btn-soft-success me-1 mb-1">Добавить роль</a>
         </div>
 
-        <div id="tableExample2" >
+        <div id="tableExample2" data-list='{"valueNames":["rolename"],"page":5,"pagination":true}'>
             <div class="table-responsive">
                 <table class="table table-sm fs--1 mb-0">
                     <thead>
                         <tr>
-                            <th class="sort border-top" data-sort="RoleName">
+                            <th class="sort border-top" data-sort="rolename">
                                 @Html.DisplayNameFor(model => model.RoleName)
                             </th>
-                            <th></th>
+                            <th class="sort text-end align-middle pe-0 border-top" scope="col"></th>
                         </tr>
                     </thead>
                     <tbody class="list">
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="align-middle RoleName">
+                                <td class="align-middle  rolename">
                                     @Html.DisplayFor(modelItem => item.RoleName)
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end pe-0">
@@ -44,3 +46,7 @@
         </div>
     </div>
 </div>
+@section Scripts {
+
+    <script src="~/lib/datatables/datatables.min.js"></script>
+  }

@@ -24,7 +24,7 @@ namespace NeftViewer.MVC.Service
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                await client.ConnectAsync("smtp.mail.ru", 465, true);
+                await client.ConnectAsync("s", 465, true);
                 await client.AuthenticateAsync("xzoom@list.ru", "S0hApmsAsmTRm9hP846Y");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);

@@ -14,6 +14,8 @@
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <title>Белоруснефть-Нефтехимпроект</title>
     <link href="~/lib/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
+    @await RenderSectionAsync("HeadArea", required: false)
+
 </head>
 <body>
     <div class="main" id="top">
