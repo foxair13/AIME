@@ -78,7 +78,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Поле Email обязательно для заполнения.")]
             [EmailAddress(ErrorMessage = "Введите корректный адрес электронной почты.")]
             [Display(Name = "Email")]
-            [Remote("IsAlreadySigned", "Register", HttpMethod = "POST", ErrorMessage = "Данный пользователь уже зарегестрирован")]
+            //[Remote("IsAlreadySigned", "Register", HttpMethod = "POST", ErrorMessage = "Данный пользователь уже зарегестрирован")]
             public string Email { get; set; }
 
             /// <summary>

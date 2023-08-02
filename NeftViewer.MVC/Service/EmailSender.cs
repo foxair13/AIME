@@ -24,8 +24,8 @@ namespace NeftViewer.MVC.Service
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                await client.ConnectAsync("s", 465, true);
-                await client.AuthenticateAsync("xzoom@list.ru", "S0hApmsAsmTRm9hP846Y");
+                await client.ConnectAsync("mail-relay.it.beloil.by", 465, true);
+                await client.AuthenticateAsync("nhp-neftviewer@beloil.by", "S0hApmsAsmTRm9hP846Y");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
