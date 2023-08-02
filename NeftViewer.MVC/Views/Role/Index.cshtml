@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadArea {
-    <link href="~/lib/datatables/datatables.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/lib/datatables/datatables-1.13.6/css/jquery.datatables.min.css" rel="stylesheet" />
 }
 
 <div class="card border border-primary">
@@ -15,9 +15,9 @@
             <a asp-action="Create" class="btn  btn-soft-success me-1 mb-1">Добавить роль</a>
         </div>
 
-        <div id="tableExample2" data-list='{"valueNames":["rolename"],"page":5,"pagination":true}'>
+      
             <div class="table-responsive">
-                <table class="table table-sm fs--1 mb-0">
+            <table id="myTable" class="table table-sm fs--1 mb-0">
                     <thead>
                         <tr>
                             <th class="sort border-top" data-sort="rolename">
@@ -45,8 +45,18 @@
             </div>
         </div>
     </div>
-</div>
-@section Scripts {
 
-    <script src="~/lib/datatables/datatables.min.js"></script>
+
+@section Scripts {
+    <script src="~/lib/datatables/datatables-1.13.6/js/jquery.datatables.min.js"></script>
+    <script type="text/javascript">
+        var table = new DataTable('#myTable', {
+            language: {
+                url: '../lib/datatables/ru.json'
+            }
+        });
+            
+     
+    </script>
+    
   }
