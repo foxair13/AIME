@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using MailKit.Security;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using MimeKit;
 
 namespace NeftViewer.MVC.Service
@@ -14,8 +15,8 @@ namespace NeftViewer.MVC.Service
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "xzoom@list.ru"));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "nhp-neftviewer@beloil.by"));
+            emailMessage.To.Add(new MailboxAddress("nhp-neftviewer@beloil.by", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -24,8 +25,8 @@ namespace NeftViewer.MVC.Service
 
             using (var client = new MailKit.Net.Smtp.SmtpClient())
             {
-                await client.ConnectAsync("mail-relay.it.beloil.by", 465, true);
-                await client.AuthenticateAsync("nhp-neftviewer@beloil.by", "S0hApmsAsmTRm9hP846Y");
+                await client.ConnectAsync("mail-relay.it.beloil.by", 25, SecureSocketOptions.None);
+                //await client.AuthenticateAsync("nhp-neftviewer@beloil.by", "");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }

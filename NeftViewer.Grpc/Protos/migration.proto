@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "NeftViewer.Grpc";
+
+package migrate;
+
+// The greeting service definition.
+service Migrate {
+  // Sends a greeting
+  rpc FinanceService (Request) returns (Reply);
+}
+
+// The request message containing the user's name.
+message Request {
+  string param = 1;
+}
+
+// The response message containing the greetings.
+message Reply {
+  bool migrationresult = 1;
+}

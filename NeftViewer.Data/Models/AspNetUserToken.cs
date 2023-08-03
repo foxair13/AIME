@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace NeftViewer.Data.Models
 {
     [Table("AspNetUserTokens")]
-    public partial class AspNetUserTokens
+    public partial class AspNetUserToken
     {
         [ForeignKey("UserId")]
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual AspNetUser User { get; set; } = null!;
         public string UserId { get; set; }
-        public string LoginProvider { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string LoginProvider { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string? Value { get; set; }
     }
 }

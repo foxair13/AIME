@@ -46,8 +46,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\NeftViewer.RPC\Protos\greet.proto" GrpcServices="Client">
-      <Link>Protos\greet.proto</Link>
+    <Protobuf Include="..\NeftViewer.Grpc\Protos\migration.proto" GrpcServices="Client">
+      <Link>Protos\migration.proto</Link>
     </Protobuf>
   </ItemGroup>
 

@@ -11,14 +11,14 @@ namespace NeftViewer.Data.DataContext
 {
     public partial class NeftViewerContext : DbContext
     {
-        public DbSet<AspNetUsers> Users { get; set; }
-        public DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        public DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
+        public DbSet<AspNetUser> Users { get; set; }
+        public DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
+        public DbSet<AspNetRole> AspNetRoles { get; set; }
+        public DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public DbSet<Criterias> Criterias { get; set; }
         public DbSet<Customers> Customers { get; set; }
         public DbSet<IndicatorValues> IndicatorValues { get; set; }
@@ -43,26 +43,16 @@ namespace NeftViewer.Data.DataContext
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetUserClaims>()
-       .HasOne(u => u.AspNetUsers)
-       .WithMany(uc => uc.UserClaims)
-       .HasForeignKey(u => u.UserId)
-       .HasPrincipalKey(u => u.Id)
-       .IsRequired();            
-            modelBuilder.Entity<AspNetUserClaims>()
-       .HasOne(u => u.AspNetUsers)
-       .WithMany(uc => uc.UserClaims)
-       .HasForeignKey(u => u.UserId)
-       .HasPrincipalKey(u => u.Id)
-       .IsRequired();
-            modelBuilder.Entity<AspNetUserTokens>().HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-            modelBuilder.Entity<AspNetUserRoles>().HasKey(e => new { e.UserId, e.RoleId });
+            modelBuilder.ApplyConfiguration(new AspNetUserLoginConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetRoleClaimConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetUserClaimConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetUserTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new AspNetUserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
             modelBuilder.ApplyConfiguration(new ActionRoleConfiguration());
             OnModelCreatingPartial(modelBuilder);
-           
-           
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

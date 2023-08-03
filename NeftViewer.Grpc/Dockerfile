@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["NeftViewer.RPC/NeftViewer.RPC.csproj", "NeftViewer.RPC/"]
-RUN dotnet restore "NeftViewer.RPC/NeftViewer.RPC.csproj"
+COPY ["NeftViewer.Grpc/NeftViewer.Grpc.csproj", "NeftViewer.Grpc/"]
+RUN dotnet restore "NeftViewer.Grpc/NeftViewer.Grpc.csproj"
 COPY . .
-WORKDIR "/src/NeftViewer.RPC"
-RUN dotnet build "NeftViewer.RPC.csproj" -c Release -o /app/build
+WORKDIR "/src/NeftViewer.Grpc"
+RUN dotnet build "NeftViewer.Grpc.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "NeftViewer.RPC.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "NeftViewer.Grpc.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "NeftViewer.RPC.dll"]
+ENTRYPOINT ["dotnet", "NeftViewer.Grpc.dll"]

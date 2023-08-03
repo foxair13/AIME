@@ -1,4 +1,4 @@
-using NeftViewer.RPC.Services;
+using NeftViewer.Grpc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +12,6 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<MigrationService>();
-app.MapGet("/", () => "Служба миграции базы данных");
+app.MapGet("/", () => "Сервис HUB для миграции данных");
 
 app.Run();

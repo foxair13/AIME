@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Repositories.EntityRepositories
 {
-    public class AspNetUsersRepository : GenericRepository<AspNetUsers>
+    public class AspNetUsersRepository : GenericRepository<AspNetUser>
     {
         private readonly NeftViewerContext _dbContext;
 
@@ -18,14 +18,14 @@ namespace NeftViewer.Data.Repositories.EntityRepositories
             _dbContext = dbContext;
         }
 
-        public override async Task<IEnumerable<AspNetUsers>> GetAllAsync()
+        public override async Task<IEnumerable<AspNetUser>> GetAllAsync()
         {
-            return await _dbContext.Set<AspNetUsers>().ToListAsync();
+            return await _dbContext.Set<AspNetUser>().ToListAsync();
         }
 
-        public override async Task<AspNetUsers> GetAsync(string? id)
+        public override async Task<AspNetUser> GetAsync(string? id)
         {
-            return await _dbContext.Set<AspNetUsers>().FirstAsync(z => z.Id == id);
+            return await _dbContext.Set<AspNetUser>().FirstAsync(z => z.Id == id);
         }
     }
 }

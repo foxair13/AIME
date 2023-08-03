@@ -21,7 +21,7 @@ var connectionString = builder.Configuration.GetConnectionString("NeftViewerCont
 builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(connectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddScoped<IGenericRepository<AspNetUsers>, AspNetUsersRepository>();
+builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository>();
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
 builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -37,7 +37,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 //          .AddCookie(options =>
 //          {
-//              options.LoginPath = "/Identity/Account/Login"; // ������� URL �������� �����
+//              options.LoginPath = "/Identity/Account/Login";
 //          });
 
 builder.Services.AddResponseCaching();

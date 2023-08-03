@@ -17,23 +17,23 @@ namespace NeftViewer.BL
             await _uow.CommitAsync();
         }
 
-        public Task<AspNetUsers> FindAspNetUserAsync(string? id)
+        public Task<AspNetUser> FindAspNetUserAsync(string? id)
         {
             return _uow.AspNetUsers.GetAsync(id);
         }
 
-        public async Task<IEnumerable<AspNetUsers>> GetAspNetUsers()
+        public async Task<IEnumerable<AspNetUser>> GetAspNetUsers()
         {
 
             return await _uow.AspNetUsers.GetAllAsync();
 
         }
 
-        public EntityEntry<AspNetUsers> UpdateAspNetUser(AspNetUsers aspNetUsers)
+        public EntityEntry<AspNetUser> UpdateAspNetUser(AspNetUser aspNetUsers)
         {
             return _uow.AspNetUsers.Update(aspNetUsers);
         }
-        public async Task<bool> AddAspNetUser(AspNetUsers aspNetUsers)
+        public async Task<bool> AddAspNetUser(AspNetUser aspNetUsers)
         {
             bool flag = false;
             try
@@ -49,7 +49,7 @@ namespace NeftViewer.BL
         }
 
 
-        public EntityEntry<AspNetUsers> DeleteAspNetUser(string id)
+        public EntityEntry<AspNetUser> DeleteAspNetUser(string id)
         {
             var res = _uow.AspNetUsers.DeleteByID(id);
             return res;

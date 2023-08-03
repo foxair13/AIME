@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "NeftViewer.RPC": {
+    "NeftViewer.Grpc": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5195;https://localhost:7095"
+      "applicationUrl": "http://localhost:5232;https://localhost:7050"
     },
     "Docker": {
       "commandName": "Docker",

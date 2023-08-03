@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 namespace NeftViewer.Data.Models
 {
     [Table("AspNetUserClaims")]
-    public partial class AspNetUserClaims
+    public partial class AspNetUserClaim
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]  
         public int Id { get; set; }
         [ForeignKey("UserId")]
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public string UserId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
+        public virtual AspNetUser AspNetUsers { get; set; }
+        public string UserId { get; set; } = null!;
+        public string? ClaimType { get; set; }
+        public string? ClaimValue { get; set; }
     }
 }

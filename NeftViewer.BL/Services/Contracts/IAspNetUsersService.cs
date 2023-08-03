@@ -10,11 +10,11 @@ namespace NeftViewer.BL.Services.Contracts
 {
     public interface IAspNetUsersService
     {
-        Task<IEnumerable<AspNetUsers>> GetAspNetUsers();
-        Task<AspNetUsers> FindAspNetUserAsync(string? id);
-        EntityEntry<AspNetUsers> UpdateAspNetUser(AspNetUsers aspNetUsers);
+        Task<IEnumerable<AspNetUser>> GetAspNetUsers();
+        Task<AspNetUser> FindAspNetUserAsync(string? id);
+        EntityEntry<AspNetUser> UpdateAspNetUser(AspNetUser aspNetUsers);
         Task CommitChangesAsync();
-        EntityEntry<AspNetUsers> DeleteAspNetUser(string id);
-        Task<bool> AddAspNetUser(AspNetUsers aspNetUsers);
+        EntityEntry<AspNetUser> DeleteAspNetUser(string id);
+        Task<bool> AddAspNetUser(AspNetUser aspNetUsers);
     }
 }

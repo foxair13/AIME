@@ -17,7 +17,7 @@ namespace NeftViewer.Data.UnitOfWork
 
         public UnitOfWork(
             NeftViewerContext context,
-            IGenericRepository<AspNetUsers> AspNetUsersRepository,
+            IGenericRepository<AspNetUser> AspNetUsersRepository,
              IGenericRepository<Models.Action> ActionRepository,
              IGenericRepository<ActionRole> ActionRoleRepository
             )
@@ -27,7 +27,7 @@ namespace NeftViewer.Data.UnitOfWork
             Action = ActionRepository;
             ActionRole = ActionRoleRepository;
         }
-        public IGenericRepository<AspNetUsers> AspNetUsers { get; }
+        public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
         public IGenericRepository<ActionRole> ActionRole { get; }
 

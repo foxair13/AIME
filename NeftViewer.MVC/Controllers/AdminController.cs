@@ -1,6 +1,6 @@
 ﻿using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
-using NeftViewer.RPC;
+using NeftViewer.Grpc;
 using NuGet.Protocol;
 
 namespace NeftViewer.MVC.Controllers
@@ -9,19 +9,19 @@ namespace NeftViewer.MVC.Controllers
     {
         public IActionResult Index()
         {
-            try
-            {
-                using var channel = GrpcChannel.ForAddress("https://localhost:32786/");
-                var client = new Greeter.GreeterClient(channel);
-                var reply = client.MigrateTableAsync(new MigrateRequest { Name = "GreeterClient" });
-                string str = reply.ToJson();
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    using var channel = GrpcChannel.ForAddress("https://localhost:32786/");
+            //    var client = new Migrate.MigrateClient(channel);
+            //    var reply = client.FinanceServiceAsync(new Request {  = "GreeterClient" });
+            //    string str = reply.ToJson();
+            //}
+            //catch (Exception ex)
+            //{
 
-                throw;
-            }
-           
+            //    throw;
+            //}
+
             return View();
         }
     }

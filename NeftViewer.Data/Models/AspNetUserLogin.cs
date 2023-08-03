@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("AspNetRoleClaims")]
-    public partial class AspNetRoleClaims
+    [Table("AspNetUserLogins")]
+    public partial class AspNetUserLogin
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string RoleId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-        [ForeignKey("RoleId")]
-        public virtual AspNetRoles AspNetRoles { get; set; }
+        public string LoginProvider { get; set; } = null!;
+        public string ProviderKey { get; set; } = null!;
+        public string? ProviderDisplayName { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AspNetUser User { get; set; } = null!;
+        public string UserId { get; set; }
     }
 }

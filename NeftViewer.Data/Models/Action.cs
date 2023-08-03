@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("Action")]
+    [Table("Actions")]
     public class Action
     {
         [Key]

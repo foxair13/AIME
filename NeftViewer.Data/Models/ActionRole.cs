@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("ActionRole")]
+    [Table("ActionRoles")]
     public class ActionRole
     {
+
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -22,6 +23,7 @@ namespace NeftViewer.Data.Models
         [ForeignKey("ActionId")]
         public virtual Action Action { get; set; }
         [ForeignKey("RoleId")]
-        public virtual AspNetRoles AspNetRoles { get; set; }
+        public virtual AspNetRole AspNetRoles { get; set; }
+
     }
 }

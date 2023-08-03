@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace NeftViewer.Data.Models
 {
     [Table("AspNetUserRoles")]
-    public partial class AspNetUserRoles
+    public partial class AspNetUserRole
     {
        
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual AspNetUser AspNetUsers { get; set; }
         public string RoleId { get; set; }
         [ForeignKey("RoleId")]
-        public virtual AspNetRoles AspNetRoles { get; set; }
+        public virtual AspNetRole AspNetRoles { get; set; }
     }
 }
