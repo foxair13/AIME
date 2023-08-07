@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Core.ActionFilters;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
 using NeftViewer.MVC.Models;
+using NeftViewer.MVC.Options;
 using System.Diagnostics;
 
 namespace NeftViewer.MVC.Controllers
@@ -17,6 +19,8 @@ namespace NeftViewer.MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAspNetUsersService _userService;
+
+
         public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService)
         {
             _logger = logger;

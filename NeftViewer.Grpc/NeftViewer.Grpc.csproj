@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>d432251d-5184-4af8-8d5e-166be26239f0</UserSecretsId>
+    <UserSecretsId>13aa8021-6d1d-4111-8b95-bbf896624adb</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
@@ -15,10 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
   </ItemGroup>
 
 </Project>

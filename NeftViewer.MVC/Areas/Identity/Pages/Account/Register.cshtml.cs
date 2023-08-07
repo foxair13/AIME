@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NeftViewer.MVC.Options;
 using NeftViewer.MVC.Service;
 
 namespace NeftViewer.MVC.Areas.Identity.Pages.Account
@@ -30,13 +32,15 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IOptions<SmtpParam> _smtpParam;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IOptions<SmtpParam> smtpParam)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +48,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _smtpParam = smtpParam;
         }
 
         /// <summary>
@@ -120,7 +125,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            EmailSender _emailSender = new EmailSender();
+            EmailSender _emailSender = new EmailSender(_smtpParam);
             if (ModelState.IsValid)
             {
                 var user = CreateUser();

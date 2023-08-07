@@ -2,11 +2,14 @@
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Options;
 using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.Repositories.EntityRepositories;
+using NeftViewer.MVC;
+using NeftViewer.MVC.Options;
 
 namespace NeftViewer.Core.ActionFilters
 {
@@ -15,8 +18,8 @@ namespace NeftViewer.Core.ActionFilters
     {
 
         private readonly string _selector;
-        private readonly NeftViewerContext nvc = new NeftViewerContext();
-
+        private readonly string _connectionString;
+        NeftViewerContext nvc;
         public CustomAuthorizeAttribute()
         {
 
@@ -25,8 +28,10 @@ namespace NeftViewer.Core.ActionFilters
         public CustomAuthorizeAttribute(string selector)
         {
             _selector = selector;
-
+            _connectionString = AppConfig.GetConnectionString().BasePostgree;
+            nvc = new NeftViewerContext(_connectionString);
         }
+
         private string GetRoles(string actionselector)
         {
 
@@ -86,7 +91,7 @@ namespace NeftViewer.Core.ActionFilters
                 context.Result = new RedirectToRouteResult(new { area = "Identity", page = "/Account/Login" });
                 return;
             }
-            else 
+            else
             {
                 string name = context.HttpContext.User.Identity.Name;
                 var currentPath = context.HttpContext.Request.Path.ToString();
@@ -98,7 +103,7 @@ namespace NeftViewer.Core.ActionFilters
                 }
 
             }
-            
+
         }
     }
 }

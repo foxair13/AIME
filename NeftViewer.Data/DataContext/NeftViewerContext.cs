@@ -32,14 +32,14 @@ namespace NeftViewer.Data.DataContext
         {
         }
         private readonly string _connectionString;
-        public NeftViewerContext()
+        public NeftViewerContext(string connectionString)
         {
-            
+            _connectionString = connectionString;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseNpgsql("Host=172.20.2.165;Port=5432;Database=NeftTest;Username=postgres;Password=7f4df451");
+            optionsBuilder.UseNpgsql(_connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

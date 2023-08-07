@@ -5,10 +5,12 @@ namespace NeftViewer.Grpc.Services
 {
     public class MigrationService : Migrate.MigrateBase
     {
+        //private readonly IOptions<SmtpParam> _smtpparam;
         private readonly ILogger<MigrationService> _logger;
         public MigrationService(ILogger<MigrationService> logger)
         {
             _logger = logger;
+
         }
 
         public override Task<Reply> FinanceService(Request request, ServerCallContext context)

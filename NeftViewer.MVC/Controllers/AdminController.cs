@@ -1,6 +1,6 @@
 ﻿using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
-using NeftViewer.Grpc;
+
 using NuGet.Protocol;
 
 namespace NeftViewer.MVC.Controllers

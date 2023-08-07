@@ -13,13 +13,22 @@ using NeftViewer.BL.Services;
 using NeftViewer.Core.ActionFilters;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using NeftViewer.MVC.Service;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using System.Configuration;
+using NeftViewer.MVC.Options;
+using NeftViewer.MVC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("NeftViewerContext");
+
+builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
+builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
+var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
+var connectionString = connections.BasePostgree;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(connectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
+AppConfig.Initialize(connections);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository>();
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
@@ -47,7 +56,7 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    var neftViewerDbContext = scope.ServiceProvider.GetRequiredService<NeftViewerContext>();
+    var neftViewerDbContext = new NeftViewerContext(connectionString);
     neftViewerDbContext.Database.EnsureCreated();
 }
 // Configure the HTTP request pipeline.

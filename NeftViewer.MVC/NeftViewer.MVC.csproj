@@ -45,10 +45,4 @@
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Protobuf Include="..\NeftViewer.Grpc\Protos\migration.proto" GrpcServices="Client">
-      <Link>Protos\migration.proto</Link>
-    </Protobuf>
-  </ItemGroup>
-
 </Project>
