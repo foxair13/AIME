@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  neft_viewer_app:
+    build:
+      context: ./
+      dockerfile: ./NeftViewer.MVC/Dockerfile
+    ports:
+      - "32774:443"

@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["NeftViewer.MVC/NeftViewer.MVC.csproj", "NeftViewer.MVC/"]
+COPY ["NeftViewer.BL/NeftViewer.BL.csproj", "NeftViewer.BL/"]
+COPY ["NeftViewer.Data/NeftViewer.Data.csproj", "NeftViewer.Data/"]
 RUN dotnet restore "NeftViewer.MVC/NeftViewer.MVC.csproj"
 COPY . .
 WORKDIR "/src/NeftViewer.MVC"
