@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeftViewer.BL", "NeftViewer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeftViewer.Data", "NeftViewer.Data\NeftViewer.Data.csproj", "{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeftViewer.Grpc", "NeftViewer.Grpc\NeftViewer.Grpc.csproj", "{8947FB1F-40CF-41B5-B3EE-8CDE5D566B6A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8947FB1F-40CF-41B5-B3EE-8CDE5D566B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8947FB1F-40CF-41B5-B3EE-8CDE5D566B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8947FB1F-40CF-41B5-B3EE-8CDE5D566B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8947FB1F-40CF-41B5-B3EE-8CDE5D566B6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

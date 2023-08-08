@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using NeftViewer.Data.DataContext;
 using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.Models;
@@ -17,7 +18,8 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using System.Configuration;
 using NeftViewer.MVC.Options;
 using NeftViewer.MVC;
-
+using NeftViewer.MVC.FinanceModels;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,9 +28,9 @@ builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpPara
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
 var connectionString = connections.BasePostgree;
+var FinanceconnectionString = connections.FinanceMssql;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(connectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
-AppConfig.Initialize(connections);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository>();
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
@@ -39,8 +41,13 @@ builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
+builder.Services.AddHostedService<TaskService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<FinanceViewerContext>(options =>
+        options.UseSqlServer(FinanceconnectionString));
+AppConfig.Initialize(connections);
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

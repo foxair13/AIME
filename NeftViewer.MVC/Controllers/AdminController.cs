@@ -1,26 +1,19 @@
-﻿using Grpc.Net.Client;
-using Microsoft.AspNetCore.Mvc;
-
-using NuGet.Protocol;
-
+﻿using Microsoft.AspNetCore.Mvc;
 namespace NeftViewer.MVC.Controllers
 {
     public class AdminController : Controller
     {
         public IActionResult Index()
         {
-            //try
-            //{
-            //    using var channel = GrpcChannel.ForAddress("https://localhost:32786/");
-            //    var client = new Migrate.MigrateClient(channel);
-            //    var reply = client.FinanceServiceAsync(new Request {  = "GreeterClient" });
-            //    string str = reply.ToJson();
-            //}
-            //catch (Exception ex)
-            //{
 
-            //    throw;
-            //}
+
+
+            //using var channel = GrpcChannel.ForAddress("https://localhost:32824");
+            //var client = new Greeter.GreeterClient(channel);
+
+            //var reply = client.SayHelloAsync(new HelloRequest { Name = "TestResult" });
+            //string str = reply.ToJson();
+
 
             return View();
         }
