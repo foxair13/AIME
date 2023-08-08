@@ -3,7 +3,7 @@ using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
 
-namespace NeftViewer.BL
+namespace NeftViewer.BL.Services
 {
     public class AspNetUsersService : IAspNetUsersService
     {
@@ -41,7 +41,7 @@ namespace NeftViewer.BL
                 await _uow.AspNetUsers.Add(aspNetUsers);
                 flag = true;
             }
-            catch 
+            catch
             {
                 flag = false;
             }

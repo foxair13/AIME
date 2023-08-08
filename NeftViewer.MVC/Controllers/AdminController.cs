@@ -8,11 +8,6 @@ namespace NeftViewer.MVC.Controllers
 
 
 
-            //using var channel = GrpcChannel.ForAddress("https://localhost:32824");
-            //var client = new Greeter.GreeterClient(channel);
-
-            //var reply = client.SayHelloAsync(new HelloRequest { Name = "TestResult" });
-            //string str = reply.ToJson();
 
 
             return View();

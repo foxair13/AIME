@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace NeftViewer.Data.Models
 {
     [Table("Objects")]
-    public partial class Objects
+    public partial class Object
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

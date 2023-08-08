@@ -90,12 +90,16 @@ namespace NeftViewer.Data.Repositories
             }
 
         }
-        public virtual bool AddRange(IEnumerable<TModel> objs)
+        public virtual async Task<bool> AddRange(IEnumerable<TModel> objs,string connectionString)
         {
             try
             {
-                var res = _dbContext.Set<TModel>().AddRangeAsync(objs);
-                _dbContext.SaveChangesAsync();
+                using (var dbContext = new NeftViewerContext(connectionString)) // Создаем контекст с переданным connectionString
+                {
+                    await dbContext.Set<TModel>().AddRangeAsync(objs);
+                    dbContext.SaveChanges();
+                }
+
                 return true;
             }
             catch (System.Exception)
