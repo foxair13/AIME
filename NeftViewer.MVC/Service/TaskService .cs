@@ -1,6 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.DataContext;
+using NeftViewer.Data.Models;
 using NeftViewer.MVC.FinanceModels;
 using Org.BouncyCastle.Utilities.Collections;
 
@@ -8,31 +13,56 @@ namespace NeftViewer.MVC.Service
 {
     public class TaskService : BackgroundService
     {
-        String _connectionString = "";
-
-        public TaskService()
+        private readonly IMapper _mapper;
+        private readonly string _BasePostgree;
+        private readonly string _FinanceMssql;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        //enum Table
+        //{
+        //    Morning,
+        //    Afternoon,
+        //    Evening,
+        //    Night
+        //}
+        public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory)
         {
-            _connectionString = AppConfig.GetConnectionString().FinanceMssql;
+            _mapper = mapper;
+            _BasePostgree = basePostgree;
+            _serviceScopeFactory = serviceScopeFactory;
+            _FinanceMssql=FinanceMssql;
         }
         private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(10);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            GetTableService _getTableService = new GetTableService(_connectionString);
-            while (!stoppingToken.IsCancellationRequested)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
                
-                var viewData = _getTableService.GetViewData("[SUID].[Criterias]");
+                var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
 
+                List<Criteria> criteriaList = new List<Criteria>();
+                GetTableService _getTableService = new GetTableService(_FinanceMssql);
+                while (!stoppingToken.IsCancellationRequested)
+                {
 
-                await Task.Delay(dailyInterval, stoppingToken);
+                    var viewData = _getTableService.GetViewData("[SUID].[Criterias]");
+                 
+
+                    foreach (var row in viewData)
+                    {
+                        var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
+                        criteriaList.Add(criteria);
+                    }
+                    criteriaService.AddCriteriaRange(criteriaList, _BasePostgree);
+                    await Task.Delay(dailyInterval, stoppingToken);
+                }
             }
         }
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
             var result = new List<Dictionary<string, object>>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_FinanceMssql))
             {
                 connection.Open();
                 var query = $"SELECT * FROM {viewName}";

@@ -20,6 +20,6 @@ namespace NeftViewer.Data.Repositories.Contracts
         EntityEntry<TModel> Delete(TModel obj);
         EntityEntry<TModel> DeleteByID(string id);
         bool DeleteRange(IEnumerable<TModel> objs);
-        bool AddRange(IEnumerable<TModel> objs);
+        Task<bool> AddRange(IEnumerable<TModel> objs, string connectionString);
     }
 }

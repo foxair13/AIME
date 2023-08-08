@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
+using NeftViewer.Data.Models;
 
 namespace NeftViewer.MVC.Service
 {

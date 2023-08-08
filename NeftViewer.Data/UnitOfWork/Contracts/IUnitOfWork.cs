@@ -13,6 +13,7 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<AspNetUser> AspNetUsers { get; }
         IGenericRepository<Models.Action> Action { get; }
         IGenericRepository<ActionRole> ActionRole { get; }
+        IGenericRepository<Criteria> Criterias { get; }
         Task CommitAsync();
     }
 }

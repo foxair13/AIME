@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="bootstrap" Version="5.3.1" />
     <PackageReference Include="Bootstrap.Less" Version="3.4.1" />
     <PackageReference Include="FontAwesome" Version="4.7.0" />
@@ -37,12 +38,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NeftViewer.BL\NeftViewer.BL.csproj" />
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore">
-      <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.identity.entityframeworkcore\6.0.20\lib\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

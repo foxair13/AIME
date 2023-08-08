@@ -1,16 +1,14 @@
-﻿using DocumentFormat.OpenXml;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("Roads")]
-    public partial class Roads
+    [Table("Criterias")]
+    public partial class Criteria
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Indicator { get; set; }
     }
 }

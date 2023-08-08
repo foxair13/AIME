@@ -9,7 +9,6 @@ using NeftViewer.Data.UnitOfWork.Contracts;
 using NeftViewer.Data.UnitOfWork;
 using NeftViewer.MVC.Data;
 using NeftViewer.BL.Services.Contracts;
-using NeftViewer.BL;
 using NeftViewer.BL.Services;
 using NeftViewer.Core.ActionFilters;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -20,6 +19,8 @@ using NeftViewer.MVC.Options;
 using NeftViewer.MVC;
 using NeftViewer.MVC.FinanceModels;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -35,17 +36,27 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository>();
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
 builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
+builder.Services.AddScoped<IGenericRepository<Criteria>, CriteriaRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
+builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
-builder.Services.AddHostedService<TaskService>();
+builder.Services.AddHostedService(serviceProvider =>
+{
+    var mapper = serviceProvider.GetRequiredService<IMapper>();
+    var criteriaservice = serviceProvider.GetRequiredService<IServiceScopeFactory>();
+    return new TaskService(mapper, FinanceconnectionString, connectionString, criteriaservice);
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<FinanceViewerContext>(options =>
         options.UseSqlServer(FinanceconnectionString));
+// Регистрация IMapper
+builder.Services.AddAutoMapper(typeof(TaskService));
 AppConfig.Initialize(connections);
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
