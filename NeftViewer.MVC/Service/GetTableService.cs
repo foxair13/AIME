@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
+using NeftViewer.Data.Models;
 
 namespace NeftViewer.MVC.Service
 {
@@ -30,6 +32,7 @@ namespace NeftViewer.MVC.Service
                             {
                                 row[reader.GetName(i)] = reader[i];
                             }
+                            //var criteria = _mapper.Map<Dictionary<string, object>, Criterias>(row);
                             result.Add(row);
                         }
                     }

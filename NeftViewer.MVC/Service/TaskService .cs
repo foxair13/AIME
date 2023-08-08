@@ -1,6 +1,9 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.DataContext;
+using NeftViewer.Data.Models;
 using NeftViewer.MVC.FinanceModels;
 using Org.BouncyCastle.Utilities.Collections;
 
@@ -8,11 +11,13 @@ namespace NeftViewer.MVC.Service
 {
     public class TaskService : BackgroundService
     {
-        String _connectionString = "";
+        private readonly IMapper _mapper;
+        private readonly string _connectionString;
 
-        public TaskService()
+        public TaskService(IMapper mapper, string connectionString)
         {
-            _connectionString = AppConfig.GetConnectionString().FinanceMssql;
+            _mapper = mapper;
+            _connectionString = connectionString;
         }
         private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(10);
 
@@ -23,7 +28,13 @@ namespace NeftViewer.MVC.Service
             {
                
                 var viewData = _getTableService.GetViewData("[SUID].[Criterias]");
+                List<Criterias> criteriaList = new List<Criterias>();
 
+                foreach (var row in viewData)
+                {
+                    var criteria = _mapper.Map<Dictionary<string, object>, Criterias>(row);
+                    criteriaList.Add(criteria);
+                }
 
                 await Task.Delay(dailyInterval, stoppingToken);
             }

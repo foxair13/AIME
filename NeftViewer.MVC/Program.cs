@@ -20,6 +20,8 @@ using NeftViewer.MVC.Options;
 using NeftViewer.MVC;
 using NeftViewer.MVC.FinanceModels;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -41,11 +43,18 @@ builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
+builder.Services.AddHostedService<TaskService>(serviceProvider =>
+{
+    var mapper = serviceProvider.GetRequiredService<IMapper>();
+    return new TaskService(mapper, FinanceconnectionString);
+});
 builder.Services.AddHostedService<TaskService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(connectionString));
 builder.Services.AddDbContext<FinanceViewerContext>(options =>
         options.UseSqlServer(FinanceconnectionString));
+// Регистрация IMapper
+builder.Services.AddAutoMapper(typeof(TaskService));
 AppConfig.Initialize(connections);
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
