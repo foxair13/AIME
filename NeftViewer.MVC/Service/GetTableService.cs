@@ -1,32 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using NeftViewer.Data.DataContext;
-using NeftViewer.MVC.FinanceModels;
-using Org.BouncyCastle.Utilities.Collections;
 
 namespace NeftViewer.MVC.Service
 {
-    public class TaskService : BackgroundService
+    public class GetTableService
     {
-        String _connectionString = "";
+        private readonly string _connectionString;
 
-        public TaskService()
+        public GetTableService(string connectionString)
         {
-            _connectionString = AppConfig.GetConnectionString().FinanceMssql;
-        }
-        private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(10);
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            GetTableService _getTableService = new GetTableService(_connectionString);
-            while (!stoppingToken.IsCancellationRequested)
-            {
-               
-                var viewData = _getTableService.GetViewData("[SUID].[Criterias]");
-
-
-                await Task.Delay(dailyInterval, stoppingToken);
-            }
+            _connectionString = connectionString;
         }
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
@@ -57,5 +39,4 @@ namespace NeftViewer.MVC.Service
             return result;
         }
     }
-
 }

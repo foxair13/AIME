@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
+using NeftViewer.MVC.FinanceViewModels;
 
 namespace NeftViewer.MVC.FinanceModels
 {
 
     public class FinanceViewerContext : DbContext
     {
-        public DbSet<Criterias> Criterias { get; set; }
+        //public DbSet<CriteriasViewModel> Criterias { get; set; }
 
         public FinanceViewerContext(DbContextOptions<FinanceViewerContext> options)
        : base(options)
