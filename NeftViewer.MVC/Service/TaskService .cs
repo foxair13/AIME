@@ -34,7 +34,7 @@ namespace NeftViewer.MVC.Service
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                
-                var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
+                
 
               
                 GetTableService _getTableService = new GetTableService(_FinanceMssql);
@@ -48,9 +48,9 @@ namespace NeftViewer.MVC.Service
                             case TableEnum.Criterias:
                                 // Обработка для таблицы Criterias
                                 {
+                                    var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
                                     List<Criteria> criteriaList = new List<Criteria>();
                                     var viewData = _getTableService.GetViewData("[SUID].["+ GetTableService.GetTableText(table) + "]");
-
 
                                     foreach (var row in viewData)
                                     {
@@ -62,7 +62,20 @@ namespace NeftViewer.MVC.Service
                                 }
                             case TableEnum.Roads:
                                 // Обработка для таблицы Roads
-                                break;
+                                {
+                                    var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
+                                    List<Road> roadsList = new List<Road>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+
+                                    foreach (var row in viewData)
+                                    {
+                                        var road = _mapper.Map<Dictionary<string, object>, Road>(row);
+                                        roadsList.Add(road);
+                                    }
+                                    await roadService.AddRoadRange(roadsList, _BasePostgree);
+                                    break;
+                                }
                             case TableEnum.Customers:
                                 // Обработка для таблицы Customers
                                 break;
