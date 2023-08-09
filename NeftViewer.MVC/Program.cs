@@ -22,9 +22,6 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
@@ -44,33 +41,22 @@ builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<FinanceViewerContext>(options =>
+        options.UseSqlServer(FinanceconnectionString));
+builder.Services.AddAutoMapper(typeof(TaskService));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.AddHostedService(serviceProvider =>
 {
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     var criteriaservice = serviceProvider.GetRequiredService<IServiceScopeFactory>();
     return new TaskService(mapper, FinanceconnectionString, connectionString, criteriaservice);
 });
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionString));
-builder.Services.AddDbContext<FinanceViewerContext>(options =>
-        options.UseSqlServer(FinanceconnectionString));
-// Регистрация IMapper
-builder.Services.AddAutoMapper(typeof(TaskService));
 AppConfig.Initialize(connections);
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//          .AddCookie(options =>
-//          {
-//              options.LoginPath = "/Identity/Account/Login";
-//          });
-
 builder.Services.AddResponseCaching();
-
 builder.Services.AddRazorPages();
-
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {

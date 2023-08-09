@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
+using NeftViewer.MVC.Enums;
+using NeftViewer.MVC.Filters;
 using NeftViewer.MVC.FinanceModels;
 using Org.BouncyCastle.Utilities.Collections;
 
@@ -17,13 +19,7 @@ namespace NeftViewer.MVC.Service
         private readonly string _BasePostgree;
         private readonly string _FinanceMssql;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        //enum Table
-        //{
-        //    Morning,
-        //    Afternoon,
-        //    Evening,
-        //    Night
-        //}
+       
         public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory)
         {
             _mapper = mapper;
@@ -40,24 +36,55 @@ namespace NeftViewer.MVC.Service
                
                 var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
 
-                List<Criteria> criteriaList = new List<Criteria>();
+              
                 GetTableService _getTableService = new GetTableService(_FinanceMssql);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-
-                    var viewData = _getTableService.GetViewData("[SUID].[Criterias]");
-                 
-
-                    foreach (var row in viewData)
+                    foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
                     {
-                        var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
-                        criteriaList.Add(criteria);
+                        // Теперь у вас есть доступ к каждому элементу перечисления `Table` внутри этого цикла
+                        switch (table)
+                        {
+                            case TableEnum.Criterias:
+                                // Обработка для таблицы Criterias
+                                {
+                                    List<Criteria> criteriaList = new List<Criteria>();
+                                    var viewData = _getTableService.GetViewData("[SUID].["+ GetTableService.GetTableText(table) + "]");
+
+
+                                    foreach (var row in viewData)
+                                    {
+                                        var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
+                                        criteriaList.Add(criteria);
+                                    }
+                                    await criteriaService.AddCriteriaRange(criteriaList, _BasePostgree);
+                                    break;
+                                }
+                            case TableEnum.Roads:
+                                // Обработка для таблицы Roads
+                                break;
+                            case TableEnum.Customers:
+                                // Обработка для таблицы Customers
+                                break;
+                            case TableEnum.Objects:
+                                // Обработка для таблицы Objects
+                                break;
+                            case TableEnum.ObjectOnRoad:
+                                // Обработка для таблицы ObjectOnRoad
+                                break;
+                            case TableEnum.IndicatorValues:
+                                // Обработка для таблицы IndicatorValues
+                                break;
+                            default:
+                                // Обработка для других значений, если необходимо
+                                break;
+                        }
                     }
-                    criteriaService.AddCriteriaRange(criteriaList, _BasePostgree);
+
                     await Task.Delay(dailyInterval, stoppingToken);
                 }
             }
-        }
+        } 
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
             var result = new List<Dictionary<string, object>>();

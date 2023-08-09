@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using NeftViewer.Data.Models;
+using NeftViewer.MVC.Enums;
+using NeftViewer.MVC.Filters;
+using System.Reflection;
 
 namespace NeftViewer.MVC.Service
 {
@@ -11,6 +14,19 @@ namespace NeftViewer.MVC.Service
         public GetTableService(string connectionString)
         {
             _connectionString = connectionString;
+        }
+        public static string GetTableText(TableEnum table)
+        {
+            FieldInfo fieldInfo = table.GetType().GetField(table.ToString());
+            if (fieldInfo != null)
+            {
+                TableTextAttribute attribute = fieldInfo.GetCustomAttribute<TableTextAttribute>();
+                if (attribute != null)
+                {
+                    return attribute.Text;
+                }
+            }
+            return table.ToString(); // Возвращаем имя перечисления, если атрибут не найден
         }
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {

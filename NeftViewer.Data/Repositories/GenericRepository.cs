@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Repositories
@@ -94,10 +95,21 @@ namespace NeftViewer.Data.Repositories
         {
             try
             {
-                using (var dbContext = new NeftViewerContext(connectionString)) // Создаем контекст с переданным connectionString
+                using (var dbContext = new NeftViewerContext(connectionString))
                 {
-                    await dbContext.Set<TModel>().AddRangeAsync(objs);
-                    dbContext.SaveChanges();
+                    var currentItems = await dbContext.Set<TModel>().ToListAsync();
+                    var uniqueItems = new List<TModel>();
+
+                    foreach (var obj in objs)
+                    {
+                        if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
+                        {
+                            uniqueItems.Add(obj);
+                            dbContext.Set<TModel>().Add(obj);
+                        }
+                    }
+
+                   await dbContext.SaveChangesAsync();
                 }
 
                 return true;
