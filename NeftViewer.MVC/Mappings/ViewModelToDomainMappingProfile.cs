@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NeftViewer.MVC.Models;
 
 namespace NeftViewer.MVC.Mappings
 {
@@ -6,8 +7,7 @@ namespace NeftViewer.MVC.Mappings
     {
         public ViewModelToDomainMappingProfile()
         {
-            //CreateMap<EventQuestionViewModel, EventQuestion>();
-            //CreateMap<AnswerViewModel, Answer>();
+            CreateMap<ActionViewModel,NeftViewer.Data.Models.Action>();
         }
 
 

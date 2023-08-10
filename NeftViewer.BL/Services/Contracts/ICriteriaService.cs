@@ -16,6 +16,6 @@ namespace NeftViewer.BL.Services.Contracts
         Task CommitChangesAsync();
         EntityEntry<Criteria> DeleteCriteria(string id);
         Task<bool> AddCriteria(Criteria criteria);
-        Task<bool> AddCriteriaRange(IEnumerable<Criteria> criterias, string connectionstring);
+        Task<bool> AddCriteriaRange(IEnumerable<Criteria> criterias);
     }
 }

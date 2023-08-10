@@ -20,7 +20,7 @@
             <table id="myTable" class="table table-sm fs--1 mb-0">
                     <thead>
                         <tr>
-                            <th class="sort border-top" data-sort="rolename">
+                            <th>
                                 @Html.DisplayNameFor(model => model.RoleName)
                             </th>
                             <th class="sort text-end align-middle pe-0 border-top" scope="col"></th>
@@ -30,7 +30,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="align-middle  rolename">
+                                <td class="align-middle">
                                     @Html.DisplayFor(modelItem => item.RoleName)
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end pe-0">

@@ -31,16 +31,16 @@ namespace NeftViewer.Data.DataContext
          : base(options)
         {
         }
-        private readonly string _connectionString;
-        public NeftViewerContext(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        //private readonly string _connectionString;
+        //public NeftViewerContext(string connectionString)
+        //{
+        //    _connectionString = connectionString;
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
 
-            optionsBuilder.UseNpgsql(_connectionString);
-        }
+        //    optionsBuilder.UseNpgsql(_connectionString);
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AspNetUserLoginConfiguration());

@@ -22,9 +22,11 @@ namespace NeftViewer.BL.Services
             await _uow.CommitAsync();
         }
 
-        public Task<Data.Models.Action> FindActionAsync(string? id)
+        public Task<Data.Models.Action> FindActionAsync(int id)
         {
-            return _uow.Action.GetAsync(id);
+           
+                return _uow.Action.GetAsync(id);
+
         }
 
         public async Task<IEnumerable<Data.Models.Action>> GetActions()
@@ -54,7 +56,7 @@ namespace NeftViewer.BL.Services
         }
 
 
-        public EntityEntry<Data.Models.Action> DeleteAction(string id)
+        public EntityEntry<Data.Models.Action> DeleteAction(int id)
         {
             var res = _uow.Action.DeleteByID(id);
             return res;

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<NeftViewer.MVC.Models.ActionViewModel>
+
+@{
+    ViewData["Title"] = "Таблица 'События'";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section HeadArea {
+    <link href="~/lib/datatables/datatables-1.13.6/css/jquery.datatables.min.css" rel="stylesheet" />
+}
+<div class="card border border-primary">
+    <div class="card-body">
+        <h5 class="card-title">@ViewData["Title"]</h5>
+        <div class="mb-3">
+            <a asp-action="Create" class="btn  btn-soft-success me-1 mb-1">Добавить событие</a>
+        </div>
+
+        <div class="table-responsive">
+            <table id="myTable" class="table table-sm fs--1 mb-0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td class="align-middle white-space-nowrap text-end pe-0">
+                                <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a> |
+                                <a asp-action="Details" class="btn btn-soft-info me-1 mb-1" asp-route-id="@item.Id">Просмотр</a> |
+                                <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-1" asp-route-id="@item.Id">Удалить</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br />
+@section Scripts {
+    <script src="~/lib/datatables/datatables-1.13.6/js/jquery.datatables.min.js"></script>
+    <script type="text/javascript">
+        var table = new DataTable('.table', {
+            language: {
+                url: '../lib/datatables/ru.json'
+            }
+        });
+    </script>
+}
