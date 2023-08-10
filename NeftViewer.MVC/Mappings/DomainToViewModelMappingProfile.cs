@@ -17,6 +17,11 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]))
                 .ForMember(dest => dest.Indicator, opt => opt.MapFrom(src => src["Indicator"]));
             CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
+
+            CreateMap<Dictionary<string, object>, ObjectItem>()
+                .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]));
+            CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
         }
 
     }

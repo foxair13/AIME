@@ -14,7 +14,7 @@ namespace NeftViewer.MVC.Enums
         Customers,
 
         [TableText("Objects")]
-        Objects,
+        ObjectItems,
 
         [TableText("ObjectOnRoad")]
         ObjectOnRoad,
