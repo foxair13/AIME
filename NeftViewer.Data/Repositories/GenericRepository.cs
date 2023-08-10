@@ -33,9 +33,9 @@ namespace NeftViewer.Data.Repositories
         {
             return await _dbContext.Set<TModel>().ToListAsync();
         }
-        public virtual async Task<TModel> GetAsync(string? id)
+        public virtual async Task<TModel> GetAsync(string id)
         {
-            if (id!="")
+            if (id != "")
             {
                 return await _dbContext.Set<TModel>().FindAsync(id);
             }
@@ -63,7 +63,18 @@ namespace NeftViewer.Data.Repositories
             _dbContext.SaveChanges();
             return res;
         }
-        public virtual EntityEntry<TModel> DeleteByID(string id)
+        public virtual EntityEntry<TModel> DeleteByID(int id)
+        {
+            var obj = _dbContext.Set<TModel>().Find(id);
+            if (obj != null)
+            {
+                var res = _dbContext.Set<TModel>().Remove(obj);
+                _dbContext.SaveChanges();
+                return res;
+            }
+            return null;
+        }
+        public virtual EntityEntry<TModel> DeleteByStringID(string id)
         {
             var obj = _dbContext.Set<TModel>().Find(id);
             if (obj != null)
@@ -91,26 +102,25 @@ namespace NeftViewer.Data.Repositories
             }
 
         }
-        public virtual async Task<bool> AddRange(IEnumerable<TModel> objs,string connectionString)
+        public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {
             try
             {
-                using (var dbContext = new NeftViewerContext(connectionString))
+
+                var currentItems = await _dbContext.Set<TModel>().ToListAsync();
+                var uniqueItems = new List<TModel>();
+
+                foreach (var obj in objs)
                 {
-                    var currentItems = await dbContext.Set<TModel>().ToListAsync();
-                    var uniqueItems = new List<TModel>();
-
-                    foreach (var obj in objs)
+                    if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
                     {
-                        if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
-                        {
-                            uniqueItems.Add(obj);
-                            dbContext.Set<TModel>().Add(obj);
-                        }
+                        uniqueItems.Add(obj);
+                        _dbContext.Set<TModel>().Add(obj);
                     }
-
-                   await dbContext.SaveChangesAsync();
                 }
+
+                await _dbContext.SaveChangesAsync();
+
 
                 return true;
             }

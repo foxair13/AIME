@@ -62,7 +62,7 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    var neftViewerDbContext = new NeftViewerContext(connectionString);
+    var neftViewerDbContext = scope.ServiceProvider.GetRequiredService<NeftViewerContext>();
     neftViewerDbContext.Database.EnsureCreated();
 }
 // Configure the HTTP request pipeline.

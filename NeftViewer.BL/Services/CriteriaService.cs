@@ -56,13 +56,13 @@ namespace NeftViewer.BL.Services
 
         public EntityEntry<Criteria> DeleteCriteria(string id)
         {
-            var res = _uow.Criterias.DeleteByID(id);
+            var res = _uow.Criterias.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddCriteriaRange(IEnumerable<Criteria> criterias, string connectionstring)
+        public async Task<bool> AddCriteriaRange(IEnumerable<Criteria> criterias)
         {
-            var res = await _uow.Criterias.AddRange(criterias, connectionstring);
+            var res = await _uow.Criterias.AddRange(criterias);
             return res;
         }
     }

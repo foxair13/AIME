@@ -51,7 +51,7 @@ namespace NeftViewer.BL.Services
 
         public EntityEntry<AspNetUser> DeleteAspNetUser(string id)
         {
-            var res = _uow.AspNetUsers.DeleteByID(id);
+            var res = _uow.AspNetUsers.DeleteByStringID(id);
             return res;
         }
     }

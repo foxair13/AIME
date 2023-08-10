@@ -23,9 +23,10 @@ namespace NeftViewer.Data.Repositories.EntityRepositories
             return await _dbContext.Set<AspNetUser>().ToListAsync();
         }
 
-        public override async Task<AspNetUser> GetAsync(string? id)
+        public override async Task<AspNetUser> GetAsync(string id)
         {
             return await _dbContext.Set<AspNetUser>().FirstAsync(z => z.Id == id);
         }
+
     }
 }

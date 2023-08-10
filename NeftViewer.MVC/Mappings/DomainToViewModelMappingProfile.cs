@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NeftViewer.Data.Models;
+using NeftViewer.MVC.Models;
 
 namespace NeftViewer.MVC.Mappings
 {
@@ -15,6 +16,7 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]))
                 .ForMember(dest => dest.Indicator, opt => opt.MapFrom(src => src["Indicator"]));
+            CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
         }
 
     }

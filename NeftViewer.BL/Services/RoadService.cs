@@ -56,13 +56,13 @@ namespace NeftViewer.BL.Services
 
         public EntityEntry<Road> DeleteRoad(string id)
         {
-            var res = _uow.Roads.DeleteByID(id);
+            var res = _uow.Roads.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddRoadRange(IEnumerable<Road> roads, string connectionstring)
+        public async Task<bool> AddRoadRange(IEnumerable<Road> roads)
         {
-            var res = await _uow.Roads.AddRange(roads, connectionstring);
+            var res = await _uow.Roads.AddRange(roads);
             return res;
         }
     }

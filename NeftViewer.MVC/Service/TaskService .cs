@@ -33,16 +33,12 @@ namespace NeftViewer.MVC.Service
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-               
-                
-
-              
                 GetTableService _getTableService = new GetTableService(_FinanceMssql);
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
                     {
-                        // Теперь у вас есть доступ к каждому элементу перечисления `Table` внутри этого цикла
+                       
                         switch (table)
                         {
                             case TableEnum.Criterias:
@@ -57,7 +53,7 @@ namespace NeftViewer.MVC.Service
                                         var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
                                         criteriaList.Add(criteria);
                                     }
-                                    await criteriaService.AddCriteriaRange(criteriaList, _BasePostgree);
+                                    await criteriaService.AddCriteriaRange(criteriaList);
                                     break;
                                 }
                             case TableEnum.Roads:
@@ -73,7 +69,7 @@ namespace NeftViewer.MVC.Service
                                         var road = _mapper.Map<Dictionary<string, object>, Road>(row);
                                         roadsList.Add(road);
                                     }
-                                    await roadService.AddRoadRange(roadsList, _BasePostgree);
+                                    await roadService.AddRoadRange(roadsList);
                                     break;
                                 }
                             case TableEnum.Customers:
