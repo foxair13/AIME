@@ -27,7 +27,7 @@ namespace NeftViewer.MVC.Service
             _serviceScopeFactory = serviceScopeFactory;
             _FinanceMssql=FinanceMssql;
         }
-        private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(10);
+        private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(60);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -42,7 +42,6 @@ namespace NeftViewer.MVC.Service
                         switch (table)
                         {
                             case TableEnum.Criterias:
-                                // Обработка для таблицы Criterias
                                 {
                                     var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
                                     List<Criteria> criteriaList = new List<Criteria>();
@@ -57,7 +56,6 @@ namespace NeftViewer.MVC.Service
                                     break;
                                 }
                             case TableEnum.Roads:
-                                // Обработка для таблицы Roads
                                 {
                                     var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
                                     List<Road> roadsList = new List<Road>();
@@ -73,10 +71,26 @@ namespace NeftViewer.MVC.Service
                                     break;
                                 }
                             case TableEnum.Customers:
-                                // Обработка для таблицы Customers
-                                break;
+                                {
+                                    var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
+                                    List<Customer> customersList = new List<Customer>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+                                    var uniqItems = new List<string>();
+                                    foreach (var row in viewData)
+                                    {
+                                        var codeSuidValue = row["Id"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                        {
+                                            uniqItems.Add(codeSuidValue);
+                                            var customer = _mapper.Map<Dictionary<string, object>, Customer>(row);
+                                            customersList.Add(customer);
+                                        }
+                                    }
+                                    await customerService.AddCustomerRange(customersList);
+                                    break;
+                                }
                             case TableEnum.ObjectItems:
-                                // Обработка для таблицы ObjectItems
                                 {
                                     var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
                                     List<ObjectItem> objectItemsList = new List<ObjectItem>();
@@ -96,12 +110,25 @@ namespace NeftViewer.MVC.Service
                                     await objectItemService.AddObjectItemRange(objectItemsList);
                                     break;
                                 }
-                            case TableEnum.ObjectOnRoad:
-                                // Обработка для таблицы ObjectOnRoad
-                                break;
                             case TableEnum.IndicatorValues:
-                                // Обработка для таблицы IndicatorValues
-                                break;
+                                {
+                                    var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
+                                    List<IndicatorValue> indicatorValueList = new List<IndicatorValue>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                    //var uniqItems = new List<string>();
+
+                                    foreach (var row in viewData)
+                                    {
+                                        //var codeSuidValue = row["CodeSUID"].ToString();
+                                        //if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                        //{
+                                        var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
+                                        indicatorValueList.Add(indicatorValue);
+                                        //}
+                                    }
+                                    await indicatorValueService.AddIndicatorValueRange(indicatorValueList);
+                                    break;
+                                }
                             default:
                                 // Обработка для других значений, если необходимо
                                 break;

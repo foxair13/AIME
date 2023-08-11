@@ -16,6 +16,9 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Criteria> Criterias { get; }
         IGenericRepository<Road> Roads { get; }
         IGenericRepository<ObjectItem> ObjectItems { get; }
+        IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
+        IGenericRepository<Customer> Customers { get; }
+        IGenericRepository<IndicatorValue> IndicatorValues { get; }
         Task CommitAsync();
     }
 }

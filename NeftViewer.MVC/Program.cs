@@ -36,12 +36,18 @@ builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>
 builder.Services.AddScoped<IGenericRepository<Criteria>, CriteriaRepository>();
 builder.Services.AddScoped<IGenericRepository<Road>, RoadRepository>();
 builder.Services.AddScoped<IGenericRepository<ObjectItem>, ObjectItemRepository>();
+builder.Services.AddScoped<IGenericRepository<ObjectOnRoad>, ObjectOnRoadRepository>();
+builder.Services.AddScoped<IGenericRepository<Customer>, CustomerRepository>();
+builder.Services.AddScoped<IGenericRepository<IndicatorValue>, IndicatorValueRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<IRoadService, RoadService>();
 builder.Services.AddScoped<IObjectItemService, ObjectItemService>();
+builder.Services.AddScoped<IObjectOnRoadService, ObjectOnRoadService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IIndicatorValueService, IndicatorValueService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();

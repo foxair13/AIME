@@ -7,12 +7,12 @@ namespace NeftViewer.Data.Models
     public partial class ObjectOnRoad
     {
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public string RoadId { get; set; }
-        [ForeignKey("RoadId")]
-        public virtual Road Roads { get; set; }
+        //[ForeignKey("RoadId")]
+        //public virtual Road Roads { get; set; }
         public string UIDObject { get; set; }
-        [ForeignKey("UIDObject")]
-        public virtual ObjectItem Objects { get; set; }
+        //[ForeignKey("UIDObject")]
+        //public virtual ObjectItem Objects { get; set; }
     }
 }
