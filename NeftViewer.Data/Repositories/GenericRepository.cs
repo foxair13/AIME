@@ -100,36 +100,41 @@ namespace NeftViewer.Data.Repositories
             {
                 return false;
             }
-
         }
         public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {
+            bool flag = false;
             try
             {
-
                 var currentItems = await _dbContext.Set<TModel>().ToListAsync();
                 var uniqueItems = new List<TModel>();
 
                 foreach (var obj in objs)
                 {
-                    if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
+                    try
                     {
-                        uniqueItems.Add(obj);
-                        _dbContext.Set<TModel>().Add(obj);
+                        if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
+                        {
+                            uniqueItems.Add(obj);
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        continue;
                     }
                 }
-
+                uniqueItems = uniqueItems.Distinct()
+                                //.Where(obj => !currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
+                                 .ToList();
+                _dbContext.Set<TModel>().AddRange(uniqueItems);
                 await _dbContext.SaveChangesAsync();
-
-
-                return true;
+                flag = true;
             }
             catch (System.Exception ex)
             {
-                return false;
             }
-
-
+            return flag;
         }
+
     }
 }

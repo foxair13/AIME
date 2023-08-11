@@ -1,13 +1,7 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using NeftViewer.Data.DataContext;
+﻿using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.Repositories.Contracts;
 using NeftViewer.Data.UnitOfWork.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeftViewer.Data.UnitOfWork
 {
@@ -21,7 +15,8 @@ namespace NeftViewer.Data.UnitOfWork
              IGenericRepository<Models.Action> ActionRepository,
              IGenericRepository<ActionRole> ActionRoleRepository,
               IGenericRepository<Criteria> CriteriaRepository,
-              IGenericRepository<Road> RoadRepository
+              IGenericRepository<Road> RoadRepository,
+              IGenericRepository<ObjectItem> ObjectItemRepository
             )
         {
             _context = context;
@@ -30,12 +25,14 @@ namespace NeftViewer.Data.UnitOfWork
             ActionRole = ActionRoleRepository;
             Criterias = CriteriaRepository;
             Roads = RoadRepository;
+            ObjectItems = ObjectItemRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
         public IGenericRepository<ActionRole> ActionRole { get; }
         public IGenericRepository<Criteria> Criterias { get; }
         public IGenericRepository<Road> Roads { get; }
+        public IGenericRepository<ObjectItem> ObjectItems { get; }
 
         public async Task CommitAsync()
         {

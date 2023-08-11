@@ -75,9 +75,26 @@ namespace NeftViewer.MVC.Service
                             case TableEnum.Customers:
                                 // Обработка для таблицы Customers
                                 break;
-                            case TableEnum.Objects:
-                                // Обработка для таблицы Objects
-                                break;
+                            case TableEnum.ObjectItems:
+                                // Обработка для таблицы ObjectItems
+                                {
+                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                    List<ObjectItem> objectItemsList = new List<ObjectItem>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+
+                                    foreach (var row in viewData)
+                                    {
+                                        var codeSuidValue = row["CodeSUID"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(codeSuidValue))
+                                        {
+                                            var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
+                                            objectItemsList.Add(objectItem);
+                                        }
+                                    }
+                                    await objectItemService.AddObjectItemRange(objectItemsList);
+                                    break;
+                                }
                             case TableEnum.ObjectOnRoad:
                                 // Обработка для таблицы ObjectOnRoad
                                 break;

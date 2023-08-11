@@ -17,7 +17,7 @@ namespace NeftViewer.Data.Models
         public virtual Criteria Criterias { get; set; }
         public string CodeSuid { get; set; }
         [ForeignKey("CodeSuid")]
-        public virtual Object Objects { get; set; }
+        public virtual ObjectItem Objects { get; set; }
         public DateTime DateStart { get; set; }
         public string Value { get; set; }
     }
