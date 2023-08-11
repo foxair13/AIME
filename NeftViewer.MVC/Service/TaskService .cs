@@ -85,8 +85,12 @@ namespace NeftViewer.MVC.Service
 
                                     foreach (var row in viewData)
                                     {
-                                        var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
-                                        objectItemsList.Add(objectItem);
+                                        var codeSuidValue = row["CodeSUID"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(codeSuidValue))
+                                        {
+                                            var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
+                                            objectItemsList.Add(objectItem);
+                                        }
                                     }
                                     await objectItemService.AddObjectItemRange(objectItemsList);
                                     break;
