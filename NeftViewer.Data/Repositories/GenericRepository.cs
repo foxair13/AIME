@@ -123,9 +123,6 @@ namespace NeftViewer.Data.Repositories
                         continue;
                     }
                 }
-                uniqueItems = uniqueItems.Distinct()
-                                //.Where(obj => !currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
-                                 .ToList();
                 _dbContext.Set<TModel>().AddRange(uniqueItems);
                 await _dbContext.SaveChangesAsync();
                 flag = true;

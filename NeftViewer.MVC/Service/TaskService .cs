@@ -82,12 +82,13 @@ namespace NeftViewer.MVC.Service
                                     List<ObjectItem> objectItemsList = new List<ObjectItem>();
                                     var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
-
+                                    var uniqItems = new List<string>();
                                     foreach (var row in viewData)
                                     {
                                         var codeSuidValue = row["CodeSUID"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(codeSuidValue))
+                                        if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
                                         {
+                                            uniqItems.Add(codeSuidValue);
                                             var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
                                             objectItemsList.Add(objectItem);
                                         }
