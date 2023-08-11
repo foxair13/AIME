@@ -33,16 +33,12 @@ namespace NeftViewer.MVC.Service
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-               
-                
-
-              
                 GetTableService _getTableService = new GetTableService(_FinanceMssql);
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
                     {
-                        // Теперь у вас есть доступ к каждому элементу перечисления `Table` внутри этого цикла
+                       
                         switch (table)
                         {
                             case TableEnum.Criterias:
@@ -57,7 +53,7 @@ namespace NeftViewer.MVC.Service
                                         var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
                                         criteriaList.Add(criteria);
                                     }
-                                    await criteriaService.AddCriteriaRange(criteriaList, _BasePostgree);
+                                    await criteriaService.AddCriteriaRange(criteriaList);
                                     break;
                                 }
                             case TableEnum.Roads:
@@ -73,15 +69,32 @@ namespace NeftViewer.MVC.Service
                                         var road = _mapper.Map<Dictionary<string, object>, Road>(row);
                                         roadsList.Add(road);
                                     }
-                                    await roadService.AddRoadRange(roadsList, _BasePostgree);
+                                    await roadService.AddRoadRange(roadsList);
                                     break;
                                 }
                             case TableEnum.Customers:
                                 // Обработка для таблицы Customers
                                 break;
-                            case TableEnum.Objects:
-                                // Обработка для таблицы Objects
-                                break;
+                            case TableEnum.ObjectItems:
+                                // Обработка для таблицы ObjectItems
+                                {
+                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                    List<ObjectItem> objectItemsList = new List<ObjectItem>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+
+                                    foreach (var row in viewData)
+                                    {
+                                        var codeSuidValue = row["CodeSUID"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(codeSuidValue))
+                                        {
+                                            var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
+                                            objectItemsList.Add(objectItem);
+                                        }
+                                    }
+                                    await objectItemService.AddObjectItemRange(objectItemsList);
+                                    break;
+                                }
                             case TableEnum.ObjectOnRoad:
                                 // Обработка для таблицы ObjectOnRoad
                                 break;

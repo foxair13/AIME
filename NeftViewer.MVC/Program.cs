@@ -25,28 +25,30 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
-var connectionString = connections.BasePostgree;
-var FinanceconnectionString = connections.FinanceMssql;
+var baseConnectionString = connections.BasePostgree;
+var financeConnectionString = connections.FinanceMssql;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
-              options.UseNpgsql(connectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
+              options.UseNpgsql(baseConnectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository>();
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
 builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
 builder.Services.AddScoped<IGenericRepository<Criteria>, CriteriaRepository>();
 builder.Services.AddScoped<IGenericRepository<Road>, RoadRepository>();
+builder.Services.AddScoped<IGenericRepository<ObjectItem>, ObjectItemRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<IRoadService, RoadService>();
+builder.Services.AddScoped<IObjectItemService, ObjectItemService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionString));
+        options.UseNpgsql(baseConnectionString));
 builder.Services.AddDbContext<FinanceViewerContext>(options =>
-        options.UseSqlServer(FinanceconnectionString));
+        options.UseSqlServer(financeConnectionString));
 builder.Services.AddAutoMapper(typeof(TaskService));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
@@ -54,7 +56,7 @@ builder.Services.AddHostedService(serviceProvider =>
 {
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     var criteriaservice = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-    return new TaskService(mapper, FinanceconnectionString, connectionString, criteriaservice);
+    return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice);
 });
 AppConfig.Initialize(connections);
 builder.Services.AddResponseCaching();
@@ -62,7 +64,7 @@ builder.Services.AddRazorPages();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-    var neftViewerDbContext = new NeftViewerContext(connectionString);
+    var neftViewerDbContext = scope.ServiceProvider.GetRequiredService<NeftViewerContext>();
     neftViewerDbContext.Database.EnsureCreated();
 }
 // Configure the HTTP request pipeline.

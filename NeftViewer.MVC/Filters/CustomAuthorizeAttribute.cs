@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
@@ -9,6 +10,7 @@ using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.Repositories.EntityRepositories;
 using NeftViewer.MVC;
+using NeftViewer.MVC.Factories;
 using NeftViewer.MVC.Options;
 
 namespace NeftViewer.Core.ActionFilters
@@ -29,7 +31,7 @@ namespace NeftViewer.Core.ActionFilters
         {
             _selector = selector;
             _connectionString = AppConfig.GetConnectionString().BasePostgree;
-            nvc = new NeftViewerContext(_connectionString);
+            nvc = nvc = NeftViewerContextFactory.CreateDbContext(_connectionString);
         }
 
         private string GetRoles(string actionselector)

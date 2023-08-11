@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace NeftViewer.BL.Services
 {
-    public class RoadService : IRoadService
+    public class ObjectItemService : IObjectItemService
     {
         private readonly IUnitOfWork _uow;
-        public RoadService(IUnitOfWork uow)
+        public ObjectItemService(IUnitOfWork uow)
         {
             _uow = uow;
         }
@@ -22,28 +22,28 @@ namespace NeftViewer.BL.Services
             await _uow.CommitAsync();
         }
 
-        public Task<Road> FindRoadAsync(string? id)
+        public Task<ObjectItem> FindObjectItemAsync(string? id)
         {
-            return _uow.Roads.GetAsync(id);
+            return _uow.ObjectItems.GetAsync(id);
         }
 
-        public async Task<IEnumerable<Road>> GetRoads()
+        public async Task<IEnumerable<ObjectItem>> GetObjectItems()
         {
 
-            return await _uow.Roads.GetAllAsync();
+            return await _uow.ObjectItems.GetAllAsync();
 
         }
 
-        public EntityEntry<Road> UpdateRoad(Road road)
+        public EntityEntry<ObjectItem> UpdateObjectItem(ObjectItem objectItem)
         {
-            return _uow.Roads.Update(road);
+            return _uow.ObjectItems.Update(objectItem);
         }
-        public async Task<bool> AddRoad(Road road)
+        public async Task<bool> AddObjectItem(ObjectItem objectItem)
         {
             bool flag = false;
             try
             {
-                await _uow.Roads.Add(road);
+                await _uow.ObjectItems.Add(objectItem);
                 flag = true;
             }
             catch
@@ -54,15 +54,15 @@ namespace NeftViewer.BL.Services
         }
 
 
-        public EntityEntry<Road> DeleteRoad(string id)
+        public EntityEntry<ObjectItem> DeleteObjectItem(string id)
         {
-            var res = _uow.Roads.DeleteByStringID(id);
+            var res = _uow.ObjectItems.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddRoadRange(IEnumerable<Road> roads)
+        public async Task<bool> AddObjectItemRange(IEnumerable<ObjectItem> objectItems)
         {
-            var res = await _uow.Roads.AddRange(roads);
+            var res = await _uow.ObjectItems.AddRange(objectItems);
             return res;
         }
     }

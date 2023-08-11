@@ -56,7 +56,7 @@ namespace NeftViewer.BL.Services
 
         public EntityEntry<ActionRole> DeleteActionRole(string id)
         {
-            var res = _uow.ActionRole.DeleteByID(id);
+            var res = _uow.ActionRole.DeleteByStringID(id);
             return res;
         }
     }

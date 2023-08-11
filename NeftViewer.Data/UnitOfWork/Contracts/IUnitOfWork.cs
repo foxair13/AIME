@@ -15,6 +15,7 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<ActionRole> ActionRole { get; }
         IGenericRepository<Criteria> Criterias { get; }
         IGenericRepository<Road> Roads { get; }
+        IGenericRepository<ObjectItem> ObjectItems { get; }
         Task CommitAsync();
     }
 }

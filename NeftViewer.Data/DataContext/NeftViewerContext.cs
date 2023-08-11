@@ -23,7 +23,7 @@ namespace NeftViewer.Data.DataContext
         public DbSet<Customer> Customers { get; set; }
         public DbSet<IndicatorValue> IndicatorValues { get; set; }
         public DbSet<ObjectOnRoad> ObjectOnRoad { get; set; }
-        public DbSet<Models.Object> Objects { get; set; }
+        public DbSet<Models.ObjectItem> Objects { get; set; }
         public DbSet<Road> Roads { get; set; }
         public DbSet<Models.Action> Actions { get; set; }
         public DbSet<ActionRole> ActionRoles { get; set; }
@@ -31,16 +31,16 @@ namespace NeftViewer.Data.DataContext
          : base(options)
         {
         }
-        private readonly string _connectionString;
-        public NeftViewerContext(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        //private readonly string _connectionString;
+        //public NeftViewerContext(string connectionString)
+        //{
+        //    _connectionString = connectionString;
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
 
-            optionsBuilder.UseNpgsql(_connectionString);
-        }
+        //    optionsBuilder.UseNpgsql(_connectionString);
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AspNetUserLoginConfiguration());

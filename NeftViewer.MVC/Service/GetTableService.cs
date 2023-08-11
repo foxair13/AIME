@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
 using NeftViewer.MVC.Filters;
+using Org.BouncyCastle.Utilities;
+using System.Collections;
 using System.Reflection;
 
 namespace NeftViewer.MVC.Service
@@ -46,7 +49,17 @@ namespace NeftViewer.MVC.Service
                             var row = new Dictionary<string, object>();
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                row[reader.GetName(i)] = reader[i];
+                                String str = reader.GetName(i).ToString();
+                                if (reader[i] is byte[] byteArray)
+                                {
+                                    string hexValue = BitConverter.ToString(byteArray).Replace("-", "");
+                                    row[reader.GetName(i)] = hexValue;
+                                }
+                                else
+                                {
+                                    row[reader.GetName(i)] = reader[i];
+                                }
+                               
                             }
                             result.Add(row);
                         }

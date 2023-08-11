@@ -8,7 +8,6 @@ namespace NeftViewer.Data.Models
     public partial class Road
     {
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string Name { get; set; }
         public string Indicator { get; set; }

@@ -13,6 +13,6 @@ namespace NeftViewer.Data.Models
         public virtual Road Roads { get; set; }
         public string UIDObject { get; set; }
         [ForeignKey("UIDObject")]
-        public virtual Object Objects { get; set; }
+        public virtual ObjectItem Objects { get; set; }
     }
 }
