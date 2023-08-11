@@ -40,24 +40,37 @@ namespace NeftViewer.BL.Services
         }
         public async Task<bool> AddActionRole(ActionRole actionRole)
         {
-            bool flag = false;
+            // Проверяем наличие дубликата
+            var isDuplicate = await IsDuplicate(actionRole.ActionId, actionRole.RoleId);
+            if (isDuplicate)
+            {
+                return false; // Возврат false, если дубликат найден
+            }
+
+            // Добавляем запись, если дубликат не обнаружен
             try
             {
                 await _uow.ActionRole.Add(actionRole);
-                flag = true;
+                await _uow.CommitAsync();
+                return true;
             }
             catch
             {
-                flag = false;
+                return false;
             }
-            return flag;
         }
 
 
-        public EntityEntry<ActionRole> DeleteActionRole(string id)
+        public EntityEntry<ActionRole> DeleteActionRole(int id)
         {
-            var res = _uow.ActionRole.DeleteByStringID(id);
+            var res = _uow.ActionRole.DeleteByID(id);
             return res;
+        }
+        public async Task<bool> IsDuplicate(int actionId, String roleId)
+        {
+            var allActionRoles = await _uow.ActionRole.GetAllAsync();
+            var existingRecord = allActionRoles.FirstOrDefault(ar => ar.ActionId == actionId && ar.RoleId == roleId);
+            return existingRecord != null;
         }
     }
 }

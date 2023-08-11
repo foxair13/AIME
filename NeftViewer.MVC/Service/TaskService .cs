@@ -27,7 +27,7 @@ namespace NeftViewer.MVC.Service
             _serviceScopeFactory = serviceScopeFactory;
             _FinanceMssql=FinanceMssql;
         }
-        private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(10);
+        private readonly TimeSpan dailyInterval = TimeSpan.FromDays(10);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

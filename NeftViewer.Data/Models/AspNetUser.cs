@@ -16,7 +16,6 @@ namespace NeftViewer.Data.Models
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetUserTokens = new HashSet<AspNetUserToken>();
-            Roles = new HashSet<AspNetRole>();
         }
 
         public string Id { get; set; } = null!;
@@ -39,7 +38,7 @@ namespace NeftViewer.Data.Models
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
 
-        public virtual ICollection<AspNetRole> Roles { get; set; }
+   
 
     }
 }

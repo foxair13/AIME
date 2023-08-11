@@ -7,10 +7,14 @@ namespace NeftViewer.MVC.Models
     {
         public int Id { get; set; }
         [Required]
-        [DisplayName("Наименование события:")]
+        [DisplayName("Наименование действия:")]
         public int ActionId { get; set; }
         [Required]
         [DisplayName("Наименование роли:")]
         public string RoleId { get; set; }
+        [DisplayName("Наименование действия:")]
+        public string? ActionName { get; set; }
+        [DisplayName("Наименование роли:")]
+        public string? RoleName { get; set; }
     }
 }

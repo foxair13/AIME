@@ -13,8 +13,8 @@ using System.Diagnostics;
 namespace NeftViewer.MVC.Controllers
 {
 
+    [CustomAuthorize("HomeIndex")]
 
-    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,13 +26,13 @@ namespace NeftViewer.MVC.Controllers
             _logger = logger;
             _userService = aspNetUsersService;
         }
-        [CustomAuthorize("HomeIndex")]
+       
         public IActionResult Index()
         {
 
             return View();
         }
-
+     
         public IActionResult Privacy()
         {
             return View();

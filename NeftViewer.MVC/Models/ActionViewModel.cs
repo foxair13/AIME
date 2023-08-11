@@ -7,9 +7,9 @@ namespace NeftViewer.MVC.Models
     public class ActionViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Наименование события:")]
+        [DisplayName("Наименование действия:")]
         public string Name { get; set; }
-        [DisplayName("Описание события:")]
+        [DisplayName("Описание действия:")]
         public string Description { get; set; }
 
     }

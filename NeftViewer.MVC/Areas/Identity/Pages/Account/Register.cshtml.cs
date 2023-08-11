@@ -136,7 +136,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    //_userManager.AddToRoleAsync(user, "Admin").Wait();
+                    _userManager.AddToRoleAsync(user, "Admin").Wait();
                     _logger.LogInformation("Пользователь создал новую учетную запись с паролем.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

@@ -14,7 +14,8 @@ namespace NeftViewer.BL.Services.Contracts
         Task<ActionRole> FindActionRoleAsync(int id);
         EntityEntry<ActionRole> UpdateActionRole(ActionRole actionRole);
         Task CommitChangesAsync();
-        EntityEntry<ActionRole> DeleteActionRole(string id);
+        EntityEntry<ActionRole> DeleteActionRole(int id);
         Task<bool> AddActionRole(ActionRole actionRole);
+        Task<bool> IsDuplicate(int actionId, String roleId);
     }
 }
