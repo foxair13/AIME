@@ -11,7 +11,7 @@ namespace NeftViewer.BL.Services.Contracts
     public interface IActionRoleService
     {
         Task<IEnumerable<ActionRole>> GetActionRoles();
-        Task<ActionRole> FindActionRoleAsync(string? id);
+        Task<ActionRole> FindActionRoleAsync(int id);
         EntityEntry<ActionRole> UpdateActionRole(ActionRole actionRole);
         Task CommitChangesAsync();
         EntityEntry<ActionRole> DeleteActionRole(string id);
