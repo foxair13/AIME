@@ -22,7 +22,7 @@ namespace NeftViewer.BL.Services
             await _uow.CommitAsync();
         }
 
-        public Task<ActionRole> FindActionRoleAsync(string? id)
+        public Task<ActionRole> FindActionRoleAsync(int id)
         {
             return _uow.ActionRole.GetAsync(id);
         }
