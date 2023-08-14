@@ -17,6 +17,7 @@ namespace NeftViewer.MVC.Data
             base.OnModelCreating(builder);
         }
         public DbSet<NeftViewer.MVC.Models.ActionViewModel>? ActionViewModel { get; set; }
+        public DbSet<NeftViewer.MVC.Models.ActionRoleViewModel>? ActionRoleViewModel { get; set; }
   
     }
 }

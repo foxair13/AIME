@@ -15,9 +15,9 @@ namespace NeftViewer.Data.Models
         public AspNetRole()
         {
             AspNetRoleClaims = new HashSet<AspNetRoleClaim>();
-         
+            ActionRoles= new HashSet<ActionRole>();
         }
-
+        [Key]
         public string Id { get; set; } = null!;
         public string? Name { get; set; }
         public string? NormalizedName { get; set; }

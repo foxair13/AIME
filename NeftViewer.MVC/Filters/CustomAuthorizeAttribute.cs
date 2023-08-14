@@ -37,7 +37,7 @@ namespace NeftViewer.Core.ActionFilters
         private string GetRoles(string actionselector)
         {
 
-            List<ActionRole> list = (from k in nvc.ActionRoles
+            List<ActionRole> list = (from k in nvc.ActionRoles.Include(x=>x.AspNetRoles)
                                      where k.Action.Name == actionselector
                                      select k).ToList<ActionRole>();
             string str = "";
@@ -96,12 +96,23 @@ namespace NeftViewer.Core.ActionFilters
             else
             {
                 string name = context.HttpContext.User.Identity.Name;
-                var currentPath = context.HttpContext.Request.Path.ToString();
-
+                var routeData = context.ActionDescriptor.RouteValues;
+                var area = routeData["area"]?.ToString();
+                var page = routeData["page"]?.ToString();
+                if (area == "Identity" && page == "Account/AccessDenied")
+                {
+                    return;
+                }
                 var actionSelector = _selector ?? context.ActionDescriptor.AttributeRouteInfo?.Name;
                 if (!string.IsNullOrEmpty(actionSelector) && CheckRoles(_selector, name))
                 {
-                    context.Result = new RedirectToRouteResult(new { area = "", page = currentPath });
+                    // Пропускаем пользователя дальше
+                    return;
+                }
+                else
+                {
+                    // Пользователь не прошел проверку ролей, перенаправляем на страницу "Доступ запрещен"
+                    context.Result = new RedirectToRouteResult(new { area = "Identity", page = "/Account/AccessDenied" });
                 }
 
             }

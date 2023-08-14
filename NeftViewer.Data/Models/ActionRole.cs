@@ -11,7 +11,6 @@ namespace NeftViewer.Data.Models
     [Table("ActionRoles")]
     public class ActionRole
     {
-
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

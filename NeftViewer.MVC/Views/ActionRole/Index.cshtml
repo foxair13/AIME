@@ -1,7 +1,7 @@
-﻿@model IEnumerable<NeftViewer.MVC.Models.ActionViewModel>
+﻿@model IEnumerable<NeftViewer.MVC.Models.ActionRoleViewModel>
 
 @{
-    ViewData["Title"] = "Таблица 'Действия'";
+    ViewData["Title"] = "Таблица 'действия по ролям'";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadArea {
@@ -11,7 +11,7 @@
     <div class="card-body">
         <h5 class="card-title">@ViewData["Title"]</h5>
         <div class="mb-3">
-            <a asp-action="Create" class="btn  btn-soft-success me-1 mb-1">Добавить событие</a>
+            <a asp-action="Create" class="btn btn-soft-success me-1 mb-1">Создать новое</a>
         </div>
 
         <div class="table-responsive">
@@ -19,10 +19,10 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Name)
+                            @Html.DisplayNameFor(model => model.ActionName)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Description)
+                            @Html.DisplayNameFor(model => model.RoleName)
                         </th>
                         <th></th>
                     </tr>
@@ -32,14 +32,13 @@
                     {
                         <tr>
                             <td class="align-middle">
-                                @Html.DisplayFor(modelItem => item.Name)
+                                @Html.DisplayFor(modelItem => item.ActionName)
                             </td>
                             <td class="align-middle">
-                                @Html.DisplayFor(modelItem => item.Description)
+                                @Html.DisplayFor(modelItem => item.RoleName)
                             </td>
                             <td class="align-middle white-space-nowrap text-end pe-0">
-                                <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a> |
-                                <a asp-action="Details" class="btn btn-soft-info me-1 mb-1" asp-route-id="@item.Id">Просмотр</a> |
+                                <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a>
                                 <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-1" asp-route-id="@item.Id">Удалить</a>
                             </td>
                         </tr>
@@ -51,13 +50,16 @@
 </div>
 
 <br />
+
 @section Scripts {
     <script src="~/lib/datatables/datatables-1.13.6/js/jquery.datatables.min.js"></script>
     <script type="text/javascript">
-        var table = new DataTable('.table', {
-            language: {
-                url: '../lib/datatables/ru.json'
-            }
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                language: {
+                    url: '../lib/datatables/ru.json'
+                }
+            });
         });
     </script>
 }

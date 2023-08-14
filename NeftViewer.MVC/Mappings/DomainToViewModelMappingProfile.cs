@@ -46,6 +46,9 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.UIDObject, opt => opt.MapFrom(src => src["UIDObject"]));
             CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
 
+            CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
+            CreateMap<ActionRole, ActionRoleViewModel>();
+            
         }
         //private string ByteArrayToString(byte[] byteArray)
         //{

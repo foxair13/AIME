@@ -1,4 +1,5 @@
-﻿using NeftViewer.Data.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.Repositories.Contracts;
 using System;
@@ -18,6 +19,13 @@ namespace NeftViewer.Data.Repositories.EntityRepositories
         {
             _dbContext = dbContext;
         }
-
+        public override async Task<ActionRole> GetAsync(int id)
+        {
+            return await _dbContext.Set<ActionRole>().Include(x=>x.AspNetRoles).Include(y=>y.Action).FirstAsync(z => z.Id == id);
+        }
+        public override async Task<IEnumerable<ActionRole>> GetAllAsync()
+        {
+            return await _dbContext.Set<ActionRole>().Include(x => x.AspNetRoles).Include(y => y.Action).ToListAsync();
+        }
     }
 }
