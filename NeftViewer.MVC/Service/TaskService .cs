@@ -9,7 +9,6 @@ using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
 using NeftViewer.MVC.Filters;
-using NeftViewer.MVC.FinanceModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Utilities.Collections;
@@ -169,7 +168,7 @@ namespace NeftViewer.MVC.Service
                             case TableEnum.Json:
                                 {
                                     var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
-                                  
+
                                     string url = _CoordsUrl;
                                     string json;
                                     using (var client = new WebClient())
@@ -185,6 +184,7 @@ namespace NeftViewer.MVC.Service
                                         double codeSUID = (double)header["CodeSUID"];
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
+
                                     }
 
                                     break;
