@@ -10,6 +10,8 @@ namespace NeftViewer.Data.Models
 
         public string CodeSUID { get; set; }
         public string Name { get; set; }
-        //public virtual ICollection<IndicatorValue> IndicatorValues { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
     }
 }

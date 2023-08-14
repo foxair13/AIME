@@ -168,6 +168,8 @@ namespace NeftViewer.MVC.Service
                                 }
                             case TableEnum.Json:
                                 {
+                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                  
                                     string url = _CoordsUrl;
                                     string json;
                                     using (var client = new WebClient())
@@ -182,6 +184,7 @@ namespace NeftViewer.MVC.Service
                                         int ownerCode = (int)header["ownerCode"];
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
+                                
                                     }
 
                                     break;

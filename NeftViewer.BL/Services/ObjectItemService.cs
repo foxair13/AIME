@@ -65,5 +65,29 @@ namespace NeftViewer.BL.Services
             var res = await _uow.ObjectItems.AddRange(objectItems);
             return res;
         }
+        public async Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude)
+        {
+            bool success = false;
+
+            try
+            {
+                ObjectItem objectItem = await _uow.ObjectItems.GetAsync(codeSuid);
+
+                if (objectItem != null)
+                {
+                    objectItem.Latitude = latitude;
+                    objectItem.Longitude = longitude;
+                    _uow.ObjectItems.Update(objectItem);
+                    await _uow.CommitAsync();
+
+                    success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return success;
+        }
     }
 }
