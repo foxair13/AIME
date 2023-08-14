@@ -54,7 +54,7 @@ builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(baseConnectionString));
-builder.Services.AddDbContext<FinanceViewerContext>(options =>
+builder.Services.AddDbContext<FinanceViewModel>(options =>
         options.UseSqlServer(financeConnectionString));
 builder.Services.AddAutoMapper(typeof(TaskService));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
