@@ -14,12 +14,11 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("Customers")]
         Customers,
-
-        [TableText("Objects")]
-        ObjectItems,
         Json,
         [TableText("IndicatorValues")]
         IndicatorValues,
+        [TableText("Objects")]
+        ObjectItems,
         [TableText("ObjectOnRoad")]
         ObjectOnRoad
 

@@ -40,4 +40,8 @@
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FinanceViewModels\" />
+  </ItemGroup>
+
 </Project>

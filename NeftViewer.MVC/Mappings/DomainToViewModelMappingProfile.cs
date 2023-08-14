@@ -29,7 +29,7 @@ namespace NeftViewer.MVC.Mappings
             CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
 
             CreateMap<Dictionary<string, object>, IndicatorValue>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["id"]))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
                 .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src["CustomerId"]))
                 .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]))
                 .ForMember(dest => dest.CriteriaId, opt => opt.MapFrom(src => src["CriteriaId"]))
