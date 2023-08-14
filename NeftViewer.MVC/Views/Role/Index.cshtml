@@ -23,7 +23,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.RoleName)
                             </th>
-                            <th class="sort text-end align-middle pe-0 border-top" scope="col"></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -36,7 +36,7 @@
                                 <td class="align-middle white-space-nowrap text-end pe-0">
                                     <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a> |
                                     <a asp-action="Details" class="btn btn-soft-info me-1 mb-1" asp-route-id="@item.Id">Просмотр</a> |
-                                    <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-" asp-route-id="@item.Id">Удалить</a>
+                                    <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-1" asp-route-id="@item.Id">Удалить</a>
                                 </td>
                             </tr>
                         }
