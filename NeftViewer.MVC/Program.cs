@@ -27,6 +27,7 @@ builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connec
 var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
 var baseConnectionString = connections.BasePostgree;
 var financeConnectionString = connections.FinanceMssql;
+string CoordsUrl = connections.CoordsUrl;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(baseConnectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -62,7 +63,7 @@ builder.Services.AddHostedService(serviceProvider =>
 {
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     var criteriaservice = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-    return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice);
+    return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice, CoordsUrl);
 });
 AppConfig.Initialize(connections);
 builder.Services.AddResponseCaching();

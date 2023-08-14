@@ -7,6 +7,7 @@ namespace NeftViewer.Data.Models
     public partial class ObjectItem
     {
         [Key]
+
         public string CodeSUID { get; set; }
         public string Name { get; set; }
         //public virtual ICollection<IndicatorValue> IndicatorValues { get; set; }

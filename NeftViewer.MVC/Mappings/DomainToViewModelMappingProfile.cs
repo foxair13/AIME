@@ -43,9 +43,7 @@ namespace NeftViewer.MVC.Mappings
 
             CreateMap<Dictionary<string, object>, ObjectOnRoad>()
                 .ForMember(dest => dest.RoadId, opt => opt.MapFrom(src => src["RoadId"]))
-                .ForMember(dest => dest.UIDObject, opt => opt.MapFrom(src => src["UIDObject"]));
-            CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
-
+                .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["UIDObject"]));
             CreateMap<NeftViewer.Data.Models.Action, ActionViewModel>();
             CreateMap<ActionRole, ActionRoleViewModel>();
             

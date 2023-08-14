@@ -10,7 +10,11 @@ using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
 using NeftViewer.MVC.Filters;
 using NeftViewer.MVC.FinanceModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Utilities.Collections;
+using System.Net;
+using System.Security.Policy;
 
 namespace NeftViewer.MVC.Service
 {
@@ -19,14 +23,16 @@ namespace NeftViewer.MVC.Service
         private readonly IMapper _mapper;
         private readonly string _BasePostgree;
         private readonly string _FinanceMssql;
+        private readonly string _CoordsUrl;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-       
-        public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory)
+
+        public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory, string coordsUrl)
         {
             _mapper = mapper;
             _BasePostgree = basePostgree;
             _serviceScopeFactory = serviceScopeFactory;
-            _FinanceMssql=FinanceMssql;
+            _FinanceMssql = FinanceMssql;
+            _CoordsUrl = coordsUrl;
         }
         private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(60);
 
@@ -39,14 +45,14 @@ namespace NeftViewer.MVC.Service
                 {
                     foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
                     {
-                       
+
                         switch (table)
                         {
                             case TableEnum.Criterias:
                                 {
                                     var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
                                     List<Criteria> criteriaList = new List<Criteria>();
-                                    var viewData = _getTableService.GetViewData("[SUID].["+ GetTableService.GetTableText(table) + "]");
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
                                     foreach (var row in viewData)
                                     {
@@ -140,15 +146,16 @@ namespace NeftViewer.MVC.Service
                                     var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
                                     List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
                                     var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
                                     var uniqRoadId = new List<string>();
                                     var uniqUIDObject = new List<string>();
 
                                     foreach (var row in viewData)
                                     {
                                         var roadIdValue = row["RoadId"].ToString();
-                                        var uidObjectValue = row["UIDObject"].ToString();
+                                        var UIDObject = row["UIDObject"].ToString();
                                         if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue) &&
-                                            !string.IsNullOrWhiteSpace(uidObjectValue) && !uniqUIDObject.Contains(uidObjectValue))
+                                            !string.IsNullOrWhiteSpace(UIDObject) && !uniqUIDObject.Contains(UIDObject))
                                         {
                                             var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
                                             uniqRoadId.Add(roadIdValue);
@@ -159,7 +166,26 @@ namespace NeftViewer.MVC.Service
                                     await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
                                     break;
                                 }
+                            case TableEnum.Json:
+                                {
+                                    string url = _CoordsUrl;
+                                    string json;
+                                    using (var client = new WebClient())
+                                    {
+                                        json = client.DownloadString(url);
+                                    }
+                                    var jsonObject = JObject.Parse(json);
+                                    JArray headers = (JArray)jsonObject["headers"];
+                                    foreach (JToken header in headers)
+                                    {
+                                        string objectNumber = (string)header["objectNumber"];
+                                        int ownerCode = (int)header["ownerCode"];
+                                        double latitude = (double)header["coordinates"]["latitude"];
+                                        double longitude = (double)header["coordinates"]["longitude"];
+                                    }
 
+                                    break;
+                                }
                             default:
                                 // Обработка для других значений, если необходимо
                                 break;
@@ -169,7 +195,7 @@ namespace NeftViewer.MVC.Service
                     await Task.Delay(dailyInterval, stoppingToken);
                 }
             }
-        } 
+        }
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
             var result = new List<Dictionary<string, object>>();

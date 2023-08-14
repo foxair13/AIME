@@ -11,8 +11,8 @@ namespace NeftViewer.Data.Models
         public string RoadId { get; set; }
         [ForeignKey("RoadId")]
         public virtual Road Roads { get; set; }
-        public string UIDObject { get; set; }
-        [ForeignKey("UIDObject")]
+        public string CodeSUID { get; set; }
+        [ForeignKey("CodeSUID")]
         public virtual ObjectItem Objects { get; set; }
     }
 }
