@@ -7,6 +7,7 @@ namespace NeftViewer.Data.Models
     public partial class ObjectOnRoad
     {
         [Key]
+        public int Id { get; set; }
         public string RoadId { get; set; }
         [ForeignKey("RoadId")]
         public virtual Road Roads { get; set; }

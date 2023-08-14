@@ -140,15 +140,19 @@ namespace NeftViewer.MVC.Service
                                     var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
                                     List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
                                     var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-                                    var uniqItems = new List<string>();
+                                    var uniqRoadId = new List<string>();
+                                    var uniqUIDObject = new List<string>();
 
                                     foreach (var row in viewData)
                                     {
                                         var roadIdValue = row["RoadId"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqItems.Contains(roadIdValue))
+                                        var uidObjectValue = row["UIDObject"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue) &&
+                                            !string.IsNullOrWhiteSpace(uidObjectValue) && !uniqUIDObject.Contains(uidObjectValue))
                                         {
                                             var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
-                                            uniqItems.Add(roadIdValue);
+                                            uniqRoadId.Add(roadIdValue);
+                                            uniqUIDObject.Add(roadIdValue);
                                             objectOnRoadList.Add(objectOnRoad);
                                         }
                                     }

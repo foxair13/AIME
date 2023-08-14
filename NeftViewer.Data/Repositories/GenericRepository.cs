@@ -116,8 +116,8 @@ namespace NeftViewer.Data.Repositories
                         if (!currentItems.Any(existingObj => JsonSerializer.Serialize(existingObj) == JsonSerializer.Serialize(obj)))
                         {
                             uniqueItems.Add(obj);
-                            //_dbContext.Set<TModel>().Add(obj);
-                            //await _dbContext.SaveChangesAsync();
+                            _dbContext.Set<TModel>().Add(obj);
+                            await _dbContext.SaveChangesAsync();
                         }
                     }
                     catch (System.Exception ex)
@@ -125,8 +125,8 @@ namespace NeftViewer.Data.Repositories
                         continue;
                     }
                 }
-                _dbContext.Set<TModel>().AddRange(uniqueItems);
-                await _dbContext.SaveChangesAsync();
+                //_dbContext.Set<TModel>().AddRange(uniqueItems);
+                //await _dbContext.SaveChangesAsync();
                 flag = true;
             }
             catch (System.Exception ex)

@@ -15,11 +15,11 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("Objects")]
         ObjectItems,
-
-        [TableText("ObjectOnRoad")]
-        ObjectOnRoad,
-
         [TableText("IndicatorValues")]
-        IndicatorValues
+        IndicatorValues,
+        [TableText("ObjectOnRoad")]
+        ObjectOnRoad
+
+
     }
 }
