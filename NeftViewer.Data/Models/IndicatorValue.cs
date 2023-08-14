@@ -10,19 +10,31 @@ namespace NeftViewer.Data.Models
     {
         public Guid Id { get; set; }
         public string CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
         public virtual Customer Customers { get; set; }
-        public virtual Criteria Criterias { get; set; }
         public string CodeSUID { get; set; }
         [ForeignKey("CodeSUID")]
         public virtual ObjectItem Objects { get; set; }
-        private DateTime _dateStart;
+        [ForeignKey("CriteriaId")]
+        public virtual Criteria Criterias { get; set; }
 
+        private DateTime _dateStart;
         [Column("DateStart", TypeName = "timestamp with time zone")]
         public DateTime DateStart
         {
             get { return _dateStart; }
             set { _dateStart = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
-        }
-        public string Value { get; set; }
+        }        
+
+        public int CriteriaId { get; set; }
+        public decimal Value { get; set; }
+
+        //private DateTime _lastUpdate;
+        //[Column("LastUpdate", TypeName = "timestamp with time zone")]
+        public string LastUpdate { get; set; }
+        //{
+        //    get { return _lastUpdate; }
+        //    set { _lastUpdate = value; }
+        //}
     }
 }

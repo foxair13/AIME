@@ -9,5 +9,6 @@ namespace NeftViewer.Data.Models
         [Key]
         public string CodeSUID { get; set; }
         public string Name { get; set; }
+        //public virtual ICollection<IndicatorValue> IndicatorValues { get; set; }
     }
 }

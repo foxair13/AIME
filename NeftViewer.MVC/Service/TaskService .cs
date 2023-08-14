@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
@@ -55,6 +56,7 @@ namespace NeftViewer.MVC.Service
                                     await criteriaService.AddCriteriaRange(criteriaList);
                                     break;
                                 }
+
                             case TableEnum.Roads:
                                 {
                                     var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
@@ -70,6 +72,7 @@ namespace NeftViewer.MVC.Service
                                     await roadService.AddRoadRange(roadsList);
                                     break;
                                 }
+
                             case TableEnum.Customers:
                                 {
                                     var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
@@ -90,6 +93,7 @@ namespace NeftViewer.MVC.Service
                                     await customerService.AddCustomerRange(customersList);
                                     break;
                                 }
+
                             case TableEnum.ObjectItems:
                                 {
                                     var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
@@ -110,6 +114,7 @@ namespace NeftViewer.MVC.Service
                                     await objectItemService.AddObjectItemRange(objectItemsList);
                                     break;
                                 }
+
                             case TableEnum.IndicatorValues:
                                 {
                                     var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
@@ -129,6 +134,28 @@ namespace NeftViewer.MVC.Service
                                     await indicatorValueService.AddIndicatorValueRange(indicatorValueList);
                                     break;
                                 }
+
+                            case TableEnum.ObjectOnRoad:
+                                {
+                                    var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
+                                    List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
+                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                    var uniqItems = new List<string>();
+
+                                    foreach (var row in viewData)
+                                    {
+                                        var roadIdValue = row["RoadId"].ToString();
+                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqItems.Contains(roadIdValue))
+                                        {
+                                            var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
+                                            uniqItems.Add(roadIdValue);
+                                            objectOnRoadList.Add(objectOnRoad);
+                                        }
+                                    }
+                                    await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
+                                    break;
+                                }
+
                             default:
                                 // Обработка для других значений, если необходимо
                                 break;

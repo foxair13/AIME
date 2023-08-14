@@ -53,7 +53,6 @@ namespace NeftViewer.BL.Services
             return flag;
         }
 
-
         public EntityEntry<Criteria> DeleteCriteria(string id)
         {
             var res = _uow.Criterias.DeleteByStringID(id);

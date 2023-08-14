@@ -41,6 +41,7 @@ namespace NeftViewer.Data.DataContext
 
         //    optionsBuilder.UseNpgsql(_connectionString);
         //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AspNetUserLoginConfiguration());
@@ -52,6 +53,11 @@ namespace NeftViewer.Data.DataContext
             modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
             modelBuilder.ApplyConfiguration(new ActionRoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            //modelBuilder.ApplyConfiguration(new CriteriaConfiguration());
+            //modelBuilder.ApplyConfiguration(new ObjectItemConfiguration());
+            //modelBuilder.ApplyConfiguration(new IndicatorValueConfiguration());
+
             OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

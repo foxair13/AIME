@@ -14,11 +14,11 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Models.Action> Action { get; }
         IGenericRepository<ActionRole> ActionRole { get; }
         IGenericRepository<Criteria> Criterias { get; }
-        IGenericRepository<Road> Roads { get; }
-        IGenericRepository<ObjectItem> ObjectItems { get; }
-        IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
         IGenericRepository<Customer> Customers { get; }
+        IGenericRepository<ObjectItem> ObjectItems { get; }
+        IGenericRepository<Road> Roads { get; }
         IGenericRepository<IndicatorValue> IndicatorValues { get; }
+        IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
         Task CommitAsync();
     }
 }

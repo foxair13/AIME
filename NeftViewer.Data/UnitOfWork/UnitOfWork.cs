@@ -38,11 +38,11 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Models.Action> Action { get; }
         public IGenericRepository<ActionRole> ActionRole { get; }
         public IGenericRepository<Criteria> Criterias { get; }
-        public IGenericRepository<Road> Roads { get; }
-        public IGenericRepository<ObjectItem> ObjectItems { get; }
-        public IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
         public IGenericRepository<Customer> Customers { get; }
+        public IGenericRepository<ObjectItem> ObjectItems { get; }
+        public IGenericRepository<Road> Roads { get; }
         public IGenericRepository<IndicatorValue> IndicatorValues { get; }
+        public IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
 
         public async Task CommitAsync()
         {
