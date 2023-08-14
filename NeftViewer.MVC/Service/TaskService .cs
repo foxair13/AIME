@@ -168,20 +168,16 @@ namespace NeftViewer.MVC.Service
                                 }
                             case TableEnum.Json:
                                 {
-                                    string url = _CoordsUrl;
-                                    string json;
-                                    using (var client = new WebClient())
-                                    {
-                                        json = client.DownloadString(url);
-                                    }
-                                    var jsonObject = JObject.Parse(json);
+                                    JObject jsonObject = NewMethod();
                                     JArray headers = (JArray)jsonObject["headers"];
                                     foreach (JToken header in headers)
                                     {
-                                        string objectNumber = (string)header["objectNumber"];
-                                        int ownerCode = (int)header["ownerCode"];
+                                        //string objectNumber = (string)header["objectNumber"];
+                                        //string ownerCode = (string)header["ownerCode"];
+                                        double codeSUID = (double)header["CodeSUID"];
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
+                                        await objectOnRoadService.AddItem(codeSUID);
                                     }
 
                                     break;
@@ -196,6 +192,19 @@ namespace NeftViewer.MVC.Service
                 }
             }
         }
+
+        private JObject NewMethod()
+        {
+            string url = _CoordsUrl;
+            string json;
+            using (var client = new WebClient())
+            {
+                json = client.DownloadString(url);
+            }
+            var jsonObject = JObject.Parse(json);
+            return jsonObject;
+        }
+
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
             var result = new List<Dictionary<string, object>>();
