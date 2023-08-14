@@ -17,8 +17,8 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("Objects")]
         ObjectItems,
-        [TableText("IndicatorValues")]
         Json,
+        [TableText("IndicatorValues")]
         IndicatorValues,
         [TableText("ObjectOnRoad")]
         ObjectOnRoad

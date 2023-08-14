@@ -168,7 +168,15 @@ namespace NeftViewer.MVC.Service
                                 }
                             case TableEnum.Json:
                                 {
-                                    JObject jsonObject = NewMethod();
+                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                  
+                                    string url = _CoordsUrl;
+                                    string json;
+                                    using (var client = new WebClient())
+                                    {
+                                        json = client.DownloadString(url);
+                                    }
+                                    var jsonObject = JObject.Parse(json);
                                     JArray headers = (JArray)jsonObject["headers"];
                                     foreach (JToken header in headers)
                                     {
@@ -177,7 +185,6 @@ namespace NeftViewer.MVC.Service
                                         double codeSUID = (double)header["CodeSUID"];
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
-                                        await objectOnRoadService.AddItem(codeSUID);
                                     }
 
                                     break;
