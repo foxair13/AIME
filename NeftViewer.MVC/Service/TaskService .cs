@@ -33,7 +33,7 @@ namespace NeftViewer.MVC.Service
             _FinanceMssql = FinanceMssql;
             _CoordsUrl = coordsUrl;
         }
-        private readonly TimeSpan dailyInterval = TimeSpan.FromSeconds(60);
+        private readonly TimeSpan dailyInterval = TimeSpan.FromDays(1);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

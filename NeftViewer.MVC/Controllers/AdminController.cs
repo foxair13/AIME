@@ -9,7 +9,6 @@ namespace NeftViewer.MVC.Controllers
 
 
 
-
             return View();
         }
     }

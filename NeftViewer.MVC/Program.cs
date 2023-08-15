@@ -20,6 +20,7 @@ using NeftViewer.MVC;
 
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
@@ -84,7 +85,16 @@ else
     app.UseHsts();
 }
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        if (ctx.File.Name.EndsWith(".js"))
+        {
+            ctx.Context.Response.Headers["Content-Type"] = "application/javascript";
+        }
+    }
+});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

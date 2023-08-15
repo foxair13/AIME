@@ -1,7 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@section HeadArea {
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+            height:100%;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/osm/ol.css" rel="stylesheet" />
 
+}
 
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="map" class="map"></div>
 
+<br />
+@section Scripts {
+@*    <script type="module" src="~/lib/osm/dist/ol.js"></script>*@
+@*    <script type="module" src="~/lib/osm/map.js"></script>
+    <script type="module" src="~/lib/osm/source/osm.js"></script>
+    <script type="module" src="~/lib/osm/layer/tile.js"></script>
+    <script type="module" src="~/lib/osm/view.js"></script>*@
+    <script type="module">
+
+        import Map from '../lib/osm/Map.js';
+        import OSM from '../lib/osm/source/OSM.js';
+        import TileLayer from '../lib/osm/layer/Tile.js';
+        import View from '../lib/osm/View.js';
+        import { useGeographic} from '../lib/osm/proj.js';
+        import GeoJSON from '../lib/osm/format/GeoJSON.js';
+        //import VectorLayer from '../lib/osm/layer/Vector.js';
+        //import VectorSource from '../lib/osm/source/Vector.js'; // Импорт VectorLayer
+        //import Style from '../lib/osm/style/Style.js'; // Импорт стилей
+        //import Stroke from '../lib/osm/style/Stroke.js'; // Импорт стилей
+        useGeographic();
+        const belarusExtent = [23.203, 51.221, 32.761, 56.146];
+
+        const centerLon = (belarusExtent[2] + belarusExtent[0]) / 2;
+        const centerLat = (belarusExtent[3] + belarusExtent[1]) / 2;
+        const center = [centerLon, centerLat];
+        const map = new Map({
+            target: 'map',
+            layers: [
+                new TileLayer({
+                    source: new OSM(),
+                }),
+            ],
+            view: new View({
+                center: center,
+                zoom:0,
+                 extent: belarusExtent
+            }),
+        });
+
+    </script>
+
+}
