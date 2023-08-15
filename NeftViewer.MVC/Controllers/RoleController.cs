@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NeftViewer.Core.ActionFilters;
 using NeftViewer.MVC.Data;
 using NeftViewer.MVC.Models;
 
 namespace NeftViewer.MVC.Controllers
 {
+    [CustomAuthorize("Role")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

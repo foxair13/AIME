@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NeftViewer.BL.Services.Contracts;
+using NeftViewer.Core.ActionFilters;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Data;
 using NeftViewer.MVC.Models;
 
 namespace NeftViewer.MVC.Controllers
 {
+    [CustomAuthorize("ActionRole")]
     public class ActionRoleController : Controller
     {
         private readonly IActionRoleService _actionRoleService;

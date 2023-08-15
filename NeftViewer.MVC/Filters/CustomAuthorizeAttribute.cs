@@ -96,6 +96,7 @@ namespace NeftViewer.Core.ActionFilters
             else
             {
                 string name = context.HttpContext.User.Identity.Name;
+                bool isAdmin = context.HttpContext.User.IsInRole("Admin");
                 var routeData = context.ActionDescriptor.RouteValues;
                 var area = routeData["area"]?.ToString();
                 var page = routeData["page"]?.ToString();
@@ -104,7 +105,7 @@ namespace NeftViewer.Core.ActionFilters
                     return;
                 }
                 var actionSelector = _selector ?? context.ActionDescriptor.AttributeRouteInfo?.Name;
-                if (!string.IsNullOrEmpty(actionSelector) && CheckRoles(_selector, name))
+                if ((!string.IsNullOrEmpty(actionSelector) && CheckRoles(_selector, name)) || isAdmin)
                 {
                     // Пропускаем пользователя дальше
                     return;

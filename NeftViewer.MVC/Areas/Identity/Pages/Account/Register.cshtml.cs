@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NeftViewer.MVC.Options;
@@ -33,6 +34,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IOptions<SmtpParam> _smtpParam;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -40,7 +42,8 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IOptions<SmtpParam> smtpParam)
+            IOptions<SmtpParam> smtpParam,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -49,6 +52,7 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _smtpParam = smtpParam;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -136,7 +140,16 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, "Admin").Wait();
+                    var isFirstUser = await _userManager.Users.CountAsync() == 1;
+                    if (isFirstUser)
+                    {
+                        if (!await _roleManager.RoleExistsAsync("Admin"))
+                        {
+                            await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                        }
+                        _userManager.AddToRoleAsync(user, "Admin").Wait();
+                    }
+                 
                     _logger.LogInformation("Пользователь создал новую учетную запись с паролем.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
