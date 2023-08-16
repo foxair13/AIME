@@ -1,11 +1,6 @@
-﻿using DocumentFormat.OpenXml.InkML;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
-using NeftViewer.MVC.Data;
-using NeftViewer.MVC.FinanceViewModels;
-using NeftViewer.MVC.Service;
 
 namespace NeftViewer.MVC.FinanceModels
 {

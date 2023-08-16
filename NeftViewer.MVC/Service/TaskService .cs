@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -179,14 +180,11 @@ namespace NeftViewer.MVC.Service
                                     JArray headers = (JArray)jsonObject["headers"];
                                     foreach (JToken header in headers)
                                     {
-                                        //string objectNumber = (string)header["objectNumber"];
-                                        //string ownerCode = (string)header["ownerCode"];
-                                        double codeSUID = (double)header["CodeSUID"];
+                                        string codeSUID = (string)header["suid"];
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
-
+                                        await objectItemService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude);
                                     }
-
                                     break;
                                 }
                             default:
