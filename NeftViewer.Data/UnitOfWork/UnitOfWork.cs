@@ -20,7 +20,10 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<ObjectItem> ObjectItemRepository,
               IGenericRepository<ObjectOnRoad> ObjectOnRoadRepository,
               IGenericRepository<Customer> CustomerRepository,
-              IGenericRepository<IndicatorValue> IndicatorValueRepository
+              IGenericRepository<IndicatorValue> IndicatorValueRepository,
+              IGenericRepository<Area> AreaRepository,
+              IGenericRepository<District> DistrictRepository,
+              IGenericRepository<Locality> LocalityRepository
             )
         {
             _context = context;
@@ -33,6 +36,9 @@ namespace NeftViewer.Data.UnitOfWork
             ObjectOnRoads = ObjectOnRoadRepository;
             Customers = CustomerRepository;
             IndicatorValues = IndicatorValueRepository;
+            Areas = AreaRepository;
+            Districts = DistrictRepository;
+            Localities = LocalityRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
@@ -43,6 +49,9 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Road> Roads { get; }
         public IGenericRepository<IndicatorValue> IndicatorValues { get; }
         public IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
+        public IGenericRepository<Area> Areas { get; }
+        public IGenericRepository<District> Districts { get; }
+        public IGenericRepository<Locality> Localities { get; }
 
         public async Task CommitAsync()
         {

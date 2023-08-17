@@ -11,6 +11,11 @@ namespace NeftViewer.Data.Models
         public string Name { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
+        [ForeignKey("CodeSUID")]
+        public virtual Area Areas { get; set; }
+        [ForeignKey("CodeSUID")]
+        public virtual District Districts { get; set; }
+        [ForeignKey("CodeSUID")]
+        public virtual Locality Localities { get; set; }
     }
 }

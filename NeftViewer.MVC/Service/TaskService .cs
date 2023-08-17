@@ -1,20 +1,10 @@
 ﻿using AutoMapper;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using NeftViewer.BL.Services;
 using NeftViewer.BL.Services.Contracts;
-using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
-using NeftViewer.MVC.Filters;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Utilities.Collections;
 using System.Net;
-using System.Security.Policy;
 
 namespace NeftViewer.MVC.Service
 {
@@ -153,20 +143,17 @@ namespace NeftViewer.MVC.Service
                                     foreach (var row in viewData)
                                     {
                                         var roadIdValue = row["RoadId"].ToString();
-                                        var UIDObject = row["UIDObject"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue) &&
-                                            !string.IsNullOrWhiteSpace(UIDObject) && !uniqUIDObject.Contains(UIDObject))
+                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue))
                                         {
                                             var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
                                             uniqRoadId.Add(roadIdValue);
-                                            uniqUIDObject.Add(roadIdValue);
                                             objectOnRoadList.Add(objectOnRoad);
                                         }
                                     }
                                     await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
                                     break;
                                 }
-                            case TableEnum.Json:
+                            case TableEnum.JsonCoordinates:
                                 {
                                     var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
 
@@ -184,6 +171,36 @@ namespace NeftViewer.MVC.Service
                                         double latitude = (double)header["coordinates"]["latitude"];
                                         double longitude = (double)header["coordinates"]["longitude"];
                                         await objectItemService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude);
+                                    }
+                                    break;
+                                }
+
+                            case TableEnum.JsonADL:
+                                {
+                                    var areaService = scope.ServiceProvider.GetRequiredService<IAreaService>();
+                                    var districtService = scope.ServiceProvider.GetRequiredService<IDistrictService>();
+                                    var localityService = scope.ServiceProvider.GetRequiredService<ILocalityService>();
+
+                                    string url = _CoordsUrl;
+                                    string json;
+                                    using (var client = new WebClient())
+                                    {
+                                        json = client.DownloadString(url);
+                                    }
+                                    var jsonObject = JObject.Parse(json);
+                                    JArray headers = (JArray)jsonObject["headers"];
+                                    foreach (JToken header in headers)
+                                    {
+                                        string codeSUID = (string)header["suid"];
+
+                                        string areaName = (string)header["areaName"];
+                                        await areaService.CreateArea(codeSUID, areaName);
+
+                                        string districtName = (string)header["districtName"];
+                                        await districtService.CreateDistrict(codeSUID, districtName);
+
+                                        string localityName = (string)header["localityName"];
+                                        await localityService.CreateLocality(codeSUID, localityName);
                                     }
                                     break;
                                 }

@@ -25,6 +25,9 @@ namespace NeftViewer.Data.DataContext
         public DbSet<ObjectOnRoad> ObjectOnRoad { get; set; }
         public DbSet<Models.ObjectItem> Objects { get; set; }
         public DbSet<Road> Roads { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Locality> Localities { get; set; }
+        public DbSet<Area> Areas { get; set; }
         public DbSet<Models.Action> Actions { get; set; }
         public DbSet<ActionRole> ActionRoles { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
@@ -53,10 +56,6 @@ namespace NeftViewer.Data.DataContext
             modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
             modelBuilder.ApplyConfiguration(new ActionRoleConfiguration());
-            //modelBuilder.ApplyConfiguration(new CustomerConfiguration());
-            //modelBuilder.ApplyConfiguration(new CriteriaConfiguration());
-            //modelBuilder.ApplyConfiguration(new ObjectItemConfiguration());
-            //modelBuilder.ApplyConfiguration(new IndicatorValueConfiguration());
 
             OnModelCreatingPartial(modelBuilder);
         }

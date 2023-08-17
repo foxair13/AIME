@@ -3,17 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("ObjectOnRoad")]
-    public partial class ObjectOnRoad
+    [Table("Localities")]
+    public partial class Locality
     {
-        [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string RoadId { get; set; }
-        [ForeignKey("RoadId")]
-        public virtual Road Roads { get; set; }
         public string CodeSUID { get; set; }
-        [ForeignKey("CodeSUID")]
-        public virtual ObjectItem Objects { get; set; }
+        public string Name { get; set; }
     }
 }

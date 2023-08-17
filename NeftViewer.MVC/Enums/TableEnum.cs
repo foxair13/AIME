@@ -4,8 +4,6 @@ namespace NeftViewer.MVC.Enums
 {
     public enum TableEnum
     {
-
-       
         [TableText("Criterias")]
         Criterias,
 
@@ -14,15 +12,18 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("Customers")]
         Customers,
-        Json,
-        [TableText("IndicatorValues")]
-        IndicatorValues,
+
         [TableText("Objects")]
         ObjectItems,
+
+        [TableText("IndicatorValues")]
+        JsonCoordinates,
+        IndicatorValues,
+
         [TableText("ObjectOnRoad")]
-        ObjectOnRoad
+        ObjectOnRoad,
 
-
-
+        [TableText("JsonADL")]
+        JsonADL
     }
 }
