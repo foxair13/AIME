@@ -37,164 +37,169 @@ namespace NeftViewer.MVC.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using (var scope = _serviceScopeFactory.CreateScope())
+            if (1==2)
             {
-                GetTableService _getTableService = new GetTableService(_FinanceMssql);
-                while (!stoppingToken.IsCancellationRequested)
+
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
+                    GetTableService _getTableService = new GetTableService(_FinanceMssql);
+
+                    while (!stoppingToken.IsCancellationRequested)
                     {
-
-                        switch (table)
+                        foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
                         {
-                            case TableEnum.Criterias:
-                                {
-                                    var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
-                                    List<Criteria> criteriaList = new List<Criteria>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
-                                    foreach (var row in viewData)
+                            switch (table)
+                            {
+                                case TableEnum.Criterias:
                                     {
-                                        var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
-                                        criteriaList.Add(criteria);
-                                    }
-                                    await criteriaService.AddCriteriaRange(criteriaList);
-                                    break;
-                                }
+                                        var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
+                                        List<Criteria> criteriaList = new List<Criteria>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
-                            case TableEnum.Roads:
-                                {
-                                    var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
-                                    List<Road> roadsList = new List<Road>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
-
-                                    foreach (var row in viewData)
-                                    {
-                                        var road = _mapper.Map<Dictionary<string, object>, Road>(row);
-                                        roadsList.Add(road);
-                                    }
-                                    await roadService.AddRoadRange(roadsList);
-                                    break;
-                                }
-
-                            case TableEnum.Customers:
-                                {
-                                    var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
-                                    List<Customer> customersList = new List<Customer>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
-                                    var uniqItems = new List<string>();
-                                    foreach (var row in viewData)
-                                    {
-                                        var codeSuidValue = row["Id"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                        foreach (var row in viewData)
                                         {
-                                            uniqItems.Add(codeSuidValue);
-                                            var customer = _mapper.Map<Dictionary<string, object>, Customer>(row);
-                                            customersList.Add(customer);
+                                            var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
+                                            criteriaList.Add(criteria);
                                         }
+                                        await criteriaService.AddCriteriaRange(criteriaList);
+                                        break;
                                     }
-                                    await customerService.AddCustomerRange(customersList);
-                                    break;
-                                }
 
-                            case TableEnum.ObjectItems:
-                                {
-                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
-                                    List<ObjectItem> objectItemsList = new List<ObjectItem>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
-                                    var uniqItems = new List<string>();
-                                    foreach (var row in viewData)
+                                case TableEnum.Roads:
                                     {
-                                        var codeSuidValue = row["CodeSUID"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                        var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
+                                        List<Road> roadsList = new List<Road>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+
+                                        foreach (var row in viewData)
                                         {
-                                            uniqItems.Add(codeSuidValue);
-                                            var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
-                                            objectItemsList.Add(objectItem);
+                                            var road = _mapper.Map<Dictionary<string, object>, Road>(row);
+                                            roadsList.Add(road);
                                         }
+                                        await roadService.AddRoadRange(roadsList);
+                                        break;
                                     }
-                                    await objectItemService.AddObjectItemRange(objectItemsList);
-                                    break;
-                                }
 
-                            case TableEnum.IndicatorValues:
-                                {
-                                    var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
-                                    List<IndicatorValue> indicatorValueList = new List<IndicatorValue>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-                                    //var uniqItems = new List<string>();
-
-                                    foreach (var row in viewData)
+                                case TableEnum.Customers:
                                     {
-                                        //var codeSuidValue = row["CodeSUID"].ToString();
-                                        //if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
-                                        //{
-                                        var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
-                                        indicatorValueList.Add(indicatorValue);
-                                        //}
-                                    }
-                                    await indicatorValueService.AddIndicatorValueRange(indicatorValueList);
-                                    break;
-                                }
+                                        var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
+                                        List<Customer> customersList = new List<Customer>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
-                            case TableEnum.ObjectOnRoad:
-                                {
-                                    var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
-                                    List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
-                                    var uniqRoadId = new List<string>();
-                                    var uniqUIDObject = new List<string>();
-
-                                    foreach (var row in viewData)
-                                    {
-                                        var roadIdValue = row["RoadId"].ToString();
-                                        var UIDObject = row["UIDObject"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue) &&
-                                            !string.IsNullOrWhiteSpace(UIDObject) && !uniqUIDObject.Contains(UIDObject))
+                                        var uniqItems = new List<string>();
+                                        foreach (var row in viewData)
                                         {
-                                            var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
-                                            uniqRoadId.Add(roadIdValue);
-                                            uniqUIDObject.Add(roadIdValue);
-                                            objectOnRoadList.Add(objectOnRoad);
+                                            var codeSuidValue = row["Id"].ToString();
+                                            if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                            {
+                                                uniqItems.Add(codeSuidValue);
+                                                var customer = _mapper.Map<Dictionary<string, object>, Customer>(row);
+                                                customersList.Add(customer);
+                                            }
                                         }
+                                        await customerService.AddCustomerRange(customersList);
+                                        break;
                                     }
-                                    await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
-                                    break;
-                                }
-                            case TableEnum.Json:
-                                {
-                                    var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
 
-                                    string url = _CoordsUrl;
-                                    string json;
-                                    using (var client = new WebClient())
+                                case TableEnum.ObjectItems:
                                     {
-                                        json = client.DownloadString(url);
+                                        var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                        List<ObjectItem> objectItemsList = new List<ObjectItem>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+                                        var uniqItems = new List<string>();
+                                        foreach (var row in viewData)
+                                        {
+                                            var codeSuidValue = row["CodeSUID"].ToString();
+                                            if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                            {
+                                                uniqItems.Add(codeSuidValue);
+                                                var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
+                                                objectItemsList.Add(objectItem);
+                                            }
+                                        }
+                                        await objectItemService.AddObjectItemRange(objectItemsList);
+                                        break;
                                     }
-                                    var jsonObject = JObject.Parse(json);
-                                    JArray headers = (JArray)jsonObject["headers"];
-                                    foreach (JToken header in headers)
+
+                                case TableEnum.IndicatorValues:
                                     {
-                                        string objectNumber = (string)header["objectNumber"];
-                                        int ownerCode = (int)header["ownerCode"];
-                                        double latitude = (double)header["coordinates"]["latitude"];
-                                        double longitude = (double)header["coordinates"]["longitude"];
+                                        var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
+                                        List<IndicatorValue> indicatorValueList = new List<IndicatorValue>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                        //var uniqItems = new List<string>();
 
+                                        foreach (var row in viewData)
+                                        {
+                                            //var codeSuidValue = row["CodeSUID"].ToString();
+                                            //if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
+                                            //{
+                                            var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
+                                            indicatorValueList.Add(indicatorValue);
+                                            //}
+                                        }
+                                        await indicatorValueService.AddIndicatorValueRange(indicatorValueList);
+                                        break;
                                     }
 
+                                case TableEnum.ObjectOnRoad:
+                                    {
+                                        var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
+                                        List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
+                                        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+
+                                        var uniqRoadId = new List<string>();
+                                        var uniqUIDObject = new List<string>();
+
+                                        foreach (var row in viewData)
+                                        {
+                                            var roadIdValue = row["RoadId"].ToString();
+                                            var UIDObject = row["UIDObject"].ToString();
+                                            if (!string.IsNullOrWhiteSpace(roadIdValue) && !uniqRoadId.Contains(roadIdValue) &&
+                                                !string.IsNullOrWhiteSpace(UIDObject) && !uniqUIDObject.Contains(UIDObject))
+                                            {
+                                                var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
+                                                uniqRoadId.Add(roadIdValue);
+                                                uniqUIDObject.Add(roadIdValue);
+                                                objectOnRoadList.Add(objectOnRoad);
+                                            }
+                                        }
+                                        await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
+                                        break;
+                                    }
+                                case TableEnum.Json:
+                                    {
+                                        var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+
+                                        string url = _CoordsUrl;
+                                        string json;
+                                        using (var client = new WebClient())
+                                        {
+                                            json = client.DownloadString(url);
+                                        }
+                                        var jsonObject = JObject.Parse(json);
+                                        JArray headers = (JArray)jsonObject["headers"];
+                                        foreach (JToken header in headers)
+                                        {
+                                            string objectNumber = (string)header["objectNumber"];
+                                            int ownerCode = (int)header["ownerCode"];
+                                            double latitude = (double)header["coordinates"]["latitude"];
+                                            double longitude = (double)header["coordinates"]["longitude"];
+
+                                        }
+
+                                        break;
+                                    }
+                                default:
+                                    // Обработка для других значений, если необходимо
                                     break;
-                                }
-                            default:
-                                // Обработка для других значений, если необходимо
-                                break;
+                            }
                         }
-                    }
 
-                    await Task.Delay(dailyInterval, stoppingToken);
+                        await Task.Delay(dailyInterval, stoppingToken);
+                    }
                 }
             }
         }
