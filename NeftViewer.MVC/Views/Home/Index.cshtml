@@ -16,6 +16,7 @@
 }
 
 <div id="map" class="map"></div>
+<div id="info" style="position: absolute; bottom: 10px; left: 10px;">прпр</div>
 
 <br />
 @section Scripts {
@@ -37,164 +38,185 @@
             url: '@Url.Content("~/georegion/Belarus.json")',
             format: new ol.format.GeoJSON(),
         });
-
-        const bresckajaOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/BresckajaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const bresckajaOblLayer = new ol.layer.Vector({
-            source: bresckajaOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.3)', // Цвет заливки области Брест
+        const createLayer = (source, fillColor, strokeColor, text) => {
+            return new ol.layer.Vector({
+                source: source,
+                style: new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: fillColor,
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: strokeColor,
+                        width: 2,
+                    }),
+                    text: new ol.style.Text({
+                        font: '12px Calibri,sans-serif',
+                        fill: new ol.style.Fill({ color: '#000' }),
+                        stroke: new ol.style.Stroke({
+                            color: '#fff',
+                            width: 2,
+                        }),
+                        text: text,
+                        offsetY: -10,
+                    }),
                 }),
-                stroke: new ol.style.Stroke({
-                    color: 'blue', // Цвет границы области Брест
-                    width: 2,
+            });
+        };
+        const layersConfig = [
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/BresckajaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-            }),
-        });
-        const homieĺskajaOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/HomelskayaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const homieĺskajaOblLayer = new ol.layer.Vector({
-            source: homieĺskajaOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 255, 0, 0.3)', // Цвет заливки области Гомель
+                fillColor: 'rgba(100, 255, 255, 0.3)',
+                strokeColor: 'blue',
+                text: 'Брестская область',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/HomelskayaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-                stroke: new ol.style.Stroke({
-                    color: 'green', // Цвет границы области Гомель
-                    width: 2,
+                fillColor: 'rgba(0, 255, 0, 0.3)',
+                strokeColor: 'green',
+                text: 'Гомельская область',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/GrodnenskayaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-            }),
-        });
-        const grodnenskayaOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/GrodnenskayaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const grodnenskayaOblLayer = new ol.layer.Vector({
-            source: grodnenskayaOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(10, 255, 200, 0.3)', // Цвет заливки области Гродно
+                fillColor: 'rgba(10, 255, 200, 0.3)',
+                strokeColor: 'yellow',
+                text: 'Гродненская область',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/MogilevskayaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-                stroke: new ol.style.Stroke({
-                    color: 'yellow', // Цвет границы области Гродно
-                    width: 2,
+                fillColor: 'rgba(255, 255, 0, 0.3)',
+                strokeColor: 'yellow',
+                text: 'Могилевская область',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/Minsk.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-            }),
-        });
-        const mogilevskayaOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/MogilevskayaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const mogilevskayaOblLayer = new ol.layer.Vector({
-            source: mogilevskayaOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(255, 255, 0, 0.3)', // Цвет заливки области Могилёв
+                fillColor: 'rgba(0, 255, 255, 0.3)',
+                strokeColor: 'cyan',
+                text: 'г. Минск',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/MinskayaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-                stroke: new ol.style.Stroke({
-                    color: 'yellow', // Цвет границы области Могилёв
-                    width: 2,
+                fillColor: 'rgba(255, 0, 255, 0.3)',
+                strokeColor: 'orange',
+                text: 'Минская область',
+            },
+            {
+                source: new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/VicebskayaObl.json")',
+                    format: new ol.format.GeoJSON(),
                 }),
-            }),
-        });
-        const minskLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/Minsk.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const minskLayer = new ol.layer.Vector({
-            source: minskLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 255, 255, 0.3)', // Цвет заливки г. Минск
-                }),
-                stroke: new ol.style.Stroke({
-                    color: 'Cyan', // Цвет границы г. Минск
-                    width: 2,
-                }),
-            }),
-        });
-        const minskOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/MinskayaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const minskOblLayer = new ol.layer.Vector({
-            source: minskOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(255,0 , 255, 0.3)', // Цвет заливки области Минск
-                }),
-                stroke: new ol.style.Stroke({
-                    color: 'Orange', // Цвет границы области Минск
-                    width: 2,
-                }),
-            }),
-        });
-        const vicebskayaOblLayerSource = new ol.source.Vector({
-            url: '@Url.Content("~/georegion/VicebskayaObl.json")',
-            format: new ol.format.GeoJSON(),
-        });
-        const vicebskayaOblLayer = new ol.layer.Vector({
-            source: vicebskayaOblLayerSource,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(100,100 , 255, 0.3)', // Цвет заливки области Минск
-                }),
-                stroke: new ol.style.Stroke({
-                    color: 'gray', // Цвет границы области Минск
-                    width: 2,
-                }),
-            }),
-        });
-        const clipLayer = new ol.layer.Vector({
-            style: null,
-            source: clipLayerSource,
-        });
-        clipLayerSource.on('addfeature', function () {
-            base.setExtent(clipLayerSource.getExtent());
-        });
+                fillColor: 'rgba(300, 100, 55, 0.3)',
+                strokeColor: 'gray',
+                text: 'Витебская область',
+            },
+        ];
         const style = new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(255, 255, 255, 0.6)',
             })
         });
-        const clipLayerBorder = new ol.layer.Vector({
-            style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'red',
-                    width: 5,
+     
+        const layers = [
+            base,
+            new ol.layer.Vector({
+                style: null,
+                source: clipLayerSource,
+            }),
+            new ol.layer.Vector({
+                style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'red',
+                        width: 5,
+                    }),
                 }),
+                source: clipLayerSource,
             }),
-            source: clipLayerSource,
-        });
-        base.on('postrender', function (e) {
-            const vectorContext = ol.render.getVectorContext(e);
-            e.context.globalCompositeOperation = 'destination-in';
-            clipLayerSource.forEachFeature(function (feature) {
-                vectorContext.drawFeature(feature, style);
-            });
-            e.context.globalCompositeOperation = 'source-over';
-        });
-        const map = new ol.Map({
-            target: 'map',
-            layers: [base, clipLayerBorder, clipLayer, bresckajaOblLayer, homieĺskajaOblLayer, grodnenskayaOblLayer, mogilevskayaOblLayer, minskLayer, minskOblLayer, vicebskayaOblLayer],
-            view: new ol.View({
-                center: ol.proj.fromLonLat(center),
-                zoom:7,
-                //minZoom: 0,  // Минимальный масштаб
-                //maxZoom: 10, // Максимальный масштаб
-                //extent: ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), // Преобразование границ в проекцию карты
-               
+            ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text)),
+        ];
+        const highlightStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'rgba(255, 0, 0, 0.7)',
+                width: 6,
             }),
-        });
-        map.on('postcompose', function (e) {
-            document.querySelector('canvas').style.filter = "brightness(90%) invert(100%) hue-rotate(280deg)";
         });
 
+
+
+      
+
+        const map = new ol.Map({
+            target: 'map',
+            layers: layers,
+            view: new ol.View({
+                center: ol.proj.fromLonLat(center),
+                zoom: 7,
+            }),
+        });
+        const displayFeatureInfo = (pixel) => {
+            map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+                const info = document.getElementById('info');
+                if (layer instanceof ol.layer.Vector) {
+                    info.innerHTML = feature ? feature.get('name') : '&nbsp;';
+
+                    if (feature !== highlight) {
+                        if (highlight) {
+                            featureOverlay.getSource().removeFeature(highlight);
+                        }
+                        if (feature) {
+                            featureOverlay.getSource().addFeature(feature);
+                        }
+                        highlight = feature;
+                    }
+                }
+            });
+        };
+                const featureOverlay = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            map: map,
+            style: highlightStyle,
+        });
+        let highlight;
+        map.on('postcompose', (e) => {
+            document.querySelector('canvas').style.filter = "brightness(90%) invert(100%) hue-rotate(280deg)";
+            const vectorContext = ol.render.getVectorContext(e);
+
+            vectorContext.setStyle(style);
+
+            // Пройдитесь по всем фичам и отрисуйте их, чтобы выполнить обрезание
+            clipLayerSource.forEachFeature(function (feature) {
+                vectorContext.drawFeature(feature);
+            });
+        });
+
+        map.on('pointermove', (evt) => {
+            if (evt.dragging) {
+                return;
+            }
+            const pixel = map.getEventPixel(evt.originalEvent);
+            displayFeatureInfo(pixel);
+        });
+
+        map.on('click', (evt) => {
+            displayFeatureInfo(evt.pixel);
+            alert(evt.pixel);
+        });
     </script>
 
 }
