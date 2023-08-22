@@ -32,6 +32,7 @@ namespace NeftViewer.MVC.Service
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 GetTableService _getTableService = new GetTableService(_FinanceMssql);
+
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     foreach (TableEnum table in Enum.GetValues(typeof(TableEnum)))
@@ -200,7 +201,7 @@ namespace NeftViewer.MVC.Service
                                         {
                                             await areaService.CreateOwner(codeSUID, ownerName);
                                         }
-                                     }
+                                    }
                                     break;
                                 }
 
@@ -251,7 +252,7 @@ namespace NeftViewer.MVC.Service
                                                 await areaService.CreateArea(codeSUID, areaName);
                                             }
                                         }
-                                     }
+                                    }
                                     break;
                                 }
                             default:
@@ -264,7 +265,6 @@ namespace NeftViewer.MVC.Service
                 }
             }
         }
-
         private JObject NewMethod()
         {
             string url = _CoordsUrl;
@@ -306,5 +306,4 @@ namespace NeftViewer.MVC.Service
             return result;
         }
     }
-
 }
