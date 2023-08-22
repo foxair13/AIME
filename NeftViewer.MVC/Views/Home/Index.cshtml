@@ -49,16 +49,16 @@
                         color: strokeColor,
                         width: 2,
                     }),
-                    text: new ol.style.Text({
-                        font: '14px Calibri,sans-serif',
-                        fill: new ol.style.Fill({ color: '#000' }),
-                        stroke: new ol.style.Stroke({
-                            color: '#fff',
-                            width: 4,
-                        }),
-                        text: text,
-                        offsetY: 20,
-                    }),
+                    //text: new ol.style.Text({
+                    //    font: '14px Calibri,sans-serif',
+                    //    fill: new ol.style.Fill({ color: '#000' }),
+                    //    stroke: new ol.style.Stroke({
+                    //        color: '#fff',
+                    //        width: 4,
+                    //    }),
+                    //    text: text,
+                    //    offsetY: 20,
+                    //}),
                 }),
             });
         };
@@ -431,7 +431,7 @@
             const view = map.getView();
             const zoom = view.getZoom();
             const delta = Math.max(-1, Math.min(1, (evt.originalEvent.deltaY || -evt.originalEvent.wheelDelta || evt.originalEvent.detail)));
-            const newZoom = zoom + delta * 0.2;
+            const newZoom = zoom - delta * 0.2;
             view.setZoom(newZoom);
 
             const currentExtent = view.calculateExtent(map.getSize());
