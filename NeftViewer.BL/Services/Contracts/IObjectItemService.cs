@@ -12,6 +12,6 @@ namespace NeftViewer.BL.Services.Contracts
         EntityEntry<ObjectItem> DeleteObjectItem(string id);
         Task<bool> AddObjectItem(ObjectItem objectItem);
         Task<bool> AddObjectItemRange(IEnumerable<ObjectItem> objectItems);
-        Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude);
+        Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude, string ownerName);
     }
 }

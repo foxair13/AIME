@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeftViewer.Data.DataContext;
 using NeftViewer.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeftViewer.Data.Repositories.EntityRepositories
 {
@@ -27,6 +22,5 @@ namespace NeftViewer.Data.Repositories.EntityRepositories
         {
             return await _dbContext.Set<AspNetUser>().FirstAsync(z => z.Id == id);
         }
-
     }
 }

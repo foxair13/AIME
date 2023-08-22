@@ -56,6 +56,7 @@ namespace NeftViewer.Core.ActionFilters
             }
             return str;
         }
+
         public bool CheckRoles(string actionselector, string name)
         {
             bool flag = false;

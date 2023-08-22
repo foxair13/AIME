@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NeftViewer.Data.Models
 {
-    [Table("Customers")]
-    public partial class Customer
+    [Table("Owners")]
+    public partial class Owner
     {
         [Key]
-        public string Id { get; set; }
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

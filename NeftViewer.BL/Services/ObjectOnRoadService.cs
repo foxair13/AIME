@@ -65,5 +65,11 @@ namespace NeftViewer.BL.Services
             var res = await _uow.ObjectOnRoads.AddRange(objectOnRoads);
             return res;
         }
+
+        public async Task<bool> AddItem(IEnumerable<ObjectOnRoad> objectOnRoads)
+        {
+            var res = await _uow.ObjectOnRoads.AddRange(objectOnRoads);
+            return res;
+        }
     }
 }

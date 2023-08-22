@@ -2,11 +2,6 @@
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeftViewer.BL.Services
 {
@@ -53,7 +48,6 @@ namespace NeftViewer.BL.Services
             return flag;
         }
 
-
         public EntityEntry<ObjectItem> DeleteObjectItem(string id)
         {
             var res = _uow.ObjectItems.DeleteByStringID(id);
@@ -65,20 +59,22 @@ namespace NeftViewer.BL.Services
             var res = await _uow.ObjectItems.AddRange(objectItems);
             return res;
         }
-        public async Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude)
+        public async Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude, string ownerName)
         {
             bool success = false;
 
             try
             {
-                ObjectItem objectItem = await _uow.ObjectItems.GetAsync(codeSuid);
+                var objectItem = await _uow.ObjectItems.GetAsync(codeSuid);
+                var owners = await _uow.Owners.GetAllAsync();
+                var owner = owners.FirstOrDefault(a => a.Name == ownerName);
 
-                if (objectItem != null)
+                if (objectItem != null && owner != null)
                 {
                     objectItem.Latitude = latitude;
                     objectItem.Longitude = longitude;
+                    objectItem.OwnerId = owner.Id;
                     _uow.ObjectItems.Update(objectItem);
-                    await _uow.CommitAsync();
 
                     success = true;
                 }
@@ -89,5 +85,29 @@ namespace NeftViewer.BL.Services
 
             return success;
         }
+
+        //public async Task<bool> UpdateObjectItemIdsAsync(string codeSuid, int id)
+        //{
+        //    bool success = false;
+
+        //    try
+        //    {
+        //        ObjectItem objectItem = await _uow.ObjectItems.GetAsync(codeSuid);
+
+        //        if (objectItem != null)
+        //        {
+        //            objectItem.OwnerId = id;
+        //            _uow.ObjectItems.Update(objectItem);
+        //            await _uow.CommitAsync();
+
+        //            success = true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+
+        //    return success;
+        //}
     }
 }

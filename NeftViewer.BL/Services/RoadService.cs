@@ -2,11 +2,6 @@
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NeftViewer.BL.Services
 {
@@ -17,6 +12,7 @@ namespace NeftViewer.BL.Services
         {
             _uow = uow;
         }
+
         public async Task CommitChangesAsync()
         {
             await _uow.CommitAsync();
@@ -29,9 +25,7 @@ namespace NeftViewer.BL.Services
 
         public async Task<IEnumerable<Road>> GetRoads()
         {
-
             return await _uow.Roads.GetAllAsync();
-
         }
 
         public EntityEntry<Road> UpdateRoad(Road road)
@@ -52,7 +46,6 @@ namespace NeftViewer.BL.Services
             }
             return flag;
         }
-
 
         public EntityEntry<Road> DeleteRoad(string id)
         {
