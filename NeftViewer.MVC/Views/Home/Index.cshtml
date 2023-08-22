@@ -24,17 +24,20 @@
     <script type="text/javascript" src="~/lib/ol/dist/ol.js"></script>
 
     <script type="text/javascript">
-
         const belarusExtent = [23.203, 51.221, 32.761, 56.146];
-
         const centerLon = (belarusExtent[2] + belarusExtent[0]) / 2;
         const centerLat = (belarusExtent[3] + belarusExtent[1]) / 2;
         const center = [centerLon, centerLat];
-
         const base = new ol.layer.Tile({
             source: new ol.source.OSM(),
         });
-
+        let clipLayerSource;
+        let clipBaseLayerSource;
+        let clipBaseSource;
+        clipBaseLayerSource = new ol.source.Vector({
+            url: '@Url.Content("~/georegion/Belarus.json")',
+            format: new ol.format.GeoJSON(),
+        });
         const createLayer = (source, fillColor, strokeColor, text) => {
             return new ol.layer.Vector({
                 source: source,
@@ -47,25 +50,27 @@
                         width: 2,
                     }),
                     text: new ol.style.Text({
-                        font: '12px Calibri,sans-serif',
+                        font: '14px Calibri,sans-serif',
                         fill: new ol.style.Fill({ color: '#000' }),
                         stroke: new ol.style.Stroke({
                             color: '#fff',
-                            width: 2,
+                            width: 4,
                         }),
                         text: text,
-                        offsetY: -10,
+                        offsetY: 20,
                     }),
                 }),
             });
         };
+        let transparency =0;
+       
         const layersConfig = [
             {
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/BresckajaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(100, 255, 255, 0.3)',
+                fillColor: 'rgba(100, 255, 255,' + transparency + ')',
                 strokeColor: 'blue',
                 text: 'Брестская область',
             },
@@ -74,7 +79,7 @@
                     url: '@Url.Content("~/georegion/HomelskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(0, 255, 0, 0.3)',
+                fillColor: 'rgba(0, 255, 0, ' + transparency + ')',
                 strokeColor: 'green',
                 text: 'Гомельская область',
             },
@@ -83,7 +88,7 @@
                     url: '@Url.Content("~/georegion/GrodnenskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(10, 255, 200, 0.3)',
+                fillColor: 'rgba(10, 255, 200, ' + transparency + ')',
                 strokeColor: 'yellow',
                 text: 'Гродненская область',
             },
@@ -92,7 +97,7 @@
                     url: '@Url.Content("~/georegion/MogilevskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(255, 255, 0, 0.3)',
+                fillColor: 'rgba(255, 255, 0, ' + transparency + ')',
                 strokeColor: 'yellow',
                 text: 'Могилевская область',
             },
@@ -101,7 +106,7 @@
                     url: '@Url.Content("~/georegion/Minsk.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(0, 255, 255, 0.3)',
+                fillColor: 'rgba(0, 255, 255, ' + transparency + ')',
                 strokeColor: 'cyan',
                 text: 'г. Минск',
             },
@@ -110,7 +115,7 @@
                     url: '@Url.Content("~/georegion/MinskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(255, 0, 255, 0.3)',
+                fillColor: 'rgba(255, 0, 255, ' + transparency + ')',
                 strokeColor: 'orange',
                 text: 'Минская область',
             },
@@ -119,7 +124,7 @@
                     url: '@Url.Content("~/georegion/VicebskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
-                fillColor: 'rgba(300, 100, 55, 0.3)',
+                fillColor: 'rgba(300, 100, 55, ' + transparency + ')',
                 strokeColor: 'gray',
                 text: 'Витебская область',
             },
@@ -131,9 +136,24 @@
         });
 
         const layers = [
-
-            ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text)),
+            base,
+            new ol.layer.Vector({
+                style: null,
+                source: clipBaseLayerSource,
+            }),
+            new ol.layer.Vector({
+                style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'red',
+                        width: 5,
+                    }),
+                }),
+                source: clipBaseLayerSource,
+            }),
+            ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text))
+          
         ];
+
         const highlightStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: 'rgba(255, 0, 0, 0.7)',
@@ -146,10 +166,16 @@
             layers: layers,
             view: new ol.View({
                 center: ol.proj.fromLonLat(center),
-                zoom: 7,
+                zoom: 7
             }),
         });
-      
+
+        map.getView().fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
+        map.getInteractions().forEach((interaction) => {
+            if (interaction instanceof ol.interaction.MouseWheelZoom) {
+                interaction.setActive(false);
+            }
+        });
         const displayFeatureInfo = (pixel) => {
             map.forEachFeatureAtPixel(pixel, (feature, layer) => {
 
@@ -175,10 +201,10 @@
         });
         let highlight;
         map.on('postrender', function () {
+
             const mapContainer = document.getElementById('map');
             mapContainer.style.filter = "brightness(90%) invert(100%) hue-rotate(280deg)";
         });
-
         map.on('pointermove', (evt) => {
             if (evt.dragging) {
                 return;
@@ -188,24 +214,23 @@
         });
 
         let selectedLayer = null;
-        let clipLayerSource;
+     
         let feature; //
         let clipLayerBorder;
         let layersLoadedFromHandleMapClick = false;
         const postRenderHandler = function (e) {
             const vectorContext = ol.render.getVectorContext(e);
             e.context.globalCompositeOperation = 'destination-in';
-            clipLayerSource.forEachFeature(function (feature) {
+            clipBaseLayerSource.forEachFeature(function (feature) {
                 vectorContext.drawFeature(feature, style);
             });
             e.context.globalCompositeOperation = 'source-over';
-            base.un('postrender', postRenderHandler);
+            //base.un('postrender', postRenderHandler);
         };
+        base.on('postrender', postRenderHandler);
 
         function handleMapClick(evt, mp) {
-
             const pixel = evt.pixel;
-
             feature = mp.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                 if (layer instanceof ol.layer.Vector) {
                     return feature;
@@ -226,6 +251,7 @@
                 if (matchingLayer) {
 
                     selectedLayer = matchingLayer;
+                    clipBaseSource = base.getSource();
                     mp.getLayers().clear();
                     mp.addLayer(base);
                     mp.addLayer(clipLayer);
@@ -239,7 +265,7 @@
                         }),
                         source: clipLayerSource,
                     });
-                    const postRenderHandler = function (e) {
+                    const postRenderHandlerloc = function (e) {
                         const vectorContext = ol.render.getVectorContext(e);
                         e.context.globalCompositeOperation = 'destination-in';
                         clipLayerSource.forEachFeature(function (feature) {
@@ -249,7 +275,7 @@
                         //base.un('postrender', postRenderHandler); // Удаляем обработчик после выполнения
                     };
 
-                    base.on('postrender', postRenderHandler);
+                    base.on('postrender', postRenderHandlerloc);
                     mp.addLayer(clipLayerBorder);
                     featureOverlay.getSource().clear();
                     const featureExtent = feature.getGeometry().getExtent();
@@ -263,16 +289,16 @@
                 }
             }
         }
-
         class HomeControl extends ol.control.Control {
             constructor() {
-                const button = document.createElement('button');
-                button.innerHTML = 'РБ';
-                button.title = 'Карта РБ';
+                const mapbutton = document.createElement('button');
+                mapbutton.innerHTML = 'РБ';
+                mapbutton.title = 'Карта РБ';
+                mapbutton.id = "rbButton";
 
                 const element = document.createElement('div');
                 element.className = 'rotate-north-control ol-unselectable ol-control';
-                element.appendChild(button);
+                element.appendChild(mapbutton);
                 element.style.top = '100px';
                 element.style.left = '8px';
 
@@ -283,33 +309,91 @@
                 this.handleMapClick = (evt) => {
                     handleMapClick(evt, map);
                 };
-                button.addEventListener('click', () => {
+                mapbutton.addEventListener('click', () => {
                     this.RBMAP(map);
                 });
             }
 
             RBMAP(mp) {
+                transparency = 0; // Reset transparency to 0
+                mp.getLayers().clear(); // Clear all layers
+                mp.getInteractions().clear();
+                featureOverlay.getSource().clear();
                 const view = this.getMap().getView();
                 view.setRotation(0);
-                mp.getLayers().clear();
-                featureOverlay.getSource().clear();
-                mp.addLayer(base);
+                const base = new ol.layer.Tile({
+                    source: new ol.source.OSM(),
+                });
+                const clipBaseLayerSource = new ol.source.Vector({
+                    url: '@Url.Content("~/georegion/Belarus.json")',
+                    format: new ol.format.GeoJSON(),
+                });
+              
+
+                const layers = [
+                    base,
+                    new ol.layer.Vector({
+                        style: null,
+                        source: clipBaseLayerSource,
+                    }),
+                    new ol.layer.Vector({
+                        style: new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'red',
+                                width: 5,
+                            }),
+                        }),
+                        source: clipBaseLayerSource,
+                    }),
+                    ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text))
+
+                ];
+                
+
                 layers.forEach(layer => mp.addLayer(layer));
+                const postRenderHandler = function (e) {
+                    const vectorContext = ol.render.getVectorContext(e);
+                    e.context.globalCompositeOperation = 'destination-in';
+                    clipBaseLayerSource.forEachFeature(function (feature) {
+                        vectorContext.drawFeature(feature, style);
+                    });
+                    e.context.globalCompositeOperation = 'source-over';
+                    //base.un('postrender', postRenderHandler);
+                };
                 base.on('postrender', postRenderHandler);
                 selectedLayer = null;
                 view.setCenter(ol.proj.fromLonLat(center));
                 view.setZoom(7);
+                view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
+
+                // Enable interactions
+                mp.getInteractions().forEach((interaction) => {
+                    if (interaction instanceof ol.interaction.MouseWheelZoom) {
+                        interaction.setActive(true);
+                    }
+                });
+
                 layersLoadedFromHandleMapClick = false;
+                const dragPan = new ol.interaction.DragPan();
+                mp.addInteraction(dragPan);
             }
+
         }
         const homeControl = new HomeControl();
         map.addControl(homeControl);
+        const rbButton = document.getElementById('rbButton');
+        rbButton.style.display = 'none';
+
         map.on('click', (evt) => {
             handleMapClick(evt, map);
 
         });
         map.getView().on('change:resolution', function () {
-
+            if (selectedLayer) {
+                rbButton.style.display = 'block';
+            } else {
+                rbButton.style.display = 'none';
+            }
             const zoom = map.getView().getZoom();
             if (zoom <7) {
  
@@ -319,8 +403,6 @@
         });
         map.getView().on('change:center', function (evt) {
             const view = evt.target;
-
-            // Проверяем, есть ли выбранный слой
             if (selectedLayer) {
                 const extent = selectedLayer.source.getExtent();
                 const center = view.getCenter();
@@ -344,29 +426,17 @@
             }
         });
         map.on('wheel', function (evt) {
+            evt.preventDefault();
+
             const view = map.getView();
             const zoom = view.getZoom();
-            const newZoom = zoom - evt.deltaY * 0.1; // Коэффициент изменения зума
+            const delta = Math.max(-1, Math.min(1, (evt.originalEvent.deltaY || -evt.originalEvent.wheelDelta || evt.originalEvent.detail)));
+            const newZoom = zoom + delta * 0.2;
+            view.setZoom(newZoom);
 
-            // Проверяем, есть ли выбранный слой
-            if (selectedLayer) {
-                const extent = selectedLayer.source.getExtent();
-                const newResolution = view.getResolutionForZoom(newZoom);
-                const resolutionConstraints = view.getResolutionConstraints();
-                const newResolutionConstrained = resolutionConstraints(newResolution, 0, true);
-
-                if (newResolutionConstrained !== null) {
-                    view.setZoom(newZoom);
-                }
-            } else {
-                const extent = ol.proj.transformExtent(belarusExtent, 'EPSG:4326', view.getProjection());
-                const newResolution = view.getResolutionForZoom(newZoom);
-                const resolutionConstraints = view.getResolutionConstraints();
-                const newResolutionConstrained = resolutionConstraints(newResolution, 0, true);
-
-                if (newResolutionConstrained !== null) {
-                    view.setZoom(newZoom);
-                }
+            const currentExtent = view.calculateExtent(map.getSize());
+            if (!ol.extent.intersects(currentExtent, ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'))) {
+                view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [50, 50, 50, 50] });
             }
         });
 
