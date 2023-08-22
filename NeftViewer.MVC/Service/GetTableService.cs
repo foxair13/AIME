@@ -59,14 +59,12 @@ namespace NeftViewer.MVC.Service
                                 {
                                     row[reader.GetName(i)] = reader[i];
                                 }
-                               
                             }
                             result.Add(row);
                         }
                     }
                 }
             }
-
             return result;
         }
     }

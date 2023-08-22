@@ -13,17 +13,20 @@ namespace NeftViewer.MVC.Enums
         [TableText("Customers")]
         Customers,
 
+        [TableText("JsonOwner")]
+        JsonOwner,
+
+        [TableText("AreaOwner")]
+        JsonArea,
+
         [TableText("Objects")]
         ObjectItems,
+        JsonCoordinates,
 
         [TableText("IndicatorValues")]
-        JsonCoordinates,
         IndicatorValues,
 
         [TableText("ObjectOnRoad")]
         ObjectOnRoad,
-
-        [TableText("JsonADL")]
-        JsonADL
     }
 }

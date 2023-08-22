@@ -67,7 +67,7 @@ namespace NeftViewer.BL.Services
                 CodeSUID = codeSUID,
                 Name = name
             };
-            AddLocality(locality);
+            await _uow.Localities.Add(locality);
         }
     }
 }

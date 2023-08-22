@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
@@ -104,6 +105,7 @@ namespace NeftViewer.MVC.Service
                                         {
                                             uniqItems.Add(codeSuidValue);
                                             var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
+                                            objectItem.OwnerId = 5;
                                             objectItemsList.Add(objectItem);
                                         }
                                     }
@@ -153,10 +155,11 @@ namespace NeftViewer.MVC.Service
                                     await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
                                     break;
                                 }
+
                             case TableEnum.JsonCoordinates:
                                 {
                                     var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
-
+                                    var objects = objectItemService.GetObjectItems();
                                     string url = _CoordsUrl;
                                     string json;
                                     using (var client = new WebClient())
@@ -167,19 +170,18 @@ namespace NeftViewer.MVC.Service
                                     JArray headers = (JArray)jsonObject["headers"];
                                     foreach (JToken header in headers)
                                     {
-                                        string codeSUID = (string)header["suid"];
-                                        double latitude = (double)header["coordinates"]["latitude"];
-                                        double longitude = (double)header["coordinates"]["longitude"];
-                                        await objectItemService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude);
+                                        var codeSUID = (string)header["suid"];
+                                        var latitude = (double)header["coordinates"]["latitude"];
+                                        var longitude = (double)header["coordinates"]["longitude"];
+                                        var ownerName = (string)header["ownerName"];
+                                        await objectItemService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude, ownerName);
                                     }
                                     break;
                                 }
 
-                            case TableEnum.JsonADL:
+                            case TableEnum.JsonOwner:
                                 {
-                                    var areaService = scope.ServiceProvider.GetRequiredService<IAreaService>();
-                                    var districtService = scope.ServiceProvider.GetRequiredService<IDistrictService>();
-                                    var localityService = scope.ServiceProvider.GetRequiredService<ILocalityService>();
+                                    var areaService = scope.ServiceProvider.GetRequiredService<IOwnerService>();
 
                                     string url = _CoordsUrl;
                                     string json;
@@ -193,15 +195,63 @@ namespace NeftViewer.MVC.Service
                                     {
                                         string codeSUID = (string)header["suid"];
 
-                                        string areaName = (string)header["areaName"];
-                                        await areaService.CreateArea(codeSUID, areaName);
+                                        string ownerName = (string)header["ownerName"];
+                                        if (!ownerName.IsNullOrEmpty())
+                                        {
+                                            await areaService.CreateOwner(codeSUID, ownerName);
+                                        }
+                                     }
+                                    break;
+                                }
 
-                                        string districtName = (string)header["districtName"];
-                                        await districtService.CreateDistrict(codeSUID, districtName);
+                            case TableEnum.JsonArea:
+                                {
+                                    var areaService = scope.ServiceProvider.GetRequiredService<IAreaService>();
 
-                                        string localityName = (string)header["localityName"];
-                                        await localityService.CreateLocality(codeSUID, localityName);
+                                    string url = _CoordsUrl;
+                                    string json;
+                                    using (var client = new WebClient())
+                                    {
+                                        json = client.DownloadString(url);
                                     }
+                                    var jsonObject = JObject.Parse(json);
+                                    JArray headers = (JArray)jsonObject["headers"];
+                                    foreach (JToken header in headers)
+                                    {
+                                        string codeSUID = (string)header["suid"];
+                                        string areaName = "";
+                                        if (!codeSUID.IsNullOrEmpty())
+                                        {
+                                            if (codeSUID.Contains("370_01"))
+                                            {
+                                                areaName = "Гомельская";
+                                            }
+                                            if (codeSUID.Contains("650_02") || codeSUID.Contains("600_03") || codeSUID.Contains("720_06"))
+                                            {
+                                                areaName = "Минская";
+                                            }
+                                            if (codeSUID.Contains("160_07"))
+                                            {
+                                                areaName = "Витебская";
+                                            }
+                                            if (codeSUID.Contains("800_08"))
+                                            {
+                                                areaName = "Могилевская";
+                                            }
+                                            if (codeSUID.Contains("020_10"))
+                                            {
+                                                areaName = "Брестская";
+                                            }
+                                            if (codeSUID.Contains("520_11") || codeSUID.Contains("530_12"))
+                                            {
+                                                areaName = "Гродненская";
+                                            }
+                                            if (!areaName.IsNullOrEmpty())
+                                            {
+                                                await areaService.CreateArea(codeSUID, areaName);
+                                            }
+                                        }
+                                     }
                                     break;
                                 }
                             default:

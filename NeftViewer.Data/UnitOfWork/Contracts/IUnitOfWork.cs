@@ -14,8 +14,8 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Road> Roads { get; }
         IGenericRepository<IndicatorValue> IndicatorValues { get; }
         IGenericRepository<ObjectOnRoad> ObjectOnRoads { get; }
+        IGenericRepository<Owner> Owners { get; }
         IGenericRepository<Area> Areas { get; }
-        IGenericRepository<District> Districts { get; }
         IGenericRepository<Locality> Localities { get; }
         Task CommitAsync();
     }

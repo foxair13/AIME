@@ -16,11 +16,11 @@ namespace NeftViewer.Data.Configuration
             builder.Property(s => s.ActionId).IsRequired();
             builder.Property(s => s.RoleId).IsRequired();
             builder.HasOne(ar => ar.AspNetRoles)
-        .WithMany(r => r.ActionRoles)
-        .HasForeignKey(ar => ar.RoleId);
+            .WithMany(r => r.ActionRoles)
+            .HasForeignKey(ar => ar.RoleId);
             builder.HasOne(ar => ar.Action)
-        .WithMany(a => a.ActionRoles)
-        .HasForeignKey(ar => ar.ActionId);
+            .WithMany(a => a.ActionRoles)
+            .HasForeignKey(ar => ar.ActionId);
         }
     }
 }

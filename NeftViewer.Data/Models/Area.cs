@@ -7,7 +7,8 @@ namespace NeftViewer.Data.Models
     public partial class Area
     {
         [Key]
-        public string CodeSUID { get; set; }
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

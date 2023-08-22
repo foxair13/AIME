@@ -3,15 +3,15 @@ using NeftViewer.Data.Models;
 
 namespace NeftViewer.BL.Services.Contracts
 {
-    public interface IDistrictService
+    public interface IAreaService
     {
-        Task<IEnumerable<District>> GetDistricts();
-        Task<District> FindDistrictAsync(string? id);
-        EntityEntry<District> UpdateDistrict(District district);
+        Task<IEnumerable<Area>> GetAreas();
+        Task<Area> FindAreaAsync(string? id);
+        EntityEntry<Area> UpdateArea(Area area);
         Task CommitChangesAsync();
-        EntityEntry<District> DeleteDistrict(string id);
-        Task<bool> AddDistrict(District district);
-        Task<bool> AddDistrictRange(IEnumerable<District> districts);
-        Task CreateDistrict(string codeSUID, string name);
+        EntityEntry<Area> DeleteArea(string id);
+        Task<bool> AddArea(Area area);
+        Task<bool> AddAreaRange(IEnumerable<Area> areas);
+        Task CreateArea(string codeSUID, string name);
     }
 }

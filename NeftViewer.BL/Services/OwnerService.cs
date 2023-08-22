@@ -5,10 +5,10 @@ using NeftViewer.Data.UnitOfWork.Contracts;
 
 namespace NeftViewer.BL.Services
 {
-    public class AreaService : IAreaService
+    public class OwnerService : IOwnerService
     {
         private readonly IUnitOfWork _uow;
-        public AreaService(IUnitOfWork uow)
+        public OwnerService(IUnitOfWork uow)
         {
             _uow = uow;
         }
@@ -17,26 +17,26 @@ namespace NeftViewer.BL.Services
             await _uow.CommitAsync();
         }
 
-        public Task<Area> FindAreaAsync(string? id)
+        public Task<Owner> FindOwnerAsync(string? id)
         {
-            return _uow.Areas.GetAsync(id);
+            return _uow.Owners.GetAsync(id);
         }
 
-        public async Task<IEnumerable<Area>> GetAreas()
+        public async Task<IEnumerable<Owner>> GetOwners()
         {
-            return await _uow.Areas.GetAllAsync();
+            return await _uow.Owners.GetAllAsync();
         }
 
-        public EntityEntry<Area> UpdateArea(Area area)
+        public EntityEntry<Owner> UpdateOwner(Owner owner)
         {
-            return _uow.Areas.Update(area);
+            return _uow.Owners.Update(owner);
         }
-        public async Task<bool> AddArea(Area area)
+        public async Task<bool> AddOwner(Owner owner)
         {
             bool flag = false;
             try
             {
-                await _uow.Areas.Add(area);
+                await _uow.Owners.Add(owner);
                 flag = true;
             }
             catch
@@ -46,30 +46,30 @@ namespace NeftViewer.BL.Services
             return flag;
         }
 
-        public EntityEntry<Area> DeleteArea(string id)
+        public EntityEntry<Owner> DeleteOwner(string id)
         {
-            var res = _uow.Areas.DeleteByStringID(id);
+            var res = _uow.Owners.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddAreaRange(IEnumerable<Area> areas)
+        public async Task<bool> AddOwnerRange(IEnumerable<Owner> owners)
         {
-            var res = await _uow.Areas.AddRange(areas);
+            var res = await _uow.Owners.AddRange(owners);
             return res;
         }
 
-        public async Task CreateArea(string codeSUID, string name)
+        public async Task CreateOwner(string codeSUID, string name)
         {
-            var areas = await _uow.Areas.GetAllAsync();
-            if (!areas.Any(x => x.Name == name))
+            var owners = await _uow.Owners.GetAllAsync();
+            if(!owners.Any(x => x.Name == name))
             {
-                var area = new Area
+                var owner = new Owner
                 {
                     Name = name
                 };
                 try
                 {
-                    await _uow.Areas.Add(area);
+                    await _uow.Owners.Add(owner);
                 }
                 catch (Exception ex)
                 {
