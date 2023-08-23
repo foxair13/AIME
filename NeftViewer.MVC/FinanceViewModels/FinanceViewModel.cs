@@ -13,9 +13,6 @@ namespace NeftViewer.MVC.FinanceModels
             _context = context;
         }
 
-        public async Task<List<Customer>> GetCustomers()
-        {
-            return await _context.Customers.ToListAsync();
-        }
+      
     }
 }

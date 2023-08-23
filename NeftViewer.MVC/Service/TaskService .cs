@@ -71,26 +71,7 @@ namespace NeftViewer.MVC.Service
                                     break;
                                 }
 
-                            case TableEnum.Customers:
-                                {
-                                    var customerService = scope.ServiceProvider.GetRequiredService<ICustomerService>();
-                                    List<Customer> customersList = new List<Customer>();
-                                    var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
-                                    var uniqItems = new List<string>();
-                                    foreach (var row in viewData)
-                                    {
-                                        var codeSuidValue = row["Id"].ToString();
-                                        if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
-                                        {
-                                            uniqItems.Add(codeSuidValue);
-                                            var customer = _mapper.Map<Dictionary<string, object>, Customer>(row);
-                                            customersList.Add(customer);
-                                        }
-                                    }
-                                    await customerService.AddCustomerRange(customersList);
-                                    break;
-                                }
+                            
 
                             case TableEnum.ObjectItems:
                                 {

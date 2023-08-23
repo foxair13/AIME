@@ -21,6 +21,7 @@ using NeftViewer.MVC;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
@@ -36,7 +37,7 @@ builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
 builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
 builder.Services.AddScoped<IGenericRepository<Criteria>, CriteriaRepository>();
-builder.Services.AddScoped<IGenericRepository<Customer>, CustomerRepository>();
+
 builder.Services.AddScoped<IGenericRepository<ObjectItem>, ObjectItemRepository>();
 builder.Services.AddScoped<IGenericRepository<Road>, RoadRepository>();
 builder.Services.AddScoped<IGenericRepository<IndicatorValue>, IndicatorValueRepository>();
@@ -48,7 +49,6 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IObjectItemService, ObjectItemService>();
 builder.Services.AddScoped<IRoadService, RoadService>();
 builder.Services.AddScoped<IIndicatorValueService, IndicatorValueService>();
@@ -59,6 +59,7 @@ builder.Services.AddScoped<ILocalityService, LocalityService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(baseConnectionString));
 builder.Services.AddAutoMapper(typeof(TaskService));

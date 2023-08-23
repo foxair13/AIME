@@ -10,8 +10,6 @@ namespace NeftViewer.MVC.Enums
         [TableText("Roads")]
         Roads,
 
-        [TableText("Customers")]
-        Customers,
 
         [TableText("JsonOwner")]
         JsonOwner,

@@ -20,12 +20,12 @@ namespace NeftViewer.Data.DataContext
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+      
         public DbSet<IndicatorValue> IndicatorValues { get; set; }
         public DbSet<ObjectOnRoad> ObjectOnRoad { get; set; }
         public DbSet<Models.ObjectItem> Objects { get; set; }
         public DbSet<Road> Roads { get; set; }
-        public DbSet<Area> Districts { get; set; }
+        //public DbSet<Area> Districts { get; set; }
         public DbSet<Locality> Localities { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Models.Action> Actions { get; set; }

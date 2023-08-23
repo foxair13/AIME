@@ -19,7 +19,7 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<Road> RoadRepository,
               IGenericRepository<ObjectItem> ObjectItemRepository,
               IGenericRepository<ObjectOnRoad> ObjectOnRoadRepository,
-              IGenericRepository<Customer> CustomerRepository,
+           
               IGenericRepository<IndicatorValue> IndicatorValueRepository,
               IGenericRepository<Owner> OwnerRepository,
               IGenericRepository<Area> AreaRepository,
@@ -34,7 +34,7 @@ namespace NeftViewer.Data.UnitOfWork
             Roads = RoadRepository;
             ObjectItems = ObjectItemRepository;
             ObjectOnRoads = ObjectOnRoadRepository;
-            Customers = CustomerRepository;
+         
             IndicatorValues = IndicatorValueRepository;
             Owners = OwnerRepository;
             Areas = AreaRepository;
@@ -44,7 +44,6 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Models.Action> Action { get; }
         public IGenericRepository<ActionRole> ActionRole { get; }
         public IGenericRepository<Criteria> Criterias { get; }
-        public IGenericRepository<Customer> Customers { get; }
         public IGenericRepository<ObjectItem> ObjectItems { get; }
         public IGenericRepository<Road> Roads { get; }
         public IGenericRepository<IndicatorValue> IndicatorValues { get; }

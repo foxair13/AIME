@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Infrastructure
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IActionContextAccessor ActionContextAccessor
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr" class="dark chrome windows fontawesome-i2svg-active fontawesome-i2svg-complete">
 <head>
@@ -24,41 +26,12 @@
             <div class="navbar navbar-vertical navbar-expand-lg" id="navbar-expand-lg-id">
                 <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
                     <div class="navbar-vertical-content">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item border-top border-300">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Вкладка 1
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body pt-0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Вкладка 2
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body pt-0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Вкладка 3
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body pt-0">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @if (ActionContextAccessor?.ActionContext?.RouteData?.Values["Controller"]?.ToString() == "Home" &&
+                       ActionContextAccessor?.ActionContext?.RouteData?.Values["Action"]?.ToString() == "Index")
+                        {
+                            @Html.Partial("_LeftPartialView")
+                        }
+                       
                     </div>
                 </div>
                 <div class="navbar-vertical-footer">
@@ -70,13 +43,12 @@
                 </div>
             </div>
             <div class="navbar navbar-vertical navbar-expand-rg" id="navbar-expand-rg-id">
-                <h2>TestTestTestTestTestTest</h2>
-                <!-- Контент вертикальной навигации -->
-                <div class="collapse navbar-collapse" id="navbarVerticalCollapser1">
-                    <div class="navbar-vertical-content">
-                        <!-- Ваш контент для вертикальной навигации здесь -->
-                    </div>
-                </div>
+                @if (ActionContextAccessor?.ActionContext?.RouteData?.Values["Controller"]?.ToString() == "Home" &&
+               ActionContextAccessor?.ActionContext?.RouteData?.Values["Action"]?.ToString() == "Index")
+                {
+                    @Html.Partial("_RightPartialView")
+                }
+               
 
             </div>
 
@@ -101,8 +73,8 @@
                             </div>
                         </a>
 
-                        <button class="btn" id="btnLeftId" data-target="navbar-expand-lg-id">Свернуть левый sidebar</button>
-                        <button class="btn" id="btnRightId" data-target="navbar-expand-rg-id">Свернуть правый sidebar</button>
+                        <button class="btn" hidden id="btnLeftId" data-target="navbar-expand-lg-id">Свернуть левый sidebar</button>
+                        <button class="btn" hidden id="btnRightId" data-target="navbar-expand-rg-id">Свернуть правый sidebar</button>
                         <button class="btn" id="btnAllId">Свернуть все</button>
                     </div>
                 </div>
@@ -126,10 +98,10 @@
                 <div class="col">
                     @RenderBody()
                 </div>
-              
+
             </div>
 
-            <script  src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
+            <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
             <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
             <script type="module" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -147,7 +119,7 @@
         }
 
 
-      
+
     </div>
 </body>
 </html>

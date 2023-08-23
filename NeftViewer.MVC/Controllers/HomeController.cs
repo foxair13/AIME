@@ -19,24 +19,46 @@ namespace NeftViewer.MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAspNetUsersService _userService;
+        private readonly IAreaService _areaService;
+        private readonly IOwnerService _ownerService;
 
-
-        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService)
+        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService)
         {
             _logger = logger;
             _userService = aspNetUsersService;
+            _areaService = areaService;
+            _ownerService = ownerService;
         }
-       
-        public IActionResult Index()
-        {
 
-            return View();
-        }
-     
-        public IActionResult Privacy()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService);
+
+
+            return View(filterViewModel);
         }
+        //[HttpGet("GetObjects")]
+        public async Task<IActionResult> GetObjects(string ownerId, string areaId)
+        {
+            try
+            {
+                //// Предположим, что ваш сервис может получить объекты на основе ownerId и areaId
+                //var objects = await _objectService.GetObjectsByOwnerAndAreaAsync(ownerId, areaId);
+
+                //var result = objects.Select(obj => new DropDownOption
+                //{
+                //    Id = obj.Id.ToString(),
+                //    Value = obj.Name // или другое соответствующее поле
+                //}).ToList();
+
+                return Json(null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

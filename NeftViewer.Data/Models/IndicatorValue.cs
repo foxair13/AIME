@@ -9,9 +9,7 @@ namespace NeftViewer.Data.Models
     public partial class IndicatorValue
     {
         public Guid Id { get; set; }
-        public string CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public virtual Customer Customers { get; set; }
+      
         public string CodeSUID { get; set; }
         [ForeignKey("CodeSUID")]
         public virtual ObjectItem Objects { get; set; }
