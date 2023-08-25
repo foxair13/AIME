@@ -17,5 +17,7 @@ namespace NeftViewer.BL.Services.Contracts
         EntityEntry<Road> DeleteRoad(string id);
         Task<bool> AddRoad(Road road);
         Task<bool> AddRoadRange(IEnumerable<Road> roads);
+        Task<IEnumerable<string>> GetCodeSUIDByRoadIdAsync(int roadId);
+        Task<ObjectDetailsDTO> GetParamsBySUIDAsync(string suid);
     }
 }

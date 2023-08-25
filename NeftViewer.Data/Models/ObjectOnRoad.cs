@@ -9,7 +9,7 @@ namespace NeftViewer.Data.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string RoadId { get; set; }
+        public int RoadId { get; set; }
         [ForeignKey("RoadId")]
         public virtual Road Roads { get; set; }
         public string CodeSUID { get; set; }

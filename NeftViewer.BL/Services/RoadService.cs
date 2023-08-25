@@ -58,5 +58,38 @@ namespace NeftViewer.BL.Services
             var res = await _uow.Roads.AddRange(roads);
             return res;
         }
+        public async Task<IEnumerable<string>> GetCodeSUIDByRoadIdAsync(int roadId)
+        {
+            var objectsOnRoad = await _uow.ObjectOnRoads.GetAllAsync();
+            var filteredObjects = objectsOnRoad.Where(o => o.RoadId == roadId);
+            return filteredObjects.Select(o => o.CodeSUID);
+        }
+        public async Task<ObjectDetailsDTO> GetParamsBySUIDAsync(string suid)
+        {
+            var allObjects = await _uow.ObjectItems.GetAllAsync();
+            var obj = allObjects.FirstOrDefault(o => o.CodeSUID.Contains(suid));
+            if (obj == null)
+            {
+                return null;
+            }
+
+            var allObjectOnRoads = await _uow.ObjectOnRoads.GetAllAsync();
+            var oor = allObjectOnRoads.FirstOrDefault(x => x.CodeSUID == obj.CodeSUID);
+
+            // Так как мы не делаем никакой дополнительной работы с переменной "road",
+            // я удаляю соответствующий код для простоты.
+
+            return new ObjectDetailsDTO
+            {
+                OwnerId = obj.OwnerId,
+                RoadId = oor?.RoadId,
+                AreaId = obj.AreaId,
+                CodeSUID = obj.CodeSUID
+            };
+        }
+
     }
+
+    
 }
+

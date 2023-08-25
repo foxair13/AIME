@@ -12,35 +12,36 @@
         height: 100%; /* это будет работать, если у вашего контейнера есть определенная высота; в противном случае, укажите конкретную высоту */
     }
 
+    .card-body {
+        padding: 0; /* Убираем padding */
+    }
+
     .fixed-width-dropdown {
         width: 200px; /* Установите нужную вам ширину */
     }
 </style>
-<div class="card shadow-none border border-300" >
+<div class="card shadow-none border border-300">
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
             <div class="col-12 col-md" align="center">
                 <p class="text-900 mb-0">ТИП ОБЪЕКТА</p>
             </div>
-
         </div>
     </div>
     <div class="p-2">
-      
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-body center-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body center-content">
                     @foreach (var item in Model.TypeRadioOptions)
-                        {
-                            <div class="form-check">
+                    {
+                        <div class="form-check">
                             <input class="form-check-input" type="radio" id="@item.Id" name="TypeRadio" value="@item">
                             <label class="form-check-label" for="TypeRadio">@item.Value</label>
-                            </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
-      
+        </div>
     </div>
 </div>
 <hr />
@@ -48,7 +49,7 @@
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
             <div class="col-12 col-md" align="center">
-                <p class="text-900 mb-0">ВЫБОР ВЛАДЕЛЬЦА</p>
+                <p class="text-900 mb-0">ВЫБОР ПОН</p>
             </div>
 
         </div>
@@ -58,26 +59,24 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-body center-content">
-                    <select id="OwnersID" class="form-select fixed-width-dropdown" aria-label="Выбор владельца">
+                    <select id="OwnersID" class="form-select fixed-width-dropdown" aria-label="Выбор ПОН">
                         @foreach (var item in Model.OwnersDropDown)
                         {
-                            <option value="@item.Id">@item.Value</option>
+                            <option value="@item.Value">@item.Text</option>
                         }
                     </select>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-<hr/>
+<hr />
 <div class="card shadow-none border border-300">
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
             <div class="col-12 col-md" align="center">
                 <p class="text-900 mb-0">ВЫБОР РЕГИОНА</p>
             </div>
-
         </div>
     </div>
     <div class="p-2">
@@ -86,90 +85,192 @@
             <div class="col-md-12">
                 <div class="card-body center-content">
                     <div class="p-2">
-                    <select id="AreasID" class="form-select fixed-width-dropdown" aria-label="Выбор региона">
-                        @foreach (var item in Model.AreasDropDown)
-                        {
-                            <option value="@item.Id">@item.Value</option>
-                        }
-                    </select>
+                        <select id="AreasID" class="form-select fixed-width-dropdown" aria-label="Выбор региона">
+                            @foreach (var item in Model.AreasDropDown)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
                     </div>
                     <div class="p-2">
-                    <select class="form-select fixed-width-dropdown" id="ObjectID" aria-label="Выбор объекта">
-                        <!-- Здесь будут элементы, подгружаемые динамически -->
-                    </select>
+                        <select class="form-select fixed-width-dropdown" id="RoadID" aria-label="Выбор дороги">
+                            @foreach (var item in Model.RoadsDropDown)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="p-2">
+                        <select class="form-select fixed-width-dropdown" id="ObjectID" aria-label="Выбор объекта">
+                            @foreach (var item in Model.ObjectsDropDown)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+
+</div>
+
+<div class="p-2">
+    <div class="card shadow-none border border-300">
+        <div class="card-header p-1 border-bottom border-300 bg-soft">
+            <div class="row  justify-content-between align-items-center">
+                <div class="col-12 col-md" align="center">
+                    <p class="text-900 mb-0">ПОКАЗАТЕЛИ</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="p-2">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-body center-content">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item border-top border-300">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Финансовые
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
+                                        @foreach (var item in Model.CriteriaRadioOptions)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="@item.Id" name="CriteriaRadio" value="@item">
+                                                <label class="form-check-label" for="TypeRadio">@item.Value</label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Технические
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
 </div>
 
 <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
-    <script type="text/javascript">
-
+<script type="text/javascript">
     $(document).ready(function () {
-        $("#ObjectID").hide();
-        $(".form-select").change(function () {
+        function updateObjects(ownerId, areaId, TypeValue, roadId) {
+            $.ajax({
+                url: '../Home/GetObjects',
+                method: 'GET',
+                data: {
+                    ownerId: ownerId,
+                    areaId: areaId,
+                    TypeValue: TypeValue,
+                    roadId: roadId
+                },
+                success: function (data) {
+                    var objectsDropdown = $("#ObjectID");
+                    objectsDropdown.empty();
+                    $.each(data, function (index, item) {
+                        objectsDropdown.append(new Option(item.text, item.value));
+                    });
+                }
+            });
+        }
+        function updateDetailsForObject(objectId) {
+            $.ajax({
+                url: '../Home/GetDetailsForObject',
+                method: 'GET',
+                data: {
+                    objectId: objectId
+                },
+                success: function (data) {
+                    if (data.ownerId != null) {
+                        $("#OwnersID").val(data.ownerId);
+                    } else {
+                        $("#OwnersID").val(0);
+                    }
+                    if (data.areaId != null) {
+                        $("#AreasID").val(data.areaId);
+                    } else {
+                        $("#AreasID").val(0);
+                    }
+                    if (data.roadId != null) {
+                        $("#RoadID").val(data.roadId);
+                    } else {
+                        $("#RoadID").val(0);
+                    }
+                    // Если TypeRadio ID действительно соответствует значению, то:
+                    //$("input[name='TypeRadio'][id='" + data.typeId + "']").prop('checked', true);
+                },
+                error: function (error) {
+                    console.error("An error occurred:", error);
+                }
+            });
+        }
+        $("input[name='TypeRadio']").change(function () {
+            var ownerId = $("#OwnersID").val();
             var ownerId = $("#OwnersID").val();
             var areaId = $("#AreasID").val();
-            
+            var roadId = $("#RoadID").val();
+            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            updateObjects(ownerId, areaId, TypeValue, roadId);
+        });
+        $(".form-select:not(#ObjectID)").change(function () {
+            var ownerId = $("#OwnersID").val();
+            var ownerId = $("#OwnersID").val();
+            var areaId = $("#AreasID").val();
            
+                //// Получите выбранное значение
+            
 
-            if (ownerId && areaId) {
-                $.ajax({
-                    url: '../Home/GetObjects', 
-                    method: 'GET',
-                    data: {
-                        ownerId: ownerId,
-                        areaId: areaId
-                    },
-                    success: function (data) {
-                        var objectsDropdown = $("#objectsDropdown");
-                        objectsDropdown.empty(); // очищаем список
+                //// Найдите конфигурацию для выбранного района
+                //const selectedConfig = layersConfig.find(config => config.text === "Минская область");
 
-                        $.each(data, function (index, item) {
-                            objectsDropdown.append(new Option(item.Value, item.Id));
-                        });
-                    }
-                });
-            }
+                //// Очистите карту от предыдущих слоев
+                //map.getLayers().clear();
+
+                ////// Добавьте базовый слой на карту
+                ////map.addLayer(base);
+
+                //// Если выбрана конфигурация для района
+                //if (selectedConfig) {
+                //    // Создайте и добавьте слой для выбранного района на карту
+                //    const selectedLayer = createLayer(selectedConfig.source, selectedConfig.fillColor, selectedConfig.strokeColor, selectedConfig.text);
+                //    map.addLayer(selectedLayer);
+
+                //    // Вызовите handleMapClick, чтобы подгрузить и отобразить район на карте
+                //    handleMapClick({ pixel: [0, 0] }, map); // Передаём фиктивное событие
+                //}
+        
+            var roadId = $("#RoadID").val();
+            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            updateObjects(ownerId, areaId, TypeValue, roadId);
+
+        });
+        $("#ObjectID").change(function () {
+            var objectId = $("#ObjectID").val();
+            updateDetailsForObject(objectId);
         });
     });
-    </script>
-
-@*<div class="accordion" id="accordionExample">
-    <div class="accordion-item border-top border-300">
-        <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Вкладка4
-            </button>
-        </h2>
-        <div class="accordion-collapse collapse show" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body pt-0">
-            </div>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Вкладка 2
-            </button>
-        </h2>
-        <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="accordion-body pt-0">
-            </div>
-        </div>
-    </div>
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Вкладка 3
-            </button>
-        </h2>
-        <div class="accordion-collapse collapse" id="collapseThree" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-            <div class="accordion-body pt-0">
-            </div>
-        </div>
-    </div>
-</div>*@
+</script>

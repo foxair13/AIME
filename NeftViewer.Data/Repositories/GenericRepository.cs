@@ -119,8 +119,7 @@ namespace NeftViewer.Data.Repositories
                         continue;
                     }
                 }
-                //_dbContext.Set<TModel>().AddRange(uniqueItems);
-                //await _dbContext.SaveChangesAsync();
+            
                 flag = true;
             }
             catch (System.Exception ex)
