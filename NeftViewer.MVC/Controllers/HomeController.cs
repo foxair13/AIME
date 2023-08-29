@@ -47,7 +47,6 @@ namespace NeftViewer.MVC.Controllers
 
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId)
         {
-
             try
             {
                 var objects = await _objectItemService.GetObjectItems();
@@ -70,15 +69,16 @@ namespace NeftViewer.MVC.Controllers
                 if (roadId != 0)
                 {
                     var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
-                    var checkobjects = from o in objects
-                                   join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
-                                   select o;
-
-                        objects = checkobjects;
-        
-                   
+                    //var checkobjects = from o in objects
+                    //                   join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
+                    //                   select o;                    
+                    foreach(var objectCodeSuid in objectCodesOnRoad)
+                    {
+                        var checkobjects = objects.FirstOrDefault(o => o.CodeSUID == objectCodeSuid);
+                    }
+                    //objects = checkobjects;
                 }
-              
+
                 var result = objects.Select(obj => new Point
                 {
                     Lon = obj.Longitude,
@@ -92,9 +92,8 @@ namespace NeftViewer.MVC.Controllers
 
                 throw;
             }
-
-
         }
+
         public async Task<IActionResult> GetObjects(int ownerId, int areaId, string TypeValue, int roadId)
         {
             try
@@ -115,9 +114,10 @@ namespace NeftViewer.MVC.Controllers
                 if (roadId != 0)
                 {
                     var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
-                    objects = from o in objects
-                              join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
-                              select o;
+                    foreach (var objectCodeSuid in objectCodesOnRoad)
+                    {
+                        var checkobjects = objects.FirstOrDefault(o => o.CodeSUID == objectCodeSuid);
+                    }
                 }
                 var result = objects.Select(obj => new DropDown
                 {
