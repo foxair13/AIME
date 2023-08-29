@@ -178,6 +178,15 @@
 <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        var ownerId = $("#OwnersID").val();
+        var areaId = $("#AreasID").val();
+        var roadId = $("#RoadID").val();
+        var objectId = $("#ObjectID").val();
+        var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+        
+        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+            addPointsToMap(points);
+        });
         function updateObjects(ownerId, areaId, TypeValue, roadId) {
             $.ajax({
                 url: '../Home/GetObjects',
@@ -220,6 +229,7 @@
                     } else {
                         $("#RoadID").val(0);
                     }
+
                     // Если TypeRadio ID действительно соответствует значению, то:
                     //$("input[name='TypeRadio'][id='" + data.typeId + "']").prop('checked', true);
                 },
@@ -229,48 +239,51 @@
             });
         }
         $("input[name='TypeRadio']").change(function () {
-            var ownerId = $("#OwnersID").val();
-            var ownerId = $("#OwnersID").val();
-            var areaId = $("#AreasID").val();
-            var roadId = $("#RoadID").val();
-            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-            updateObjects(ownerId, areaId, TypeValue, roadId);
-        });
-        $(".form-select:not(#ObjectID)").change(function () {
-            var ownerId = $("#OwnersID").val();
-            var ownerId = $("#OwnersID").val();
-            var areaId = $("#AreasID").val();
            
-                //// Получите выбранное значение
-            
-
-                //// Найдите конфигурацию для выбранного района
-                //const selectedConfig = layersConfig.find(config => config.text === "Минская область");
-
-                //// Очистите карту от предыдущих слоев
-                //map.getLayers().clear();
-
-                ////// Добавьте базовый слой на карту
-                ////map.addLayer(base);
-
-                //// Если выбрана конфигурация для района
-                //if (selectedConfig) {
-                //    // Создайте и добавьте слой для выбранного района на карту
-                //    const selectedLayer = createLayer(selectedConfig.source, selectedConfig.fillColor, selectedConfig.strokeColor, selectedConfig.text);
-                //    map.addLayer(selectedLayer);
-
-                //    // Вызовите handleMapClick, чтобы подгрузить и отобразить район на карте
-                //    handleMapClick({ pixel: [0, 0] }, map); // Передаём фиктивное событие
-                //}
-        
+            updateObjects(ownerId, areaId, TypeValue, roadId);
+            var ownerId = $("#OwnersID").val();
+            var ownerId = $("#OwnersID").val();
+            var areaId = $("#AreasID").val();
             var roadId = $("#RoadID").val();
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            var objectId = $("#ObjectID").val();
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+                addPointsToMap(points);
+            });
+        });
+      
+      
+       
+        $(".form-select:not(#ObjectID)").change(function () {
+          
             updateObjects(ownerId, areaId, TypeValue, roadId);
+            var ownerId = $("#OwnersID").val();
 
+            var areaId = $("#AreasID").val();
+
+            var objectId = $("#ObjectID").val();
+
+            var roadId = $("#RoadID").val();
+            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+                addPointsToMap(points);
+            });
         });
         $("#ObjectID").change(function () {
+          
             var objectId = $("#ObjectID").val();
+          
+            var roadId = $("#RoadID").val();
+            var ownerId = $("#OwnersID").val();
+
+            var areaId = $("#AreasID").val();
+
+            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
             updateDetailsForObject(objectId);
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+                addPointsToMap(points);
+            });
+           
         });
     });
 </script>

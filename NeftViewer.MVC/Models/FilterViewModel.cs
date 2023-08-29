@@ -37,7 +37,7 @@ namespace NeftViewer.MVC.Models
             return radioOptiosn;
 
         }
-        private List<RadioOption> GetTypeOptions()
+        private async Task<List<RadioOption>> GetTypeOptions()
         {
             return new List<RadioOption>
             {
@@ -108,7 +108,7 @@ namespace NeftViewer.MVC.Models
             viewModel.OwnersDropDown = await viewModel.GetOwnerList();
             viewModel.RoadsDropDown = await viewModel.GeRoadList();
             viewModel.ObjectsDropDown = await viewModel.GetObjectList();
-            viewModel.TypeRadioOptions = viewModel.GetTypeOptions();
+            viewModel.TypeRadioOptions = await viewModel.GetTypeOptions();
             viewModel.CriteriaRadioOptions = await viewModel.GetCriteriaOptions();
 
 

@@ -40,7 +40,7 @@
             format: new ol.format.GeoJSON(),
         });
         const createLayer = (source, fillColor, strokeColor, text) => {
-            return new ol.layer.Vector({
+            const layer = new ol.layer.Vector({
                 source: source,
                 style: new ol.style.Style({
                     fill: new ol.style.Fill({
@@ -50,59 +50,62 @@
                         color: strokeColor,
                         width: 2,
                     }),
-                    //text: new ol.style.Text({
-                    //    font: '14px Calibri,sans-serif',
-                    //    fill: new ol.style.Fill({ color: '#000' }),
-                    //    stroke: new ol.style.Stroke({
-                    //        color: '#fff',
-                    //        width: 4,
-                    //    }),
-                    //    text: text,
-                    //    offsetY: 20,
-                    //}),
                 }),
             });
+            layer.set('id', text);  // Устанавливаем слою свойство ID, соответствующее его текстовому описанию.
+            return layer;
         };
-        let transparency =0;
-       
+        let transparency = 0;
+
         const layersConfig = [
             {
+                id: 1,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/BresckajaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(100, 255, 255,' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Брестская область',
+                text: 'Брестская',
+                center: [25.399008, 52.462073],
+
             },
             {
+                id: 3,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/HomelskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(0, 255, 0, ' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Гомельская область',
+                text: 'Гомельская',
+                center: [29.522193, 52.318775],
+
             },
             {
+                id: 4,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/GrodnenskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(10, 255, 200, ' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Гродненская область',
+                text: 'Гродненская',
+                center: [25.105029, 53.886073],
             },
             {
+                id: 6,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/MogilevskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(255, 255, 0, ' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Могилевская область',
+                text: 'Могилевская',
+                center: [30.424664, 53.581749],
             },
             {
+                id: 7,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/Minsk.json")',
                     format: new ol.format.GeoJSON(),
@@ -110,24 +113,35 @@
                 fillColor: 'rgba(0, 255, 255, ' + transparency + ')',
                 strokeColor: 'yellow',
                 text: 'г. Минск',
+                center: [27.725687, 53.882864],
             },
             {
+                id: 5,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/MinskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(255, 0, 255, ' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Минская область',
+                text: 'Минская',
+                center: [27.748717, 53.726112],
+
             },
             {
+                id: 2,
                 source: new ol.source.Vector({
                     url: '@Url.Content("~/georegion/VicebskayaObl.json")',
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(300, 100, 55, ' + transparency + ')',
                 strokeColor: 'yellow',
-                text: 'Витебская область',
+                text: 'Витебская',
+                center: [28.708576, 55.214912],
+
+            },
+            {
+                // ...
+                layerName: 'exclude', // Добавьте это поле
             },
         ];
         const style = new ol.style.Style({
@@ -152,13 +166,13 @@
                 source: clipBaseLayerSource,
             }),
             ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text))
-          
+
         ];
 
         const highlightStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: 'rgba(255, 0, 0, 0.7)',
-                width: 7,
+                width: 3,
             }),
         });
 
@@ -170,7 +184,10 @@
                 zoom: 7
             }),
         });
-
+        function findIdByText(text) {
+            const config = layersConfig.find(config => config.text === text);
+            return config ? config.id : null;
+        }
         map.getView().fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
         map.getInteractions().forEach((interaction) => {
             if (interaction instanceof ol.interaction.MouseWheelZoom) {
@@ -202,9 +219,9 @@
         });
         let highlight;
         map.on('postrender', function () {
-
             const mapContainer = document.getElementById('map');
-            mapContainer.style.filter = "brightness(90%) invert(100%) hue-rotate(280deg)";
+            mapContainer.style.filter = "brightness(100%) invert(100%) hue-rotate(280deg)";
+
         });
         map.on('pointermove', (evt) => {
             if (evt.dragging) {
@@ -215,7 +232,7 @@
         });
 
         let selectedLayer = null;
-     
+
         let feature; //
         let clipLayerBorder;
         let layersLoadedFromHandleMapClick = false;
@@ -231,7 +248,9 @@
         base.on('postrender', postRenderHandler);
 
         function handleMapClick(evt, mp) {
-            const pixel = evt.pixel;
+            const pixel = evt.pixel
+
+
             feature = mp.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                 if (layer instanceof ol.layer.Vector) {
                     return feature;
@@ -282,13 +301,90 @@
                     const featureExtent = feature.getGeometry().getExtent();
                     const featureCenter = ol.extent.getCenter(featureExtent);
                     mp.getView().setCenter(featureCenter);
+
                     mp.getView().fit(featureExtent, {
                         padding: [50, 50, 50, 50],
                         constrainResolution: false,
                     });
                     layersLoadedFromHandleMapClick = true;
+
+                    //const featureCenterTransformed = ol.proj.transform(featureCenter, 'EPSG:3857', 'EPSG:4326');
+
+                    //alert(featureCenterTransformed[0].toFixed(6));
+                    //alert(featureCenterTransformed[1].toFixed(6));
+
+                    var ownerId = $("#OwnersID").val();
+                    var areaId = findIdByText(matchingLayer.text);
+                    var roadId = $("#RoadID").val();
+                    var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+                    var objectId = $("#ObjectID").val();
+                    getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+                        addPointsToMap(points);
+                    });
                 }
             }
+        }
+        let pointsLayer;
+        function addPointsToMap(points) {
+            if (currentLayer) {
+                map.removeLayer(currentLayer);
+            }
+
+            const features = points.map(point => {
+                const feature = new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
+                    name: point.name
+
+                });
+                return feature;
+            });
+
+            const source = new ol.source.Vector({
+                features: features
+            });
+
+            const layer = new ol.layer.Vector({
+                source: source,
+                style: function (feature) {
+
+                    return new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: '../img/offpick.png',
+                            scale: 0.1,
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.get('name'),
+                            offsetY: 15,
+                            scale: 1.1,
+                        }),
+                    });
+
+                },
+            });
+            pointsLayer = layer;
+            map.addLayer(layer);
+            currentLayer = layer;
+        }
+        let currentLayer;
+        function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, callback) {
+            $.ajax({
+                url: '../Home/GetPointsForRegion',
+                method: 'GET',
+                data: {
+                    ownerId: ownerId,
+                    areaId: areaId,
+                    TypeValue: TypeValue,
+                    roadId: roadId,
+                    objectId: objectId
+                },
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (error) {
+                    console.error("An error occurred:", error);
+                }
+            });
         }
         class HomeControl extends ol.control.Control {
             constructor() {
@@ -329,7 +425,7 @@
                     url: '@Url.Content("~/georegion/Belarus.json")',
                     format: new ol.format.GeoJSON(),
                 });
-              
+
 
                 const layers = [
                     base,
@@ -349,7 +445,7 @@
                     ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text))
 
                 ];
-                
+
 
                 layers.forEach(layer => mp.addLayer(layer));
                 const postRenderHandler = function (e) {
@@ -367,7 +463,6 @@
                 view.setZoom(7);
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
 
-                // Enable interactions
                 mp.getInteractions().forEach((interaction) => {
                     if (interaction instanceof ol.interaction.MouseWheelZoom) {
                         interaction.setActive(true);
@@ -377,6 +472,14 @@
                 layersLoadedFromHandleMapClick = false;
                 const dragPan = new ol.interaction.DragPan();
                 mp.addInteraction(dragPan);
+                var ownerId = $("#OwnersID").val();
+                var objectId = $("#ObjectID").val();
+                var roadId = $("#RoadID").val();
+                var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+
+                getPointsForRegion(ownerId, 0, TypeValue, roadId, objectId, function (points) {
+                    addPointsToMap(points);
+                });
             }
 
         }
@@ -396,8 +499,8 @@
                 rbButton.style.display = 'none';
             }
             const zoom = map.getView().getZoom();
-            if (zoom <7) {
- 
+            if (zoom < 7) {
+
                 map.getView().setZoom(7);
             }
 
@@ -441,7 +544,7 @@
             }
         });
 
-      
+
     </script>
 
 }

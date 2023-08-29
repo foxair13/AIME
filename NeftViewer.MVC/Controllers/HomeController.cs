@@ -44,7 +44,58 @@ namespace NeftViewer.MVC.Controllers
 
             return View(filterViewModel);
         }
-        public async Task<IActionResult> GetObjects(int ownerId, int areaId,string TypeValue, int roadId)
+
+        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId)
+        {
+
+            try
+            {
+                var objects = await _objectItemService.GetObjectItems();
+                if (ownerId != 0)
+                {
+                    objects = objects.Where(x => x.OwnerId == ownerId);
+                }
+                if (areaId != 0)
+                {
+                    objects = objects.Where(x => x.AreaId == areaId);
+                }
+                if (TypeValue != null)
+                {
+                    objects = objects.Where(x => x.CodeSUID.Contains(TypeValue));
+                }
+                if (objectId != "0")
+                {
+                    objects = objects.Where(x => x.CodeSUID == objectId);
+                }
+                if (roadId != 0)
+                {
+                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
+                    var checkobjects = from o in objects
+                                   join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
+                                   select o;
+
+                        objects = checkobjects;
+        
+                   
+                }
+              
+                var result = objects.Select(obj => new Point
+                {
+                    Lon = obj.Longitude,
+                    Lat = obj.Latitude,
+                    Name = obj.Name
+                }).ToList();
+                return Json(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+        public async Task<IActionResult> GetObjects(int ownerId, int areaId, string TypeValue, int roadId)
         {
             try
             {
@@ -63,7 +114,7 @@ namespace NeftViewer.MVC.Controllers
                 }
                 if (roadId != 0)
                 {
-                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId); 
+                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
                     objects = from o in objects
                               join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
                               select o;
@@ -74,7 +125,7 @@ namespace NeftViewer.MVC.Controllers
                     Text = obj.Name
                 }).ToList();
                 result.Insert(0, new DropDown { Value = "0", Text = "ВЫБОР ОБЪЕКТА" });
-                return Json(result); 
+                return Json(result);
             }
             catch (Exception ex)
             {
