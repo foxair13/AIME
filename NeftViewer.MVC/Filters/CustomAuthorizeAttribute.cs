@@ -21,7 +21,7 @@ namespace NeftViewer.Core.ActionFilters
 
         private readonly string _selector;
         private readonly string _connectionString;
-        NeftViewerContext nvc;
+      
         public CustomAuthorizeAttribute()
         {
 
@@ -31,57 +31,69 @@ namespace NeftViewer.Core.ActionFilters
         {
             _selector = selector;
             _connectionString = AppConfig.GetConnectionString().BasePostgree;
-            nvc = nvc = NeftViewerContextFactory.CreateDbContext(_connectionString);
+        
         }
+        private NeftViewerContext CreateContext()
+        {
+            var options = new DbContextOptionsBuilder<NeftViewerContext>()
+                .UseNpgsql(_connectionString)
+                .Options;
 
+            return new NeftViewerContext(options);
+        }
         private string GetRoles(string actionselector)
         {
-
-            List<ActionRole> list = (from k in nvc.ActionRoles.Include(x=>x.AspNetRoles)
-                                     where k.Action.Name == actionselector
-                                     select k).ToList<ActionRole>();
-            string str = "";
-            int i = 0;
-            foreach (ActionRole item in list)
+            using (var nvc = CreateContext())
             {
-                if (i == 0)
+                List<ActionRole> list = (from k in nvc.ActionRoles.Include(x => x.AspNetRoles)
+                                         where k.Action.Name == actionselector
+                                         select k).ToList<ActionRole>();
+                string str = "";
+                int i = 0;
+                foreach (ActionRole item in list)
                 {
-                    str += item.AspNetRoles.Name;
+                    if (i == 0)
+                    {
+                        str += item.AspNetRoles.Name;
+                    }
+                    else
+                    {
+                        str += string.Concat(",", item.AspNetRoles.Name);
+                    }
+                    i++;
                 }
-                else
-                {
-                    str += string.Concat(",", item.AspNetRoles.Name);
-                }
-                i++;
+                return str;
             }
-            return str;
         }
 
         public bool CheckRoles(string actionselector, string name)
         {
-            bool flag = false;
-            string[] words = GetRoles(actionselector).Split(',');
-            var roles = (from ur in nvc.AspNetUserRoles
-                         join role in nvc.AspNetRoles on ur.RoleId equals role.Id
-                         where ur.AspNetUsers.Email == name
-                         select role.Name
-                         );
-            foreach (var item in roles)
+            using (var nvc = CreateContext())
             {
-                var results = from t in words where t.Trim() == item.Trim() select t;
+                bool flag = false;
+                string[] words = GetRoles(actionselector).Split(',');
+                var roles = (from ur in nvc.AspNetUserRoles
+                             join role in nvc.AspNetRoles on ur.RoleId equals role.Id
+                             where ur.AspNetUsers.Email == name
+                             select role.Name
+                             );
+                foreach (var item in roles)
+                {
+                    var results = from t in words where t.Trim() == item.Trim() select t;
 
-                if (results.Count() == 0)
-                {
-                    flag = false;
-                    break;
+                    if (results.Count() == 0)
+                    {
+                        flag = false;
+                        break;
+                    }
+                    else
+                    {
+                        flag = true;
+                        break;
+                    }
                 }
-                else
-                {
-                    flag = true;
-                    break;
-                }
+                return flag;
             }
-            return flag;
         }
 
 
