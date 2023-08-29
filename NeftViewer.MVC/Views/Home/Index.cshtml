@@ -32,6 +32,68 @@
         const base = new ol.layer.Tile({
             source: new ol.source.OSM(),
         });
+
+        const outerCircleFill = new ol.style.Fill({
+            color: 'rgba(255, 153, 102, 0.3)',
+        });
+        const innerCircleFill = new ol.style.Fill({
+            color: 'rgba(255, 165, 0, 0.7)',
+        });
+        const textFill = new ol.style.Fill({
+            color: '#fff',
+        });
+        const textStroke = new ol.style.Stroke({
+            color: 'rgba(0, 0, 0, 0.6)',
+            width: 3,
+        });
+        const innerCircle = new ol.style.Circle({
+            radius: 20,
+            fill: innerCircleFill,
+        });
+        const outerCircle = new ol.style.Circle({
+            radius: 25,
+            fill: outerCircleFill,
+        });
+        const darkIcon = new ol.style.Icon({
+            anchor: [0.5, 1],
+            src: '../img/offpick.png',
+            scale: 0.1
+        });
+
+        function clusterMemberStyle(clusterMember) {
+            return new ol.style.Style({
+                geometry: clusterMember.getGeometry(),
+                image: darkIcon,
+                text: new ol.style.Text({
+                    text: clusterMember.get('name'),  // убедитесь, что у вашего объекта есть свойство 'name'
+                    offsetY: 15,
+                    scale: 1.1
+                })
+            });
+
+        }
+        function clusterStyle(feature) {
+            const size = feature.get('features').length;
+            if (size > 1) {
+                return [
+                    new ol.style.Style({
+                        image: outerCircle,
+                    }),
+                    new ol.style.Style({
+                        image: innerCircle,
+                        text: new ol.style.Text({
+                            text: size.toString(),
+                            fill: textFill,
+                            stroke: textStroke,
+                        }),
+                    }),
+                ];
+            }
+            const originalFeature = feature.get('features')[0];
+            return clusterMemberStyle(originalFeature);
+        }
+
+
         let clipLayerSource;
         let clipBaseLayerSource;
         let clipBaseSource;
@@ -52,11 +114,10 @@
                     }),
                 }),
             });
-            layer.set('id', text);  // Устанавливаем слою свойство ID, соответствующее его текстовому описанию.
+            layer.set('id', text);
             return layer;
         };
         let transparency = 0;
-
         const layersConfig = [
             {
                 id: 1,
@@ -137,19 +198,13 @@
                 strokeColor: 'yellow',
                 text: 'Витебская',
                 center: [28.708576, 55.214912],
-
-            },
-            {
-                // ...
-                layerName: 'exclude', // Добавьте это поле
-            },
+            }
         ];
         const style = new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(255, 255, 255, 1)',
             })
         });
-
         const layers = [
             base,
             new ol.layer.Vector({
@@ -230,10 +285,8 @@
             const pixel = map.getEventPixel(evt.originalEvent);
             displayFeatureInfo(pixel);
         });
-
         let selectedLayer = null;
-
-        let feature; //
+        let feature;
         let clipLayerBorder;
         let layersLoadedFromHandleMapClick = false;
         const postRenderHandler = function (e) {
@@ -243,7 +296,6 @@
                 vectorContext.drawFeature(feature, style);
             });
             e.context.globalCompositeOperation = 'source-over';
-            //base.un('postrender', postRenderHandler);
         };
         base.on('postrender', postRenderHandler);
 
@@ -256,7 +308,6 @@
                     return feature;
                 }
             });
-
             if (feature) {
                 const matchingLayer = layersConfig.find(config =>
                     config.source.getFeatures().includes(feature)
@@ -292,7 +343,6 @@
                             vectorContext.drawFeature(feature, style);
                         });
                         e.context.globalCompositeOperation = 'source-over';
-                        //base.un('postrender', postRenderHandler); // Удаляем обработчик после выполнения
                     };
 
                     base.on('postrender', postRenderHandlerloc);
@@ -307,12 +357,6 @@
                         constrainResolution: false,
                     });
                     layersLoadedFromHandleMapClick = true;
-
-                    //const featureCenterTransformed = ol.proj.transform(featureCenter, 'EPSG:3857', 'EPSG:4326');
-
-                    //alert(featureCenterTransformed[0].toFixed(6));
-                    //alert(featureCenterTransformed[1].toFixed(6));
-
                     var ownerId = $("#OwnersID").val();
                     var areaId = findIdByText(matchingLayer.text);
                     var roadId = $("#RoadID").val();
@@ -325,47 +369,39 @@
             }
         }
         let pointsLayer;
+
         function addPointsToMap(points) {
             if (currentLayer) {
                 map.removeLayer(currentLayer);
             }
-
             const features = points.map(point => {
                 const feature = new ol.Feature({
                     geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
                     name: point.name
-
                 });
                 return feature;
             });
 
-            const source = new ol.source.Vector({
+            const vectorSource = new ol.source.Vector({
                 features: features
             });
 
-            const layer = new ol.layer.Vector({
-                source: source,
-                style: function (feature) {
-
-                    return new ol.style.Style({
-                        image: new ol.style.Icon({
-                            anchor: [0.5, 1],
-                            src: '../img/offpick.png',
-                            scale: 0.1,
-                        }),
-                        text: new ol.style.Text({
-                            text: feature.get('name'),
-                            offsetY: 15,
-                            scale: 1.1,
-                        }),
-                    });
-
-                },
+            // Create a cluster source using the vector source
+            const clusterSource = new ol.source.Cluster({
+                distance: 35,  // You can adjust the distance based on your needs
+                source: vectorSource,
             });
+
+            const layer = new ol.layer.Vector({
+                source: clusterSource,
+                style: clusterStyle,
+            });
+
             pointsLayer = layer;
             map.addLayer(layer);
             currentLayer = layer;
         }
+
         let currentLayer;
         function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, callback) {
             $.ajax({
@@ -410,10 +446,9 @@
                     this.RBMAP(map);
                 });
             }
-
             RBMAP(mp) {
-                transparency = 0; // Reset transparency to 0
-                mp.getLayers().clear(); // Clear all layers
+                transparency = 0;
+                mp.getLayers().clear();
                 mp.getInteractions().clear();
                 featureOverlay.getSource().clear();
                 const view = this.getMap().getView();
@@ -425,8 +460,6 @@
                     url: '@Url.Content("~/georegion/Belarus.json")',
                     format: new ol.format.GeoJSON(),
                 });
-
-
                 const layers = [
                     base,
                     new ol.layer.Vector({
@@ -445,8 +478,6 @@
                     ...layersConfig.map(config => createLayer(config.source, config.fillColor, config.strokeColor, config.text))
 
                 ];
-
-
                 layers.forEach(layer => mp.addLayer(layer));
                 const postRenderHandler = function (e) {
                     const vectorContext = ol.render.getVectorContext(e);
@@ -476,7 +507,6 @@
                 var objectId = $("#ObjectID").val();
                 var roadId = $("#RoadID").val();
                 var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-
                 getPointsForRegion(ownerId, 0, TypeValue, roadId, objectId, function (points) {
                     addPointsToMap(points);
                 });
