@@ -21,10 +21,11 @@ namespace NeftViewer.MVC.Enums
         ObjectItems,
         JsonCoordinates,
 
+        [TableText("ObjectOnRoad")]
+        ObjectOnRoad,
+
         [TableText("IndicatorValues")]
         IndicatorValues,
 
-        [TableText("ObjectOnRoad")]
-        ObjectOnRoad,
     }
 }

@@ -84,8 +84,6 @@ namespace NeftViewer.Core.ActionFilters
             return flag;
         }
 
-
-
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (!context.HttpContext.User.Identity.IsAuthenticated)

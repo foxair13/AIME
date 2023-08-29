@@ -22,10 +22,6 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]));
 
-
-          
-
-
             CreateMap<Dictionary<string, object>, IndicatorValue>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
                 .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]))

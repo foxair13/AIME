@@ -29,7 +29,7 @@ namespace NeftViewer.MVC.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (1==2){
+            if (1==1){
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     GetTableService _getTableService = new GetTableService(_FinanceMssql);
@@ -73,8 +73,6 @@ namespace NeftViewer.MVC.Service
                                             await roadService.AddRoadRange(roadsList);
                                             break;
                                         }
-
-
 
                                     case TableEnum.ObjectItems:
                                         {
