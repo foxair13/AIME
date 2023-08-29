@@ -40,7 +40,7 @@
             color: 'rgba(255, 165, 0, 0.7)',
         });
         const textFill = new ol.style.Fill({
-            color: '#fff',
+            color: '#000',
         });
         const textStroke = new ol.style.Stroke({
             color: 'rgba(0, 0, 0, 0.6)',
@@ -65,7 +65,7 @@
                 geometry: clusterMember.getGeometry(),
                 image: darkIcon,
                 text: new ol.style.Text({
-                    text: clusterMember.get('name'),  // убедитесь, что у вашего объекта есть свойство 'name'
+                    text: clusterMember.get('name'),  
                     offsetY: 15,
                     scale: 1.1
                 })
@@ -85,6 +85,7 @@
                             text: size.toString(),
                             fill: textFill,
                             stroke: textStroke,
+                            font: '18px Arial',
                         }),
                     }),
                 ];
@@ -522,6 +523,16 @@
             handleMapClick(evt, map);
 
         });
+        let lastCoordinate = null;
+
+        map.on('pointermove', function (event) {
+            lastCoordinate = event.coordinate;
+        });
+        map.getInteractions().forEach(function (interaction) {
+            if (interaction instanceof ol.interaction.MouseWheelZoom) {
+                interaction.setActive(false);
+            }
+        }, this);
         map.getView().on('change:resolution', function () {
             if (selectedLayer) {
                 rbButton.style.display = 'block';
@@ -563,9 +574,25 @@
             evt.preventDefault();
 
             const view = map.getView();
-            const zoom = view.getZoom();
+            const oldZoom = view.getZoom();
             const delta = Math.max(-1, Math.min(1, (evt.originalEvent.deltaY || -evt.originalEvent.wheelDelta || evt.originalEvent.detail)));
-            const newZoom = zoom - delta * 0.2;
+            const newZoom = oldZoom - delta * 0.2;
+
+            const oldResolution = view.getResolution();
+            const newResolution = view.getResolutionForZoom(newZoom);
+
+            const oldCenter = view.getCenter();
+            const mousePosition = lastCoordinate;
+
+            const dx = (mousePosition[0] - oldCenter[0]);
+            const dy = (mousePosition[1] - oldCenter[1]);
+
+            const newCenter = [
+                mousePosition[0] - dx * (newResolution / oldResolution),
+                mousePosition[1] - dy * (newResolution / oldResolution)
+            ];
+
+            view.setCenter(newCenter);
             view.setZoom(newZoom);
 
             const currentExtent = view.calculateExtent(map.getSize());
@@ -573,6 +600,7 @@
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [50, 50, 50, 50] });
             }
         });
+
 
 
     </script>
