@@ -68,15 +68,9 @@ namespace NeftViewer.MVC.Controllers
                 }
                 if (roadId != 0)
                 {
-                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
-                    //var checkobjects = from o in objects
-                    //                   join orCode in objectCodesOnRoad on o.CodeSUID equals orCode
-                    //                   select o;                    
-                    foreach(var objectCodeSuid in objectCodesOnRoad)
-                    {
-                        var checkobjects = objects.FirstOrDefault(o => o.CodeSUID == objectCodeSuid);
-                    }
-                    //objects = checkobjects;
+                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);                   
+                    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
+                    objects = checkobjects;
                 }
 
                 var result = objects.Select(obj => new Point
@@ -114,10 +108,8 @@ namespace NeftViewer.MVC.Controllers
                 if (roadId != 0)
                 {
                     var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
-                    foreach (var objectCodeSuid in objectCodesOnRoad)
-                    {
-                        var checkobjects = objects.FirstOrDefault(o => o.CodeSUID == objectCodeSuid);
-                    }
+                    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
+                    objects = checkobjects;
                 }
                 var result = objects.Select(obj => new DropDown
                 {

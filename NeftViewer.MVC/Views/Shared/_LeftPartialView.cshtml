@@ -240,12 +240,12 @@
         }
         $("input[name='TypeRadio']").change(function () {
            
-            updateObjects(ownerId, areaId, TypeValue, roadId);
             var ownerId = $("#OwnersID").val();
             var areaId = $("#AreasID").val();
             var roadId = $("#RoadID").val();
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
             var objectId = $("#ObjectID").val();
+            updateObjects(ownerId, areaId, TypeValue, roadId);
             getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
                 addPointsToMap(points);
             });
@@ -255,7 +255,6 @@
        
         $(".form-select:not(#ObjectID)").change(function () {
           
-            updateObjects(ownerId, areaId, TypeValue, roadId);
             var ownerId = $("#OwnersID").val();
 
             var areaId = $("#AreasID").val();
@@ -264,6 +263,7 @@
 
             var roadId = $("#RoadID").val();
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            updateObjects(ownerId, areaId, TypeValue, roadId);
             getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
                 addPointsToMap(points);
             });
