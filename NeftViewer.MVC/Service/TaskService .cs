@@ -29,7 +29,7 @@ namespace NeftViewer.MVC.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (1==2){
+            if (1==1){
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     GetTableService _getTableService = new GetTableService(_FinanceMssql);
@@ -96,25 +96,6 @@ namespace NeftViewer.MVC.Service
                                             break;
                                         }
 
-                                    case TableEnum.IndicatorValues:
-                                        {
-                                            var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
-                                            List<IndicatorValue> indicatorValueList = new List<IndicatorValue>();
-                                            var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-                                            //var uniqItems = new List<string>();
-
-                                            foreach (var row in viewData)
-                                            {
-                                                //var codeSuidValue = row["CodeSUID"].ToString();
-                                                //if (!string.IsNullOrWhiteSpace(codeSuidValue) && !uniqItems.Contains(codeSuidValue))
-                                                //{
-                                                var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
-                                                indicatorValueList.Add(indicatorValue);
-                                                //}
-                                            }
-                                            await indicatorValueService.AddIndicatorValueRange(indicatorValueList);
-                                            break;
-                                        }
 
                                     case TableEnum.ObjectOnRoad:
                                         {

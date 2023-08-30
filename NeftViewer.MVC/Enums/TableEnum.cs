@@ -16,16 +16,16 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("AreaOwner")]
         JsonArea,
-
+        
         [TableText("Objects")]
         ObjectItems,
         JsonCoordinates,
-
+        //[TableText("IndicatorValues")]
+        //IndicatorValues,
         [TableText("ObjectOnRoad")]
         ObjectOnRoad,
 
-        [TableText("IndicatorValues")]
-        IndicatorValues,
+       
 
     }
 }

@@ -65,7 +65,7 @@
                 geometry: clusterMember.getGeometry(),
                 image: darkIcon,
                 text: new ol.style.Text({
-                    text: clusterMember.get('name'),  
+                    text: clusterMember.get('name'),
                     offsetY: 15,
                     scale: 1.1
                 })
@@ -301,80 +301,200 @@
         base.on('postrender', postRenderHandler);
 
         function handleMapClick(evt, mp) {
-            const pixel = evt.pixel
+            if (!layersLoadedFromHandleMapClick) {
 
-
-            feature = mp.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
-                if (layer instanceof ol.layer.Vector) {
-                    return feature;
-                }
-            });
-            if (feature) {
-                const matchingLayer = layersConfig.find(config =>
-                    config.source.getFeatures().includes(feature)
-                );
-                clipLayerSource = new ol.source.Vector({
-                    features: [feature],
+                const pixel = evt.pixel
+                feature = mp.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                    if (layer instanceof ol.layer.Vector) {
+                        return feature;
+                    }
                 });
-                const clipLayer = new ol.layer.Vector({
-                    style: null,
-                    source: clipLayerSource,
-                });
-                if (matchingLayer) {
-
-                    selectedLayer = matchingLayer;
-                    clipBaseSource = base.getSource();
-                    mp.getLayers().clear();
-                    mp.addLayer(base);
-                    mp.addLayer(clipLayer);
-                    clipLayer.setExtent(selectedLayer.source.getExtent());
-                    clipLayerBorder = new ol.layer.Vector({
-                        style: new ol.style.Style({
-                            stroke: new ol.style.Stroke({
-                                color: 'red',
-                                width: 5,
-                            }),
-                        }),
+                if (feature) {
+                    const matchingLayer = layersConfig.find(config =>
+                        config.source.getFeatures().includes(feature)
+                    );
+                    clipLayerSource = new ol.source.Vector({
+                        features: [feature],
+                    });
+                    const clipLayer = new ol.layer.Vector({
+                        style: null,
                         source: clipLayerSource,
                     });
-                    const postRenderHandlerloc = function (e) {
-                        const vectorContext = ol.render.getVectorContext(e);
-                        e.context.globalCompositeOperation = 'destination-in';
-                        clipLayerSource.forEachFeature(function (feature) {
-                            vectorContext.drawFeature(feature, style);
+                    if (matchingLayer) {
+
+                        selectedLayer = matchingLayer;
+                        clipBaseSource = base.getSource();
+                        mp.getLayers().clear();
+                        mp.addLayer(base);
+                        mp.addLayer(clipLayer);
+                        clipLayer.setExtent(selectedLayer.source.getExtent());
+                        clipLayerBorder = new ol.layer.Vector({
+                            style: new ol.style.Style({
+                                stroke: new ol.style.Stroke({
+                                    color: 'red',
+                                    width: 5,
+                                }),
+                            }),
+                            source: clipLayerSource,
                         });
-                        e.context.globalCompositeOperation = 'source-over';
-                    };
+                        const postRenderHandlerloc = function (e) {
+                            const vectorContext = ol.render.getVectorContext(e);
+                            e.context.globalCompositeOperation = 'destination-in';
+                            clipLayerSource.forEachFeature(function (feature) {
+                                vectorContext.drawFeature(feature, style);
+                            });
+                            e.context.globalCompositeOperation = 'source-over';
+                        };
 
-                    base.on('postrender', postRenderHandlerloc);
-                    mp.addLayer(clipLayerBorder);
-                    featureOverlay.getSource().clear();
-                    const featureExtent = feature.getGeometry().getExtent();
-                    const featureCenter = ol.extent.getCenter(featureExtent);
-                    mp.getView().setCenter(featureCenter);
+                        base.on('postrender', postRenderHandlerloc);
+                        mp.addLayer(clipLayerBorder);
+                        featureOverlay.getSource().clear();
+                        const featureExtent = feature.getGeometry().getExtent();
+                        const featureCenter = ol.extent.getCenter(featureExtent);
+                        mp.getView().setCenter(featureCenter);
 
-                    mp.getView().fit(featureExtent, {
-                        padding: [50, 50, 50, 50],
-                        constrainResolution: false,
-                    });
-                    layersLoadedFromHandleMapClick = true;
-                    var ownerId = $("#OwnersID").val();
-                    var areaId = findIdByText(matchingLayer.text);
-                    var roadId = $("#RoadID").val();
-                    var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-                    var objectId = $("#ObjectID").val();
-                    getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
-                        addPointsToMap(points);
-                    });
+                        mp.getView().fit(featureExtent, {
+                            padding: [50, 50, 50, 50],
+                            constrainResolution: false,
+                        });
+                        layersLoadedFromHandleMapClick = true;
+                        var ownerId = $("#OwnersID").val();
+                        var areaId = findIdByText(matchingLayer.text);
+                        var roadId = $("#RoadID").val();
+                        var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+                        var objectId = $("#ObjectID").val();
+                        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+                            addPointsToMap(points);
+                        });
+                    }
                 }
             }
         }
+
         let pointsLayer;
+        let lastHighlightedFeature = null;
+        let lastHoveredFeature = null;
+        function handleFeatureClick(evt) {
+            const pixel = map.getEventPixel(evt.originalEvent);
+
+            if (clickedFeature) {
+                const regularIconStyle = new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 1],
+                        src: '../img/offpick.png',
+                        scale: 0.1
+                    }),
+                    text: new ol.style.Text({
+                        text: clickedFeature.get('features')[0].get('name'),
+                        offsetY: 15,
+                        scale: 1.1
+                    })
+                });
+                clickedFeature.setStyle(regularIconStyle);
+            }
+
+            map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                if (layer === pointsLayer) {
+                    const clusterFeatures = feature.get('features');
+                    if (clusterFeatures && clusterFeatures.length === 1) {
+                        const selectedIconStyle = new ol.style.Style({
+                            image: new ol.style.Icon({
+                                anchor: [0.5, 1],
+                                src: '../img/onpick.png',
+                                scale: 0.15
+                            }),
+                            text: new ol.style.Text({
+                                text: clusterFeatures[0].get('name'),
+                                offsetY: 15,
+                                scale: 1.1
+                            })
+                        });
+
+                        feature.setStyle(selectedIconStyle);
+                        clickedFeature = feature;
+                    }
+                }
+            });
+        }
+
+        let clickedFeature = null;
+        function handlePointerMove(evt) {
+            if (evt.dragging) return;
+
+            const pixel = map.getEventPixel(evt.originalEvent);
+            let isSingleFeatureInCluster = false;
+
+            map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                if (layer === pointsLayer && feature !== clickedFeature) {
+                    const clusterFeatures = feature.get('features');
+                    if (clusterFeatures && clusterFeatures.length === 1) {
+                        const singleFeature = clusterFeatures[0];
+                        const featureName = singleFeature.get('name');
+
+                        const hoverIconStyleDynamic = new ol.style.Style({
+                            image: new ol.style.Icon({
+                                anchor: [0.5, 1],
+                                src: '../img/onpick.png',
+                                scale: 0.15
+                            }),
+                            text: new ol.style.Text({
+                                text: featureName,
+                                offsetY: 15,
+                                scale: 1.1
+                            })
+                        });
+
+                        isSingleFeatureInCluster = true;
+
+                        if (lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
+                            const regularIconStyleDynamic = new ol.style.Style({
+                                image: new ol.style.Icon({
+                                    anchor: [0.5, 1],
+                                    src: '../img/offpick.png',
+                                    scale: 0.1
+                                }),
+                                text: new ol.style.Text({
+                                    text: lastHoveredFeature.get('features')[0].get('name'),
+                                    offsetY: 15,
+                                    scale: 1.1
+                                })
+                            });
+                            lastHoveredFeature.setStyle(regularIconStyleDynamic);
+                        }
+
+                        feature.setStyle(hoverIconStyleDynamic);
+                        lastHoveredFeature = feature;
+                    }
+                }
+            });
+
+            if (!isSingleFeatureInCluster && lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
+                const regularIconStyleDynamic = new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 1],
+                        src: '../img/offpick.png',
+                        scale: 0.1
+                    }),
+                    text: new ol.style.Text({
+                        text: lastHoveredFeature.get('features')[0].get('name'),
+                        offsetY: 15,
+                        scale: 1.1
+                    })
+                });
+                lastHoveredFeature.setStyle(regularIconStyleDynamic);
+                lastHoveredFeature = null;
+            }
+        }
+
+
 
         function addPointsToMap(points) {
+         
+
             if (currentLayer) {
                 map.removeLayer(currentLayer);
             }
+
             const features = points.map(point => {
                 const feature = new ol.Feature({
                     geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
@@ -387,9 +507,8 @@
                 features: features
             });
 
-            // Create a cluster source using the vector source
             const clusterSource = new ol.source.Cluster({
-                distance: 35,  // You can adjust the distance based on your needs
+                distance: 35,
                 source: vectorSource,
             });
 
@@ -401,7 +520,19 @@
             pointsLayer = layer;
             map.addLayer(layer);
             currentLayer = layer;
+
+            // Удаление предыдущего обработчика
+            map.un('pointermove', handlePointerMove);
+
+            // Добавление нового обработчика
+            map.on('pointermove', handlePointerMove);
+            // Удаление предыдущего обработчика клика
+            map.un('click', handleFeatureClick);
+
+            // Добавление нового обработчика клика
+            map.on('click', handleFeatureClick);
         }
+
 
         let currentLayer;
         function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, callback) {
