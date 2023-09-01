@@ -10,7 +10,8 @@ namespace NeftViewer.MVC.Mappings
         {
             CreateMap<Dictionary<string, object>, Criteria>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]))
+              .ForMember(dest => dest.AgregateId, opt => opt.MapFrom(src => src["AgregateId"]));
 
             CreateMap<Dictionary<string, object>, Road>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
@@ -27,15 +28,17 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]))
                 .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src["DateStart"]))
                 .ForMember(dest => dest.CriteriaId, opt => opt.MapFrom(src => src["CriteriaId"]))
-                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src["Value"]))
-                .ForMember(dest => dest.LastUpdate, opt => opt.MapFrom(src => src["LastUpdate"]));
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src["Value"]));
+
 
 
             CreateMap<Dictionary<string, object>, ObjectOnRoad>()
                 .ForMember(dest => dest.RoadId, opt => opt.MapFrom(src => src["RoadId"]))
                 .ForMember(dest => dest.CodeSUID, opt => opt.MapFrom(src => src["CodeSUID"]));
 
-            CreateMap<ActionRole, ActionRoleViewModel>();            
+            CreateMap<ActionRole, ActionRoleViewModel>();
+            CreateMap<CriteriaCalcMethod, CriteriaCalcMethodViewModel>();
+            
         }
         //private string ByteArrayToString(byte[] byteArray)
         //{

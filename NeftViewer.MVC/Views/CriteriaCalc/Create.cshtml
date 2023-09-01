@@ -1,0 +1,50 @@
+﻿@model NeftViewer.MVC.Models.CriteriaCalcMethodViewModel
+
+@{
+    ViewData["Title"] = "Добавление метода расчета показателя";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section HeadArea {
+    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />
+}
+<div class="card border border-primary">
+    <div class="card-body">
+        <h5 class="card-title">@ViewData["Title"]</h5>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="CriteriaId" class="form-label"></label>
+                @Html.DropDownListFor(m => m.CriteriaId, (SelectList)ViewBag.CriteriaId, new { @class = "form-control" })
+                <span asp-validation-for="CriteriaId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check form-switch">
+                <label asp-for="СalculationByMax" class="form-check-label"></label>
+                @Html.CheckBoxFor(m => m.СalculationByMax,  new { @class = "form-check-input" })
+                <span asp-validation-for="СalculationByMax" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-link">Вернуться назад</a>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CriteriaId").select2({
+                theme: "classic"
+            });
+       
+        });
+    </script>
+    <script type="module" src="~/lib/select2/dist/js/select2.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

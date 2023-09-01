@@ -7,35 +7,44 @@ namespace NeftViewer.MVC.Models
     public class FilterViewModel
     {
         public List<RadioOption> TypeRadioOptions { get; set; }
-        public List<RadioOption> CriteriaRadioOptions { get; set; }
+      
         public List<DropDown> AreasDropDown { get; set; }
         public List<DropDown> OwnersDropDown { get; set; }
         public List<DropDown> ObjectsDropDown { get; set; }
         public List<DropDown> RoadsDropDown { get; set; }
-        
-        
+
+        public List<CriteriaRadioModel> CriteriaRadioModels { get; set; }
 
         private readonly IAreaService _areaService;
         private readonly IOwnerService _ownerService;
         private readonly IObjectItemService _objectItemService;
         private readonly IRoadService _roadService;
         private readonly ICriteriaService _criteriaService;
-        public FilterViewModel(IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService)
+        private readonly IAgregateService _agregateService;
+        public FilterViewModel(IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService, IAgregateService agregateService)
         {
             _ownerService = ownerService;
             _areaService = areaService;
             _objectItemService = objectItemService;
             _roadService = roadService;
             _criteriaService = criteriaService;
+            _agregateService = agregateService;
         }
-        private async Task<List<RadioOption>> GetCriteriaOptions()
+        private async Task<List<CriteriaRadioModel>> GetCriteriaOptions()
         {
-            IEnumerable<Criteria> criterias = await _criteriaService.GetCriterias();
-            List<RadioOption> radioOptiosn = criterias.Select(criteria => new RadioOption { Id = criteria.Id.ToString(), Value = criteria.Name })
-                                      .OrderBy(x => x.Value)
-                                      .ToList();
-            return radioOptiosn;
-
+            List<CriteriaRadioModel> crm = new List<CriteriaRadioModel>();
+            var agregates = await _agregateService.GetAgregates();
+            foreach (var item in agregates)
+            {
+                IEnumerable<Criteria> criterias = await _criteriaService.GetCriterias();
+                    criterias = criterias.Where(x => x.AgregateId == item.Id);
+                List<RadioOption> radioOptions = criterias.Select(criteria => new RadioOption { Id = criteria.Id.ToString(), Value = criteria.Name })
+                                    .OrderBy(x => x.Value)
+                                    .ToList();
+                crm.Add(new CriteriaRadioModel { AgregateId=item.Id, AgregateName=item.Name, CriteriaRadioOptions = radioOptions });
+                crm = crm.OrderBy(x => x.AgregateId).ToList();
+            }
+            return crm;
         }
         private async Task<List<RadioOption>> GetTypeOptions()
         {
@@ -100,16 +109,16 @@ namespace NeftViewer.MVC.Models
 
             return dropDownOptions;
         }
-        public static async Task<FilterViewModel> CreateAsync(IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService,ICriteriaService criteriaService)
+        public static async Task<FilterViewModel> CreateAsync(IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService,ICriteriaService criteriaService,IAgregateService agregateService)
         {
 
-            var viewModel = new FilterViewModel(areaService, ownerService, objectItemService, roadService, criteriaService);
+            var viewModel = new FilterViewModel(areaService, ownerService, objectItemService, roadService, criteriaService, agregateService);
             viewModel.AreasDropDown = await viewModel.GetAreaList();
             viewModel.OwnersDropDown = await viewModel.GetOwnerList();
             viewModel.RoadsDropDown = await viewModel.GeRoadList();
             viewModel.ObjectsDropDown = await viewModel.GetObjectList();
             viewModel.TypeRadioOptions = await viewModel.GetTypeOptions();
-            viewModel.CriteriaRadioOptions = await viewModel.GetCriteriaOptions();
+            viewModel.CriteriaRadioModels = await viewModel.GetCriteriaOptions();
 
 
             return viewModel;

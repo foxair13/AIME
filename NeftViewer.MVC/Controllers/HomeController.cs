@@ -25,8 +25,9 @@ namespace NeftViewer.MVC.Controllers
         private readonly IObjectItemService _objectItemService;
         private readonly IRoadService _roadService;
         private readonly ICriteriaService _criteriaService;
+        private readonly IAgregateService _agregateService;
 
-        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService)
+        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService, IAgregateService agregateService)
         {
             _logger = logger;
             _userService = aspNetUsersService;
@@ -35,11 +36,12 @@ namespace NeftViewer.MVC.Controllers
             _objectItemService = objectItemService;
             _roadService = roadService;
             _criteriaService = criteriaService;
+            _agregateService = agregateService;
         }
 
         public async Task<IActionResult> Index()
         {
-            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService);
+            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService, _agregateService);
 
 
             return View(filterViewModel);
@@ -75,6 +77,7 @@ namespace NeftViewer.MVC.Controllers
 
                 var result = objects.Select(obj => new Point
                 {
+                    id=obj.CodeSUID,
                     Lon = obj.Longitude,
                     Lat = obj.Latitude,
                     Name = obj.Name

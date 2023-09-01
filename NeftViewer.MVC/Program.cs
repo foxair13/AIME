@@ -44,10 +44,16 @@ builder.Services.AddScoped<IGenericRepository<IndicatorValue>, IndicatorValueRep
 builder.Services.AddScoped<IGenericRepository<ObjectOnRoad>, ObjectOnRoadRepository>();
 builder.Services.AddScoped<IGenericRepository<Owner>, OwnerRepository>();
 builder.Services.AddScoped<IGenericRepository<Area>, AreaRepository>();
+builder.Services.AddScoped<IGenericRepository<Agregate>, AgregateRepository>();
+
+builder.Services.AddScoped<IGenericRepository<CriteriaCalcMethod>, CriteriaCalcMethodRepository>();
+
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
+builder.Services.AddScoped<ICriteriaCalcMethodService, CriteriaCalcMethodService>();
+builder.Services.AddScoped<IAgregateService, AgregateService>();
 builder.Services.AddScoped<ICriteriaService, CriteriaService>();
 builder.Services.AddScoped<IObjectItemService, ObjectItemService>();
 builder.Services.AddScoped<IRoadService, RoadService>();
@@ -58,6 +64,7 @@ builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<ILocalityService, LocalityService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

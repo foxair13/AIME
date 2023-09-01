@@ -11,7 +11,7 @@ namespace NeftViewer.BL.Services.Contracts
     public interface ICriteriaService
     {
         Task<IEnumerable<Criteria>> GetCriterias();
-        Task<Criteria> FindCriteriaAsync(string? id);
+        Task<Criteria> FindCriteriaAsync(int id);
         EntityEntry<Criteria> UpdateCriteria(Criteria criteria);
         Task CommitChangesAsync();
         EntityEntry<Criteria> DeleteCriteria(string id);

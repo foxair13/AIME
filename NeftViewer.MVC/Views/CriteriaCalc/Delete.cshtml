@@ -1,0 +1,29 @@
+﻿@model NeftViewer.MVC.Models.CriteriaCalcMethodViewModel
+
+@{
+    ViewData["Title"] = "Удаление метода расчета показателя";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card border border-danger">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <div class="card-body">
+            <h5 class="card-title">@ViewData["Title"]</h5>
+            <div class="mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                @Html.DisplayFor(model => model.Name)
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="СalculationByMax" class="control-label"></label>
+                @Html.DisplayFor(model => model.СalculationByMax)
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Удалить" class="btn btn-danger" />
+            </div>
+        </div>
+    </form>
+</div>
+<a asp-action="Index" class="btn btn-link">Вернуться назад</a>

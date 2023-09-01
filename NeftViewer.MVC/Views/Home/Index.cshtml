@@ -374,10 +374,11 @@
         let pointsLayer;
         let lastHighlightedFeature = null;
         let lastHoveredFeature = null;
+      
         function handleFeatureClick(evt) {
             const pixel = map.getEventPixel(evt.originalEvent);
-
             if (clickedFeature) {
+              
                 const regularIconStyle = new ol.style.Style({
                     image: new ol.style.Icon({
                         anchor: [0.5, 1],
@@ -396,6 +397,8 @@
             map.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 if (layer === pointsLayer) {
                     const clusterFeatures = feature.get('features');
+                    const selectedFeatureId = clusterFeatures[0].get('id');
+                 
                     if (clusterFeatures && clusterFeatures.length === 1) {
                         const selectedIconStyle = new ol.style.Style({
                             image: new ol.style.Icon({
@@ -410,10 +413,15 @@
                             })
                         });
 
-                        feature.setStyle(selectedIconStyle);
+                                feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
+
+                        clusterFeatures.forEach(childFeature => {
+                            const selectedFeatureId = clickedFeature.get('features')[0].get('id');
+                        });
                     }
                 }
+              
             });
         }
 
@@ -460,6 +468,7 @@
                                 })
                             });
                             lastHoveredFeature.setStyle(regularIconStyleDynamic);
+                          
                         }
 
                         feature.setStyle(hoverIconStyleDynamic);
@@ -485,7 +494,10 @@
                 lastHoveredFeature = null;
             }
         }
+        function handleFeatureMoveend(evt) {
 
+            //alert(selectedFeatureId);
+        }
 
 
         function addPointsToMap(points) {
@@ -497,6 +509,7 @@
 
             const features = points.map(point => {
                 const feature = new ol.Feature({
+                    id: point.id,
                     geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
                     name: point.name
                 });
@@ -531,11 +544,16 @@
 
             // Добавление нового обработчика клика
             map.on('click', handleFeatureClick);
+            map.un('moveend', handleFeatureClick);
+
+            // Добавление нового обработчика клика
+            map.on('moveend', handleFeatureMoveend);
         }
 
 
         let currentLayer;
         function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, callback) {
+
             $.ajax({
                 url: '../Home/GetPointsForRegion',
                 method: 'GET',
