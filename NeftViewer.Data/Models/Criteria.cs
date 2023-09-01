@@ -9,6 +9,6 @@ namespace NeftViewer.Data.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        //public virtual ICollection<IndicatorValue> IndicatorValues { get; set; }
+        public int AgregateId { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace NeftViewer.MVC.Enums
         [TableText("Roads")]
         Roads,
 
-
         [TableText("JsonOwner")]
         JsonOwner,
 
@@ -26,6 +25,5 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("IndicatorValues")]
         IndicatorValues,
-
     }
 }

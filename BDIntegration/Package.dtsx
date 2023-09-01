@@ -1,0 +1,1048 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/31/2023 4:11:08 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NHP-4747"
+  DTS:CreatorName="BRANCHES\N.Nesterovich"
+  DTS:DTSID="{3CE5C153-5178-44F3-8D64-2BC22DB70424}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5228.0"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{6ACF2ED3-5338-49DF-8AED-8AF7A572BDB3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+      DTS:CreationName="ODBC"
+      DTS:DTSID="{3E52C965-EFBF-426F-BA2A-E8A9FB90DD40}"
+      DTS:ObjectName="PostgreSQLLocal.postgres">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=postgres;Dsn=PostgreSQLLocal;">
+          <DTS:Password
+            DTS:Name="pwd"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD8KofpWL7COV6wEnuJkArbAAAAAASAAACgAAAAEAAAAKbmzHVMTHmMddXjkWSy1z4YAAAAGuy7qhWgYiV/+IBPx3OLyjp249+PCqArFAAAAAtxGP239no0cevvWEsw32wnMHwy</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9F152930-A29E-4F43-A9E2-5B8717D2E73E}"
+      DTS:ObjectName="tunnel.it.beloil.by,14334.KISjoinMDM.suid">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=tunnel.it.beloil.by,14334;User ID=suid;Initial Catalog=KISjoinMDM;Provider=SQLNCLI11.1;Persist Security Info=True;Application Name=SSIS-Package-{9F152930-A29E-4F43-A9E2-5B8717D2E73E}tunnel.it.beloil.by,14334.KISjoinMDM.suid;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC99TixpQQDeq9rSz7uFkxmAAAAAASAAACgAAAAEAAAAH26AL/7AL4FF1dQmITdnfAYAAAAPl5+hoqdM6m6TNkuYOPBx8Sspeq8SdLPFAAAAL983Y+HsXPqGKKHYM3idVt9GPAE</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Задача потока данных"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Задача потока данных"
+      DTS:DTSID="{E825A4A9-D4DE-45A0-A81D-3FCBAF6BB05F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Задача потока данных"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Источник &quot;OLE DB&quot;;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;7"
+              description="Источник &quot;OLE DB&quot;"
+              name="Источник &quot;OLE DB&quot; IndicatorValues"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowset">[SUID].[IndicatorValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает переменную, содержащую имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Команда SQL для выполнения."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="Переменная, содержащая команду SQL для выполнения."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Вызывает безусловное использование значение свойства DefaultCodePage при описании символьных данных."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает используемый режим доступа к базе данных."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="Сопоставления между параметрами в команде SQL и переменными."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;]"
+                  name="Выход источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      length="30"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      length="17"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      name="CustomerId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      dataType="dbDate"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;]"
+                  isErrorOut="true"
+                  name="Вывод ошибок источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\Назначение ODBC"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="Назначение ODBC;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;1"
+              description="Назначение ODBC"
+              name="Назначение ODBC"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Имя таблицы для извлечения данных."
+                  expressionType="Notify"
+                  name="TableName">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Укажите число строк, извлекаемых в одном пакете."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число строк, вставляемых в одной и той же транзакции."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет размер фрагмента при выделении памяти для столбцов больших объектов"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число секунд для ожидания выполнения инструкции SQL перед возвратом в приложение."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Кодовая страница столбца, используемая, когда сведения о кодовой странице недоступны в источнике данных."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Int32"
+                  description="Метод, используемый для вставки данных. Возможные значения: &quot;Пакет&quot; и &quot;Построчно&quot;."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Тип данных C в ODBC для привязки числовых данных."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет, как компонент будет привязывать столбцы с типами строк байтовых или многобайтовых символов (SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). Варианты: Юникод (SQL_C_WCHAR) и ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Назначение ODBC.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC]"
+                  errorOrTruncationOperation="Вставить"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Вход назначения ODBC"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      dataType="nText"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp2"
+                      name="DateStart"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Ошибка при выводе назначения ODBC"
+                  synchronousInputId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\Назначение ODBC 1"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="Назначение ODBC;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;1"
+              description="Назначение ODBC"
+              name="Назначение ODBC 1"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Имя таблицы для извлечения данных."
+                  expressionType="Notify"
+                  name="TableName">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Укажите число строк, извлекаемых в одном пакете."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число строк, вставляемых в одной и той же транзакции."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет размер фрагмента при выделении памяти для столбцов больших объектов"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число секунд для ожидания выполнения инструкции SQL перед возвратом в приложение."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Кодовая страница столбца, используемая, когда сведения о кодовой странице недоступны в источнике данных."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Int32"
+                  description="Метод, используемый для вставки данных. Возможные значения: &quot;Пакет&quot; и &quot;Построчно&quot;."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Тип данных C в ODBC для привязки числовых данных."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет, как компонент будет привязывать столбцы с типами строк байтовых или многобайтовых символов (SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). Варианты: Юникод (SQL_C_WCHAR) и ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Назначение ODBC 1.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC]"
+                  errorOrTruncationOperation="Вставить"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Вход назначения ODBC"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      dataType="nText"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp2"
+                      name="DateStart"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Назначение ODBC 1.Outputs[Ошибка при выводе назначения ODBC]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Ошибка при выводе назначения ODBC"
+                  synchronousInputId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Назначение ODBC 1.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Назначение ODBC 1.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Назначение ODBC 1.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\Уточняющий запрос"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Уточняющий запрос;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;6"
+              description="Присоединяет дополнительные столбцы к потоку данных путем поиска значений в таблице. Пример: соединение со столбцом &quot;employee id&quot; таблицы employees позволяет получить значения &quot;hire date&quot; и &quot;employee name&quot;. Рекомендуется воспользоваться этим преобразованием, если таблица подстановки не помещается в памяти."
+              name="Уточняющий запрос"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Задает инструкцию SQL, которая формирует таблицу уточняющих запросов."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [SUID].[IndicatorValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Задает инструкцию SQL, которая использует параметры для формирования таблицы уточняющих запросов."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [SUID].[IndicatorValues]) [refTable]
+where [refTable].[Id] = ? and [refTable].[CodeSUID] = ? and [refTable].[DateStart] = ? and [refTable].[CriteriaId] = ? and [refTable].[Value] = ? and [refTable].[CustomerId] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает тип соединения, используемого для доступа к эталонному набору данных."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает тип кэша таблицы уточняющих запросов."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает, как преобразование &quot;Уточняющий запрос&quot; обрабатывает строки без совпадающих элементов в эталонном наборе данных."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает долю кэша (в процентах), выделенную для строк без совпадающих элементов в эталонном наборе данных."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Максимальный объем памяти для кэша ссылок на 32-разрядной платформе."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Максимальный объем памяти для кэша ссылок на 64-разрядной платформе."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает, следует ли ссылаться на метаданные в формате XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Id" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerId" dataType="DT_BYTES" length="17" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodeSUID" dataType="DT_STR" length="30" precision="0" scale="0" codePage="1251"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CriteriaId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Value" dataType="DT_NUMERIC" length="0" precision="38" scale="6" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Задает список идентификаторов журнала обращений и преобразований, сопоставляемый с параметрами, которые использует инструкция SQL в свойстве SQLCommand. Элементы списка разделяются точками с запятой."
+                  name="ParameterMap">#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[Id]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CodeSUID]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[DateStart]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CriteriaId]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[Value]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CustomerId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Определяет, должны ли повторяющиеся ключи в ссылочных данных обрабатываться как ошибки при использовании режима полного кэширования."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Уточняющий запрос.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Диспетчер соединений, используемый для доступа к данным уточняющих запросов."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+                  name="Ввод преобразования &quot;Уточняющий запрос&quot;">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">Id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CustomerId]"
+                      cachedDataType="bytes"
+                      cachedLength="17"
+                      cachedName="CustomerId"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CustomerId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CodeSUID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">DateStart</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CriteriaId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">Value</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+                  errorOrTruncationOperation="Уточняющий запрос"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]"
+                  description="Вывод преобразования &quot;Уточняющий запрос&quot;, которое обрабатывает строки без совпадающих элементов в эталонном наборе данных. Используйте этот выход, если свойство NoMatchBehavior имеет значение &quot;Отправить строки без совпадающих элементов в выход несовпадающих строк&quot;."
+                  exclusionGroup="1"
+                  name="Выход несовпадающих строк уточняющего запроса"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Вывод ошибок преобразования &quot;Уточняющий запрос&quot;"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Задача потока данных.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+              endId="Package\Задача потока данных\Назначение ODBC.Inputs[Вход назначения ODBC]"
+              name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
+              startId="Package\Задача потока данных\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]" />
+            <path
+              refId="Package\Задача потока данных.Paths[Выход источника &quot;OLE DB&quot;]"
+              endId="Package\Задача потока данных\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+              name="Выход источника &quot;OLE DB&quot;"
+              startId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;]" />
+            <path
+              refId="Package\Задача потока данных.Paths[Выход несовпадающих строк уточняющего запроса]"
+              endId="Package\Задача потока данных\Назначение ODBC 1.Inputs[Вход назначения ODBC]"
+              name="Выход несовпадающих строк уточняющего запроса"
+              startId="Package\Задача потока данных\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Задача потока данных"
+          TopLeft="432,206" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Задача потока данных">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Задача потока данных\Назначение ODBC 1"
+          TopLeft="590,224" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues"
+          TopLeft="67,107" />
+        <NodeLayout
+          Size="176,42"
+          Id="Package\Задача потока данных\Назначение ODBC"
+          TopLeft="586,9" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\Задача потока данных\Уточняющий запрос"
+          TopLeft="296,107" />
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Выход источника &quot;OLE DB&quot;]"
+          TopLeft="250,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46,0"
+              Start="0,0"
+              End="38.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="38.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+          TopLeft="387.5,107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="286.5,-56"
+              Start="0,0"
+              End="286.5,-48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-24"
+                    Point2="0,-28"
+                    Point3="4,-28" />
+                  <mssgle:LineSegment
+                    End="282.5,-28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="282.5,-28"
+                    Point2="286.5,-28"
+                    Point3="286.5,-32" />
+                  <mssgle:LineSegment
+                    End="286.5,-48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="8.56013671874999,-23,269.3797265625,12"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Выход несовпадающих строк уточняющего запроса]"
+          TopLeft="387.5,149">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="290.5,75"
+              Start="0,0"
+              End="290.5,67.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.5"
+                    Point2="0,37.5"
+                    Point3="4,37.5" />
+                  <mssgle:LineSegment
+                    End="286.5,37.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="286.5,37.5"
+                    Point2="290.5,37.5"
+                    Point3="290.5,41.5" />
+                  <mssgle:LineSegment
+                    End="290.5,67.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="25.651640625,42.5,239.19671875,11.2822265625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Назначение ODBC 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Назначение ODBC">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Уточняющий запрос">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[SUID].[IndicatorValues]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">1</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,1478 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/30/2023 8:40:56 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="NHP-4747"
+  DTS:CreatorName="BRANCHES\N.Nesterovich"
+  DTS:DTSID="{01510AD7-D5AF-4480-A4CC-853D9D17F8B8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5228.0"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="90"
+  DTS:VersionGUID="{85191A54-C25B-4204-9EC9-E5730213FFB3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MyPostgreDB.postgres]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5CE3D208-CEB1-41A6-AE32-05EDFF6E0285}"
+      DTS:ObjectName="MyPostgreDB.postgres">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=MyPostgreDB;User ID=postgres;Provider=SSISOLEDB.5;Location=localhost:5432;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAmCPGcRx/ph8kNgwagFtIDAAAAAASAAACgAAAAEAAAAMV6nLqDoUblsBPXaJLEEqwYAAAA1OCUqKA66jSvwiTPqeQhfjDXY0avZrIKFAAAADqjMBCX3A9ZirefaJcCajvH7Qb5</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+      DTS:CreationName="ADO.NET:System.Data.Odbc.OdbcConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{32428F62-5DB8-46E8-8F41-3DBB15795921}"
+      DTS:ObjectName="PostgreSQLLocal.postgres">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=postgres;Dsn=PostgreSQLLocal;">
+          <DTS:Password
+            DTS:Name="pwd"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACtbyJoe9zmKD7JKzI3Xlp1AAAAAASAAACgAAAAEAAAANhu1DlqZoFJgjyaJk70VToYAAAA1sUb/yi2vuyL1sjFmo1ywvyZbfMq4CLlFAAAAEn53Bit9Jl4xDZzyG51dsL+Fxjx</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DA5032EE-42A1-4BBA-A353-9D94E0D4A3D1}"
+      DTS:ObjectName="tunnel.it.beloil.by,14334.KISjoinMDM.suid">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=tunnel.it.beloil.by,14334;User ID=suid;Initial Catalog=KISjoinMDM;Provider=SQLNCLI11.1;Persist Security Info=True;Application Name=SSIS-Package-{DA5032EE-42A1-4BBA-A353-9D94E0D4A3D1}tunnel.it.beloil.by,14334.KISjoinMDM.suid;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABu0pr4UWBzvWIdjCNnup1AAAAAAASAAACgAAAAEAAAAIVm9GP0lUjwzN23Ph355XMYAAAA4eMk3jWcjcvTWSg+VgSNR4BWCJJPUbAHFAAAAMu0ugAwN+c+49WqibtlK5/HhBWM</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Задача потока данных"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Задача потока данных"
+      DTS:Disabled="True"
+      DTS:DTSID="{9EC2E481-B015-4AAB-BF41-1F3CFB50BAF4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:MaxErrorCount="10"
+      DTS:ObjectName="Задача потока данных"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination 1 1 1 1"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="IgnoreFailure"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      dataType="wstr"
+                      length="4095"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\ADO NET Destination 2 1 1"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination 2 1 1"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="IgnoreFailure"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      dataType="wstr"
+                      length="4095"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\ADO NET Destination 2 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\ADO NET Destination 2 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\ADO NET Destination 2 1 1.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Источник &quot;OLE DB&quot;;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;7"
+              description="Источник &quot;OLE DB&quot;"
+              name="Источник &quot;OLE DB&quot; IndicatorValues"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowset">[SUID].[IndicatorValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает переменную, содержащую имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Команда SQL для выполнения."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    CONVERT(NVARCHAR(34), [Id], 1) AS IdString, 
+    [Name], 
+    [EmitterCode]
+FROM 
+    SUID.Customers</property>
+                <property
+                  dataType="System.String"
+                  description="Переменная, содержащая команду SQL для выполнения."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Вызывает безусловное использование значение свойства DefaultCodePage при описании символьных данных."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает используемый режим доступа к базе данных."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="Сопоставления между параметрами в команде SQL и переменными."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;]"
+                  name="Выход источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      length="30"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      length="17"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      name="CustomerId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      dataType="dbDate"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;]"
+                  isErrorOut="true"
+                  name="Вывод ошибок источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных\Уточняющий запрос 1 1 1"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Уточняющий запрос;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;6"
+              description="Присоединяет дополнительные столбцы к потоку данных путем поиска значений в таблице. Пример: соединение со столбцом &quot;employee id&quot; таблицы employees позволяет получить значения &quot;hire date&quot; и &quot;employee name&quot;. Рекомендуется воспользоваться этим преобразованием, если таблица подстановки не помещается в памяти."
+              name="Уточняющий запрос 1 1 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Задает инструкцию SQL, которая формирует таблицу уточняющих запросов."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [SUID].[IndicatorValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Задает инструкцию SQL, которая использует параметры для формирования таблицы уточняющих запросов."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [SUID].[IndicatorValues]) [refTable]
+where [refTable].[CodeSUID] = ? and [refTable].[Id] = ? and [refTable].[CustomerId] = ? and [refTable].[DateStart] = ? and [refTable].[CriteriaId] = ? and [refTable].[Value] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает тип соединения, используемого для доступа к эталонному набору данных."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает тип кэша таблицы уточняющих запросов."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает, как преобразование &quot;Уточняющий запрос&quot; обрабатывает строки без совпадающих элементов в эталонном наборе данных."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает долю кэша (в процентах), выделенную для строк без совпадающих элементов в эталонном наборе данных."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Максимальный объем памяти для кэша ссылок на 32-разрядной платформе."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Максимальный объем памяти для кэша ссылок на 64-разрядной платформе."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает, следует ли ссылаться на метаданные в формате XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Id" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerId" dataType="DT_BYTES" length="17" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodeSUID" dataType="DT_STR" length="30" precision="0" scale="0" codePage="1251"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CriteriaId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Value" dataType="DT_NUMERIC" length="0" precision="38" scale="6" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Задает список идентификаторов журнала обращений и преобразований, сопоставляемый с параметрами, которые использует инструкция SQL в свойстве SQLCommand. Элементы списка разделяются точками с запятой."
+                  name="ParameterMap">#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CodeSUID]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[Id]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CustomerId]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[DateStart]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[CriteriaId]};#{Package\Задача потока данных\Источник "OLE DB" IndicatorValues.Outputs[Выход источника "OLE DB"].Columns[Value]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Определяет, должны ли повторяющиеся ключи в ссылочных данных обрабатываться как ошибки при использовании режима полного кэширования."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Диспетчер соединений, используемый для доступа к данным уточняющих запросов."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+                  name="Ввод преобразования &quot;Уточняющий запрос&quot;">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">Id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CriteriaId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">Value</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">DateStart</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CodeSUID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CustomerId]"
+                      cachedDataType="bytes"
+                      cachedLength="17"
+                      cachedName="CustomerId"
+                      lineageId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CustomerId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+                  errorOrTruncationOperation="Уточняющий запрос"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Выход несовпадающих строк уточняющего запроса]"
+                  description="Вывод преобразования &quot;Уточняющий запрос&quot;, которое обрабатывает строки без совпадающих элементов в эталонном наборе данных. Используйте этот выход, если свойство NoMatchBehavior имеет значение &quot;Отправить строки без совпадающих элементов в выход несовпадающих строк&quot;."
+                  exclusionGroup="1"
+                  name="Выход несовпадающих строк уточняющего запроса"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Вывод ошибок преобразования &quot;Уточняющий запрос&quot;"
+                  synchronousInputId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Задача потока данных.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+              endId="Package\Задача потока данных\ADO NET Destination 2 1 1.Inputs[ADO NET Destination Input]"
+              name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
+              startId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]" />
+            <path
+              refId="Package\Задача потока данных.Paths[Выход источника &quot;OLE DB&quot;]"
+              endId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+              name="Выход источника &quot;OLE DB&quot;"
+              startId="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues.Outputs[Выход источника &quot;OLE DB&quot;]" />
+            <path
+              refId="Package\Задача потока данных.Paths[Выход несовпадающих строк уточняющего запроса]"
+              endId="Package\Задача потока данных\ADO NET Destination 1 1 1 1.Inputs[ADO NET Destination Input]"
+              name="Выход несовпадающих строк уточняющего запроса"
+              startId="Package\Задача потока данных\Уточняющий запрос 1 1 1.Outputs[Выход несовпадающих строк уточняющего запроса]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Задача потока данных 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Задача потока данных"
+      DTS:DTSID="{2BC51D11-E76E-4700-A3A7-8BE2B722BEB8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Задача потока данных 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Задача потока данных 1\ADO NET Destination"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="ADO NET Destination"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных 1\ADO NET Destination.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ADO NET Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[Id]"
+                      cachedDataType="guid"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[CodeSUID]"
+                      cachedCodepage="1251"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      externalMetadataColumnId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CodeSUID]"
+                      dataType="wstr"
+                      length="4095"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных 1\ADO NET Destination.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных 1\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных 1\ADO NET Destination.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Источник &quot;OLE DB&quot;;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;7"
+              description="Источник &quot;OLE DB&quot;"
+              name="Источник &quot;OLE DB&quot;"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowset">[SUID].[IndicatorValues]</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает переменную, содержащую имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Команда SQL для выполнения."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="Переменная, содержащая команду SQL для выполнения."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Вызывает безусловное использование значение свойства DefaultCodePage при описании символьных данных."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает используемый режим доступа к базе данных."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="Сопоставления между параметрами в команде SQL и переменными."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]"
+                  name="Выход источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      length="17"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      length="30"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      dataType="guid"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      name="CustomerId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      dataType="dbDate"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;]"
+                  isErrorOut="true"
+                  name="Вывод ошибок источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="guid"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CustomerId]"
+                      name="CustomerId" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      codePage="1251"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Задача потока данных 1.Paths[Выход источника &quot;OLE DB&quot;]"
+              endId="Package\Задача потока данных 1\ADO NET Destination.Inputs[ADO NET Destination Input]"
+              name="Выход источника &quot;OLE DB&quot;"
+              startId="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Задача потока данных"
+          TopLeft="469,213" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Задача потока данных 1"
+          TopLeft="128,305" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Задача потока данных">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="257,42"
+          Id="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues"
+          TopLeft="25,969" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Задача потока данных\Уточняющий запрос 1 1 1"
+          TopLeft="245,1084" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Задача потока данных\ADO NET Destination 2 1 1"
+          TopLeft="520,966" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Задача потока данных\ADO NET Destination 1 1 1 1"
+          TopLeft="525,1182" />
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Выход несовпадающих строк уточняющего запроса]"
+          TopLeft="341,1126">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="286,56"
+              Start="0,0"
+              End="286,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="282,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="282,28"
+                    Point2="286,28"
+                    Point3="286,32" />
+                  <mssgle:LineSegment
+                    End="286,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="23.401640625,33,239.19671875,11.2822265625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Выход источника &quot;OLE DB&quot;]"
+          TopLeft="153.5,1011">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="156.833333333333,73"
+              Start="0,0"
+              End="156.833333333333,65.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.4380165289256" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39.4380165289256"
+                    Point2="0,43.4380165289256"
+                    Point3="4,43.4380165289256" />
+                  <mssgle:LineSegment
+                    End="152.833333333333,43.4380165289256" />
+                  <mssgle:CubicBezierSegment
+                    Point1="152.833333333333,43.4380165289256"
+                    Point2="156.833333333333,43.4380165289256"
+                    Point3="156.833333333333,47.4380165289256" />
+                  <mssgle:LineSegment
+                    End="156.833333333333,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Задача потока данных.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+          TopLeft="371.666666666667,1084">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="241.333333333333,-76"
+              Start="0,0"
+              End="241.333333333333,-68.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-26.7768595041322" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-26.7768595041322"
+                    Point2="0,-30.7768595041322"
+                    Point3="4,-30.7768595041322" />
+                  <mssgle:LineSegment
+                    End="237.333333333333,-30.7768595041322" />
+                  <mssgle:CubicBezierSegment
+                    Point1="237.333333333333,-30.7768595041322"
+                    Point2="241.333333333333,-30.7768595041322"
+                    Point3="241.333333333333,-34.7768595041322" />
+                  <mssgle:LineSegment
+                    End="241.333333333333,-68.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.0231966145835,-25.7768595041322,269.3797265625,12"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Источник &quot;OLE DB&quot; IndicatorValues">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\Уточняющий запрос 1 1 1">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[SUID].[IndicatorValues]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">1</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\ADO NET Destination 2 1 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных\ADO NET Destination 1 1 1 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Задача потока данных 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Задача потока данных 1\ADO NET Destination"
+          TopLeft="362.5,14.5" />
+        <EdgeLayout
+          Id="Package\Задача потока данных 1.Paths[Выход источника &quot;OLE DB&quot;]"
+          TopLeft="183.5,26.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="179,9"
+              Start="0,0"
+              End="171.5,9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="85.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="85.5,0"
+                    Point2="89.5,0"
+                    Point3="89.5,4" />
+                  <mssgle:LineSegment
+                    End="89.5,5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="89.5,5"
+                    Point2="89.5,9"
+                    Point3="93.5,9" />
+                  <mssgle:LineSegment
+                    End="171.5,9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных 1\Источник &quot;OLE DB&quot;">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Задача потока данных 1\ADO NET Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
