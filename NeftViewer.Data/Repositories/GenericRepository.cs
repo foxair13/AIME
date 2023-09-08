@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NeftViewer.Data.DataContext;
+using NeftViewer.Data.Models;
 using NeftViewer.Data.Repositories.Contracts;
+using System.Linq.Expressions;
 using System.Text.Json;
 
 namespace NeftViewer.Data.Repositories
@@ -95,6 +98,57 @@ namespace NeftViewer.Data.Repositories
                 return false;
             }
         }
+
+        public async Task<(object? MinValue, object? MaxValue)> GetMinMaxValuesAsync<T>(string filterPropertyName, object filterValue, string valuePropertyName)
+        {
+            // Формирование выражения для выборки значения
+            var parameter = Expression.Parameter(typeof(TModel), "x");
+            var valueProperty = Expression.Property(parameter, valuePropertyName);
+            var nullableValueProperty = Expression.Convert(valueProperty, typeof(T));
+            var valueLambda = Expression.Lambda<Func<TModel, T>>(nullableValueProperty, parameter);
+
+
+            // Формирование выражения для фильтрации
+            var filterProperty = Expression.Property(parameter, filterPropertyName);
+            var constant = Expression.Constant(filterValue);
+            var equality = Expression.Equal(filterProperty, constant);
+            var filterLambda = Expression.Lambda<Func<TModel, bool>>(equality, parameter);
+
+            var maxVal = await _dbContext.Set<TModel>()
+                .Where(filterLambda)
+                .Select(valueLambda)
+                .MaxAsync();
+            var minVal = await _dbContext.Set<TModel>()
+              .Where(filterLambda)
+              .Select(valueLambda)
+              .MinAsync();
+
+            return (minVal, maxVal);
+        }
+
+        public async Task<decimal?> GetMinValueByPropertyNameAsync(string filterPropertyName, object filterValue, string valuePropertyName)
+        {
+            // Формирование выражения для выборки значения
+            var parameter = Expression.Parameter(typeof(TModel), "x");
+            var valueProperty = Expression.Property(parameter, valuePropertyName);
+            var nullableValueProperty = Expression.Convert(valueProperty, typeof(decimal?));
+            var valueLambda = Expression.Lambda<Func<TModel, decimal?>>(nullableValueProperty, parameter);
+
+
+            // Формирование выражения для фильтрации
+            var filterProperty = Expression.Property(parameter, filterPropertyName);
+            var constant = Expression.Constant(filterValue);
+            var equality = Expression.Equal(filterProperty, constant);
+            var filterLambda = Expression.Lambda<Func<TModel, bool>>(equality, parameter);
+
+            var maxVal = await _dbContext.Set<TModel>()
+                .Where(filterLambda)
+                .Select(valueLambda)
+                .MinAsync();
+
+            return maxVal;
+        }
+
         public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {
             bool flag = false;

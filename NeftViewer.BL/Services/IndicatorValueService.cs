@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
@@ -21,7 +22,20 @@ namespace NeftViewer.BL.Services
         {
             await _uow.CommitAsync();
         }
+        public async Task<(decimal? MinValue, decimal? MaxValue,DateTime? MinDate,DateTime? MaxDate)> GetMinMaxValues(int CriteriaId)
+        {
+          
+            var value = await _uow.IndicatorValues.GetMinMaxValuesAsync<decimal?>("CriteriaId", CriteriaId, "Value");
+            var date = await _uow.IndicatorValues.GetMinMaxValuesAsync<DateTime?>("CriteriaId", CriteriaId, "DateStart");
+            decimal? minValue = value.MinValue as decimal?;
+            decimal? maxValue = value.MaxValue as decimal?;
+            DateTime? minDate = date.MinValue as DateTime?;
+            DateTime? maxDate = date.MaxValue as DateTime?;
+            return (minValue, maxValue, minDate, maxDate);
+        }
 
+ 
+      
         public Task<IndicatorValue> FindIndicatorValueAsync(string? id)
         {
             return _uow.IndicatorValues.GetAsync(id);
@@ -29,9 +43,7 @@ namespace NeftViewer.BL.Services
 
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues()
         {
-
             return await _uow.IndicatorValues.GetAllAsync();
-
         }
 
         public EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue)

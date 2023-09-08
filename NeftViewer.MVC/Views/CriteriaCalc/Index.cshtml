@@ -24,6 +24,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.СalculationByMax)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsHidden)
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -36,6 +39,9 @@
                             </td>
                             <td class="align-middle">
                                 @Html.DisplayFor(modelItem => item.СalculationByMax)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.IsHidden)
                             </td>
                             <td class="align-middle white-space-nowrap text-end pe-0">
                                 <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a>

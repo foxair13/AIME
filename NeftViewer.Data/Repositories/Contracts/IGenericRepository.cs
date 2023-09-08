@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq.Expressions;
 
 namespace NeftViewer.Data.Repositories.Contracts
 {
@@ -7,7 +9,7 @@ namespace NeftViewer.Data.Repositories.Contracts
         Task<EntityEntry<TModel>> Add(TModel obj);
 
         Task<IEnumerable<TModel>> GetAllAsync();
-
+        Task<(object? MinValue, object? MaxValue)> GetMinMaxValuesAsync<T>(string filterPropertyName, object filterValue, string valuePropertyName);
         Task<TModel> GetAsync(string? id);
         Task<TModel> GetAsync(int id);
         EntityEntry<TModel> Update(TModel obj);

@@ -24,6 +24,11 @@
                 @Html.CheckBoxFor(m => m.СalculationByMax,  new { @class = "form-check-input" })
                 <span asp-validation-for="СalculationByMax" class="text-danger"></span>
             </div>
+            <div class="mb-3 form-check form-switch">
+                <label asp-for="IsHidden" class="form-check-label"></label>
+                @Html.CheckBoxFor(m => m.IsHidden,  new { @class = "form-check-input" })
+                <span asp-validation-for="IsHidden" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Создать" class="btn btn-primary" />

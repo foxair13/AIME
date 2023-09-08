@@ -16,10 +16,36 @@
         padding: 0;
     }
 
+    .full-width-row {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
     .fixed-width-dropdown {
         width: 200px;
     }
+
+    #datepicker {
+        text-align: center;
+    }
+
+    #amount {
+        text-align: center;
+    }
+
+    .ui-slider .ui-slider-range {
+        position: absolute;
+        z-index: 1;
+        font-size: .7em;
+        display: block;
+        border: 0;
+        background-position: 0 0;
+        background-color: #85a9ff;
+    }
 </style>
+<link href="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" />
+
 <div class="card shadow-none border border-300">
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
@@ -115,49 +141,48 @@
     </div>
 
 </div>
+<hr />
 
-<div class="p-2">
-    <div class="card shadow-none border border-300">
-        <div class="card-header p-1 border-bottom border-300 bg-soft">
-            <div class="row  justify-content-between align-items-center">
-                <div class="col-12 col-md" align="center">
-                    <p class="text-900 mb-0">ПОКАЗАТЕЛИ</p>
-                </div>
-
+<div class="card shadow-none border border-300">
+    <div class="card-header p-1 border-bottom border-300 bg-soft">
+        <div class="row  justify-content-between align-items-center">
+            <div class="col-12 col-md" align="center">
+                <p class="text-900 mb-0">ПОКАЗАТЕЛИ</p>
             </div>
+
         </div>
-        <div class="p-2">
+    </div>
+    <div class="p-2">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card-body center-content">
-                        <div class="accordion" id="accordionExample">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body center-content">
+                    <div class="accordion" id="accordionExample">
 
-                            @foreach (var item in Model.CriteriaRadioModels)
-                            {
-                                <div class="accordion-item border-top border-300">
-                                    <h2 class="accordion-header" id='@String.Concat("heading_",item.AgregateId)'>
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target='@String.Concat("#collapse_",item.AgregateId)' aria-expanded="true" aria-controls='@String.Concat("collapse_",item.AgregateId)'>
-                                            @item.AgregateName
-                                        </button>
-                                    </h2>
-                                    <div class="accordion-collapse collapse" id='@String.Concat("collapse_",item.AgregateId)' aria-labelledby='@String.Concat("heading",item.AgregateId)' data-bs-parent="#accordionExample">
-                                        <div class="accordion-body pt-0">
-                                            @foreach (var typeitem in item.CriteriaRadioOptions)
-                                            {
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="@typeitem.Id" name="CriteriaRadio" value="@typeitem.Value">
-                                                    <label class="form-check-label" for="TypeRadio">@typeitem.Value</label>
-                                                </div>
-                                            }
-                                        </div>
+                        @foreach (var item in Model.CriteriaRadioModels)
+                        {
+                            <div class="accordion-item border-top border-300">
+                                <h2 class="accordion-header" id='@String.Concat("heading_",item.AgregateId)'>
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target='@String.Concat("#collapse_",item.AgregateId)' aria-expanded="true" aria-controls='@String.Concat("collapse_",item.AgregateId)'>
+                                        @item.AgregateName
+                                    </button>
+                                </h2>
+                                <div class="accordion-collapse collapse" id='@String.Concat("collapse_",item.AgregateId)' aria-labelledby='@String.Concat("heading",item.AgregateId)' data-bs-parent="#accordionExample">
+                                    <div class="accordion-body pt-0">
+                                        @foreach (var typeitem in item.CriteriaRadioOptions)
+                                        {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="@typeitem.Id" name="CriteriaRadio" value="@typeitem.Value">
+                                                <label class="form-check-label" for="TypeRadio">@typeitem.Value</label>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                            }
+                            </div>
+                        }
 
 
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -165,23 +190,162 @@
     </div>
 </div>
 
+<hr />
+
+<div class="card shadow-none border border-300">
+    <div class="card-header p-1 border-bottom border-300 bg-soft">
+        <div class="row  justify-content-between align-items-center">
+            <div class="col-12 col-md" align="center">
+                <p class="text-900 mb-0">СРАВНИТЕЛЬНАЯ АНАЛИТИКА</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="p-2">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body center-content">
+
+                    <div class="row justify-content-center p-2">
+                        <div class="col-md-12 text-center">
+                            <div class="mb-3 form-check form-switch">
+                                <label for="IsBest" class="form-check-label"></label>
+                                <input type="checkbox" id="IsBest" name="IsBest" checked class="form-check-input">
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center ">
+                            <select id="EntriesID" class="form-select fixed-width-dropdown" aria-label="Выбор объектов">
+                                @foreach (var item in Model.TopEntries)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <div class="col-md-12 text-center ">
+                            <div class="mb-3">
+                                <label for="datepicker">На дату:</label>
+                                <input type="text" id="datepicker" placeholder="" class="form-control fixed-width-dropdown">
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="row full-width-row">
+                        <div class="col-md-12 text-center">
+                            <div class="mb-3">
+                                <p>
+                                    <label for="amount">Диапазон значений:</label>
+                                    <input type="text" id="amount" readonly class="form-control fixed-width-dropdow">
+                                </p>
+
+                                <div id="slider-range"></div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
 
+                </div>
 
+            </div>
+        </div>
+    </div>
 </div>
 
+
 <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
+<script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
+<script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/ui/i18n/datepicker-ru.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $(function () {
+            var today = new Date();
+            var handle = $("#custom-handle");
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 0,
+                values: [0, 0],
+                slide: function (event, ui) {
+                    $("#amount").val("от: " + ui.values[0] + " до: " + ui.values[1]);
+                }
+            });
+            $("#amount").val("от: " + $("#slider-range").slider("values", 0) + " до: " + $("#slider-range").slider("values", 1));
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+
+            var currentDate = dd + '.' + mm + '.' + yyyy;
+
+            $("#datepicker").attr("placeholder", currentDate);
+            $("#datepicker").val(currentDate);
+            $("#datepicker").datepicker({
+                regional: $.datepicker.regional['ru'],
+                minDate: new Date(2023, 09, 06),  // 1 января 2023 года
+                maxDate: new Date(2023, 09, 12),  // 31 декабря 2025 года
+                beforeShow: function (input, inst) {
+                    setTimeout(function () {
+                        var windowWidth = $(window).width();
+                        var windowHeight = $(window).height();
+                        var inputWidth = $(input).outerWidth();
+                        var inputHeight = $(input).outerHeight();
+                        var inputOffset = $(input).offset();
+                        var datePickerWidth = inst.dpDiv.outerWidth();
+                        var datePickerHeight = inst.dpDiv.outerHeight();
+                        var topMargin = 20;
+                        var leftPosition;
+                        var topPosition;
+                        if (inputOffset.left + inputWidth + datePickerWidth <= windowWidth) {
+                            leftPosition = inputOffset.left + inputWidth;
+                        } else {
+                            leftPosition = inputOffset.left - datePickerWidth;
+                        }
+                        if (inputOffset.top + inputHeight + datePickerHeight <= windowHeight) {
+                            topPosition = inputOffset.top + inputHeight - 50;
+                        } else {
+                            topPosition = inputOffset.top - datePickerHeight - topMargin;
+                        }
+
+                        inst.dpDiv.css({
+                            position: 'absolute',
+                            left: leftPosition,
+                            top: topPosition
+                        });
+                    }, 0);
+                }
+            });
+
+        });
         var ownerId = $("#OwnersID").val();
         var areaId = $("#AreasID").val();
         var roadId = $("#RoadID").val();
         var objectId = $("#ObjectID").val();
+        var IsBest = $('#IsBest').prop('checked');
+        var EntriesID = $('#EntriesID').val();
         var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-
-        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+        $('#IsBest').change(function () {
+            if (this.checked) {
+                $('label[for="IsBest"]').text('ЛУЧШИЙ ОБЪЕКТ');
+            } else {
+                $('label[for="IsBest"]').text('ХУДШИЙ ОБЪЕКТ');
+            }
+        });
+        if ($('#IsBest').prop('checked')) {
+            $('label[for="IsBest"]').text('ЛУЧШИЙ ОБЪЕКТ');
+        } else {
+            $('label[for="IsBest"]').text('ХУДШИЙ ОБЪЕКТ');
+        }
+        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID,function(points) {
             addPointsToMap(points);
         });
         function updateObjects(ownerId, areaId, TypeValue, roadId) {
@@ -227,14 +391,38 @@
                         $("#RoadID").val(0);
                     }
 
-                    // Если TypeRadio ID действительно соответствует значению, то:
-                    //$("input[name='TypeRadio'][id='" + data.typeId + "']").prop('checked', true);
                 },
                 error: function (error) {
                     console.error("An error occurred:", error);
                 }
             });
         }
+        function updateequals(CriteriId) {
+            $.ajax({
+                url: '../Home/GetExtremumCriteria',
+                method: 'GET',
+                data: {
+                    CriteriId: CriteriId
+                },
+                success: function (data) {
+                    $("#slider-range").slider("option", "min", data.min);
+                    $("#slider-range").slider("option", "max", data.max);
+                    $("#slider-range").slider("option", "values", [data.min, data.max]);
+                    $("#amount").val("от: " + data.min + " до: " + data.max);
+                    $("#datepicker").datepicker("option", "minDate", new Date(data.dateMin));
+                    $("#datepicker").datepicker("option", "maxDate", new Date(data.dateMax));
+                },
+                error: function (error) {
+                    console.error("An error occurred:", error);
+                }
+            });
+        }
+
+        $("input[name='CriteriaRadio']").change(function () {
+            var CriteriId = $("input[name='CriteriaRadio']:checked").attr('id');
+            updateequals(CriteriId);
+        });
+
         $("input[name='TypeRadio']").change(function () {
 
             var ownerId = $("#OwnersID").val();
@@ -242,15 +430,23 @@
             var roadId = $("#RoadID").val();
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
             var objectId = $("#ObjectID").val();
+
+            var IsBest = $('#IsBest').prop('checked');
+            var EntriesID = $('#EntriesID').val();
+            var Date = $('#datepicker').val();
+            var slideMin = $("#slider-range").slider("values", 0);
+            var slideMax = $("#slider-range").slider("values", 1);
+
+          
             updateObjects(ownerId, areaId, TypeValue, roadId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
                 addPointsToMap(points);
             });
         });
 
 
 
-        $(".form-select:not(#ObjectID)").change(function () {
+        $(".form-select:not(#ObjectID, #EntriesID)").change(function () {
 
             var ownerId = $("#OwnersID").val();
 
@@ -260,8 +456,11 @@
 
             var roadId = $("#RoadID").val();
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+
+            var IsBest = $('#IsBest').prop('checked');
+            var EntriesID = $('#EntriesID').val();
             updateObjects(ownerId, areaId, TypeValue, roadId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
                 addPointsToMap(points);
             });
         });
@@ -275,8 +474,10 @@
             var areaId = $("#AreasID").val();
 
             var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            var IsBest = $('#IsBest').prop('checked');
+            var EntriesID = $('#EntriesID').val();
             updateDetailsForObject(objectId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, function (points) {
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
                 addPointsToMap(points);
             });
 

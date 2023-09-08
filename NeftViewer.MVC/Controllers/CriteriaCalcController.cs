@@ -45,12 +45,13 @@ namespace NeftViewer.MVC.Controllers
                     Id = actioncriteriaCalcMethodRole.Id,
                     Name = criteria.Name,
                     CriteriaId = actioncriteriaCalcMethodRole.CriteriaId,
-                    СalculationByMax = actioncriteriaCalcMethodRole.СalculationByMax
+                    СalculationByMax = actioncriteriaCalcMethodRole.СalculationByMax,
+                    IsHidden=actioncriteriaCalcMethodRole.IsHidden
                 };
 
                 criteriaCalcMethodViewModels.Add(viewModel);
             }
-
+            criteriaCalcMethodViewModels= criteriaCalcMethodViewModels.OrderBy(x => x.Name).ToList();
             return View(criteriaCalcMethodViewModels);
         }
 
@@ -65,13 +66,13 @@ namespace NeftViewer.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CriteriaId,СalculationByMax")] CriteriaCalcMethodViewModel criteriaCalcMethodViewModel)
+        public async Task<IActionResult> Create([Bind("Id,CriteriaId,СalculationByMax,IsHidden")] CriteriaCalcMethodViewModel criteriaCalcMethodViewModel)
         {
             if (ModelState.IsValid)
             {
                 var criteriaCalcMethod = _mapper.Map<CriteriaCalcMethod>(criteriaCalcMethodViewModel);
                 await _criteriaCalcMethodService.AddCriteriaCalcMethod(criteriaCalcMethod);
-                await _criteriaCalcMethodService.CommitChangesAsync();
+               
                 return RedirectToAction(nameof(Index));
             }
 
@@ -89,7 +90,7 @@ namespace NeftViewer.MVC.Controllers
             }
 
             var result = _mapper.Map<CriteriaCalcMethodViewModel>(criteriaCalc);
-            await PopulateDropdownListsAsync();
+            await PopulateDropdownListsUpdateAsync();
             return View(result);
         }
 
@@ -98,7 +99,7 @@ namespace NeftViewer.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CriteriaId,СalculationByMax")] CriteriaCalcMethodViewModel criteriaCalcMethodViewModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CriteriaId,СalculationByMax,IsHidden")] CriteriaCalcMethodViewModel criteriaCalcMethodViewModel)
         {
             if (id != criteriaCalcMethodViewModel.Id)
             {
@@ -113,7 +114,7 @@ namespace NeftViewer.MVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await PopulateDropdownListsAsync();
+            await PopulateDropdownListsUpdateAsync();
             return View(criteriaCalcMethodViewModel);
         }
 
@@ -126,12 +127,13 @@ namespace NeftViewer.MVC.Controllers
             {
                 return NotFound();
             }
-            var criteria = await _criteriaService.FindCriteriaAsync(id);
+            var criteria = await _criteriaService.FindCriteriaAsync(criteriaCalc.CriteriaId);
             var viewModel = new CriteriaCalcMethodViewModel
             {
                 Id = criteriaCalc.Id,
                 Name = criteria.Name,
-                СalculationByMax = criteriaCalc.СalculationByMax
+                СalculationByMax = criteriaCalc.СalculationByMax,
+                IsHidden = criteriaCalc.IsHidden
             };
             var result = viewModel;
             return View(result);
@@ -156,6 +158,23 @@ namespace NeftViewer.MVC.Controllers
         {
 
             var criteria = await _criteriaService.GetCriterias();
+            var criteriacalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
+            var filteredcriteria = from x in criteria
+                                   join y in criteriacalc on x.Id equals y.CriteriaId into joined
+                                   from suby in joined.DefaultIfEmpty()
+                                   where suby == null
+                                   select x;
+
+            filteredcriteria = filteredcriteria.OrderBy(x => x.Name);
+            ViewBag.CriteriaId = new SelectList(filteredcriteria, "Id", "Name");
+        }
+        private async Task PopulateDropdownListsUpdateAsync()
+        {
+
+            var criteria = await _criteriaService.GetCriterias();
+
+
+
             criteria = criteria.OrderBy(x => x.Name);
             ViewBag.CriteriaId = new SelectList(criteria, "Id", "Name");
         }

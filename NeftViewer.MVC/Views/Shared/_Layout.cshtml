@@ -31,7 +31,11 @@
                         {
                             @Html.Partial("_LeftPartialView")
                         }
-                       
+                        else
+                        {
+                            @Html.Partial("_AdminLeftPartialView")
+                        }
+
                     </div>
                 </div>
                 <div class="navbar-vertical-footer">
@@ -75,7 +79,8 @@
 
                         <button class="btn" hidden id="btnLeftId" data-target="navbar-expand-lg-id">Свернуть левый sidebar</button>
                         <button class="btn" hidden id="btnRightId" data-target="navbar-expand-rg-id">Свернуть правый sidebar</button>
-                        <button class="btn" id="btnAllId">Свернуть все</button>
+                        <button class="btn" id="btnAllId"><i class="fa fa-eye" aria-hidden="true"></i>Вкл/Выкл панели</button>
+                    
                     </div>
                 </div>
                 <div class="footer navbar-bottom fixed-bottom">
@@ -104,8 +109,16 @@
             <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
             <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
             <script type="module" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+            
             <script src="~/js/site.js" asp-append-version="true"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var path = window.location.pathname.toLowerCase();
+                    if (path !== "/") {
+                        $("#navbar-expand-rg-id").hide();
+                    }
+                });
+            </script>
             @await RenderSectionAsync("Scripts", required: false)
 
 

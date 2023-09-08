@@ -14,7 +14,9 @@ namespace NeftViewer.MVC.Models
         [DisplayName("Наименование критерия:")]
         public string? Name { get; set; }
         [Required]
-        [DisplayName("Лучшие показатели считать по максимальному значению?:")]
+        [DisplayName("Лучшие показатели считать по максимальному значению?")]
         public bool СalculationByMax { get; set; }
+        [DisplayName("Скрытый критерий:")]
+        public bool IsHidden { get; set; }
     }
 }

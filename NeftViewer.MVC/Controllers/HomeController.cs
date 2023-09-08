@@ -26,8 +26,10 @@ namespace NeftViewer.MVC.Controllers
         private readonly IRoadService _roadService;
         private readonly ICriteriaService _criteriaService;
         private readonly IAgregateService _agregateService;
+        private readonly ICriteriaCalcMethodService _criteriaCalcMethodService;
+        private readonly IIndicatorValueService _indicatorValueService;
 
-        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService, IAgregateService agregateService)
+        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService, IAgregateService agregateService, ICriteriaCalcMethodService criteriaCalcMethodService, IIndicatorValueService indicatorValueService)
         {
             _logger = logger;
             _userService = aspNetUsersService;
@@ -37,16 +39,24 @@ namespace NeftViewer.MVC.Controllers
             _roadService = roadService;
             _criteriaService = criteriaService;
             _agregateService = agregateService;
+            _criteriaCalcMethodService = criteriaCalcMethodService;
+            _indicatorValueService = indicatorValueService;
         }
 
         public async Task<IActionResult> Index()
         {
-            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService, _agregateService);
+            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService, _agregateService, _criteriaCalcMethodService);
 
 
             return View(filterViewModel);
         }
 
+        public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
+        {
+            var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
+            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax });
+        }
+    
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId)
         {
             try
@@ -70,14 +80,14 @@ namespace NeftViewer.MVC.Controllers
                 }
                 if (roadId != 0)
                 {
-                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);                   
+                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
                     var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
                     objects = checkobjects;
                 }
 
                 var result = objects.Select(obj => new Point
                 {
-                    id=obj.CodeSUID,
+                    id = obj.CodeSUID,
                     Lon = obj.Longitude,
                     Lat = obj.Latitude,
                     Name = obj.Name

@@ -15,8 +15,8 @@ namespace NeftViewer.BL.Services
         private readonly IUnitOfWork _uow;
         public async Task<bool> IsDuplicate(int CriteriaId)
         {
-            var allCriterias = await _uow.Criterias.GetAllAsync();
-            var existingRecord = allCriterias.FirstOrDefault(ar => ar.Id == CriteriaId);
+            var allCriterias = await _uow.CriteriaCalcMethods.GetAllAsync();
+            var existingRecord = allCriterias.FirstOrDefault(ar => ar.CriteriaId == CriteriaId);
             return existingRecord != null;
         }
         public CriteriaCalcMethodService(IUnitOfWork uow)

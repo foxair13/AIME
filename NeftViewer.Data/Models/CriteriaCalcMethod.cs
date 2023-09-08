@@ -13,7 +13,7 @@ namespace NeftViewer.Data.Models
         public bool СalculationByMax { get; set; }
         [ForeignKey("CriteriaId")]
         public virtual Criteria Criterias { get; set; }
-       
-    
+        public bool IsHidden { get; set; }
+        
     }
 }
