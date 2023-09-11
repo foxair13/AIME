@@ -157,7 +157,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card-body center-content">
-                    <div class="accordion" id="accordionExample">
+                    <div class="accordion" id="accordion">
 
                         @foreach (var item in Model.CriteriaRadioModels)
                         {
@@ -167,13 +167,13 @@
                                         @item.AgregateName
                                     </button>
                                 </h2>
-                                <div class="accordion-collapse collapse" id='@String.Concat("collapse_",item.AgregateId)' aria-labelledby='@String.Concat("heading",item.AgregateId)' data-bs-parent="#accordionExample">
+                                <div class="accordion-collapse collapse" id='@String.Concat("collapse_",item.AgregateId)' aria-labelledby='@String.Concat("heading",item.AgregateId)' data-bs-parent="#accordion">
                                     <div class="accordion-body pt-0">
                                         @foreach (var typeitem in item.CriteriaRadioOptions)
                                         {
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" id="@typeitem.Id" name="CriteriaRadio" value="@typeitem.Value">
-                                                <label class="form-check-label" for="TypeRadio">@typeitem.Value</label>
+                                                <label class="form-check-label" for="CriteriaRadio">@typeitem.Value</label>
                                             </div>
                                         }
                                     </div>
@@ -268,18 +268,20 @@
 <script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/ui/i18n/datepicker-ru.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 0,
+            values: [0, 0],
+            slide: function (event, ui) {
+                $("#amount").val("от: " + ui.values[0] + " до: " + ui.values[1]);
+                OnUpdate();
+            }
+        });
         $(function () {
             var today = new Date();
             var handle = $("#custom-handle");
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 0,
-                values: [0, 0],
-                slide: function (event, ui) {
-                    $("#amount").val("от: " + ui.values[0] + " до: " + ui.values[1]);
-                }
-            });
+
             $("#amount").val("от: " + $("#slider-range").slider("values", 0) + " до: " + $("#slider-range").slider("values", 1));
             var dd = String(today.getDate()).padStart(2, '0');
             var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -291,8 +293,9 @@
             $("#datepicker").val(currentDate);
             $("#datepicker").datepicker({
                 regional: $.datepicker.regional['ru'],
-                minDate: new Date(2023, 09, 06),  // 1 января 2023 года
-                maxDate: new Date(2023, 09, 12),  // 31 декабря 2025 года
+                onClose: function (selectedDate) {
+                    OnUpdate();
+                },
                 beforeShow: function (input, inst) {
                     setTimeout(function () {
                         var windowWidth = $(window).width();
@@ -332,20 +335,28 @@
         var objectId = $("#ObjectID").val();
         var IsBest = $('#IsBest').prop('checked');
         var EntriesID = $('#EntriesID').val();
+        var Dates = $('#datepicker').val();
         var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+        var CriteriaValue = $("input[name='CriteriaRadio']:checked").attr('id');
+        var slideMin = $("#slider-range").slider("values", 0);
+        var slideMax = $("#slider-range").slider("values", 1);
         $('#IsBest').change(function () {
             if (this.checked) {
                 $('label[for="IsBest"]').text('ЛУЧШИЙ ОБЪЕКТ');
             } else {
                 $('label[for="IsBest"]').text('ХУДШИЙ ОБЪЕКТ');
             }
+            OnUpdate();
+        });
+        $('#EntriesID').change(function () {
+            OnUpdate();
         });
         if ($('#IsBest').prop('checked')) {
             $('label[for="IsBest"]').text('ЛУЧШИЙ ОБЪЕКТ');
         } else {
             $('label[for="IsBest"]').text('ХУДШИЙ ОБЪЕКТ');
         }
-        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID,function(points) {
+        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
             addPointsToMap(points);
         });
         function updateObjects(ownerId, areaId, TypeValue, roadId) {
@@ -365,6 +376,23 @@
                         objectsDropdown.append(new Option(item.text, item.value));
                     });
                 }
+            });
+        }
+        function OnUpdate() {
+            var ownerId = $("#OwnersID").val();
+            var areaId = $("#AreasID").val();
+            var roadId = $("#RoadID").val();
+            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
+            var CriteriaValue = $("input[name='CriteriaRadio']:checked").attr('id');
+            var objectId = $("#ObjectID").val();
+            var IsBest = $('#IsBest').prop('checked');
+            var EntriesID = $('#EntriesID').val();
+            var Dates = $('#datepicker').val();
+            var slideMin = $("#slider-range").slider("values", 0);
+            var slideMax = $("#slider-range").slider("values", 1);
+            updateObjects(ownerId, areaId, TypeValue, roadId);
+            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
+                addPointsToMap(points);
             });
         }
         function updateDetailsForObject(objectId) {
@@ -411,6 +439,7 @@
                     $("#amount").val("от: " + data.min + " до: " + data.max);
                     $("#datepicker").datepicker("option", "minDate", new Date(data.dateMin));
                     $("#datepicker").datepicker("option", "maxDate", new Date(data.dateMax));
+                    OnUpdate();
                 },
                 error: function (error) {
                     console.error("An error occurred:", error);
@@ -421,66 +450,17 @@
         $("input[name='CriteriaRadio']").change(function () {
             var CriteriId = $("input[name='CriteriaRadio']:checked").attr('id');
             updateequals(CriteriId);
+            
         });
 
         $("input[name='TypeRadio']").change(function () {
-
-            var ownerId = $("#OwnersID").val();
-            var areaId = $("#AreasID").val();
-            var roadId = $("#RoadID").val();
-            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-            var objectId = $("#ObjectID").val();
-
-            var IsBest = $('#IsBest').prop('checked');
-            var EntriesID = $('#EntriesID').val();
-            var Date = $('#datepicker').val();
-            var slideMin = $("#slider-range").slider("values", 0);
-            var slideMax = $("#slider-range").slider("values", 1);
-
-          
-            updateObjects(ownerId, areaId, TypeValue, roadId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
-                addPointsToMap(points);
-            });
+            OnUpdate();
         });
-
-
-
         $(".form-select:not(#ObjectID, #EntriesID)").change(function () {
-
-            var ownerId = $("#OwnersID").val();
-
-            var areaId = $("#AreasID").val();
-
-            var objectId = $("#ObjectID").val();
-
-            var roadId = $("#RoadID").val();
-            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-
-            var IsBest = $('#IsBest').prop('checked');
-            var EntriesID = $('#EntriesID').val();
-            updateObjects(ownerId, areaId, TypeValue, roadId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
-                addPointsToMap(points);
-            });
+            OnUpdate();
         });
         $("#ObjectID").change(function () {
-
-            var objectId = $("#ObjectID").val();
-
-            var roadId = $("#RoadID").val();
-            var ownerId = $("#OwnersID").val();
-
-            var areaId = $("#AreasID").val();
-
-            var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
-            var IsBest = $('#IsBest').prop('checked');
-            var EntriesID = $('#EntriesID').val();
-            updateDetailsForObject(objectId);
-            getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
-                addPointsToMap(points);
-            });
-
+            OnUpdate();
         });
     });
 </script>

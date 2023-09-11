@@ -126,6 +126,27 @@ namespace NeftViewer.Data.Repositories
             return (minVal, maxVal);
         }
 
+        public IQueryable<TModel> GetItems(List<(string filterPropertyName, object filterValue)> filters)
+        {
+            var parameter = Expression.Parameter(typeof(TModel), "x");
+            Expression filterExpression = null;
+            foreach (var filter in filters)
+            {
+                var filterProperty = Expression.Property(parameter, filter.filterPropertyName);
+                var constant = Expression.Constant(filter.filterValue);
+                var equality = Expression.Equal(filterProperty, constant);
+                if (filterExpression == null)
+                    filterExpression = equality;
+                else
+                    filterExpression = Expression.And(filterExpression, equality);
+            }
+            var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
+
+            return _dbContext.Set<TModel>()
+                .Where(filterLambda);
+        }
+
+
         public async Task<decimal?> GetMinValueByPropertyNameAsync(string filterPropertyName, object filterValue, string valuePropertyName)
         {
             // Формирование выражения для выборки значения

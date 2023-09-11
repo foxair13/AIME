@@ -41,9 +41,16 @@ namespace NeftViewer.BL.Services
             return _uow.IndicatorValues.GetAsync(id);
         }
 
-        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues()
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues(DateTime Dates,  int CriteriaValue)
         {
-            return await _uow.IndicatorValues.GetAllAsync();
+            DateTime dateInput = Dates;
+            DateTimeOffset dateWithOffset = new DateTimeOffset(dateInput, new TimeSpan(2, 0, 0));
+            DateTime dateForFilter = dateWithOffset.UtcDateTime;
+            List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            filters.Add(new ValueTuple<string, object>("DateStart", dateForFilter));
+            filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaValue));
+            var v = _uow.IndicatorValues.GetItems(filters);
+            return v.ToList();
         }
 
         public EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue)

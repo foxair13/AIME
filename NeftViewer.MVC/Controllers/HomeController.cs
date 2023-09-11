@@ -1,4 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -7,6 +9,7 @@ using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Core.ActionFilters;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
+using NeftViewer.MVC.Binders;
 using NeftViewer.MVC.Models;
 using NeftViewer.MVC.Options;
 using System.Diagnostics;
@@ -56,11 +59,13 @@ namespace NeftViewer.MVC.Controllers
             var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
             return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax });
         }
-    
-        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId)
+
+        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
         {
             try
             {
+                var result = new object();
+                var items = new object();
                 var objects = await _objectItemService.GetObjectItems();
                 if (ownerId != 0)
                 {
@@ -84,14 +89,63 @@ namespace NeftViewer.MVC.Controllers
                     var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
                     objects = checkobjects;
                 }
-
-                var result = objects.Select(obj => new Point
+                if (CriteriaValue == 0)
                 {
-                    id = obj.CodeSUID,
-                    Lon = obj.Longitude,
-                    Lat = obj.Latitude,
-                    Name = obj.Name
-                }).ToList();
+                    result = objects.Select(obj => new Point
+                    {
+                        id = obj.CodeSUID,
+                        Lon = obj.Longitude,
+                        Lat = obj.Latitude,
+                        Name = obj.Name,
+                        HasValue=false,
+                        Value=0
+                    }).ToList();
+                }
+                else 
+                {
+                    IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
+                    bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
+                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
+                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).OrderBy(x => x.Value);
+
+                    var objwithval = from x in objects
+                              join y in iv on x.CodeSUID equals y.CodeSUID
+                              select new { x,y.Value};
+
+                    if (IsBest)
+                    {
+                        if (CalculationByMax)
+                        {
+                            objwithval = objwithval.OrderByDescending(x => x.Value).Take(EntriesID);
+                        }
+                        else 
+                        {
+                            objwithval = objwithval.OrderBy(x => x.Value).Take(EntriesID);
+                        }
+                        
+                    }
+                    else 
+                    {
+                        if (CalculationByMax)
+                        {
+                            objwithval = objwithval.OrderBy(x => x.Value).Take(EntriesID);
+                        }
+                        else
+                        {
+                            objwithval = objwithval.OrderByDescending(x => x.Value).Take(EntriesID);
+                        }
+                    }
+                    result = objwithval.Select(obj => new Point
+                    {
+                        id = obj.x.CodeSUID,
+                        Lon = obj.x.Longitude,
+                        Lat = obj.x.Latitude,
+                        Name = obj.x.Name,
+                        HasValue = true,
+                        Value = obj.Value
+                    }).ToList();
+                }
+              
                 return Json(result);
             }
             catch (Exception)

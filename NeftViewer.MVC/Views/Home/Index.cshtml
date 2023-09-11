@@ -365,7 +365,11 @@
                         var objectId = $("#ObjectID").val();
                         var IsBest = $('#IsBest').prop('checked');
                         var EntriesID = $('#EntriesID').val();
-                        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
+                        var Dates = $('#datepicker').val();
+                        var slideMin = $("#slider-range").slider("values", 0);
+                        var slideMax = $("#slider-range").slider("values", 1);
+                        var CriteriaValue = $("input[name='CriteriaRadio']:checked").attr('id');
+                        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
                             addPointsToMap(points);
                         });
                     }
@@ -376,11 +380,11 @@
         let pointsLayer;
         let lastHighlightedFeature = null;
         let lastHoveredFeature = null;
-      
+
         function handleFeatureClick(evt) {
             const pixel = map.getEventPixel(evt.originalEvent);
             if (clickedFeature) {
-              
+
                 const regularIconStyle = new ol.style.Style({
                     image: new ol.style.Icon({
                         anchor: [0.5, 1],
@@ -400,7 +404,7 @@
                 if (layer === pointsLayer) {
                     const clusterFeatures = feature.get('features');
                     const selectedFeatureId = clusterFeatures[0].get('id');
-                 
+
                     if (clusterFeatures && clusterFeatures.length === 1) {
                         const selectedIconStyle = new ol.style.Style({
                             image: new ol.style.Icon({
@@ -415,16 +419,16 @@
                             })
                         });
 
-                                feature.setStyle(selectedIconStyle);
+                        feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
 
                         clusterFeatures.forEach(childFeature => {
                             const selectedFeatureId = clickedFeature.get('features')[0].get('id');
-                            alert($("#datepicker").val());
+                            alert($("#slider-range").slider("values", 1));
                         });
                     }
                 }
-              
+
             });
         }
 
@@ -471,7 +475,7 @@
                                 })
                             });
                             lastHoveredFeature.setStyle(regularIconStyleDynamic);
-                          
+
                         }
 
                         feature.setStyle(hoverIconStyleDynamic);
@@ -504,7 +508,7 @@
 
 
         function addPointsToMap(points) {
-         
+
 
             if (currentLayer) {
                 map.removeLayer(currentLayer);
@@ -569,20 +573,26 @@
             map.on('moveend', handleFeatureMoveend);
         }
 
-     
+
         let currentLayer;
-   
-        function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, callback) {
+
+        function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, callback) {
 
             $.ajax({
                 url: '../Home/GetPointsForRegion',
                 method: 'GET',
                 data: {
-                    ownerId: ownerId,
+                                       ownerId: ownerId,
                     areaId: areaId,
                     TypeValue: TypeValue,
                     roadId: roadId,
-                    objectId: objectId
+                    objectId: objectId,
+                    IsBest:IsBest,
+                    EntriesID: EntriesID,
+                    Dates: Dates,
+                    slideMin:slideMin,
+                    slideMax: slideMax,
+                    CriteriaValue: CriteriaValue
                 },
                 success: function (data) {
                     callback(data);
@@ -680,7 +690,11 @@
                 var TypeValue = $("input[name='TypeRadio']:checked").attr('id');
                 var IsBest = $('#IsBest').prop('checked');
                 var EntriesID = $('#EntriesID').val();
-                getPointsForRegion(ownerId, 0, TypeValue, roadId, objectId, IsBest, EntriesID, function (points) {
+                var Dates = $('#datepicker').val();
+                var slideMin = $("#slider-range").slider("values", 0);
+                var slideMax = $("#slider-range").slider("values", 1);
+                var CriteriaValue = $("input[name='CriteriaRadio']:checked").attr('id');
+                getPointsForRegion(ownerId, 0, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
                     addPointsToMap(points);
                 });
             }
