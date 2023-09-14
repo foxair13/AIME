@@ -118,14 +118,14 @@
                             }
                         </select>
                     </div>
-                    <div class="p-2">
+                   @* <div class="p-2">
                         <select class="form-select fixed-width-dropdown" id="RoadID" aria-label="Выбор дороги">
                             @foreach (var item in Model.RoadsDropDown)
                             {
                                 <option value="@item.Value">@item.Text</option>
                             }
                         </select>
-                    </div>
+                    </div>*@
                     <div class="p-2">
                         <select class="form-select fixed-width-dropdown" id="ObjectID" aria-label="Выбор объекта">
                             @foreach (var item in Model.ObjectsDropDown)
@@ -446,11 +446,15 @@
                 }
             });
         }
-
         $("input[name='CriteriaRadio']").change(function () {
             var CriteriId = $("input[name='CriteriaRadio']:checked").attr('id');
+            $("#navbar-expand-rg-id").show();
+            const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
+            const navbarExpandRightWidth = navbarExpandRight.clientWidth;
+            contentElement.style.marginRight = navbarExpandRightWidth + "px";
+            contentElement.classList.remove('collapsed');
+            contentElement.classList.remove('collapsed-right');
             updateequals(CriteriId);
-            
         });
 
         $("input[name='TypeRadio']").change(function () {

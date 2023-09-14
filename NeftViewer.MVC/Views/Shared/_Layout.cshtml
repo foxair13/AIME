@@ -15,6 +15,7 @@
     <title>@ViewData["Title"] - NeftViewer.MVC</title>
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <title>Белоруснефть-Нефтехимпроект</title>
+
     <link href="~/lib/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
     @await RenderSectionAsync("HeadArea", required: false)
 
@@ -29,11 +30,11 @@
                         @if (ActionContextAccessor?.ActionContext?.RouteData?.Values["Controller"]?.ToString() == "Home" &&
                        ActionContextAccessor?.ActionContext?.RouteData?.Values["Action"]?.ToString() == "Index")
                         {
-                            @Html.Partial("_LeftPartialView")
+                            @await Html.PartialAsync("_LeftPartialView")
                         }
                         else
                         {
-                            @Html.Partial("_AdminLeftPartialView")
+                            @await Html.PartialAsync("_AdminLeftPartialView")
                         }
 
                     </div>
@@ -46,13 +47,13 @@
                     </button>
                 </div>
             </div>
-            <div class="navbar navbar-vertical navbar-expand-rg" id="navbar-expand-rg-id">
+            <div class="navbar navbar-vertical navbar-expand-rg p-2" style="display: none;" id="navbar-expand-rg-id">
                 @if (ActionContextAccessor?.ActionContext?.RouteData?.Values["Controller"]?.ToString() == "Home" &&
                ActionContextAccessor?.ActionContext?.RouteData?.Values["Action"]?.ToString() == "Index")
                 {
-                    @Html.Partial("_RightPartialView")
+                    @await Html.PartialAsync("_RightPartialView")
                 }
-               
+
 
             </div>
 
@@ -80,7 +81,7 @@
                         <button class="btn" hidden id="btnLeftId" data-target="navbar-expand-lg-id">Свернуть левый sidebar</button>
                         <button class="btn" hidden id="btnRightId" data-target="navbar-expand-rg-id">Свернуть правый sidebar</button>
                         <button class="btn" id="btnAllId"><i class="fa fa-eye" aria-hidden="true"></i>Вкл/Выкл панели</button>
-                    
+
                     </div>
                 </div>
                 <div class="footer navbar-bottom fixed-bottom">
@@ -95,8 +96,8 @@
                         </div>
                     </div>
                 </div>
-
-                <partial name="_LoginPartial" />
+                @await Html.PartialAsync("_LoginPartial")
+             
             </div>
             <div class="content" id="contentId">
                 <!-- Основной контент -->
@@ -109,14 +110,17 @@
             <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
             <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
             <script type="module" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-            
+
             <script src="~/js/site.js" asp-append-version="true"></script>
             <script type="text/javascript">
                 $(document).ready(function () {
-                    var path = window.location.pathname.toLowerCase();
-                    if (path !== "/") {
-                        $("#navbar-expand-rg-id").hide();
-                    }
+
+
+                    //const contentElement = document.getElementById("contentId");
+
+
+                    //$("#navbar-expand-rg-id").hide();
+                    //contentElement.classList.toggle('collapsed-right');
                 });
             </script>
             @await RenderSectionAsync("Scripts", required: false)

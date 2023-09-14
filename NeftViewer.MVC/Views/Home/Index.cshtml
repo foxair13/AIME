@@ -4,6 +4,11 @@
 }
 @section HeadArea {
     <style>
+        #navbarVerticalCollapser1 {
+            width: 350px;
+            overflow-x: auto;
+
+        }
         .map {
             height: 400px;
             width: 100%;
@@ -59,17 +64,55 @@
             src: '../img/offpick.png',
             scale: 0.1
         });
-
+        const valueIcon = new ol.style.Icon({
+            anchor: [0.5, 1.45],
+            src: '../img/Pictagram_Inv_No.gif',
+            scale: 0.3
+        });
         function clusterMemberStyle(clusterMember) {
-            return new ol.style.Style({
-                geometry: clusterMember.getGeometry(),
-                image: darkIcon,
-                text: new ol.style.Text({
-                    text: clusterMember.get('name'),
-                    offsetY: 15,
-                    scale: 1.1
-                })
-            });
+            if (clusterMember.get('hasvalue') === false) {
+                return new ol.style.Style({
+                    geometry: clusterMember.getGeometry(),
+                    image: darkIcon,
+                    text: new ol.style.Text({
+                        text: clusterMember.get('name'),
+                        offsetY: 15,
+                        scale: 1.1
+                    })
+                });
+            } else {
+                return [
+                    new ol.style.Style({
+
+                        image: darkIcon,
+                        text: new ol.style.Text({
+                            text: clusterMember.get('name'),
+                            offsetY: 15,
+                            scale: 1.1
+                        })
+                    }),
+                    new ol.style.Style({
+
+                        image: valueIcon,
+                        text: new ol.style.Text({
+                            text: clusterMember.get('vl').toString(),
+                            offsetY: -110,
+                            scale: 1.1,
+                            font: '18px Arial',
+                            scale: 1.1,
+                            backgroundFill: new ol.style.Fill({
+                                color: 'black'
+                            }),
+                            padding: [5, 10, 5, 10], // Подгоните эти значения под ваш дизайн: [top, right, bottom, left]
+                            stroke: new ol.style.Stroke({
+                                color: 'white',
+                                width: 2
+                            })
+                        }),
+                    }),
+                ];
+            }
+
 
         }
         function clusterStyle(feature) {
@@ -127,7 +170,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(100, 255, 255,' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Брестская',
                 center: [25.399008, 52.462073],
 
@@ -139,7 +182,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(0, 255, 0, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Гомельская',
                 center: [29.522193, 52.318775],
 
@@ -151,7 +194,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(10, 255, 200, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Гродненская',
                 center: [25.105029, 53.886073],
             },
@@ -162,7 +205,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(255, 255, 0, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Могилевская',
                 center: [30.424664, 53.581749],
             },
@@ -173,7 +216,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(0, 255, 255, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'г. Минск',
                 center: [27.725687, 53.882864],
             },
@@ -184,7 +227,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(255, 0, 255, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Минская',
                 center: [27.748717, 53.726112],
 
@@ -196,7 +239,7 @@
                     format: new ol.format.GeoJSON(),
                 }),
                 fillColor: 'rgba(300, 100, 55, ' + transparency + ')',
-                strokeColor: 'yellow',
+                strokeColor: 'rgba(188, 255, 59, 1)',
                 text: 'Витебская',
                 center: [28.708576, 55.214912],
             }
@@ -215,7 +258,7 @@
             new ol.layer.Vector({
                 style: new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: 'red',
+                        color: 'rgba(188, 255, 59, 1)',
                         width: 3,
                     }),
                 }),
@@ -227,7 +270,7 @@
 
         const highlightStyle = new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: 'rgba(255, 0, 0, 0.7)',
+                color: 'rgba(85, 127, 0, 0.7)',
                 width: 3,
             }),
         });
@@ -331,7 +374,7 @@
                         clipLayerBorder = new ol.layer.Vector({
                             style: new ol.style.Style({
                                 stroke: new ol.style.Stroke({
-                                    color: 'red',
+                                    color: 'rgba(188, 255, 59, 0.7)',
                                     width: 3,
                                 }),
                             }),
@@ -383,20 +426,57 @@
 
         function handleFeatureClick(evt) {
             const pixel = map.getEventPixel(evt.originalEvent);
+            let regularIconStyle;
             if (clickedFeature) {
+                if (clickedFeature.get('features')[0].get('hasvalue') == false) {
 
-                const regularIconStyle = new ol.style.Style({
-                    image: new ol.style.Icon({
-                        anchor: [0.5, 1],
-                        src: '../img/offpick.png',
-                        scale: 0.1
-                    }),
-                    text: new ol.style.Text({
-                        text: clickedFeature.get('features')[0].get('name'),
-                        offsetY: 15,
-                        scale: 1.1
-                    })
-                });
+
+                     regularIconStyle = new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: '../img/offpick.png',
+                            scale: 0.1
+                        }),
+                        text: new ol.style.Text({
+                            text: clickedFeature.get('features')[0].get('name'),
+                            offsetY: 15,
+                            scale: 1.1
+                        })
+                    });
+                  
+                }
+                else if (clickedFeature.get('features')[0].get('hasvalue') == true) {
+                    regularIconStyle = [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                anchor: [0.5, 1],
+                                src: '../img/offpick.png',
+                                scale: 0.1
+                            }),
+                            text: new ol.style.Text({
+                                text: clickedFeature.get('features')[0].get('name'),
+                                offsetY: 15,
+                                scale: 1.1
+                            })
+                        }),
+                        new ol.style.Style({
+                            image: valueIcon,
+                            text: new ol.style.Text({
+                                text: clickedFeature.get('features')[0].get('vl').toString(),
+                                offsetY: -110,
+                                font: '18px Arial',
+                                backgroundFill: new ol.style.Fill({
+                                    color: 'black'
+                                }),
+                                padding: [5, 10, 5, 10],
+                                stroke: new ol.style.Stroke({
+                                    color: 'white',
+                                    width: 2
+                                })
+                            })
+                        })
+                    ];
+                }
                 clickedFeature.setStyle(regularIconStyle);
             }
 
@@ -404,27 +484,63 @@
                 if (layer === pointsLayer) {
                     const clusterFeatures = feature.get('features');
                     const selectedFeatureId = clusterFeatures[0].get('id');
-
+                    let selectedIconStyle;
                     if (clusterFeatures && clusterFeatures.length === 1) {
-                        const selectedIconStyle = new ol.style.Style({
-                            image: new ol.style.Icon({
-                                anchor: [0.5, 1],
-                                src: '../img/onpick.png',
-                                scale: 0.15
-                            }),
-                            text: new ol.style.Text({
-                                text: clusterFeatures[0].get('name'),
-                                offsetY: 15,
-                                scale: 1.1
-                            })
-                        });
+                        if (clusterFeatures[0].get('hasvalue') == false) {
+                            selectedIconStyle = new ol.style.Style({
+                                image: new ol.style.Icon({
+                                    anchor: [0.5, 1],
+                                    src: '../img/onpick.png',
+                                    scale: 0.15
+                                }),
+                                text: new ol.style.Text({
+                                    text: clusterFeatures[0].get('name'),
+                                    offsetY: 15,
+                                    scale: 1.1
+                                })
+                            });
+                        }
+                        else if (clusterFeatures[0].get('hasvalue') == true) {
+
+                            selectedIconStyle = [
+                                new ol.style.Style({
+                                    image: new ol.style.Icon({
+                                        anchor: [0.5, 1],
+                                        src: '../img/onpick.png',
+                                        scale: 0.1
+                                    }),
+                                    text: new ol.style.Text({
+                                        text: clusterFeatures[0].get('name'),
+                                        offsetY: 15,
+                                        scale: 1.1
+                                    })
+                                }),
+                                new ol.style.Style({
+                                    image: valueIcon,
+                                    text: new ol.style.Text({
+                                        text: clusterFeatures[0].get('vl').toString(),
+                                        offsetY: -110,
+                                        font: '18px Arial',
+                                        backgroundFill: new ol.style.Fill({
+                                            color: 'black'
+                                        }),
+                                        padding: [5, 10, 5, 10],
+                                        stroke: new ol.style.Stroke({
+                                            color: 'white',
+                                            width: 2
+                                        })
+                                    })
+                                })
+                            ];
+                        }
 
                         feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
 
                         clusterFeatures.forEach(childFeature => {
-                            const selectedFeatureId = clickedFeature.get('features')[0].get('id');
-                            alert($("#slider-range").slider("values", 1));
+                            const selectedFeatureId = clickedFeature.get('features')[0].get('hasvalue');
+                            //alert($("#slider-range").slider("values", 1));
+                            //alert(selectedFeatureId);
                         });
                     }
                 }
@@ -438,44 +554,116 @@
 
             const pixel = map.getEventPixel(evt.originalEvent);
             let isSingleFeatureInCluster = false;
-
+            let hoverIconStyleDynamic;
             map.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 if (layer === pointsLayer && feature !== clickedFeature) {
                     const clusterFeatures = feature.get('features');
                     if (clusterFeatures && clusterFeatures.length === 1) {
                         const singleFeature = clusterFeatures[0];
                         const featureName = singleFeature.get('name');
-
-                        const hoverIconStyleDynamic = new ol.style.Style({
-                            image: new ol.style.Icon({
-                                anchor: [0.5, 1],
-                                src: '../img/onpick.png',
-                                scale: 0.15
-                            }),
-                            text: new ol.style.Text({
-                                text: featureName,
-                                offsetY: 15,
-                                scale: 1.1
-                            })
-                        });
-
-                        isSingleFeatureInCluster = true;
-
-                        if (lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
-                            const regularIconStyleDynamic = new ol.style.Style({
+                        const featurevalue = singleFeature.get('vl').toString();
+                        if (singleFeature.get('hasvalue') == false) {
+                            hoverIconStyleDynamic = new ol.style.Style({
                                 image: new ol.style.Icon({
                                     anchor: [0.5, 1],
-                                    src: '../img/offpick.png',
-                                    scale: 0.1
+                                    src: '../img/onpick.png',
+                                    scale: 0.15
                                 }),
                                 text: new ol.style.Text({
-                                    text: lastHoveredFeature.get('features')[0].get('name'),
+                                    text: featureName,
                                     offsetY: 15,
                                     scale: 1.1
                                 })
                             });
-                            lastHoveredFeature.setStyle(regularIconStyleDynamic);
+                        } else if (singleFeature.get('hasvalue') == true) {
+                            hoverIconStyleDynamic = [
+                                new ol.style.Style({
+                                    image: new ol.style.Icon({
+                                        anchor: [0.5, 1],
+                                        src: '../img/onpick.png',
+                                        scale: 0.1
+                                    }),
+                                    text: new ol.style.Text({
+                                        text: featureName,
+                                        offsetY: 15,
+                                        scale: 1.1
+                                    })
+                                }),
+                                new ol.style.Style({
+                                    image: valueIcon,
+                                    text: new ol.style.Text({
+                                        text: featurevalue,
+                                        offsetY: -110,
+                                        font: '18px Arial',
+                                        backgroundFill: new ol.style.Fill({
+                                            color: 'black'
+                                        }),
+                                        padding: [5, 10, 5, 10],
+                                        stroke: new ol.style.Stroke({
+                                            color: 'white',
+                                            width: 2
+                                        })
+                                    })
+                                })
+                            ];
+                        }
 
+
+                        isSingleFeatureInCluster = true;
+                        let regularIconStyleDynamic;
+                        if (lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
+
+                            if (singleFeature.get('hasvalue') == false) {
+                                regularIconStyleDynamic = new ol.style.Style({
+                                    image: new ol.style.Icon({
+                                        anchor: [0.5, 1],
+                                        src: '../img/offpick.png',
+                                        scale: 0.1
+                                    }),
+                                    text: new ol.style.Text({
+                                        text: singleFeature.get('name'),
+                                        offsetY: 15,
+                                        scale: 1.1
+                                    })
+                                });
+
+                            }
+                            else if (singleFeature.get('hasvalue') == true) {
+
+                                regularIconStyleDynamic = [
+                                    new ol.style.Style({
+                                        image: new ol.style.Icon({
+                                            anchor: [0.5, 1],
+                                            src: '../img/offpick.png',
+                                            scale: 0.1
+                                        }),
+                                        text: new ol.style.Text({
+                                            text: singleFeature.get('name'),
+                                            offsetY: 15,
+                                            scale: 1.1
+                                        })
+                                    }),
+                                    new ol.style.Style({
+                                        image: valueIcon,
+                                        text: new ol.style.Text({
+                                            text: singleFeature.get('vl').toString(),
+                                            offsetY: -110,
+                                            font: '18px Arial',
+                                            backgroundFill: new ol.style.Fill({
+                                                color: 'black'
+                                            }),
+                                            padding: [5, 10, 5, 10],
+                                            stroke: new ol.style.Stroke({
+                                                color: 'white',
+                                                width: 2
+                                            })
+                                        })
+                                    })
+
+                                ];
+
+                            }
+                            lastHoveredFeature.setStyle(regularIconStyleDynamic);
                         }
 
                         feature.setStyle(hoverIconStyleDynamic);
@@ -485,18 +673,59 @@
             });
 
             if (!isSingleFeatureInCluster && lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
-                const regularIconStyleDynamic = new ol.style.Style({
-                    image: new ol.style.Icon({
-                        anchor: [0.5, 1],
-                        src: '../img/offpick.png',
-                        scale: 0.1
-                    }),
-                    text: new ol.style.Text({
-                        text: lastHoveredFeature.get('features')[0].get('name'),
-                        offsetY: 15,
-                        scale: 1.1
-                    })
-                });
+                let regularIconStyleDynamic;
+                if (lastHoveredFeature.get('features')[0].get('hasvalue') == false) {
+
+
+
+                    regularIconStyleDynamic = new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: '../img/offpick.png',
+                            scale: 0.1
+                        }),
+                        text: new ol.style.Text({
+                            text: lastHoveredFeature.get('features')[0].get('name'),
+                            offsetY: 15,
+                            scale: 1.1
+                        })
+                    });
+
+                }
+                else if (lastHoveredFeature.get('features')[0].get('hasvalue') == true) {
+                    regularIconStyleDynamic = [
+                        new ol.style.Style({
+                            image: new ol.style.Icon({
+                                anchor: [0.5, 1],
+                                src: '../img/offpick.png',
+                                scale: 0.1
+                            }),
+                            text: new ol.style.Text({
+                                text: lastHoveredFeature.get('features')[0].get('name'),
+                                offsetY: 15,
+                                scale: 1.1
+                            })
+                        }),
+                        new ol.style.Style({
+                            image: valueIcon,
+                            text: new ol.style.Text({
+                                text: lastHoveredFeature.get('features')[0].get('vl').toString(),
+                                offsetY: -110,
+                                font: '18px Arial',
+                                backgroundFill: new ol.style.Fill({
+                                    color: 'black'
+                                }),
+                                padding: [5, 10, 5, 10],
+                                stroke: new ol.style.Stroke({
+                                    color: 'white',
+                                    width: 2
+                                })
+                            })
+                        })
+
+                    ];
+
+                }
                 lastHoveredFeature.setStyle(regularIconStyleDynamic);
                 lastHoveredFeature = null;
             }
@@ -523,17 +752,20 @@
                         const feature = new ol.Feature({
                             id: point.id,
                             geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
-                            name: point.name
+                            name: point.name,
+                            hasvalue: point.hasValue,
+                            vl: point.value
                         });
                         return feature;
                     });
             } else {
-                // Если feature не определена, добавляем все точки
                 features = points.map(point => {
                     const feature = new ol.Feature({
                         id: point.id,
                         geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
-                        name: point.name
+                        name: point.name,
+                        hasvalue: point.hasValue,
+                        vl: point.value
                     });
                     return feature;
                 });
@@ -556,20 +788,11 @@
             pointsLayer = layer;
             map.addLayer(layer);
             currentLayer = layer;
-
-            // Удаление предыдущего обработчика
             map.un('pointermove', handlePointerMove);
-
-            // Добавление нового обработчика
             map.on('pointermove', handlePointerMove);
-            // Удаление предыдущего обработчика клика
             map.un('click', handleFeatureClick);
-
-            // Добавление нового обработчика клика
             map.on('click', handleFeatureClick);
             map.un('moveend', handleFeatureClick);
-
-            // Добавление нового обработчика клика
             map.on('moveend', handleFeatureMoveend);
         }
 
@@ -582,19 +805,42 @@
                 url: '../Home/GetPointsForRegion',
                 method: 'GET',
                 data: {
-                                       ownerId: ownerId,
+                    ownerId: ownerId,
                     areaId: areaId,
                     TypeValue: TypeValue,
                     roadId: roadId,
                     objectId: objectId,
-                    IsBest:IsBest,
+                    IsBest: IsBest,
                     EntriesID: EntriesID,
                     Dates: Dates,
-                    slideMin:slideMin,
+                    slideMin: slideMin,
                     slideMax: slideMax,
                     CriteriaValue: CriteriaValue
                 },
                 success: function (data) {
+                    $("#meta table tbody").empty();
+                    let hasValue;
+                    var criteriaValueText = $("input[name='CriteriaRadio']:checked").val();
+                    $.each(data, function (index, point) {
+                        var rowNumber = index + 1;  // Get the 1-based row number
+                        var row = '<tr>' +
+                            '<td align="center">' + rowNumber + '</td>' +  // Display the ordinal number
+                            '<td>' + point.name + '</td>' +
+                            '<td class="valueColumn">' + point.value + '</td>' +
+                            '</tr>';
+                        hasValue = point.hasValue;
+                        $("#meta table tbody").append(row);
+                    });
+                    //alert(hasValue);
+                    // Check hasValue and show/hide the "Value" column accordingly
+                    if (hasValue) {
+
+                        $("#meta table th:nth-child(3), #meta table td.valueColumn").show();
+                        $("#meta table th:nth-child(3)").text(criteriaValueText);
+                    } else {
+                        $("#meta table th:nth-child(3), #meta table td.valueColumn").hide();
+
+                    }
                     callback(data);
                 },
                 error: function (error) {
@@ -649,7 +895,7 @@
                     new ol.layer.Vector({
                         style: new ol.style.Style({
                             stroke: new ol.style.Stroke({
-                                color: 'red',
+                                color: 'rgba(188, 255, 59, 1)',
                                 width: 3,
                             }),
                         }),

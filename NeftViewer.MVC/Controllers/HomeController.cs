@@ -83,12 +83,12 @@ namespace NeftViewer.MVC.Controllers
                 {
                     objects = objects.Where(x => x.CodeSUID == objectId);
                 }
-                if (roadId != 0)
-                {
-                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
-                    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
-                    objects = checkobjects;
-                }
+                //if (roadId != 0)
+                //{
+                //    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
+                //    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
+                //    objects = checkobjects;
+                //}
                 if (CriteriaValue == 0)
                 {
                     result = objects.Select(obj => new Point
@@ -106,7 +106,7 @@ namespace NeftViewer.MVC.Controllers
                     IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
                     bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
                     IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
-                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).OrderBy(x => x.Value);
+                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
 
                     var objwithval = from x in objects
                               join y in iv on x.CodeSUID equals y.CodeSUID
