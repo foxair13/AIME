@@ -45,6 +45,9 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src["Value"]));
 
             CreateMap<ActionRole, ActionRoleViewModel>();            
+            CreateMap<ActionRole, ActionRoleViewModel>();
+            CreateMap<CriteriaCalcMethod, CriteriaCalcMethodViewModel>();
+            
         }
         //private string ByteArrayToString(byte[] byteArray)
         //{

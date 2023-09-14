@@ -25,7 +25,7 @@ namespace NeftViewer.Data.Models
         {
             get { return _dateStart; }
             set { _dateStart = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
-        }        
+        }
 
         public int CriteriaId { get; set; }
         public decimal Value { get; set; }

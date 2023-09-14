@@ -10,6 +10,8 @@ namespace NeftViewer.Data.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int AgregateId { get; set; }
+        [ForeignKey("AgregateId")]
+        public virtual Agregate Agregates { get; set; }
         public string Units { get; set; }
         public int Periodicity { get; set; }
     }

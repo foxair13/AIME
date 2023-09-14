@@ -1,0 +1,71 @@
+﻿@model IEnumerable<NeftViewer.MVC.Models.CriteriaCalcMethodViewModel>
+
+@{
+    ViewData["Title"] = "Таблица 'методы расчета показателей'";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section HeadArea {
+    <link href="~/lib/datatables/datatables-1.13.6/css/jquery.datatables.min.css" rel="stylesheet" />
+}
+<div class="card border border-primary">
+    <div class="card-body">
+        <h5 class="card-title">@ViewData["Title"]</h5>
+        <div class="mb-3">
+            <a asp-action="Create" class="btn btn-soft-success me-1 mb-1">Создать новое</a>
+        </div>
+
+        <div class="table-responsive">
+            <table id="myTable" class="table table-sm fs--1 mb-0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.СalculationByMax)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsHidden)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.СalculationByMax)
+                            </td>
+                            <td class="align-middle">
+                                @Html.DisplayFor(modelItem => item.IsHidden)
+                            </td>
+                            <td class="align-middle white-space-nowrap text-end pe-0">
+                                <a asp-action="Edit" class="btn btn-soft-primary me-1 mb-1" asp-route-id="@item.Id">Изменить</a>
+                                <a asp-action="Delete" class="btn btn-soft-warning me-1 mb-1" asp-route-id="@item.Id">Удалить</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br />
+
+@section Scripts {
+    <script src="~/lib/datatables/datatables-1.13.6/js/jquery.datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                language: {
+                    url: '../lib/datatables/ru.json'
+                }
+            });
+        });
+    </script>
+}

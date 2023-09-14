@@ -18,6 +18,7 @@ namespace NeftViewer.MVC.Data
         }
         public DbSet<NeftViewer.MVC.Models.ActionViewModel>? ActionViewModel { get; set; }
         public DbSet<NeftViewer.MVC.Models.ActionRoleViewModel>? ActionRoleViewModel { get; set; }
+        public DbSet<NeftViewer.MVC.Models.CriteriaCalcMethodViewModel>? CriteriaCalcMethodViewModel { get; set; }
   
     }
 }

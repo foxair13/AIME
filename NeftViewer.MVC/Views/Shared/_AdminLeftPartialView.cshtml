@@ -1,0 +1,55 @@
+﻿<nav class="navbar navbar-vertical navbar-expand-lg" >
+   
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <div class="navbar-vertical-content">
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <li class="nav-item">
+                  
+                    <p class="navbar-vertical-label">Администрирование</p>
+                    <hr class="navbar-vertical-line" />
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1" href="@Url.Action("Index","Home")"  role="button" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center"><span class="nav-link-icon"><i class="fa fa-home" aria-hidden="true"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Главная страница</span></span></div>
+                        </a>
+                    </div>
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link dropdown-indicator label-1" href="#nv-customization" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-customization">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div><span class="nav-link-icon"><i class="fa fa-cogs" aria-hidden="true"></i></span><span class="nav-link-text">Настройки</span>
+                            </div>
+                        </a>
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-customization">
+                                <li class="collapsed-nav-item-title d-none">Роли</li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index","Role")"  data-bs-toggle="" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><i class="fa fa-object-group" aria-hidden="true"></i><span class="nav-link-text">Роли</span></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index","Action")"  data-bs-toggle="" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><i class="fa fa-magic" aria-hidden="true"></i><span class="nav-link-text">Действия</span></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index","ActionRole")"  data-bs-toggle="" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><i class="fa fa-link" aria-hidden="true"></i><span class="nav-link-text">Действия по ролям</span></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index","CriteriaCalc")" data-bs-toggle="" aria-expanded="false">
+                                        <div class="d-flex align-items-center"><i class="fa fa-calculator" aria-hidden="true"></i><span class="nav-link-text">Рассчет показателей</span></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  
+                 
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</nav>

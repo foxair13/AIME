@@ -10,6 +10,7 @@ namespace NeftViewer.MVC.Mappings
         {
             CreateMap<ActionViewModel,NeftViewer.Data.Models.Action>();
             CreateMap<ActionRoleViewModel, ActionRole>();
+            CreateMap<CriteriaCalcMethodViewModel, CriteriaCalcMethod>();
         }
 
 

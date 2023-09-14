@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
 using NeftViewer.MVC.Filters;
+using NeftViewer.MVC.Mappings;
 using Org.BouncyCastle.Utilities;
 using System.Collections;
 using System.Reflection;
@@ -29,8 +30,10 @@ namespace NeftViewer.MVC.Service
                     return attribute.Text;
                 }
             }
-            return table.ToString(); // Возвращаем имя перечисления, если атрибут не найден
+            return table.ToString(); 
         }
+
+
         public List<Dictionary<string, object>> GetViewData(string viewName)
         {
             var result = new List<Dictionary<string, object>>();
@@ -69,3 +72,4 @@ namespace NeftViewer.MVC.Service
         }
     }
 }
+

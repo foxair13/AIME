@@ -19,11 +19,13 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<Road> RoadRepository,
               IGenericRepository<ObjectItem> ObjectItemRepository,
               IGenericRepository<ObjectOnRoad> ObjectOnRoadRepository,
-           
+
               IGenericRepository<IndicatorValue> IndicatorValueRepository,
               IGenericRepository<Owner> OwnerRepository,
               IGenericRepository<Area> AreaRepository,
               IGenericRepository<Locality> LocalityRepository,
+               IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethodRepository,
+                 IGenericRepository<Agregate> AgregateRepository,
               IGenericRepository<Energy> EnergyRepository
             )
         {
@@ -35,11 +37,14 @@ namespace NeftViewer.Data.UnitOfWork
             Roads = RoadRepository;
             ObjectItems = ObjectItemRepository;
             ObjectOnRoads = ObjectOnRoadRepository;
-         
             IndicatorValues = IndicatorValueRepository;
             Owners = OwnerRepository;
             Areas = AreaRepository;
             Localities = LocalityRepository;
+            CriteriaCalcMethods = CriteriaCalcMethodRepository;
+            CriteriaCalcMethods = CriteriaCalcMethodRepository;
+            Agregates = AgregateRepository;
+
             Energies = EnergyRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
@@ -53,17 +58,19 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Owner> Owners { get; }
         public IGenericRepository<Area> Areas { get; }
         public IGenericRepository<Locality> Localities { get; }
+        public IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethods { get; }
+        public IGenericRepository<Agregate> Agregates { get; }
+
         public IGenericRepository<Energy> Energies { get; }
 
         public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();
         }
-      public void Dispose()
+        public void Dispose()
         {
             _context.Dispose();
         }
     }
 }
 
-  

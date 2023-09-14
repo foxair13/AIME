@@ -1,4 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Spreadsheet;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -7,6 +9,7 @@ using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Core.ActionFilters;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
+using NeftViewer.MVC.Binders;
 using NeftViewer.MVC.Models;
 using NeftViewer.MVC.Options;
 using System.Diagnostics;
@@ -25,8 +28,11 @@ namespace NeftViewer.MVC.Controllers
         private readonly IObjectItemService _objectItemService;
         private readonly IRoadService _roadService;
         private readonly ICriteriaService _criteriaService;
+        private readonly IAgregateService _agregateService;
+        private readonly ICriteriaCalcMethodService _criteriaCalcMethodService;
+        private readonly IIndicatorValueService _indicatorValueService;
 
-        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService)
+        public HomeController(ILogger<HomeController> logger, IAspNetUsersService aspNetUsersService, IAreaService areaService, IOwnerService ownerService, IObjectItemService objectItemService, IRoadService roadService, ICriteriaService criteriaService, IAgregateService agregateService, ICriteriaCalcMethodService criteriaCalcMethodService, IIndicatorValueService indicatorValueService)
         {
             _logger = logger;
             _userService = aspNetUsersService;
@@ -35,20 +41,31 @@ namespace NeftViewer.MVC.Controllers
             _objectItemService = objectItemService;
             _roadService = roadService;
             _criteriaService = criteriaService;
+            _agregateService = agregateService;
+            _criteriaCalcMethodService = criteriaCalcMethodService;
+            _indicatorValueService = indicatorValueService;
         }
 
         public async Task<IActionResult> Index()
         {
-            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService);
+            FilterViewModel filterViewModel = await FilterViewModel.CreateAsync(_areaService, _ownerService, _objectItemService, _roadService, _criteriaService, _agregateService, _criteriaCalcMethodService);
 
 
             return View(filterViewModel);
         }
 
-        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId)
+        public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
+        {
+            var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
+            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax });
+        }
+
+        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
         {
             try
             {
+                var result = new object();
+                var items = new object();
                 var objects = await _objectItemService.GetObjectItems();
                 if (ownerId != 0)
                 {
@@ -66,19 +83,69 @@ namespace NeftViewer.MVC.Controllers
                 {
                     objects = objects.Where(x => x.CodeSUID == objectId);
                 }
-                if (roadId != 0)
+                //if (roadId != 0)
+                //{
+                //    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);
+                //    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
+                //    objects = checkobjects;
+                //}
+                if (CriteriaValue == 0)
                 {
-                    var objectCodesOnRoad = await _roadService.GetCodeSUIDByRoadIdAsync(roadId);                   
-                    var checkobjects = objects.Where(o => objectCodesOnRoad.Contains(o.CodeSUID));
-                    objects = checkobjects;
+                    result = objects.Select(obj => new Point
+                    {
+                        id = obj.CodeSUID,
+                        Lon = obj.Longitude,
+                        Lat = obj.Latitude,
+                        Name = obj.Name,
+                        HasValue=false,
+                        Value=0
+                    }).ToList();
                 }
-
-                var result = objects.Select(obj => new Point
+                else 
                 {
-                    Lon = obj.Longitude,
-                    Lat = obj.Latitude,
-                    Name = obj.Name
-                }).ToList();
+                    IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
+                    bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
+                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
+                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
+
+                    var objwithval = from x in objects
+                              join y in iv on x.CodeSUID equals y.CodeSUID
+                              select new { x,y.Value};
+
+                    if (IsBest)
+                    {
+                        if (CalculationByMax)
+                        {
+                            objwithval = objwithval.OrderByDescending(x => x.Value).Take(EntriesID);
+                        }
+                        else 
+                        {
+                            objwithval = objwithval.OrderBy(x => x.Value).Take(EntriesID);
+                        }
+                        
+                    }
+                    else 
+                    {
+                        if (CalculationByMax)
+                        {
+                            objwithval = objwithval.OrderBy(x => x.Value).Take(EntriesID);
+                        }
+                        else
+                        {
+                            objwithval = objwithval.OrderByDescending(x => x.Value).Take(EntriesID);
+                        }
+                    }
+                    result = objwithval.Select(obj => new Point
+                    {
+                        id = obj.x.CodeSUID,
+                        Lon = obj.x.Longitude,
+                        Lat = obj.x.Latitude,
+                        Name = obj.x.Name,
+                        HasValue = true,
+                        Value = obj.Value
+                    }).ToList();
+                }
+              
                 return Json(result);
             }
             catch (Exception)

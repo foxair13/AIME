@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NeftViewer.BL.Services.Contracts;
 using NeftViewer.Data.Models;
 using NeftViewer.Data.UnitOfWork.Contracts;
@@ -21,17 +22,35 @@ namespace NeftViewer.BL.Services
         {
             await _uow.CommitAsync();
         }
+        public async Task<(decimal? MinValue, decimal? MaxValue,DateTime? MinDate,DateTime? MaxDate)> GetMinMaxValues(int CriteriaId)
+        {
+          
+            var value = await _uow.IndicatorValues.GetMinMaxValuesAsync<decimal?>("CriteriaId", CriteriaId, "Value");
+            var date = await _uow.IndicatorValues.GetMinMaxValuesAsync<DateTime?>("CriteriaId", CriteriaId, "DateStart");
+            decimal? minValue = value.MinValue as decimal?;
+            decimal? maxValue = value.MaxValue as decimal?;
+            DateTime? minDate = date.MinValue as DateTime?;
+            DateTime? maxDate = date.MaxValue as DateTime?;
+            return (minValue, maxValue, minDate, maxDate);
+        }
 
+ 
+      
         public Task<IndicatorValue> FindIndicatorValueAsync(string? id)
         {
             return _uow.IndicatorValues.GetAsync(id);
         }
 
-        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues()
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues(DateTime Dates,  int CriteriaValue)
         {
-
-            return await _uow.IndicatorValues.GetAllAsync();
-
+            DateTime dateInput = Dates;
+            DateTimeOffset dateWithOffset = new DateTimeOffset(dateInput, new TimeSpan(2, 0, 0));
+            DateTime dateForFilter = dateWithOffset.UtcDateTime;
+            List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            filters.Add(new ValueTuple<string, object>("DateStart", dateForFilter));
+            filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaValue));
+            var v = _uow.IndicatorValues.GetItems(filters);
+            return v.ToList();
         }
 
         public EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue)

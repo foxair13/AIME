@@ -22,7 +22,7 @@ namespace NeftViewer.BL.Services
             await _uow.CommitAsync();
         }
 
-        public Task<Criteria> FindCriteriaAsync(string? id)
+        public Task<Criteria> FindCriteriaAsync(int id)
         {
             return _uow.Criterias.GetAsync(id);
         }

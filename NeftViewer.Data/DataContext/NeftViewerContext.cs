@@ -29,6 +29,9 @@ namespace NeftViewer.Data.DataContext
         public DbSet<Area> Areas { get; set; }
         public DbSet<Models.Action> Actions { get; set; }
         public DbSet<ActionRole> ActionRoles { get; set; }
+        public DbSet<CriteriaCalcMethod> CriteriaCalcMethod { get; set; }
+        public DbSet<Agregate> Agregates { get; set; }
+
         public DbSet<Energy> Energies { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
          : base(options)
@@ -56,7 +59,7 @@ namespace NeftViewer.Data.DataContext
             modelBuilder.ApplyConfiguration(new AspNetUsersConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
             modelBuilder.ApplyConfiguration(new ActionRoleConfiguration());
-
+            modelBuilder.ApplyConfiguration(new AgregateConfiguration());
             OnModelCreatingPartial(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
