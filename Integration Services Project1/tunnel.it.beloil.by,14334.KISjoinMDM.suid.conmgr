@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="tunnel it beloil by 14334 KISjoinMDM suid"
+  DTS:DTSID="{C84DD9FA-2EDA-4F99-AA57-0E49BF373033}"
+  DTS:CreationName="ADO.NET:System.Data.OleDb.OleDbConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=tunnel.it.beloil.by,14334;User ID=suid;Initial Catalog=KISjoinMDM;Provider=SQLOLEDB.1;Persist Security Info=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAACAAAAAAADZgAAwAAAABAAAAAwVWxyHIBq0cKKd8anzE23AAAAAASAAACgAAAAEAAAAFcLuMRVQQvxP465TVbfqZJ4AAAA6TNZqxPJAaxgCB+4CrzwXb5X+poSlRtkCiGDCv9x5h1435UIxJjKwfEYT+6E3vPd8YSQTk6GmZtddbOIhqTbH2XvMU+1670PpPBSZkHEtS/cOaV3P1XDrsjRCWOrO+SWIrUtVL1POTg9g6oxnxHG3uIw22DWBUKRFAAAAAhEktE3WkU9SlWgRTw+9SKP1WZh</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

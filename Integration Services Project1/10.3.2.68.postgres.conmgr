@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="10.3.2.68.postgres"
+  DTS:DTSID="{7E938BD4-FBC5-4C53-B7BC-877ABD5CBC05}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=10.3.2.68;User ID=postgres;Provider=PGNP.1;Location=NeftViewer;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAACAAAAAAADZgAAwAAAABAAAAATiHMcVbfJHlt7uaizQ3N9AAAAAASAAACgAAAAEAAAAE4SIhfKlbBUVY6K3oPv1GJ4AAAAk3+vrD6uweWlN43Yw5rozETNq9esG6A6wsiXsXqxzbIdUYkssq1NoW3oLV2q75a1nHeYxGgiEBMFM4ieoZeQvN2y4raQox3MXOV2te4IKteN1pWxj6dsA+KbYb9wBhBuWQbd5EId1eyqLRhmTXWnK5l1pNIv+aTyFAAAAH+ZXa9mRI1bvWYeEbgjNJZehoH6</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

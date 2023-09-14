@@ -8,7 +8,10 @@ namespace NeftViewer.Data.Models
     [Table("IndicatorValues")]
     public partial class IndicatorValue
     {
-        public Guid Id { get; set; }
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        //public Guid Id { get; set; }
       
         public string CodeSUID { get; set; }
         [ForeignKey("CodeSUID")]
