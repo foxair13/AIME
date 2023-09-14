@@ -9,7 +9,9 @@ namespace NeftViewer.Data.Models
     public partial class IndicatorValue
     {
         [Key]
-        public int IdInt { get; set; }
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        //public Guid Id { get; set; }
       
         public string CodeSUID { get; set; }
         [ForeignKey("CodeSUID")]
@@ -28,19 +30,15 @@ namespace NeftViewer.Data.Models
         public int CriteriaId { get; set; }
         public decimal Value { get; set; }
         //private DateTime _lastUpdate;
-        //private DateTime _lastUpdate;
-        //[Column("LastUpdate", TypeName = "timestamp with time zone")]
+
         //[Column("LastUpdate", TypeName = "timestamp with time zone")]
         //public DateTime LastUpdate
         //{
         //    get { return _lastUpdate; }
         //    set { _lastUpdate = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
         //}
-        ////{
-        ////    get { return _lastUpdate; }
-        ////    set { _lastUpdate = value; }
-        ////}
-        //[NotMapped] // This property is not mapped to the database
+
+        //[NotMapped]
         //public string FormattedLastUpdate
         //{
         //    get { return LastUpdate.ToString("dd.MM.yyyy HH:mm:ss"); }

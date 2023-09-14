@@ -25,8 +25,8 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<Area> AreaRepository,
               IGenericRepository<Locality> LocalityRepository,
                IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethodRepository,
-                 IGenericRepository<Agregate> AgregateRepository
-
+                 IGenericRepository<Agregate> AgregateRepository,
+              IGenericRepository<Energy> EnergyRepository
             )
         {
             _context = context;
@@ -45,6 +45,7 @@ namespace NeftViewer.Data.UnitOfWork
             CriteriaCalcMethods = CriteriaCalcMethodRepository;
             Agregates = AgregateRepository;
 
+            Energies = EnergyRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
@@ -60,6 +61,7 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethods { get; }
         public IGenericRepository<Agregate> Agregates { get; }
 
+        public IGenericRepository<Energy> Energies { get; }
 
         public async Task CommitAsync()
         {

@@ -20,6 +20,7 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethods { get; }
         IGenericRepository<Agregate> Agregates { get; }
 
+        IGenericRepository<Energy> Energies { get; }
         Task CommitAsync();
     }
 }
