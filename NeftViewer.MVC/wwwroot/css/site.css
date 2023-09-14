@@ -28751,11 +28751,7 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs {
                 background: rgba(0,0,0,0)
             }
 
-            .navbar-vertical.navbar-expand-lg ~ .navbar-top ~ .content {
-                padding-left: 2.5rem;
-                padding-right: 2.5rem;
-                margin-left: 15.875rem
-            }
+
 
         .navbar-vertical.navbar-expand-lg ~ .content .footer {
             padding-left: calc(var(--phoenix-navbar-vertical-width) + 2.5rem)

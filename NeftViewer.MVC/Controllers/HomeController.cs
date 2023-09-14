@@ -57,7 +57,8 @@ namespace NeftViewer.MVC.Controllers
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
             var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
-            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax });
+
+            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax});
         }
 
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
