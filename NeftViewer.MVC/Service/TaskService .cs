@@ -15,6 +15,7 @@ namespace NeftViewer.MVC.Service
         private readonly string _BasePostgree;
         private readonly string _FinanceMssql;
         private readonly string _CoordsUrl;
+        //private readonly string _CoordsUrl;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory, string coordsUrl)
@@ -236,6 +237,29 @@ namespace NeftViewer.MVC.Service
                                             }
                                             break;
                                         }
+
+                                    //case TableEnum.Energies:
+                                    //    {
+                                    //        var energyService = scope.ServiceProvider.GetRequiredService<IEnergyService>();
+                                    //        var objects = energyService.GetEnergies();
+                                    //        string url = _CoordsUrl;
+                                    //        string json;
+                                    //        using (var client = new WebClient())
+                                    //        {
+                                    //            json = client.DownloadString(url);
+                                    //        }
+                                    //        var jsonObject = JObject.Parse(json);
+                                    //        JArray headers = (JArray)jsonObject["headers"];
+                                    //        foreach (JToken header in headers)
+                                    //        {
+                                    //            var codeSUID = (string)header["suid"];
+                                    //            var latitude = (double)header["coordinates"]["latitude"];
+                                    //            var longitude = (double)header["coordinates"]["longitude"];
+                                    //            var ownerName = (string)header["ownerName"];
+                                    //            //await energyService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude, ownerName);
+                                    //        }
+                                    //        break;
+                                    //    }
                                     default:
                                         // Обработка для других значений, если необходимо
                                         break;

@@ -25,5 +25,8 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("IndicatorValues")]
         IndicatorValues,
+
+        [TableText("Energies")]
+        Energies,
     }
 }

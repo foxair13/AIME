@@ -17,6 +17,7 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Owner> Owners { get; }
         IGenericRepository<Area> Areas { get; }
         IGenericRepository<Locality> Localities { get; }
+        IGenericRepository<Energy> Energies { get; }
         Task CommitAsync();
     }
 }

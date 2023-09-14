@@ -45,6 +45,7 @@ builder.Services.AddScoped<IGenericRepository<ObjectOnRoad>, ObjectOnRoadReposit
 builder.Services.AddScoped<IGenericRepository<Owner>, OwnerRepository>();
 builder.Services.AddScoped<IGenericRepository<Area>, AreaRepository>();
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
+builder.Services.AddScoped<IGenericRepository<Energy>, EnergyRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
@@ -56,6 +57,7 @@ builder.Services.AddScoped<IObjectOnRoadService, ObjectOnRoadService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<ILocalityService, LocalityService>();
+builder.Services.AddScoped<IEnergyService, EnergyService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<CustomAuthorizeAttribute>();

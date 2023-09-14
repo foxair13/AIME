@@ -23,7 +23,8 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<IndicatorValue> IndicatorValueRepository,
               IGenericRepository<Owner> OwnerRepository,
               IGenericRepository<Area> AreaRepository,
-              IGenericRepository<Locality> LocalityRepository
+              IGenericRepository<Locality> LocalityRepository,
+              IGenericRepository<Energy> EnergyRepository
             )
         {
             _context = context;
@@ -39,6 +40,7 @@ namespace NeftViewer.Data.UnitOfWork
             Owners = OwnerRepository;
             Areas = AreaRepository;
             Localities = LocalityRepository;
+            Energies = EnergyRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
@@ -51,6 +53,7 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Owner> Owners { get; }
         public IGenericRepository<Area> Areas { get; }
         public IGenericRepository<Locality> Localities { get; }
+        public IGenericRepository<Energy> Energies { get; }
 
         public async Task CommitAsync()
         {
