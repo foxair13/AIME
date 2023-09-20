@@ -8,5 +8,6 @@
         public string Name { get; set; }
         public bool HasValue { get; set; }
         public decimal Value { get; set; }
+        public string scaleUnit { get; set;}
     }
 }

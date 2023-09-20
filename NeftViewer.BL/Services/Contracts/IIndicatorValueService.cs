@@ -17,7 +17,7 @@ namespace NeftViewer.BL.Services.Contracts
         EntityEntry<IndicatorValue> DeleteIndicatorValue(string id);
         Task<bool> AddIndicatorValue(IndicatorValue indicatorValue);
         Task<bool> AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues);
-        Task<(decimal? MinValue, decimal? MaxValue, DateTime? MinDate, DateTime? MaxDate)> GetMinMaxValues(int CriteriaId);
+        Task<(decimal? MinValue, decimal? MaxValue, DateTime? MinDate, DateTime? MaxDate,List<DateTime> dates)> GetMinMaxValues(int CriteriaId);
 
     }
 }

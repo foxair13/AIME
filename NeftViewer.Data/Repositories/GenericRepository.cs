@@ -147,28 +147,38 @@ namespace NeftViewer.Data.Repositories
         }
 
 
-        public async Task<decimal?> GetMinValueByPropertyNameAsync(string filterPropertyName, object filterValue, string valuePropertyName)
+
+        public IQueryable<T> GetUniqueItems<T>(List<(string filterPropertyName, object filterValue)> filters, string uniqueColumnName)
         {
-            // Формирование выражения для выборки значения
             var parameter = Expression.Parameter(typeof(TModel), "x");
-            var valueProperty = Expression.Property(parameter, valuePropertyName);
-            var nullableValueProperty = Expression.Convert(valueProperty, typeof(decimal?));
-            var valueLambda = Expression.Lambda<Func<TModel, decimal?>>(nullableValueProperty, parameter);
+            Expression filterExpression = null;
 
+            foreach (var filter in filters)
+            {
+                var filterProperty = Expression.Property(parameter, filter.filterPropertyName);
+                var constant = Expression.Constant(filter.filterValue);
+                var equality = Expression.Equal(filterProperty, constant);
 
-            // Формирование выражения для фильтрации
-            var filterProperty = Expression.Property(parameter, filterPropertyName);
-            var constant = Expression.Constant(filterValue);
-            var equality = Expression.Equal(filterProperty, constant);
-            var filterLambda = Expression.Lambda<Func<TModel, bool>>(equality, parameter);
+                if (filterExpression == null)
+                    filterExpression = equality;
+                else
+                    filterExpression = Expression.And(filterExpression, equality);
+            }
 
-            var maxVal = await _dbContext.Set<TModel>()
+            var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
+
+            var uniqueColumnProperty = Expression.Property(parameter, uniqueColumnName);
+            var boxedUniqueColumnProperty = Expression.Convert(uniqueColumnProperty, typeof(T));
+
+            var groupByLambda = Expression.Lambda<Func<TModel, T>>(boxedUniqueColumnProperty, parameter);
+
+            return _dbContext.Set<TModel>()
                 .Where(filterLambda)
-                .Select(valueLambda)
-                .MinAsync();
-
-            return maxVal;
+                .GroupBy(groupByLambda)
+                .Select(group => group.Key);
         }
+
+
 
         public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {

@@ -56,9 +56,9 @@ namespace NeftViewer.MVC.Controllers
 
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
-            var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
+            var (min, max,datemin,datemax,dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
 
-            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax});
+            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax, Dates= dates });
         }
 
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
@@ -99,7 +99,8 @@ namespace NeftViewer.MVC.Controllers
                         Lat = obj.Latitude,
                         Name = obj.Name,
                         HasValue=false,
-                        Value=0
+                        Value=0,
+                        scaleUnit=""
                     }).ToList();
                 }
                 else 
@@ -107,7 +108,8 @@ namespace NeftViewer.MVC.Controllers
                     IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
                     bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
                     IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
-                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
+                    string  Units = _criteriaService.FindCriteriaAsync(CriteriaValue).Result.Units;
+                    iv =iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
 
                     var objwithval = from x in objects
                               join y in iv on x.CodeSUID equals y.CodeSUID
@@ -143,7 +145,8 @@ namespace NeftViewer.MVC.Controllers
                         Lat = obj.x.Latitude,
                         Name = obj.x.Name,
                         HasValue = true,
-                        Value = obj.Value
+                        Value = obj.Value,
+                        scaleUnit = Units
                     }).ToList();
                 }
               

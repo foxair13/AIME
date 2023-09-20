@@ -28141,7 +28141,7 @@ h3, .h3 {
 }
 
 html:not(.navbar-vertical-collapsed) .navbar-vertical .navbar-vertical-content {
-    height: calc(100vh - var(--phoenix-navbar-top-height))
+    height: calc(90vh - var(--phoenix-navbar-top-height))
 }
 
 @media(min-width: 1540px) {

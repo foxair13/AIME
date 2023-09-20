@@ -41,8 +41,11 @@
         const centerLat = (belarusExtent[3] + belarusExtent[1]) / 2;
         const center = [centerLon, centerLat];
         const base = new ol.layer.Tile({
-            source: new ol.source.OSM(),
+            source: new ol.source.XYZ({
+                url: 'http://localhost:8083/tile/{z}/{x}/{y}.png'
+            })
         });
+
 
         const outerCircleFill = new ol.style.Fill({
             color: 'rgba(255, 153, 102, 0.3)',
@@ -101,7 +104,7 @@
 
                         image: valueIcon,
                         text: new ol.style.Text({
-                            text: clusterMember.get('vl').toString(),
+                            text: clusterMember.get('vl').toString() + " " + clusterMember.get('units').toString(),
                             offsetY: -110,
                             scale: 1.1,
                             font: '18px Arial',
@@ -350,6 +353,7 @@
         base.on('postrender', postRenderHandler);
 
         function handleMapClick(evt, mp) {
+
             if (!layersLoadedFromHandleMapClick) {
 
                 const pixel = evt.pixel
@@ -468,7 +472,7 @@
                         new ol.style.Style({
                             image: valueIcon,
                             text: new ol.style.Text({
-                                text: clickedFeature.get('features')[0].get('vl').toString(),
+                                text: clickedFeature.get('features')[0].get('vl').toString() + " " + clickedFeature.get('features')[0].get('units').toString(),
                                 offsetY: -110,
                                 font: '18px Arial',
                                 backgroundFill: new ol.style.Fill({
@@ -524,7 +528,7 @@
                                 new ol.style.Style({
                                     image: valueIcon,
                                     text: new ol.style.Text({
-                                        text: clusterFeatures[0].get('vl').toString(),
+                                        text: clusterFeatures[0].get('vl').toString() + " " + clusterFeatures[0].get('units').toString(),
                                         offsetY: -110,
                                         font: '18px Arial',
                                         backgroundFill: new ol.style.Fill({
@@ -542,18 +546,31 @@
 
                         feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
-
+                        
                         clusterFeatures.forEach(childFeature => {
-                            const selectedFeatureId = clickedFeature.get('features')[0].get('hasvalue');
-                            //alert($("#slider-range").slider("values", 1));
-                            //alert(selectedFeatureId);
+                            const ObjectId = clickedFeature.get('features')[0].get('id');
+                            $("#navbar-expand-rg-id").show();
+                            const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
+                            const navbarExpandRightWidth = navbarExpandRight.clientWidth;
+                            contentElement.style.marginRight = navbarExpandRightWidth + "px";
+                            contentElement.classList.remove('collapsed');
+                            contentElement.classList.remove('collapsed-right');
+                            updateobjectdetails(ObjectId);
+                          
+
                         });
                     }
                 }
 
             });
         }
+        function updateobjectdetails(ObjectId) {
 
+
+            $("#HeaderId").text(ObjectId.toString());
+               
+           
+        }
         let clickedFeature = null;
         function handlePointerMove(evt) {
             if (evt.dragging) return;
@@ -567,7 +584,7 @@
                     if (clusterFeatures && clusterFeatures.length === 1) {
                         const singleFeature = clusterFeatures[0];
                         const featureName = singleFeature.get('name');
-                        const featurevalue = singleFeature.get('vl').toString();
+                        const featurevalue = singleFeature.get('vl').toString() + " " + singleFeature.get('units').toString();
                         if (singleFeature.get('hasvalue') == false) {
                             hoverIconStyleDynamic = new ol.style.Style({
                                 image: new ol.style.Icon({
@@ -652,7 +669,7 @@
                                     new ol.style.Style({
                                         image: valueIcon,
                                         text: new ol.style.Text({
-                                            text: singleFeature.get('vl').toString(),
+                                            text: singleFeature.get('vl').toString() + " " + singleFeature.get('units').toString(),
                                             offsetY: -110,
                                             font: '18px Arial',
                                             backgroundFill: new ol.style.Fill({
@@ -715,7 +732,7 @@
                         new ol.style.Style({
                             image: valueIcon,
                             text: new ol.style.Text({
-                                text: lastHoveredFeature.get('features')[0].get('vl').toString(),
+                                text: lastHoveredFeature.get('features')[0].get('vl').toString() + " " + lastHoveredFeature.get('features')[0].get('units').toString(),
                                 offsetY: -110,
                                 font: '18px Arial',
                                 backgroundFill: new ol.style.Fill({
@@ -743,39 +760,30 @@
 
 
         function addPointsToMap(points) {
-
+            if (clickedFeature) {
+                clickedFeature.setStyle(null);  // Используйте стиль по умолчанию
+            }
 
             if (currentLayer) {
                 map.removeLayer(currentLayer);
             }
 
             let features;
-            if (feature) {
-                const selectedGeometry = feature.getGeometry();
-                features = points
-                    .filter(point => selectedGeometry.intersectsCoordinate(ol.proj.fromLonLat([point.lon, point.lat])))
-                    .map(point => {
-                        const feature = new ol.Feature({
-                            id: point.id,
-                            geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
-                            name: point.name,
-                            hasvalue: point.hasValue,
-                            vl: point.value
-                        });
-                        return feature;
-                    });
-            } else {
+
+           
                 features = points.map(point => {
                     const feature = new ol.Feature({
                         id: point.id,
                         geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
                         name: point.name,
                         hasvalue: point.hasValue,
-                        vl: point.value
+                        vl: point.value,
+                        units: point.scaleUnit
                     });
                     return feature;
                 });
-            }
+                console.log(points);
+          
 
             const vectorSource = new ol.source.Vector({
                 features: features

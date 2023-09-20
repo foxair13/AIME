@@ -30,7 +30,7 @@ namespace NeftViewer.MVC.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (1==1){
+            if (1==2){
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     GetTableService _getTableService = new GetTableService(_FinanceMssql);

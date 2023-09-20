@@ -278,6 +278,8 @@
                 OnUpdate();
             }
         });
+        let allowedDates = [];
+
         $(function () {
             var today = new Date();
             var handle = $("#custom-handle");
@@ -295,6 +297,10 @@
                 regional: $.datepicker.regional['ru'],
                 onClose: function (selectedDate) {
                     OnUpdate();
+                },
+                beforeShowDay: function (date) {
+                    var formattedDate = $.datepicker.formatDate('dd.mm.yy', date);
+                    return [allowedDates.indexOf(formattedDate) !== -1, ""];
                 },
                 beforeShow: function (input, inst) {
                     setTimeout(function () {
@@ -371,10 +377,14 @@
                 },
                 success: function (data) {
                     var objectsDropdown = $("#ObjectID");
+                    var currentSelectedValue = objectsDropdown.val();
                     objectsDropdown.empty();
                     $.each(data, function (index, item) {
                         objectsDropdown.append(new Option(item.text, item.value));
                     });
+                    if (objectsDropdown.find("option[value='" + currentSelectedValue + "']").length) {
+                        objectsDropdown.val(currentSelectedValue);
+                    }
                 }
             });
         }
@@ -437,6 +447,7 @@
                     $("#slider-range").slider("option", "max", data.max);
                     $("#slider-range").slider("option", "values", [data.min, data.max]);
                     $("#amount").val("от: " + data.min + " до: " + data.max);
+                    allowedDates = data.dates.map(date => $.datepicker.formatDate('dd.mm.yy', new Date(date)));
                     $("#datepicker").datepicker("option", "minDate", new Date(data.dateMin));
                     $("#datepicker").datepicker("option", "maxDate", new Date(data.dateMax));
                     OnUpdate();
