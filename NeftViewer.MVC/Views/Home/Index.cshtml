@@ -7,27 +7,30 @@
         #navbarVerticalCollapserRight {
             width: 350px;
             overflow-x: auto;
-
         }
 
         #navbar-expand-lg-id {
             width: 250px;
         }
-        
-     
+
+
         .map {
             height: 400px;
             width: 100%;
             height: 100%;
         }
+
     </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="~/lib/ol/ol.css" rel="stylesheet" />
 
+
 }
 
 <div id="map" class="map"></div>
+<input type="hidden" name="ObjectId" value="">
+<input type="hidden" name="TabId" value="">
 
 
 <br />
@@ -36,6 +39,65 @@
     <script type="text/javascript" src="~/lib/ol/dist/ol.js"></script>
 
     <script type="text/javascript">
+        $(window).on('resize show.bs.modal', function () {
+            adjustModalWidth();
+        });
+
+        function adjustModalWidth() {
+            var totalWidth = $(window).width();
+            var leftNavWidth = $('#navbar-expand-lg-id').is(':visible') ? $('#navbar-expand-lg-id').outerWidth() : 0;
+            var rightNavWidth = $('#navbar-expand-rg-id').is(':visible') ? $('#navbar-expand-rg-id').outerWidth() : 0;
+
+            var navbarHeight = $('#navbarDefault').outerHeight();
+            var footerHeight = $('#navbarFooter').outerHeight();
+            var modalWidth = totalWidth - leftNavWidth - rightNavWidth - 50; // учитываем отступы по 10px с каждой стороны
+            var allheight = $(window).height();
+            var maxHeight = allheight - footerHeight - navbarHeight - 40;
+            $('.overlay').css({
+                'max-width': modalWidth + 'px',
+                'max-height': maxHeight + 'px',
+
+
+                'overflow': 'auto'  // чтобы появилась прокрутка в случае необходимости
+            });
+
+        }
+
+
+
+        $(document).ready(function () {
+            var overlay = $('.overlay');
+            var closeButton = $('#CloseTab');
+            var ObjectName = $('#ObjectName');
+
+            // Обработчик клика на кнопку Close
+            closeButton.on('click', function () {
+
+                overlay.hide(); // Добавьте эту строку для скрытия overlay
+            });
+
+            // Добавьте этот обработчик, чтобы скрывать overlay при клике вне него
+            overlay.on('click', function (event) {
+                // Проверяем, был ли клик на самом overlay, а не на его дочерних элементах
+                if (event.target === this) {
+
+                    overlay.hide(); // Добавьте эту строку для скрытия overlay
+                }
+            });
+
+            adjustModalWidth();
+
+            $('#meta').on('click', 'tbody tr', function () {
+                var number = $(this).find('td:first').text();
+                var name = $(this).find('td:nth-child(3)').text();
+                ObjectId = $(this).find('td:nth-child(1)').text();
+                ObjectName.text(name);
+                updateobjectdetails(ObjectId, name)
+                overlay.show();
+
+            });
+        });
+
         const belarusExtent = [23.203, 51.221, 32.761, 56.146];
         const centerLon = (belarusExtent[2] + belarusExtent[0]) / 2;
         const centerLat = (belarusExtent[3] + belarusExtent[1]) / 2;
@@ -51,7 +113,7 @@
             color: 'rgba(255, 153, 102, 0.3)',
         });
         const innerCircleFill = new ol.style.Fill({
-            color: 'rgba(255, 165, 0, 0.7)',
+            color: 'rgba(188, 255, 59, 0.7)',
         });
         const textFill = new ol.style.Fill({
             color: '#000',
@@ -75,13 +137,13 @@
         });
         const valueIcon = new ol.style.Icon({
             anchor: [0.5, 1.45],
-            src: '../img/Pictagram_Inv_No.gif',
+            src: '../img/anchor.png',
             scale: 0.3
         });
         function clusterMemberStyle(clusterMember) {
             if (clusterMember.get('hasvalue') === false) {
                 return new ol.style.Style({
-                    geometry: clusterMember.getGeometry(),
+                
                     image: darkIcon,
                     text: new ol.style.Text({
                         text: clusterMember.get('name'),
@@ -114,8 +176,8 @@
                             }),
                             padding: [5, 10, 5, 10], // Подгоните эти значения под ваш дизайн: [top, right, bottom, left]
                             stroke: new ol.style.Stroke({
-                                color: 'white',
-                                width: 2
+                                color: 'rgba(188, 255, 59, 1)',
+                                width: 5
                             })
                         }),
                     }),
@@ -136,7 +198,7 @@
                         text: new ol.style.Text({
                             text: size.toString(),
                             fill: textFill,
-                            stroke: textStroke,
+                          
                             font: '18px Arial',
                         }),
                     }),
@@ -163,7 +225,7 @@
                     }),
                     stroke: new ol.style.Stroke({
                         color: strokeColor,
-                        width: 2,
+                        width: 1,
                     }),
                 }),
             });
@@ -433,7 +495,7 @@
         let pointsLayer;
         let lastHighlightedFeature = null;
         let lastHoveredFeature = null;
-
+        let ObjectId;
         function handleFeatureClick(evt) {
             const pixel = map.getEventPixel(evt.originalEvent);
             let regularIconStyle;
@@ -441,7 +503,7 @@
                 if (clickedFeature.get('features')[0].get('hasvalue') == false) {
 
 
-                     regularIconStyle = new ol.style.Style({
+                    regularIconStyle = new ol.style.Style({
                         image: new ol.style.Icon({
                             anchor: [0.5, 1],
                             src: '../img/offpick.png',
@@ -453,7 +515,7 @@
                             scale: 1.1
                         })
                     });
-                  
+
                 }
                 else if (clickedFeature.get('features')[0].get('hasvalue') == true) {
                     regularIconStyle = [
@@ -480,8 +542,8 @@
                                 }),
                                 padding: [5, 10, 5, 10],
                                 stroke: new ol.style.Stroke({
-                                    color: 'white',
-                                    width: 2
+                                    color: 'rgba(188, 255, 59, 1)',
+                                    width: 5
                                 })
                             })
                         })
@@ -536,8 +598,8 @@
                                         }),
                                         padding: [5, 10, 5, 10],
                                         stroke: new ol.style.Stroke({
-                                            color: 'white',
-                                            width: 2
+                                            color: 'rgba(188, 255, 59, 1)',
+                                            width: 5
                                         })
                                     })
                                 })
@@ -546,17 +608,23 @@
 
                         feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
-                        
+
                         clusterFeatures.forEach(childFeature => {
-                            const ObjectId = clickedFeature.get('features')[0].get('id');
-                            $("#navbar-expand-rg-id").show();
-                            const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
-                            const navbarExpandRightWidth = navbarExpandRight.clientWidth;
-                            contentElement.style.marginRight = navbarExpandRightWidth + "px";
-                            contentElement.classList.remove('collapsed');
-                            contentElement.classList.remove('collapsed-right');
-                            updateobjectdetails(ObjectId);
-                          
+                            if (clickedFeature.get('features')[0].get('hasvalue') == true) {
+                                ObjectId = clickedFeature.get('features')[0].get('id');
+                                const name = clickedFeature.get('features')[0].get('name');
+                                $("#navbar-expand-rg-id").show();
+                             
+                                const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
+                                const navbarExpandRightWidth = navbarExpandRight.clientWidth;
+                                contentElement.style.marginRight = navbarExpandRightWidth + "px";
+                                contentElement.classList.remove('collapsed');
+                                contentElement.classList.remove('collapsed-right');
+
+                                updateobjectdetails(ObjectId, name);
+                            }
+
+
 
                         });
                     }
@@ -564,13 +632,67 @@
 
             });
         }
-        function updateobjectdetails(ObjectId) {
+        let activeTabId;
 
+        let tId;
+        let OId;
+        function setActiveTab(tabId, ObjectId) {
+            $("input[name='ObjectId']").val(ObjectId);
+            $("input[name='TabId']").val(tabId);
+            var Date = $('#datepicker').val();
+            $.ajax({
+                url: '/Home/GetObjectParams',
+                type: 'GET',
+                data: {
+                    TabId: tabId,
+                    ObjectId: ObjectId,
+                    Date: Date
+                },
+                success: function (data) {
 
-            $("#HeaderId").text(ObjectId.toString());
-               
-           
+                    if (tabId === '#ObjectParams') {
+                        $('#ObjectParams').html(data);
+                    } else if (tabId === '#Dashboards') {
+                        $('#Dashboards').html(data);
+                    }
+                },
+                error: function (error) {
+                    console.error('Ошибка AJAX-запроса:', error);
+                }
+            });
         }
+
+        const tabLinks = document.querySelectorAll('.nav-link');
+
+        // Добавить обработчик события клика для каждого таба
+        tabLinks.forEach(tabLink => {
+            tabLink.addEventListener('click', function () {
+                // Получить ID выбранного таба
+                const tabId = this.getAttribute('href').replace('#', '');
+               
+            });
+        });
+
+        function updateobjectdetails(ObjectId, name) {
+            OId = ObjectId;
+            var overlay = $('.overlay');
+            overlay.hide();
+            overlay.show();
+            var ObjectName = $('#ObjectName');
+            var tabList = document.getElementById('contactListTab');
+
+            var activeTab = tabList.querySelector('.nav-link.active');
+            var activeTabId = activeTab.getAttribute('href');
+            setActiveTab(activeTabId, ObjectId);
+
+            ObjectName.text(name.toString());
+            adjustModalWidth();
+        }
+
+
+
+
+
         let clickedFeature = null;
         function handlePointerMove(evt) {
             if (evt.dragging) return;
@@ -623,8 +745,8 @@
                                         }),
                                         padding: [5, 10, 5, 10],
                                         stroke: new ol.style.Stroke({
-                                            color: 'white',
-                                            width: 2
+                                            color: 'rgba(188, 255, 59, 1)',
+                                            width: 5
                                         })
                                     })
                                 })
@@ -677,8 +799,8 @@
                                             }),
                                             padding: [5, 10, 5, 10],
                                             stroke: new ol.style.Stroke({
-                                                color: 'white',
-                                                width: 2
+                                                color: 'rgba(188, 255, 59, 1)',
+                                                width: 5
                                             })
                                         })
                                     })
@@ -698,7 +820,7 @@
             if (!isSingleFeatureInCluster && lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
                 let regularIconStyleDynamic;
                 if (lastHoveredFeature.get('features')[0].get('hasvalue') == false) {
-
+                    //проблема где-то тут с точками
 
 
                     regularIconStyleDynamic = new ol.style.Style({
@@ -740,8 +862,8 @@
                                 }),
                                 padding: [5, 10, 5, 10],
                                 stroke: new ol.style.Stroke({
-                                    color: 'white',
-                                    width: 2
+                                    color: 'rgba(188, 255, 59, 1)',
+                                    width: 5
                                 })
                             })
                         })
@@ -770,20 +892,20 @@
 
             let features;
 
-           
-                features = points.map(point => {
-                    const feature = new ol.Feature({
-                        id: point.id,
-                        geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
-                        name: point.name,
-                        hasvalue: point.hasValue,
-                        vl: point.value,
-                        units: point.scaleUnit
-                    });
-                    return feature;
+
+            features = points.map(point => {
+                const feature = new ol.Feature({
+                    id: point.id,
+                    geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
+                    name: point.name,
+                    hasvalue: point.hasValue,
+                    vl: point.value,
+                    units: point.scaleUnit
                 });
-                console.log(points);
-          
+                return feature;
+            });
+            console.log(points);
+
 
             const vectorSource = new ol.source.Vector({
                 features: features
@@ -838,9 +960,11 @@
                     $.each(data, function (index, point) {
                         var rowNumber = index + 1;  // Get the 1-based row number
                         var row = '<tr>' +
-                            '<td align="center">' + rowNumber + '</td>' +  // Display the ordinal number
+                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' +
+                            '<td align="center">' + rowNumber + '</td>' +
                             '<td>' + point.name + '</td>' +
                             '<td class="valueColumn">' + point.value + '</td>' +
+                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' + // Here's the hidden ID column
                             '</tr>';
                         hasValue = point.hasValue;
                         $("#meta table tbody").append(row);
@@ -849,10 +973,10 @@
                     // Check hasValue and show/hide the "Value" column accordingly
                     if (hasValue) {
 
-                        $("#meta table th:nth-child(3), #meta table td.valueColumn").show();
-                        $("#meta table th:nth-child(3)").text(criteriaValueText);
+                        $("#meta table th:nth-child(4), #meta table td.valueColumn").show();
+                        $("#meta table th:nth-child(4)").text(criteriaValueText);
                     } else {
-                        $("#meta table th:nth-child(3), #meta table td.valueColumn").hide();
+                        $("#meta table th:nth-child(4), #meta table td.valueColumn").hide();
 
                     }
                     callback(data);

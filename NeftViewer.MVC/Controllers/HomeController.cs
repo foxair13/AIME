@@ -53,7 +53,21 @@ namespace NeftViewer.MVC.Controllers
 
             return View(filterViewModel);
         }
+        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date)
+        {
+			IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByObject(Date, ObjectId).Result;
+            iv = iv.OrderBy(x => x.Criterias.Name);
 
+            if (TabId == "#ObjectParams")
+            {
+                return PartialView("_ObjectParamsPartialView", iv);
+            }
+            else if (TabId == "#Dashboards")
+            {
+                return PartialView("_DashboardsPartialView", null);
+            }
+            return PartialView("_ObjectParamsPartialView", iv);
+        }
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
             var (min, max,datemin,datemax,dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
@@ -107,7 +121,7 @@ namespace NeftViewer.MVC.Controllers
                 {
                     IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
                     bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
-                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
+                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByCriteria(Dates, CriteriaValue).Result;
                     string  Units = _criteriaService.FindCriteriaAsync(CriteriaValue).Result.Units;
                     iv =iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
 

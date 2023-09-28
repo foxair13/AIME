@@ -126,7 +126,7 @@ namespace NeftViewer.Data.Repositories
             return (minVal, maxVal);
         }
 
-        public IQueryable<TModel> GetItems(List<(string filterPropertyName, object filterValue)> filters)
+        public IQueryable<TModel> GetItemsWithInclude(List<(string filterPropertyName, object filterValue)> filters, List<string> includeTableNames)
         {
             var parameter = Expression.Parameter(typeof(TModel), "x");
             Expression filterExpression = null;
@@ -142,9 +142,18 @@ namespace NeftViewer.Data.Repositories
             }
             var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
 
-            return _dbContext.Set<TModel>()
-                .Where(filterLambda);
+            var query = _dbContext.Set<TModel>().Where(filterLambda);
+
+            // Добавляем Include для указанных таблиц
+            foreach (var tableName in includeTableNames)
+            {
+                query = query.Include(tableName);
+            }
+
+            return query;
         }
+
+
 
 
 

@@ -3682,7 +3682,7 @@ progress {
 
 .table-hover > tbody > tr:hover > * {
     --phoenix-table-accent-bg: var(--phoenix-table-hover-bg);
-    color: var(--phoenix-table-hover-color)
+    color: #85a9ff
 }
 
 .table-primary {
@@ -6982,13 +6982,11 @@ textarea.form-control-lg {
 
 .modal-content {
     position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
+
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
+
     width: 100%;
     color: var(--phoenix-modal-color);
     pointer-events: auto;
@@ -7000,7 +6998,30 @@ textarea.form-control-lg {
     box-shadow: var(--phoenix-modal-box-shadow);
     outline: 0
 }
+.overlay {
+    position: fixed;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    color: var(--phoenix-modal-color);
+    pointer-events: auto;
+    background-color: #141824;
+    display: none;
+    overflow-x: hidden;
+    outline: 0;
+    height: 100%;
+    z-index: 10000; /* Высокий z-index, чтобы перекрыть другие элементы */
+}
 
+    .overlay.active {
+        display: block; /* Отобразить элемент, когда он активирован */
+    }
 .modal-backdrop {
     --phoenix-backdrop-zindex: 1050;
     --phoenix-backdrop-bg: #000000;

@@ -10,7 +10,8 @@ namespace NeftViewer.BL.Services.Contracts
 {
     public interface IIndicatorValueService
     {
-        Task<IEnumerable<IndicatorValue>> GetIndicatorValues(DateTime Dates, int CriteriaValue);
+        Task<IEnumerable<IndicatorValue>> GetIndicatorByCriteria(DateTime Dates, int CriteriaValue);
+        Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID);
         Task<IndicatorValue> FindIndicatorValueAsync(string? id);
         EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue);
         Task CommitChangesAsync();

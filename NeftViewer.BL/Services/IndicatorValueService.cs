@@ -54,14 +54,29 @@ namespace NeftViewer.BL.Services
             return _uow.IndicatorValues.GetAsync(id);
         }
 
-        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues(DateTime Dates,  int CriteriaValue)
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByCriteria(DateTime Dates,  int CriteriaValue)
         {
             DateTime dateInput = Dates;
 
             List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            List<string> includs = new List<string>();
             filters.Add(new ValueTuple<string, object>("DateStart", Dates));
             filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaValue));
-            var v = _uow.IndicatorValues.GetItems(filters);
+           
+            var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
+            return v.ToList();
+        }
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID)
+        {
+            DateTime dateInput = Dates;
+
+            List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            List<string> includs = new List<string>();
+            filters.Add(new ValueTuple<string, object>("DateStart", Dates));
+            filters.Add(new ValueTuple<string, object>("CodeSUID", CodeSUID));
+            includs.Add("Criterias");
+            includs.Add("Objects");
+            var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
             return v.ToList();
         }
 
