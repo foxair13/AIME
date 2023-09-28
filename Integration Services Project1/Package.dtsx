@@ -11,8 +11,8 @@
   DTS:LocaleID="1049"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="192"
-  DTS:VersionGUID="{3B0CF8D4-09E8-461A-972F-E0899F146D7D}">
+  DTS:VersionBuild="264"
+  DTS:VersionGUID="{C7CD17D5-D873-406D-A490-5B5C3C587B5B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -29,7 +29,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADw8RqSjsmePoR6Be39fWx7AAAAAASAAACgAAAAEAAAADoCZ53/jHtODYtwO36oWTIYAAAALNJmQTfQkaHrfcsBWDykPBVcUS1CqeXfFAAAADa8fwdNm0RPRv4IjZ+F/3fypNmk</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD8PFeE2rEc7PSkkrIKCyDhAAAAAASAAACgAAAAEAAAABS+z7k+rV+YVcBtFiBpDqUYAAAAmm4yha/6g/bqaWvMLCYIkA4LunprrHvWFAAAAGqQ1qR7fDZADk3E/XqlVU0s3Fzz</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,7 +46,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADsklWfzCyYvTkOCuW4CgcuAAAAAASAAACgAAAAEAAAAIFumKPXUG/n7uOrNnj3hd4YAAAAZ2XFKmMXE8Nz/VmVLz7FjhFoPA8iELrkFAAAADelZrLmHxRW+ujQ4el0z7oszzKo</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACMYiZSgeS2NU0P5j/ArZsWAAAAAASAAACgAAAAEAAAANZCxcQrJkpVRa1unTBf2WgYAAAAu3vEmbh30k03+1Cl7NofEqh/KR8KWtetFAAAAOu5sFN/Gec30dgdtR0qbwAnL7LY</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -61,7 +61,7 @@
           <DTS:Password
             DTS:Name="pwd"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACA/LcX13OUYFM7wm6nKiNGAAAAAASAAACgAAAAEAAAAEgYuEHpkJooiGwJomPp5CsYAAAAFVtfUnwXE2yJhvMciS+ZQyva8kbtiSqvFAAAAIs1hTmvak0M0u8SyqzgfzGpX5dl</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADLIUvhkLEHlXmePg1ClirKAAAAAASAAACgAAAAEAAAACuxR1lQuCNsCDTTfPLC7s4YAAAA3esCFsBcLuOpwXLjXs8PxREDEptB7HknFAAAAFhC3tIppcQx7TlCsqIIetRQFQ1G</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -78,7 +78,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAC9dMuFn83frQlBwW9E+N0uAAAAAASAAACgAAAAEAAAAF7pFPRWOyWXqX8ZVYg5iM4YAAAAqiuHUBADuH8SNJJ098B/tsjK5e1evsygFAAAAFik8N2VB3YMD2mN/SY8SNNakyhE</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABD/3aWreJHiwD5TDrd8oVPAAAAAASAAACgAAAAEAAAAP+VFFe73BTtDXZgF3CknLsYAAAAbFwTCnz1pGg4cg/Bde4HVJs6BNw7M2AiFAAAAM1iQp6IDZBBUUJMBZuwxpPd2XVE</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -93,7 +93,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABc7b4heNGWeoq580rvG+kSAAAAAASAAACgAAAAEAAAALDAkiwiQK2Uf8GWjzJdhGUYAAAA78Rxgm+65w7uF6LKjFAgsyak5HfwGoqwFAAAAD/DQ/NnKKnnFdpOUaJAU68thK8v</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAkIMvq4lmrh2Yr0U0WUjo8AAAAAASAAACgAAAAEAAAADx4zJ+43NQZeXI7lhEirX4YAAAAurJphhX8dunhxFJ+PryESgxWGRqgbVyQFAAAAEL6nHUxy7OiQpno6dJLbjNEIPHr</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -104,6 +104,7 @@
       DTS:refId="Package\Criterias"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Задача потока данных"
+      DTS:Disabled="True"
       DTS:DTSID="{C95BFF28-3F4D-45BC-A30D-9FAB1F5AB949}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -968,13 +969,7 @@ where "refTable"."Id" = ?</property>
                   dataType="System.String"
                   description="Команда SQL для выполнения."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
-    Id,
-    CONVERT(NVARCHAR(30), CodeSUID) AS CodeSUID,
-    DateStart,
-    CriteriaId,
-    Value
-FROM SUID.IndicatorValues;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230101', @date_to = '20230131'</property>
                 <property
                   dataType="System.String"
                   description="Переменная, содержащая команду SQL для выполнения."
@@ -1014,50 +1009,50 @@ FROM SUID.IndicatorValues;</property>
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
                       dataType="wstr"
                       errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
                       length="30"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
                       name="CodeSUID"
-                      truncationRowDisposition="FailComponent" />
+                      truncationRowDisposition="IgnoreFailure" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
                       dataType="dbDate"
                       errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
                       name="DateStart"
-                      truncationRowDisposition="FailComponent" />
+                      truncationRowDisposition="IgnoreFailure" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
                       dataType="i4"
                       errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
                       name="CriteriaId"
-                      truncationRowDisposition="FailComponent" />
+                      truncationRowDisposition="IgnoreFailure" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
                       dataType="numeric"
                       errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
                       name="Value"
                       precision="38"
                       scale="6"
-                      truncationRowDisposition="FailComponent" />
+                      truncationRowDisposition="IgnoreFailure" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
                       dataType="i8"
                       errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
+                      errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
                       name="Id"
-                      truncationRowDisposition="FailComponent" />
+                      truncationRowDisposition="IgnoreFailure" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1084,6 +1079,11 @@ FROM SUID.IndicatorValues;</property>
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
                       dataType="i8"
                       name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      name="CustomerId" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -1169,8 +1169,8 @@ WHERE "Id" = ?;</property>
               <connections>
                 <connection
                   refId="Package\IndicatorValues\Команда OLE DB.Connections[OleDbConnection]"
-                  connectionManagerID="{7E938BD4-FBC5-4C53-B7BC-877ABD5CBC05}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[10.3.2.68.postgres]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
                   name="OleDbConnection" />
               </connections>
@@ -1367,8 +1367,8 @@ WHERE "Id" = ?;</property>
               <connections>
                 <connection
                   refId="Package\IndicatorValues\Назначение ODBC.Connections[ODBCConnection]"
-                  connectionManagerID="{33EF2947-7FE1-416B-94A0-B9AA18E49BFC}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLServer.postgres]"
+                  connectionManagerID="{54D6600B-1165-4B3F-9187-3FB2E654DA98}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLLocal.postgres]"
                   description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
                   name="ODBCConnection" />
               </connections>
@@ -1376,10 +1376,10 @@ WHERE "Id" = ?;</property>
                 <input
                   refId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC]"
                   errorOrTruncationOperation="Вставить"
-                  errorRowDisposition="FailComponent"
+                  errorRowDisposition="IgnoreFailure"
                   hasSideEffects="true"
                   name="Вход назначения ODBC"
-                  truncationRowDisposition="FailComponent">
+                  truncationRowDisposition="IgnoreFailure">
                   <inputColumns>
                     <inputColumn
                       refId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[DateStart]"
@@ -1481,16 +1481,16 @@ WHERE "Id" = ?;</property>
                   name="Входные данные преобразования данных">
                   <inputColumns>
                     <inputColumn
+                      refId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[Id]"
+                      cachedDataType="i8"
+                      cachedName="Id"
+                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
                       refId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[CodeSUID]"
                       cachedDataType="wstr"
                       cachedLength="30"
                       cachedName="CodeSUID"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[Id]"
-                      cachedDataType="i8"
-                      cachedName="Id"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1502,6 +1502,26 @@ WHERE "Id" = ?;</property>
                   name="Выходные данные преобразования данных"
                   synchronousInputId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных]">
                   <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
+                      name="Copy of Id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Указывает входной столбец, служащий источником данных для преобразования."
+                          name="SourceInputColumnLineageID">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Id]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
                     <outputColumn
                       refId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]"
                       dataType="wstr"
@@ -1517,26 +1537,6 @@ WHERE "Id" = ?;</property>
                           dataType="System.Int32"
                           description="Указывает входной столбец, служащий источником данных для преобразования."
                           name="SourceInputColumnLineageID">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[CodeSUID]}</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
-                          name="FastParse">false</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
-                      name="Copy of Id"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Указывает входной столбец, служащий источником данных для преобразования."
-                          name="SourceInputColumnLineageID">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Id]}</property>
                         <property
                           dataType="System.Boolean"
                           description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
@@ -1591,7 +1591,7 @@ WHERE "Id" = ?;</property>
                   expressionType="Notify"
                   name="SqlCommandParam"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from "public"."IndicatorValues") "refTable"
-where "refTable"."Id" = ?</property>
+where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."CodeSUID" = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Указывает тип соединения, используемого для доступа к эталонному набору данных."
@@ -1622,12 +1622,12 @@ where "refTable"."Id" = ?</property>
                 <property
                   dataType="System.String"
                   description="Указывает, следует ли ссылаться на метаданные в формате XML."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodeSUID" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBTIMESTAMP2" length="0" precision="0" scale="7" codePage="0"/&gt;&lt;referenceColumn name="CriteriaId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Value" dataType="DT_NUMERIC" length="0" precision="19" scale="7" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodeSUID" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CriteriaId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Value" dataType="DT_NUMERIC" length="0" precision="19" scale="7" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
                   description="Задает список идентификаторов журнала обращений и преобразований, сопоставляемый с параметрами, которые использует инструкция SQL в свойстве SQLCommand. Элементы списка разделяются точками с запятой."
-                  name="ParameterMap">#{Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]};</property>
+                  name="ParameterMap">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[CriteriaId]};#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Value]};#{Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]};</property>
                 <property
                   dataType="System.Int32"
                   description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
@@ -1640,8 +1640,8 @@ where "refTable"."Id" = ?</property>
               <connections>
                 <connection
                   refId="Package\IndicatorValues\Уточняющий запрос.Connections[OleDbConnection]"
-                  connectionManagerID="{7E938BD4-FBC5-4C53-B7BC-877ABD5CBC05}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[10.3.2.68.postgres]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   description="Диспетчер соединений, используемый для доступа к данным уточняющих запросов."
                   name="OleDbConnection" />
               </connections>
@@ -1660,6 +1660,40 @@ where "refTable"."Id" = ?</property>
                           dataType="System.String"
                           description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
                           name="JoinToReferenceColumn">Id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">CriteriaId</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">Value</property>
                         <property
                           dataType="System.Null"
                           description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
@@ -1741,6 +1775,7 @@ where "refTable"."Id" = ?</property>
       DTS:refId="Package\ObjectOnRoad"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Задача потока данных"
+      DTS:Disabled="True"
       DTS:DTSID="{C2775830-7FA2-44C1-B093-34EF77C720EC}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -2485,6 +2520,7 @@ where "refTable"."RoadId" = ? and "refTable"."Id" = ?</property>
       DTS:refId="Package\Roads"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Задача потока данных"
+      DTS:Disabled="True"
       DTS:DTSID="{DA07B972-4295-4A8A-9C1E-E17B9336960D}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
@@ -2680,8 +2716,8 @@ WHERE "Id" = ?;</property>
               <connections>
                 <connection
                   refId="Package\Roads\Команда OLE DB.Connections[OleDbConnection]"
-                  connectionManagerID="{7E938BD4-FBC5-4C53-B7BC-877ABD5CBC05}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[10.3.2.68.postgres]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
                   name="OleDbConnection" />
               </connections>
@@ -2842,8 +2878,8 @@ WHERE "Id" = ?;</property>
               <connections>
                 <connection
                   refId="Package\Roads\Назначение ODBC.Connections[ODBCConnection]"
-                  connectionManagerID="{33EF2947-7FE1-416B-94A0-B9AA18E49BFC}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLServer.postgres]"
+                  connectionManagerID="{54D6600B-1165-4B3F-9187-3FB2E654DA98}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLLocal.postgres]"
                   description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
                   name="ODBCConnection" />
               </connections>
@@ -3120,8 +3156,8 @@ where "refTable"."Id" = ?</property>
               <connections>
                 <connection
                   refId="Package\Roads\Уточняющий запрос.Connections[OleDbConnection]"
-                  connectionManagerID="{7E938BD4-FBC5-4C53-B7BC-877ABD5CBC05}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[10.3.2.68.postgres]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   description="Диспетчер соединений, используемый для доступа к данным уточняющих запросов."
                   name="OleDbConnection" />
               </connections>
@@ -3220,14 +3256,6 @@ where "refTable"."Id" = ?</property>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint]"
-      DTS:CreationName=""
-      DTS:DTSID="{DF1BBD58-28F6-4E5D-8D36-9642EB5139F7}"
-      DTS:From="Package\Criterias"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint"
-      DTS:To="Package\IndicatorValues" />
-    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
       DTS:DTSID="{1D6A59A1-8720-46BD-8ADD-8653DF29CA28}"
@@ -3272,28 +3300,6 @@ where "refTable"."Id" = ?</property>
           Size="111,42"
           Id="Package\Roads"
           TopLeft="266,184" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="783,203.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="60,0"
-              Start="0,0"
-              End="52.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="52.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="377,204.5">
@@ -3351,13 +3357,13 @@ where "refTable"."Id" = ?</property>
           Id="Package\Criterias\Команда OLE DB"
           TopLeft="457,112" />
         <NodeLayout
-          Size="207,42"
-          Id="Package\Criterias\Преобразование данных"
-          TopLeft="119,104" />
-        <NodeLayout
           Size="183,42"
           Id="Package\Criterias\Уточняющий запрос"
           TopLeft="218,197" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\Criterias\Преобразование данных"
+          TopLeft="119,104" />
         <NodeLayout
           Size="176,42"
           Id="Package\Criterias\Назначение ODBC"
@@ -3366,40 +3372,6 @@ where "refTable"."Id" = ?</property>
           Size="178,42"
           Id="Package\Criterias\Источник &quot;OLE DB&quot;"
           TopLeft="17,15" />
-        <EdgeLayout
-          Id="Package\Criterias.Paths[Выходные данные преобразования данных]"
-          TopLeft="222.5,146">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="87,51"
-              Start="0,0"
-              End="87,43.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,21.5"
-                    Point2="0,25.5"
-                    Point3="4,25.5" />
-                  <mssgle:LineSegment
-                    End="83,25.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="83,25.5"
-                    Point2="87,25.5"
-                    Point3="87,29.5" />
-                  <mssgle:LineSegment
-                    End="87,43.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Criterias.Paths[Выход несовпадающих строк уточняющего запроса]"
           TopLeft="309.5,239">
@@ -3467,7 +3439,9 @@ where "refTable"."Id" = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -3506,32 +3480,45 @@ where "refTable"."Id" = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Criterias.Paths[Выходные данные преобразования данных]"
+          TopLeft="222.5,146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,51"
+              Start="0,0"
+              End="87,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.5"
+                    Point2="0,25.5"
+                    Point3="4,25.5" />
+                  <mssgle:LineSegment
+                    End="83,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="83,25.5"
+                    Point2="87,25.5"
+                    Point3="87,29.5" />
+                  <mssgle:LineSegment
+                    End="87,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Criterias\Уточняющий запрос">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">"public"."Criterias"</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Criterias\Источник &quot;OLE DB&quot;">
     <Properties>
@@ -3558,6 +3545,29 @@ where "refTable"."Id" = ?</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Criterias\Уточняющий запрос">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">"public"."Criterias"</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\IndicatorValues">
     <LayoutInfo>
@@ -3574,11 +3584,11 @@ where "refTable"."Id" = ?</property>
         <NodeLayout
           Size="183,42"
           Id="Package\IndicatorValues\Уточняющий запрос"
-          TopLeft="271,199" />
+          TopLeft="272,211" />
         <NodeLayout
-          Size="176,42"
+          Size="176,43"
           Id="Package\IndicatorValues\Назначение ODBC"
-          TopLeft="454,306" />
+          TopLeft="453,329" />
         <NodeLayout
           Size="178,42"
           Id="Package\IndicatorValues\Источник &quot;OLE DB&quot;"
@@ -3589,26 +3599,26 @@ where "refTable"."Id" = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="134.833333333333,48"
+              EndConnector="135.833333333333,60"
               Start="0,0"
-              End="134.833333333333,40.5">
+              End="135.833333333333,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.5503791982665" />
+                    End="0,31.6879739978332" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,24.5503791982665"
-                    Point2="0,28.5503791982665"
-                    Point3="4,28.5503791982665" />
+                    Point1="0,31.6879739978332"
+                    Point2="0,35.6879739978332"
+                    Point3="4,35.6879739978332" />
                   <mssgle:LineSegment
-                    End="130.833333333333,28.5503791982665" />
+                    End="131.833333333333,35.6879739978332" />
                   <mssgle:CubicBezierSegment
-                    Point1="130.833333333333,28.5503791982665"
-                    Point2="134.833333333333,28.5503791982665"
-                    Point3="134.833333333333,32.5503791982665" />
+                    Point1="131.833333333333,35.6879739978332"
+                    Point2="135.833333333333,35.6879739978332"
+                    Point3="135.833333333333,39.6879739978332" />
                   <mssgle:LineSegment
-                    End="134.833333333333,40.5" />
+                    End="135.833333333333,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3619,37 +3629,37 @@ where "refTable"."Id" = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\IndicatorValues.Paths[Выход несовпадающих строк уточняющего запроса]"
-          TopLeft="362.5,241">
+          TopLeft="363.5,253">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="179.5,65"
+              EndConnector="177.5,76"
               Start="0,0"
-              End="179.5,57.5">
+              End="177.5,68.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.5" />
+                    End="0,34" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,28.5"
-                    Point2="0,32.5"
-                    Point3="4,32.5" />
+                    Point1="0,34"
+                    Point2="0,38"
+                    Point3="4,38" />
                   <mssgle:LineSegment
-                    End="175.5,32.5" />
+                    End="173.5,38" />
                   <mssgle:CubicBezierSegment
-                    Point1="175.5,32.5"
-                    Point2="179.5,32.5"
-                    Point3="179.5,36.5" />
+                    Point1="173.5,38"
+                    Point2="177.5,38"
+                    Point3="177.5,42" />
                   <mssgle:LineSegment
-                    End="179.5,57.5" />
+                    End="177.5,68.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-29.848359375,37.5,239.19671875,11.2822265625"
+              BoundingBox="-30.848359375,43,239.19671875,11.2822265625"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -3689,37 +3699,37 @@ where "refTable"."Id" = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\IndicatorValues.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
-          TopLeft="391.666666666667,199">
+          TopLeft="392.666666666667,211">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="151.333333333333,-55"
+              EndConnector="150.333333333333,-67"
               Start="0,0"
-              End="151.333333333333,-47.5">
+              End="150.333333333333,-59.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-18.2860238353196" />
+                    End="0,-23.148429035753" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-18.2860238353196"
-                    Point2="0,-22.2860238353196"
-                    Point3="4,-22.2860238353196" />
+                    Point1="0,-23.148429035753"
+                    Point2="0,-27.148429035753"
+                    Point3="4,-27.148429035753" />
                   <mssgle:LineSegment
-                    End="147.333333333333,-22.2860238353196" />
+                    End="146.333333333333,-27.148429035753" />
                   <mssgle:CubicBezierSegment
-                    Point1="147.333333333333,-22.2860238353196"
-                    Point2="151.333333333333,-22.2860238353196"
-                    Point3="151.333333333333,-26.2860238353196" />
+                    Point1="146.333333333333,-27.148429035753"
+                    Point2="150.333333333333,-27.148429035753"
+                    Point3="150.333333333333,-31.148429035753" />
                   <mssgle:LineSegment
-                    End="151.333333333333,-47.5" />
+                    End="150.333333333333,-59.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-59.0231966145835,-17.2860238353196,269.3797265625,12"
+              BoundingBox="-59.5231966145835,-22.148429035753,269.3797265625,12"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -3732,7 +3742,7 @@ where "refTable"."Id" = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">true</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -3742,7 +3752,7 @@ where "refTable"."Id" = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

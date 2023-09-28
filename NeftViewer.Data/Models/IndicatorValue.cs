@@ -20,7 +20,7 @@ namespace NeftViewer.Data.Models
         public virtual Criteria Criterias { get; set; }
 
         private DateTime _dateStart;
-        [Column("DateStart", TypeName = "timestamp with time zone")]
+        [Column("DateStart", TypeName = "timestamp without time zone")]
         public DateTime DateStart
         {
             get { return _dateStart; }
