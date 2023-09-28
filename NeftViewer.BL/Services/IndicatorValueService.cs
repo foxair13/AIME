@@ -22,16 +22,29 @@ namespace NeftViewer.BL.Services
         {
             await _uow.CommitAsync();
         }
-        public async Task<(decimal? MinValue, decimal? MaxValue,DateTime? MinDate,DateTime? MaxDate)> GetMinMaxValues(int CriteriaId)
+        public async Task<(decimal? MinValue, decimal? MaxValue,DateTime? MinDate,DateTime? MaxDate,List<DateTime> dates)> GetMinMaxValues(int CriteriaId)
         {
           
             var value = await _uow.IndicatorValues.GetMinMaxValuesAsync<decimal?>("CriteriaId", CriteriaId, "Value");
             var date = await _uow.IndicatorValues.GetMinMaxValuesAsync<DateTime?>("CriteriaId", CriteriaId, "DateStart");
-            decimal? minValue = value.MinValue as decimal?;
-            decimal? maxValue = value.MaxValue as decimal?;
-            DateTime? minDate = date.MinValue as DateTime?;
-            DateTime? maxDate = date.MaxValue as DateTime?;
-            return (minValue, maxValue, minDate, maxDate);
+            List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaId));
+            try
+            {
+                var dates = _uow.IndicatorValues.GetUniqueItems<DateTime>(filters, "DateStart").ToList();
+
+                decimal? minValue = value.MinValue as decimal?;
+                decimal? maxValue = value.MaxValue as decimal?;
+                DateTime? minDate = date.MinValue as DateTime?;
+                DateTime? maxDate = date.MaxValue as DateTime?;
+                return (minValue, maxValue, minDate, maxDate, dates);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         }
 
  
@@ -41,15 +54,29 @@ namespace NeftViewer.BL.Services
             return _uow.IndicatorValues.GetAsync(id);
         }
 
-        public async Task<IEnumerable<IndicatorValue>> GetIndicatorValues(DateTime Dates,  int CriteriaValue)
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByCriteria(DateTime Dates,  int CriteriaValue)
         {
             DateTime dateInput = Dates;
-            DateTimeOffset dateWithOffset = new DateTimeOffset(dateInput, new TimeSpan(2, 0, 0));
-            DateTime dateForFilter = dateWithOffset.UtcDateTime;
+
             List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
-            filters.Add(new ValueTuple<string, object>("DateStart", dateForFilter));
+            List<string> includs = new List<string>();
+            filters.Add(new ValueTuple<string, object>("DateStart", Dates));
             filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaValue));
-            var v = _uow.IndicatorValues.GetItems(filters);
+           
+            var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
+            return v.ToList();
+        }
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID)
+        {
+            DateTime dateInput = Dates;
+
+            List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
+            List<string> includs = new List<string>();
+            filters.Add(new ValueTuple<string, object>("DateStart", Dates));
+            filters.Add(new ValueTuple<string, object>("CodeSUID", CodeSUID));
+            includs.Add("Criterias");
+            includs.Add("Objects");
+            var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
             return v.ToList();
         }
 

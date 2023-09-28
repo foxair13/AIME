@@ -1,0 +1,21 @@
+﻿@model IEnumerable<NeftViewer.Data.Models.IndicatorValue>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-sm" style="width: 100%;">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center" style="width: 80%;">Показатель</th>
+                <th class="text-center" style="width: 20%;">@Model.Select(x => x.DateStart).FirstOrDefault().ToString("dd.MM.yyyy")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (NeftViewer.Data.Models.IndicatorValue item in Model)
+            {
+                <tr>
+                    <td class="text-center" style="width: 80%;">@item.Criterias.Name</td>
+                    <td  style="width: 20%;">@item.Value.ToString("0.00")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

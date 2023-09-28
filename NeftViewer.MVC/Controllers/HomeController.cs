@@ -53,11 +53,26 @@ namespace NeftViewer.MVC.Controllers
 
             return View(filterViewModel);
         }
+        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date)
+        {
+			IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByObject(Date, ObjectId).Result;
+            iv = iv.OrderBy(x => x.Criterias.Name);
 
+            if (TabId == "#ObjectParams")
+            {
+                return PartialView("_ObjectParamsPartialView", iv);
+            }
+            else if (TabId == "#Dashboards")
+            {
+                return PartialView("_DashboardsPartialView", null);
+            }
+            return PartialView("_ObjectParamsPartialView", iv);
+        }
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
-            var (min, max,datemin,datemax) = await _indicatorValueService.GetMinMaxValues(CriteriId);
-            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax });
+            var (min, max,datemin,datemax,dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
+
+            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax, Dates= dates });
         }
 
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
@@ -98,15 +113,17 @@ namespace NeftViewer.MVC.Controllers
                         Lat = obj.Latitude,
                         Name = obj.Name,
                         HasValue=false,
-                        Value=0
+                        Value=0,
+                        scaleUnit=""
                     }).ToList();
                 }
                 else 
                 {
                     IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
                     bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
-                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorValues(Dates, CriteriaValue).Result;
-                    iv=iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
+                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByCriteria(Dates, CriteriaValue).Result;
+                    string  Units = _criteriaService.FindCriteriaAsync(CriteriaValue).Result.Units;
+                    iv =iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
 
                     var objwithval = from x in objects
                               join y in iv on x.CodeSUID equals y.CodeSUID
@@ -142,7 +159,8 @@ namespace NeftViewer.MVC.Controllers
                         Lat = obj.x.Latitude,
                         Name = obj.x.Name,
                         HasValue = true,
-                        Value = obj.Value
+                        Value = obj.Value,
+                        scaleUnit = Units
                     }).ToList();
                 }
               
