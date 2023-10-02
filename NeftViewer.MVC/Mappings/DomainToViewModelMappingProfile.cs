@@ -12,8 +12,8 @@ namespace NeftViewer.MVC.Mappings
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src["Name"]))
                 .ForMember(dest => dest.AgregateId, opt => opt.MapFrom(src => src["AgregateId"]))
-                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src["Units"]))
-                .ForMember(dest => dest.Periodicity, opt => opt.MapFrom(src => src["Periodicity"]));
+                //.ForMember(dest => dest.Units, opt => opt.MapFrom(src => src["Units"]))
+                /*.ForMember(dest => dest.Periodicity, opt => opt.MapFrom(src => src["Periodicity"]))*/;
 
             CreateMap<Dictionary<string, object>, Road>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src["Id"]))

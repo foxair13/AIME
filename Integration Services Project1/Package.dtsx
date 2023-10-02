@@ -11,8 +11,8 @@
   DTS:LocaleID="1049"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="264"
-  DTS:VersionGUID="{C7CD17D5-D873-406D-A490-5B5C3C587B5B}">
+  DTS:VersionBuild="318"
+  DTS:VersionGUID="{4DD77601-0755-4EF0-ACD3-4F6C09278303}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -29,7 +29,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAD8PFeE2rEc7PSkkrIKCyDhAAAAAASAAACgAAAAEAAAABS+z7k+rV+YVcBtFiBpDqUYAAAAmm4yha/6g/bqaWvMLCYIkA4LunprrHvWFAAAAGqQ1qR7fDZADk3E/XqlVU0s3Fzz</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAsecvUxksoQfeChwT0AWUWAAAAAASAAACgAAAAEAAAAHlC98jt1iSczMgspbefAq0YAAAAzLViHJR2q2xZW++Zipf9bi2okp3B6V1AFAAAAAYprPsphC4Ef6+/RC7ivmJIOgbE</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,7 +46,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACMYiZSgeS2NU0P5j/ArZsWAAAAAASAAACgAAAAEAAAANZCxcQrJkpVRa1unTBf2WgYAAAAu3vEmbh30k03+1Cl7NofEqh/KR8KWtetFAAAAOu5sFN/Gec30dgdtR0qbwAnL7LY</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADdpdmFoNRsc5GiBxp6mgLkAAAAAASAAACgAAAAEAAAAH9ePyG8CKrdA3PbZ8CWODQYAAAAruhwCoBCQmIXyoajy3iIaPlE/uQ0ZxrAFAAAAGeJOEdjk6308lNOXIUbMHeQ21MO</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -61,7 +61,7 @@
           <DTS:Password
             DTS:Name="pwd"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADLIUvhkLEHlXmePg1ClirKAAAAAASAAACgAAAAEAAAACuxR1lQuCNsCDTTfPLC7s4YAAAA3esCFsBcLuOpwXLjXs8PxREDEptB7HknFAAAAFhC3tIppcQx7TlCsqIIetRQFQ1G</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACRvb/hxiuRoxa/Xye5v87XAAAAAASAAACgAAAAEAAAAFC1AloeUBH+hoo6+03wq/wYAAAAQ0dHeM9zgeuBnpATEhxWYSBAcDVtQuEnFAAAAGvLdFg+xgFVf2uC0kcafjcXBp0d</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -78,7 +78,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABD/3aWreJHiwD5TDrd8oVPAAAAAASAAACgAAAAEAAAAP+VFFe73BTtDXZgF3CknLsYAAAAbFwTCnz1pGg4cg/Bde4HVJs6BNw7M2AiFAAAAM1iQp6IDZBBUUJMBZuwxpPd2XVE</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACzwcCq6xMjboZliqSWqF2AAAAAAASAAACgAAAAEAAAAGaBYxwFi5E3h6aQuPenP/AYAAAAEJsenr/RszKEv/FHdYDxBMzoqhDa3z2rFAAAAL6gxwKpHctLpnQdwa0BxZ7E+LRI</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -93,7 +93,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAkIMvq4lmrh2Yr0U0WUjo8AAAAAASAAACgAAAAEAAAADx4zJ+43NQZeXI7lhEirX4YAAAAurJphhX8dunhxFJ+PryESgxWGRqgbVyQFAAAAEL6nHUxy7OiQpno6dJLbjNEIPHr</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADhen9WMRn8W8UJR6oTg+3GAAAAAASAAACgAAAAEAAAAMKTaPYRh6X4XNLECP1HVbQYAAAAWSwmSdsyh7LYpQd+HgvDf34rQZJR6q6dFAAAAOXfiCWJeJCanH/9wylriGTHuzqq</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -969,7 +969,7 @@ where "refTable"."Id" = ?</property>
                   dataType="System.String"
                   description="Команда SQL для выполнения."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230101', @date_to = '20230131'</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230901', @date_to = '20230930'</property>
                 <property
                   dataType="System.String"
                   description="Переменная, содержащая команду SQL для выполнения."
@@ -1026,7 +1026,7 @@ where "refTable"."Id" = ?</property>
                       truncationRowDisposition="IgnoreFailure" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
-                      dataType="i4"
+                      dataType="i2"
                       errorOrTruncationOperation="Преобразование"
                       errorRowDisposition="IgnoreFailure"
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
@@ -1041,17 +1041,8 @@ where "refTable"."Id" = ?</property>
                       externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
                       name="Value"
-                      precision="38"
-                      scale="6"
-                      truncationRowDisposition="IgnoreFailure" />
-                    <outputColumn
-                      refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
-                      dataType="i8"
-                      errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="IgnoreFailure"
-                      externalMetadataColumnId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
-                      name="Id"
+                      precision="15"
+                      scale="2"
                       truncationRowDisposition="IgnoreFailure" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -1067,14 +1058,14 @@ where "refTable"."Id" = ?</property>
                       name="DateStart" />
                     <externalMetadataColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
-                      dataType="i4"
+                      dataType="i2"
                       name="CriteriaId" />
                     <externalMetadataColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
                       dataType="numeric"
                       name="Value"
-                      precision="38"
-                      scale="6" />
+                      precision="15"
+                      scale="2" />
                     <externalMetadataColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
                       dataType="i8"
@@ -1092,11 +1083,6 @@ where "refTable"."Id" = ?</property>
                   name="Вывод ошибок источника &quot;OLE DB&quot;">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
-                      dataType="i8"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
-                      name="Id" />
-                    <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
                       dataType="wstr"
                       length="30"
@@ -1109,7 +1095,7 @@ where "refTable"."Id" = ?</property>
                       name="DateStart" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
-                      dataType="i4"
+                      dataType="i2"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
                       name="CriteriaId" />
                     <outputColumn
@@ -1117,8 +1103,8 @@ where "refTable"."Id" = ?</property>
                       dataType="numeric"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
                       name="Value"
-                      precision="38"
-                      scale="6" />
+                      precision="15"
+                      scale="2" />
                     <outputColumn
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
                       dataType="i4"
@@ -1129,179 +1115,6 @@ where "refTable"."Id" = ?</property>
                       refId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\IndicatorValues\Команда OLE DB"
-              componentClassID="Microsoft.OLEDBCommand"
-              contactInfo="Команда OLE DB;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;2"
-              description="Выполняет инструкцию SQL для каждой строки в потоке данных. Пример: вызов хранимой процедуры &quot;new employee setup&quot; для всех строк в таблице &quot;new employees&quot;. Примечание. Выполнение инструкции SQL для всех строк большого потока данных может занять длительное время."
-              name="Команда OLE DB"
-              usesDispositions="true"
-              version="2">
-              <properties>
-                <property
-                  dataType="System.Int32"
-                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
-                  name="CommandTimeout">0</property>
-                <property
-                  dataType="System.String"
-                  description="Команда SQL для выполнения."
-                  expressionType="Notify"
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE public."IndicatorValues"
-SET 
-    "CodeSUID" = ?,
-    "DateStart" = ?,
-    "CriteriaId" = ?,
-    "Value" = ?
-WHERE "Id" = ?;</property>
-                <property
-                  dataType="System.Int32"
-                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
-                  name="DefaultCodePage">1251</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\IndicatorValues\Команда OLE DB.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
-                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
-                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB]"
-                  errorOrTruncationOperation="Выполнение команды"
-                  errorRowDisposition="FailComponent"
-                  hasSideEffects="true"
-                  name="Вход команды OLE DB">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[DateStart]"
-                      cachedDataType="dbDate"
-                      cachedName="DateStart"
-                      externalMetadataColumnId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_1]"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[CriteriaId]"
-                      cachedDataType="i4"
-                      cachedName="CriteriaId"
-                      externalMetadataColumnId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_2]"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Value]"
-                      cachedDataType="numeric"
-                      cachedName="Value"
-                      cachedPrecision="38"
-                      cachedScale="6"
-                      externalMetadataColumnId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_3]"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Copy of CodeSUID]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="Copy of CodeSUID"
-                      externalMetadataColumnId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_0]"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Copy of Id]"
-                      cachedDataType="i4"
-                      cachedName="Copy of Id"
-                      externalMetadataColumnId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_4]"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_0]"
-                      dataType="nText"
-                      name="Param_0">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
-                          name="DBParamInfoFlags">65</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_1]"
-                      dataType="dbTimeStamp"
-                      name="Param_1">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
-                          name="DBParamInfoFlags">65</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_2]"
-                      dataType="i4"
-                      name="Param_2">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
-                          name="DBParamInfoFlags">65</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_3]"
-                      dataType="numeric"
-                      name="Param_3"
-                      precision="39">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
-                          name="DBParamInfoFlags">65</property>
-                      </properties>
-                    </externalMetadataColumn>
-                    <externalMetadataColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_4]"
-                      dataType="i4"
-                      name="Param_4">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
-                          name="DBParamInfoFlags">65</property>
-                      </properties>
-                    </externalMetadataColumn>
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\IndicatorValues\Команда OLE DB.Outputs[Выход команды OLE DB]"
-                  exclusionGroup="1"
-                  name="Выход команды OLE DB"
-                  synchronousInputId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB]">
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\IndicatorValues\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Вывод ошибок команды OLE DB"
-                  synchronousInputId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\IndicatorValues\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\IndicatorValues\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\IndicatorValues\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1367,8 +1180,8 @@ WHERE "Id" = ?;</property>
               <connections>
                 <connection
                   refId="Package\IndicatorValues\Назначение ODBC.Connections[ODBCConnection]"
-                  connectionManagerID="{54D6600B-1165-4B3F-9187-3FB2E654DA98}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  connectionManagerID="{33EF2947-7FE1-416B-94A0-B9AA18E49BFC}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLServer.postgres]"
                   description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
                   name="ODBCConnection" />
               </connections>
@@ -1389,7 +1202,7 @@ WHERE "Id" = ?;</property>
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
                     <inputColumn
                       refId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[CriteriaId]"
-                      cachedDataType="i4"
+                      cachedDataType="i2"
                       cachedName="CriteriaId"
                       externalMetadataColumnId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
@@ -1397,8 +1210,8 @@ WHERE "Id" = ?;</property>
                       refId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Value]"
                       cachedDataType="numeric"
                       cachedName="Value"
-                      cachedPrecision="38"
-                      cachedScale="6"
+                      cachedPrecision="15"
+                      cachedScale="2"
                       externalMetadataColumnId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
                       lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
                     <inputColumn
@@ -1408,12 +1221,6 @@ WHERE "Id" = ?;</property>
                       cachedName="Copy of CodeSUID"
                       externalMetadataColumnId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
                       lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]" />
-                    <inputColumn
-                      refId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Copy of Id]"
-                      cachedDataType="i4"
-                      cachedName="Copy of Id"
-                      externalMetadataColumnId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -1481,11 +1288,6 @@ WHERE "Id" = ?;</property>
                   name="Входные данные преобразования данных">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[Id]"
-                      cachedDataType="i8"
-                      cachedName="Id"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
-                    <inputColumn
                       refId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[CodeSUID]"
                       cachedDataType="wstr"
                       cachedLength="30"
@@ -1502,26 +1304,6 @@ WHERE "Id" = ?;</property>
                   name="Выходные данные преобразования данных"
                   synchronousInputId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных]">
                   <outputColumns>
-                    <outputColumn
-                      refId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
-                      dataType="i4"
-                      errorOrTruncationOperation="Преобразование"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
-                      name="Copy of Id"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Указывает входной столбец, служащий источником данных для преобразования."
-                          name="SourceInputColumnLineageID">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Id]}</property>
-                        <property
-                          dataType="System.Boolean"
-                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
-                          name="FastParse">false</property>
-                      </properties>
-                    </outputColumn>
                     <outputColumn
                       refId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]"
                       dataType="wstr"
@@ -1570,8 +1352,688 @@ WHERE "Id" = ?;</property>
                 </output>
               </outputs>
             </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\IndicatorValues.Paths[Выход источника &quot;OLE DB&quot;]"
+              endId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных]"
+              name="Выход источника &quot;OLE DB&quot;"
+              startId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]" />
+            <path
+              refId="Package\IndicatorValues.Paths[Выходные данные преобразования данных]"
+              endId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC]"
+              name="Выходные данные преобразования данных"
+              startId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\IndicatorValues 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Задача потока данных"
+      DTS:Disabled="True"
+      DTS:DTSID="{3f097b34-cadc-403c-b861-98a8811b7abf}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="IndicatorValues 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
             <component
-              refId="Package\IndicatorValues\Уточняющий запрос"
+              refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Источник &quot;OLE DB&quot;;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;7"
+              description="Источник &quot;OLE DB&quot;"
+              name="Источник &quot;OLE DB&quot;"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Указывает имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Указывает переменную, содержащую имя объекта базы данных, используемого для открытия набора строк."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Команда SQL для выполнения."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230201', @date_to = '20230228'</property>
+                <property
+                  dataType="System.String"
+                  description="Переменная, содержащая команду SQL для выполнения."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Вызывает безусловное использование значение свойства DefaultCodePage при описании символьных данных."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает используемый режим доступа к базе данных."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Сопоставления между параметрами в команде SQL и переменными."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  connectionManagerRefId="Package.ConnectionManagers[tunnel.it.beloil.by,14334.KISjoinMDM.suid]"
+                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]"
+                  name="Выход источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      length="30"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="IgnoreFailure" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="IgnoreFailure"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="IgnoreFailure" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CodeSUID]"
+                      dataType="wstr"
+                      length="30"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[DateStart]"
+                      dataType="dbDate"
+                      name="DateStart" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CriteriaId]"
+                      dataType="i2"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="15"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[Id]"
+                      dataType="i8"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].ExternalColumns[CustomerId]"
+                      dataType="bytes"
+                      length="17"
+                      name="CustomerId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;]"
+                  isErrorOut="true"
+                  name="Вывод ошибок источника &quot;OLE DB&quot;">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CodeSUID]"
+                      name="CodeSUID" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      dataType="dbDate"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[DateStart]"
+                      name="DateStart" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      dataType="i2"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[CriteriaId]"
+                      name="CriteriaId" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      dataType="numeric"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Value]"
+                      name="Value"
+                      precision="15"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      dataType="i8"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Вывод ошибок источника &quot;OLE DB&quot;].Columns[Id]"
+                      name="Id" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\IndicatorValues 1\Команда OLE DB"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="Команда OLE DB;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;2"
+              description="Выполняет инструкцию SQL для каждой строки в потоке данных. Пример: вызов хранимой процедуры &quot;new employee setup&quot; для всех строк в таблице &quot;new employees&quot;. Примечание. Выполнение инструкции SQL для всех строк большого потока данных может занять длительное время."
+              name="Команда OLE DB"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Время ожидания команды, в секундах. Величина 0 означает неограниченное время ожидания."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Команда SQL для выполнения."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE public."IndicatorValues"
+SET 
+    "CodeSUID" = ?,
+    "DateStart" = ?,
+    "CriteriaId" = ?,
+    "Value" = ?
+WHERE "Id" = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
+                  name="DefaultCodePage">1251</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\IndicatorValues 1\Команда OLE DB.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
+                  description="Соединение OLE DB среды выполнения, используемое для доступа к базе данных."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB]"
+                  errorOrTruncationOperation="Выполнение команды"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Вход команды OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_1]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_2]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_3]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Copy of CodeSUID]"
+                      cachedDataType="nText"
+                      cachedName="Copy of CodeSUID"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_0]"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].Columns[Copy of Id]"
+                      cachedDataType="i4"
+                      cachedName="Copy of Id"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_4]"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_0]"
+                      dataType="nText"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_1]"
+                      dataType="dbTimeStamp"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_2]"
+                      dataType="i4"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_3]"
+                      dataType="numeric"
+                      name="Param_3"
+                      precision="39">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB].ExternalColumns[Param_4]"
+                      dataType="i4"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Сведения о параметрах. Соответствуют значениям DBPARAMFLAGSENUM OLE DB."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Выход команды OLE DB]"
+                  exclusionGroup="1"
+                  name="Выход команды OLE DB"
+                  synchronousInputId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Вывод ошибок команды OLE DB"
+                  synchronousInputId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Команда OLE DB.Outputs[Вывод ошибок команды OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\IndicatorValues 1\Назначение ODBC"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="Назначение ODBC;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;1"
+              description="Назначение ODBC"
+              name="Назначение ODBC"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Имя таблицы для извлечения данных."
+                  expressionType="Notify"
+                  name="TableName">"public"."IndicatorValues"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Укажите число строк, извлекаемых в одном пакете."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число строк, вставляемых в одной и той же транзакции."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет размер фрагмента при выделении памяти для столбцов больших объектов"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="Число секунд для ожидания выполнения инструкции SQL перед возвратом в приложение."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Кодовая страница столбца, используемая, когда сведения о кодовой странице недоступны в источнике данных."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Int32"
+                  description="Метод, используемый для вставки данных. Возможные значения: &quot;Пакет&quot; и &quot;Построчно&quot;."
+                  expressionType="Notify"
+                  name="InsertMethod">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Тип данных C в ODBC для привязки числовых данных."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Определяет, как компонент будет привязывать столбцы с типами строк байтовых или многобайтовых символов (SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). Варианты: Юникод (SQL_C_WCHAR) и ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\IndicatorValues 1\Назначение ODBC.Connections[ODBCConnection]"
+                  connectionManagerID="{54D6600B-1165-4B3F-9187-3FB2E654DA98}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PostgreSQLLocal.postgres]"
+                  description="Соединение среды выполнения ODBC, используемое для доступа к базе данных."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC]"
+                  errorOrTruncationOperation="Вставить"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="Вход назначения ODBC"
+                  truncationRowDisposition="RedirectRow">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Value]"
+                      cachedDataType="numeric"
+                      cachedName="Value"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Copy of CodeSUID]"
+                      cachedDataType="nText"
+                      cachedName="Copy of CodeSUID"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].Columns[Copy of Id]"
+                      cachedDataType="i4"
+                      cachedName="Copy of Id"
+                      externalMetadataColumnId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CodeSUID]"
+                      dataType="wstr"
+                      length="255"
+                      name="CodeSUID" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[DateStart]"
+                      dataType="dbTimeStamp2"
+                      name="DateStart"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[CriteriaId]"
+                      dataType="i4"
+                      name="CriteriaId" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Value]"
+                      dataType="numeric"
+                      name="Value"
+                      precision="28"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\IndicatorValues 1\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Ошибка при выводе назначения ODBC"
+                  synchronousInputId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Назначение ODBC.Outputs[Ошибка при выводе назначения ODBC].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\IndicatorValues 1\Преобразование данных"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Преобразование данных;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;0"
+              description="Преобразование данных"
+              name="Преобразование данных"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных]"
+                  name="Входные данные преобразования данных">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[Id]"
+                      cachedDataType="i8"
+                      cachedName="Id"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[CodeSUID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="CodeSUID"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CodeSUID]" />
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных]"
+                  exclusionGroup="1"
+                  name="Выходные данные преобразования данных"
+                  synchronousInputId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]"
+                      name="Copy of Id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Указывает входной столбец, служащий источником данных для преобразования."
+                          name="SourceInputColumnLineageID">#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Id]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of CodeSUID]"
+                      name="Copy of CodeSUID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Указывает входной столбец, служащий источником данных для преобразования."
+                          name="SourceInputColumnLineageID">#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[CodeSUID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of DateStart]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Преобразование"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of DateStart]"
+                      name="Copy of DateStart"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Указывает входной столбец, служащий источником данных для преобразования."
+                          name="SourceInputColumnLineageID">#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[DateStart]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Указывает, используются ли в столбце более производительные, не зависящие от локалей процедуры синтаксического анализа."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные ошибок преобразования данных]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Выходные данные ошибок преобразования данных"
+                  synchronousInputId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные ошибок преобразования данных].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные ошибок преобразования данных].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные ошибок преобразования данных].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные ошибок преобразования данных].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\IndicatorValues 1\Уточняющий запрос"
               componentClassID="Microsoft.Lookup"
               contactInfo="Уточняющий запрос;Корпорация Майкрософт. Microsoft SQL Server. (C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены. http://www.microsoft.com/sql/support;6"
               description="Присоединяет дополнительные столбцы к потоку данных путем поиска значений в таблице. Пример: соединение со столбцом &quot;employee id&quot; таблицы employees позволяет получить значения &quot;hire date&quot; и &quot;employee name&quot;. Рекомендуется воспользоваться этим преобразованием, если таблица подстановки не помещается в памяти."
@@ -1584,14 +2046,32 @@ WHERE "Id" = ?;</property>
                   description="Задает инструкцию SQL, которая формирует таблицу уточняющих запросов."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from "public"."IndicatorValues"</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+    "Id", 
+    "CodeSUID", 
+    CAST("DateStart" AS DATE) AS "DateStart", 
+    "CriteriaId", 
+    "Value"
+FROM 
+    public."IndicatorValues"
+WHERE
+    "CodeSUID" IS NOT NULL</property>
                 <property
                   dataType="System.String"
                   description="Задает инструкцию SQL, которая использует параметры для формирования таблицы уточняющих запросов."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from "public"."IndicatorValues") "refTable"
-where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."CodeSUID" = ?</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT 
+    "Id", 
+    "CodeSUID", 
+    CAST("DateStart" AS DATE) AS "DateStart", 
+    "CriteriaId", 
+    "Value"
+FROM 
+    public."IndicatorValues"
+WHERE
+    "CodeSUID" IS NOT NULL) "refTable"
+where "refTable"."DateStart" = ? and "refTable"."criteriaid" = ? and "refTable"."value" = ? and "refTable"."id" = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Указывает тип соединения, используемого для доступа к эталонному набору данных."
@@ -1601,7 +2081,7 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
                   dataType="System.Int32"
                   description="Указывает тип кэша таблицы уточняющих запросов."
                   name="CacheType"
-                  typeConverter="CacheType">2</property>
+                  typeConverter="CacheType">0</property>
                 <property
                   dataType="System.Int32"
                   description="Указывает, как преобразование &quot;Уточняющий запрос&quot; обрабатывает строки без совпадающих элементов в эталонном наборе данных."
@@ -1622,12 +2102,12 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
                 <property
                   dataType="System.String"
                   description="Указывает, следует ли ссылаться на метаданные в формате XML."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodeSUID" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CriteriaId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Value" dataType="DT_NUMERIC" length="0" precision="19" scale="7" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="codesuid" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DateStart" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="criteriaid" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="value" dataType="DT_NUMERIC" length="0" precision="19" scale="7" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
                   description="Задает список идентификаторов журнала обращений и преобразований, сопоставляемый с параметрами, которые использует инструкция SQL в свойстве SQLCommand. Элементы списка разделяются точками с запятой."
-                  name="ParameterMap">#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[CriteriaId]};#{Package\IndicatorValues\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Value]};#{Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]};</property>
+                  name="ParameterMap">#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[DateStart]};#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[CriteriaId]};#{Package\IndicatorValues 1\Источник "OLE DB".Outputs[Выход источника "OLE DB"].Columns[Value]};#{Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]};</property>
                 <property
                   dataType="System.Int32"
                   description="Указывает кодовую страницу столбца, используемую, когда недоступны сведения о кодовой странице из источника данных."
@@ -1639,7 +2119,7 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
               </properties>
               <connections>
                 <connection
-                  refId="Package\IndicatorValues\Уточняющий запрос.Connections[OleDbConnection]"
+                  refId="Package\IndicatorValues 1\Уточняющий запрос.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   connectionManagerRefId="Package.ConnectionManagers[localhost.MyPostgreDB.postgres]"
                   description="Диспетчер соединений, используемый для доступа к данным уточняющих запросов."
@@ -1647,19 +2127,19 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
               </connections>
               <inputs>
                 <input
-                  refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+                  refId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
                   name="Ввод преобразования &quot;Уточняющий запрос&quot;">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Copy of Id]"
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Copy of Id]"
                       cachedDataType="i4"
                       cachedName="Copy of Id"
-                      lineageId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]">
+                      lineageId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных].Columns[Copy of Id]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
-                          name="JoinToReferenceColumn">Id</property>
+                          name="JoinToReferenceColumn">id</property>
                         <property
                           dataType="System.Null"
                           description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
@@ -1667,33 +2147,49 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CriteriaId]"
-                      cachedDataType="i4"
-                      cachedName="CriteriaId"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
-                          name="JoinToReferenceColumn">CriteriaId</property>
-                        <property
-                          dataType="System.Null"
-                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
-                          name="CopyFromReferenceColumn" />
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Value]"
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[Value]"
                       cachedDataType="numeric"
                       cachedName="Value"
                       cachedPrecision="38"
                       cachedScale="6"
-                      lineageId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]">
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[Value]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
-                          name="JoinToReferenceColumn">Value</property>
+                          name="JoinToReferenceColumn">value</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[CriteriaId]"
+                      cachedDataType="i4"
+                      cachedName="CriteriaId"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[CriteriaId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">criteriaid</property>
+                        <property
+                          dataType="System.Null"
+                          description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;].Columns[DateStart]"
+                      cachedDataType="dbDate"
+                      cachedName="DateStart"
+                      lineageId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;].Columns[DateStart]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Указывает в ссылочной таблице столбец, который соединен с данным столбцом."
+                          name="JoinToReferenceColumn">DateStart</property>
                         <property
                           dataType="System.Null"
                           description="Указывает в ссылочной таблице столбец, из которого копируется данный столбец."
@@ -1706,38 +2202,38 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
               </inputs>
               <outputs>
                 <output
-                  refId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+                  refId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
                   errorOrTruncationOperation="Уточняющий запрос"
                   exclusionGroup="1"
                   name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
-                  synchronousInputId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  synchronousInputId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\IndicatorValues\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]"
+                  refId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]"
                   description="Вывод преобразования &quot;Уточняющий запрос&quot;, которое обрабатывает строки без совпадающих элементов в эталонном наборе данных. Используйте этот выход, если свойство NoMatchBehavior имеет значение &quot;Отправить строки без совпадающих элементов в выход несовпадающих строк&quot;."
                   exclusionGroup="1"
                   name="Выход несовпадающих строк уточняющего запроса"
-                  synchronousInputId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  synchronousInputId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;]"
+                  refId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Вывод ошибок преобразования &quot;Уточняющий запрос&quot;"
-                  synchronousInputId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
+                  synchronousInputId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
+                      lineageId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      refId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
+                      lineageId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод ошибок преобразования &quot;Уточняющий запрос&quot;].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1748,25 +2244,25 @@ where "refTable"."CriteriaId" = ? and "refTable"."Value" = ? and "refTable"."Cod
           </components>
           <paths>
             <path
-              refId="Package\IndicatorValues.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
-              endId="Package\IndicatorValues\Команда OLE DB.Inputs[Вход команды OLE DB]"
+              refId="Package\IndicatorValues 1.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+              endId="Package\IndicatorValues 1\Команда OLE DB.Inputs[Вход команды OLE DB]"
               name="Вывод совпадений преобразования &quot;Уточняющий запрос&quot;"
-              startId="Package\IndicatorValues\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]" />
+              startId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]" />
             <path
-              refId="Package\IndicatorValues.Paths[Выход источника &quot;OLE DB&quot;]"
-              endId="Package\IndicatorValues\Преобразование данных.Inputs[Входные данные преобразования данных]"
+              refId="Package\IndicatorValues 1.Paths[Выход источника &quot;OLE DB&quot;]"
+              endId="Package\IndicatorValues 1\Преобразование данных.Inputs[Входные данные преобразования данных]"
               name="Выход источника &quot;OLE DB&quot;"
-              startId="Package\IndicatorValues\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]" />
+              startId="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;.Outputs[Выход источника &quot;OLE DB&quot;]" />
             <path
-              refId="Package\IndicatorValues.Paths[Выход несовпадающих строк уточняющего запроса]"
-              endId="Package\IndicatorValues\Назначение ODBC.Inputs[Вход назначения ODBC]"
+              refId="Package\IndicatorValues 1.Paths[Выход несовпадающих строк уточняющего запроса]"
+              endId="Package\IndicatorValues 1\Назначение ODBC.Inputs[Вход назначения ODBC]"
               name="Выход несовпадающих строк уточняющего запроса"
-              startId="Package\IndicatorValues\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]" />
+              startId="Package\IndicatorValues 1\Уточняющий запрос.Outputs[Выход несовпадающих строк уточняющего запроса]" />
             <path
-              refId="Package\IndicatorValues.Paths[Выходные данные преобразования данных]"
-              endId="Package\IndicatorValues\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
+              refId="Package\IndicatorValues 1.Paths[Выходные данные преобразования данных]"
+              endId="Package\IndicatorValues 1\Уточняющий запрос.Inputs[Ввод преобразования &quot;Уточняющий запрос&quot;]"
               name="Выходные данные преобразования данных"
-              startId="Package\IndicatorValues\Преобразование данных.Outputs[Выходные данные преобразования данных]" />
+              startId="Package\IndicatorValues 1\Преобразование данных.Outputs[Выходные данные преобразования данных]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -3293,6 +3789,10 @@ where "refTable"."Id" = ?</property>
           Id="Package\IndicatorValues"
           TopLeft="843,182" />
         <NodeLayout
+          Size="155,42"
+          Id="Package\IndicatorValues 1"
+          TopLeft="266,286" />
+        <NodeLayout
           Size="152,42"
           Id="Package\ObjectOnRoad"
           TopLeft="433,183" />
@@ -3572,29 +4072,138 @@ where "refTable"."Id" = ?</property>
     design-time-name="Package\IndicatorValues">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="168,42"
-          Id="Package\IndicatorValues\Команда OLE DB"
-          TopLeft="459,102" />
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="207,42"
           Id="Package\IndicatorValues\Преобразование данных"
-          TopLeft="95,109" />
-        <NodeLayout
-          Size="183,42"
-          Id="Package\IndicatorValues\Уточняющий запрос"
-          TopLeft="272,211" />
+          TopLeft="95,127" />
         <NodeLayout
           Size="176,43"
           Id="Package\IndicatorValues\Назначение ODBC"
-          TopLeft="453,329" />
+          TopLeft="227,237" />
         <NodeLayout
           Size="178,42"
           Id="Package\IndicatorValues\Источник &quot;OLE DB&quot;"
           TopLeft="14,16" />
         <EdgeLayout
           Id="Package\IndicatorValues.Paths[Выходные данные преобразования данных]"
+          TopLeft="198.5,169">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="116.5,68"
+              Start="0,0"
+              End="116.5,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30"
+                    Point2="0,34"
+                    Point3="4,34" />
+                  <mssgle:LineSegment
+                    End="112.5,34" />
+                  <mssgle:CubicBezierSegment
+                    Point1="112.5,34"
+                    Point2="116.5,34"
+                    Point3="116.5,38" />
+                  <mssgle:LineSegment
+                    End="116.5,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\IndicatorValues.Paths[Выход источника &quot;OLE DB&quot;]"
+          TopLeft="103,58">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95.5,69"
+              Start="0,0"
+              End="95.5,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30.5"
+                    Point2="0,34.5"
+                    Point3="4,34.5" />
+                  <mssgle:LineSegment
+                    End="91.5,34.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="91.5,34.5"
+                    Point2="95.5,34.5"
+                    Point3="95.5,38.5" />
+                  <mssgle:LineSegment
+                    End="95.5,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\IndicatorValues\Назначение ODBC">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\IndicatorValues\Источник &quot;OLE DB&quot;">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\IndicatorValues 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="183,42"
+          Id="Package\IndicatorValues 1\Уточняющий запрос"
+          TopLeft="272,211" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\IndicatorValues 1\Преобразование данных"
+          TopLeft="95,109" />
+        <NodeLayout
+          Size="176,43"
+          Id="Package\IndicatorValues 1\Назначение ODBC"
+          TopLeft="453,329" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\IndicatorValues 1\Команда OLE DB"
+          TopLeft="459,102" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;"
+          TopLeft="14,16" />
+        <EdgeLayout
+          Id="Package\IndicatorValues 1.Paths[Выходные данные преобразования данных]"
           TopLeft="198.5,151">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -3628,7 +4237,7 @@ where "refTable"."Id" = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\IndicatorValues.Paths[Выход несовпадающих строк уточняющего запроса]"
+          Id="Package\IndicatorValues 1.Paths[Выход несовпадающих строк уточняющего запроса]"
           TopLeft="363.5,253">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -3664,7 +4273,7 @@ where "refTable"."Id" = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\IndicatorValues.Paths[Выход источника &quot;OLE DB&quot;]"
+          Id="Package\IndicatorValues 1.Paths[Выход источника &quot;OLE DB&quot;]"
           TopLeft="103,58">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -3698,7 +4307,7 @@ where "refTable"."Id" = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\IndicatorValues.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
+          Id="Package\IndicatorValues 1.Paths[Вывод совпадений преобразования &quot;Уточняющий запрос&quot;]"
           TopLeft="392.666666666667,211">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -3737,30 +4346,30 @@ where "refTable"."Id" = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\IndicatorValues\Уточняющий запрос">
+    design-time-name="Package\IndicatorValues 1\Уточняющий запрос">
     <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">true</Value>
-      </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">"public"."IndicatorValues"</Value>
+          type="q2:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q3:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q4:boolean">false</Value>
+      </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\IndicatorValues\Источник &quot;OLE DB&quot;">
+    design-time-name="Package\IndicatorValues 1\Источник &quot;OLE DB&quot;">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3768,7 +4377,7 @@ where "refTable"."Id" = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\IndicatorValues\Назначение ODBC">
+    design-time-name="Package\IndicatorValues 1\Назначение ODBC">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
