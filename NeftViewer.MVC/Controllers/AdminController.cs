@@ -5,10 +5,6 @@ namespace NeftViewer.MVC.Controllers
     {
         public IActionResult Index()
         {
-
-
-
-
             return View();
         }
     }

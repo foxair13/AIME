@@ -11,6 +11,8 @@ namespace NeftViewer.Data.Repositories.Contracts
 
         Task<IEnumerable<TModel>> GetAllAsync();
         Task<(object? MinValue, object? MaxValue)> GetMinMaxValuesAsync<T>(string filterPropertyName, object filterValue, string valuePropertyName);
+
+        IQueryable<TModel> GetRangeParamValues(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters, List<string> includeTableNames);
         IQueryable<T> GetUniqueItems<T>(List<(string filterPropertyName, object filterValue)> filters, string uniqueColumnName);
         IQueryable<TModel> GetItemsWithInclude(List<(string filterPropertyName, object filterValue)> filters, List<string> includeTableNames);
         Task<TModel> GetAsync(string? id);
