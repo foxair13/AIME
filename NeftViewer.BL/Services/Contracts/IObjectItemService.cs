@@ -8,6 +8,7 @@ namespace NeftViewer.BL.Services.Contracts
         Task<IEnumerable<ObjectItem>> GetObjectItems();
         Task<ObjectItem> FindObjectItemAsync(string? id);
         EntityEntry<ObjectItem> UpdateObjectItem(ObjectItem objectItem);
+        Task UpdateObjectItemsRange(List<ObjectItem> objectItems);
         Task CommitChangesAsync();
         EntityEntry<ObjectItem> DeleteObjectItem(string id);
         Task<bool> AddObjectItem(ObjectItem objectItem);

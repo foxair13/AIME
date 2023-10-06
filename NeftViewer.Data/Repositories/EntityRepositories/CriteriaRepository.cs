@@ -16,7 +16,5 @@ namespace NeftViewer.Data.Repositories.EntityRepositories
         {
             _dbContext = dbContext;
         }
-
-   
     }
 }

@@ -11,8 +11,8 @@
   DTS:LocaleID="1049"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="318"
-  DTS:VersionGUID="{4DD77601-0755-4EF0-ACD3-4F6C09278303}">
+  DTS:VersionBuild="319"
+  DTS:VersionGUID="{6C6A082C-BB90-4B4D-9466-24232A9433AC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -29,7 +29,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAsecvUxksoQfeChwT0AWUWAAAAAASAAACgAAAAEAAAAHlC98jt1iSczMgspbefAq0YAAAAzLViHJR2q2xZW++Zipf9bi2okp3B6V1AFAAAAAYprPsphC4Ef6+/RC7ivmJIOgbE</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAHZ3xzXWM5S/8MeQtsWta0AAAAAASAAACgAAAAEAAAAK8Eu0RTc4cHInE+BtAfbmIYAAAAvRhP8brxYztY8BFJfgl8BE6kuE8k9gE3FAAAADbn45XIwMw+S7SWkPMYiEvkD/lj</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,7 +46,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADdpdmFoNRsc5GiBxp6mgLkAAAAAASAAACgAAAAEAAAAH9ePyG8CKrdA3PbZ8CWODQYAAAAruhwCoBCQmIXyoajy3iIaPlE/uQ0ZxrAFAAAAGeJOEdjk6308lNOXIUbMHeQ21MO</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABvWbQ0y6+HDjbKfCTfVPMDAAAAAASAAACgAAAAEAAAADAXSJDuS5aPkrx51E9EN9MYAAAAaUng/hQFaMUA83NJVU3DwGeJRoaUx2aqFAAAAJIEgzl/3jRw+mRp1nC1OFTlyr11</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -61,7 +61,7 @@
           <DTS:Password
             DTS:Name="pwd"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACRvb/hxiuRoxa/Xye5v87XAAAAAASAAACgAAAAEAAAAFC1AloeUBH+hoo6+03wq/wYAAAAQ0dHeM9zgeuBnpATEhxWYSBAcDVtQuEnFAAAAGvLdFg+xgFVf2uC0kcafjcXBp0d</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABzdtIgmyWlsS56d8sTRJRHAAAAAASAAACgAAAAEAAAAEUSq9r4DWjRrbj+V3G2GokYAAAAVwk6f9DajQZss137e8IgY/z8BMusazbjFAAAACWaSfNiaEgSrqsaOtmGhMzj73uB</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -78,7 +78,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACzwcCq6xMjboZliqSWqF2AAAAAAASAAACgAAAAEAAAAGaBYxwFi5E3h6aQuPenP/AYAAAAEJsenr/RszKEv/FHdYDxBMzoqhDa3z2rFAAAAL6gxwKpHctLpnQdwa0BxZ7E+LRI</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADobrLewfFlx0sPp/THPbuMAAAAAASAAACgAAAAEAAAAN5EhUfvBFxFwTv7iJA4bS8YAAAAji3FOWsD1WF5al7iSGyUsbUgUWi7vaF6FAAAAPzfHaGDWUEy77uJGuSjILhP7N51</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -93,7 +93,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADhen9WMRn8W8UJR6oTg+3GAAAAAASAAACgAAAAEAAAAMKTaPYRh6X4XNLECP1HVbQYAAAAWSwmSdsyh7LYpQd+HgvDf34rQZJR6q6dFAAAAOXfiCWJeJCanH/9wylriGTHuzqq</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADT5nmC1hs1OSb8Xyw81WpuAAAAAASAAACgAAAAEAAAANqobGpgtckVHj9PE5f/IH0YAAAA6BjbzgV3+/aqctIT/aY7gLxZOrVizkCkFAAAADcTmE2D+ybueuWm6jBbQoX1CGo5</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -969,7 +969,7 @@ where "refTable"."Id" = ?</property>
                   dataType="System.String"
                   description="Команда SQL для выполнения."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230901', @date_to = '20230930'</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [SUID].[sp_indicatorValues] @date_from = '20230101', @date_to = '20230930'</property>
                 <property
                   dataType="System.String"
                   description="Переменная, содержащая команду SQL для выполнения."
@@ -4356,7 +4356,7 @@ where "refTable"."Id" = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q3:int">0</Value>
+          type="q3:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4364,7 +4364,7 @@ where "refTable"."Id" = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q4:boolean">false</Value>
+          type="q4:string">false</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

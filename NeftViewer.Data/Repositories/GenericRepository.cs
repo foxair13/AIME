@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using NeftViewer.Data.DataContext;
@@ -23,13 +24,13 @@ namespace NeftViewer.Data.Repositories
             var res = await _dbContext.Set<TModel>().AddAsync(obj);
             _dbContext.SaveChanges();
             return res;
-
         }
 
         public virtual async Task<IEnumerable<TModel>> GetAllAsync()
         {
             return await _dbContext.Set<TModel>().ToListAsync();
         }
+
         public virtual async Task<TModel> GetAsync(string id)
         {
             if (id != "")
@@ -38,6 +39,7 @@ namespace NeftViewer.Data.Repositories
             }
             return null;
         }
+
         public virtual async Task<TModel> GetAsync(int id)
         {
             if (id != null)
@@ -54,12 +56,20 @@ namespace NeftViewer.Data.Repositories
             return res;
         }
 
+        public virtual async Task<TModel> UpdateRange(IEnumerable<TModel> objs)
+        {
+            _dbContext.Set<TModel>().UpdateRange(objs);
+            _dbContext.SaveChanges();
+            return null;
+        }
+
         public virtual EntityEntry<TModel> Delete(TModel obj)
         {
             var res = _dbContext.Set<TModel>().Remove(obj);
             _dbContext.SaveChanges();
             return res;
         }
+
         public virtual EntityEntry<TModel> DeleteByID(int id)
         {
             var obj = _dbContext.Set<TModel>().Find(id);
@@ -71,6 +81,7 @@ namespace NeftViewer.Data.Repositories
             }
             return null;
         }
+
         public virtual EntityEntry<TModel> DeleteByStringID(string id)
         {
             var obj = _dbContext.Set<TModel>().Find(id);
@@ -82,6 +93,7 @@ namespace NeftViewer.Data.Repositories
             }
             return null;
         }
+
         public virtual bool DeleteRange(IEnumerable<TModel> objs)
         {
             foreach (var obj in objs)
@@ -152,11 +164,7 @@ namespace NeftViewer.Data.Repositories
 
             return query;
         }
-
-
-
-
-
+        
         public IQueryable<T> GetUniqueItems<T>(List<(string filterPropertyName, object filterValue)> filters, string uniqueColumnName)
         {
             var parameter = Expression.Parameter(typeof(TModel), "x");
@@ -187,7 +195,29 @@ namespace NeftViewer.Data.Repositories
                 .Select(group => group.Key);
         }
 
+        public virtual async Task<bool> AddRangeByCodeSuid(IEnumerable<ObjectItem> objs)
+        {
+            bool flag = false;
+            try
+            {
+                var newKeys = objs.Select(o => o.CodeSUID).ToList();
+                var existingKeys = await _dbContext.Set<ObjectItem>().Where(o => newKeys.Contains(o.CodeSUID)).Select(o => o.CodeSUID).ToListAsync();
+                var uniqueItems = objs.Where(o => !existingKeys.Contains(o.CodeSUID)).ToList();
 
+                if (uniqueItems.Any())
+                {
+                    _dbContext.Set<ObjectItem>().AddRange(uniqueItems);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                flag = true;
+            }
+            catch (System.Exception ex)
+            {
+
+            }
+            return flag;
+        }
 
         public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {
@@ -205,7 +235,14 @@ namespace NeftViewer.Data.Repositories
                         {
                             uniqueItems.Add(obj);
                             _dbContext.Set<TModel>().Add(obj);
-                            await _dbContext.SaveChangesAsync();
+                            try
+                            {
+                               await _dbContext.SaveChangesAsync();
+                            }
+                            catch (System.Exception ex)
+                            {
+                                continue;
+                            }
                         }
                     }
                     catch (System.Exception ex)

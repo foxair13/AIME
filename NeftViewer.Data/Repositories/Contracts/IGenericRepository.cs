@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using NeftViewer.Data.Models;
 using System.Linq.Expressions;
 
 namespace NeftViewer.Data.Repositories.Contracts
@@ -15,11 +16,12 @@ namespace NeftViewer.Data.Repositories.Contracts
         Task<TModel> GetAsync(string? id);
         Task<TModel> GetAsync(int id);
         EntityEntry<TModel> Update(TModel obj);
-
+        Task<TModel> UpdateRange(IEnumerable<TModel> objs);
         EntityEntry<TModel> Delete(TModel obj);
         EntityEntry<TModel> DeleteByID(int id);
         EntityEntry<TModel> DeleteByStringID(string id);
         bool DeleteRange(IEnumerable<TModel> objs);
         Task<bool> AddRange(IEnumerable<TModel> objs);
+        Task<bool> AddRangeByCodeSuid(IEnumerable<ObjectItem> objs);
     }
 }

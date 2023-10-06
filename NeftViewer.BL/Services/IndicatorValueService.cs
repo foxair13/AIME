@@ -46,8 +46,6 @@ namespace NeftViewer.BL.Services
             }
            
         }
-
- 
       
         public Task<IndicatorValue> FindIndicatorValueAsync(string? id)
         {
@@ -66,6 +64,7 @@ namespace NeftViewer.BL.Services
             var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
             return v.ToList();
         }
+
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID)
         {
             DateTime dateInput = Dates;
@@ -80,10 +79,19 @@ namespace NeftViewer.BL.Services
             return v.ToList();
         }
 
-        public EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue)
+        public async Task<IndicatorValue> GetIndicatorValue(string codeSUID, DateTime dateStart, int criteriaId)
         {
-            return _uow.IndicatorValues.Update(indicatorValue);
+            var indicatorValues = await _uow.IndicatorValues.GetAllAsync();
+            var indicatorValue = indicatorValues
+                .FirstOrDefault(i => i.CodeSUID == codeSUID && i.DateStart == dateStart && i.CriteriaId == criteriaId);
+            return indicatorValue;
         }
+
+        public async Task UpdateIndicatorValuesRange(List<IndicatorValue> indicatorValues)
+        {
+            await _uow.IndicatorValues.UpdateRange(indicatorValues);
+        }
+
         public async Task<bool> AddIndicatorValue(IndicatorValue indicatorValue)
         {
             bool flag = false;
@@ -98,7 +106,6 @@ namespace NeftViewer.BL.Services
             }
             return flag;
         }
-
 
         public EntityEntry<IndicatorValue> DeleteIndicatorValue(string id)
         {

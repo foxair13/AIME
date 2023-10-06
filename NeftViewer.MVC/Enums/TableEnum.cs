@@ -19,12 +19,12 @@ namespace NeftViewer.MVC.Enums
         [TableText("Objects")]
         ObjectItems,
         JsonCoordinates,
-        //[TableText("IndicatorValues")]
-        //IndicatorValues,
+
+        [TableText("IndicatorValues")]
+        IndicatorValues,
+
         [TableText("ObjectOnRoad")]
         ObjectOnRoad,
-
-       
 
         [TableText("Energies")]
         Energies,

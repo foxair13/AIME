@@ -29,15 +29,14 @@ namespace NeftViewer.BL.Services
 
         public async Task<IEnumerable<Criteria>> GetCriterias()
         {
-
             return await _uow.Criterias.GetAllAsync();
-
         }
 
         public EntityEntry<Criteria> UpdateCriteria(Criteria criteria)
         {
             return _uow.Criterias.Update(criteria);
         }
+
         public async Task<bool> AddCriteria(Criteria criteria)
         {
             bool flag = false;
