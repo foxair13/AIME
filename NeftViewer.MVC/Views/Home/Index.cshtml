@@ -50,7 +50,7 @@
 
             var navbarHeight = $('#navbarDefault').outerHeight();
             var footerHeight = $('#navbarFooter').outerHeight();
-            var modalWidth = totalWidth - leftNavWidth - rightNavWidth - 50; // учитываем отступы по 10px с каждой стороны
+            var modalWidth = totalWidth - leftNavWidth - rightNavWidth - 50; 
             var allheight = $(window).height();
             var maxHeight = allheight - footerHeight - navbarHeight - 40;
             $('.overlay').css({
@@ -58,7 +58,7 @@
                 'max-height': maxHeight + 'px',
 
 
-                'overflow': 'auto'  // чтобы появилась прокрутка в случае необходимости
+                'overflow': 'auto'  
             });
 
         }
@@ -69,19 +69,14 @@
             var overlay = $('.overlay');
             var closeButton = $('#CloseTab');
             var ObjectName = $('#ObjectName');
-
-            // Обработчик клика на кнопку Close
             closeButton.on('click', function () {
 
-                overlay.hide(); // Добавьте эту строку для скрытия overlay
+                overlay.hide(); 
             });
-
-            // Добавьте этот обработчик, чтобы скрывать overlay при клике вне него
             overlay.on('click', function (event) {
-                // Проверяем, был ли клик на самом overlay, а не на его дочерних элементах
                 if (event.target === this) {
 
-                    overlay.hide(); // Добавьте эту строку для скрытия overlay
+                    overlay.hide(); 
                 }
             });
 
@@ -366,10 +361,7 @@
         });
         const displayFeatureInfo = (pixel) => {
             map.forEachFeatureAtPixel(pixel, (feature, layer) => {
-
                 if (layer instanceof ol.layer.Vector) {
-
-
                     if (feature !== highlight) {
                         if (highlight) {
                             featureOverlay.getSource().removeFeature(highlight);
@@ -391,7 +383,6 @@
         map.on('postrender', function () {
             const mapContainer = document.getElementById('map');
             mapContainer.style.filter = "brightness(100%) invert(100%) hue-rotate(280deg)";
-
         });
         map.on('pointermove', (evt) => {
             if (evt.dragging) {
@@ -491,7 +482,6 @@
                 }
             }
         }
-
         let pointsLayer;
         let lastHighlightedFeature = null;
         let lastHoveredFeature = null;
@@ -501,8 +491,6 @@
             let regularIconStyle;
             if (clickedFeature) {
                 if (clickedFeature.get('features')[0].get('hasvalue') == false) {
-
-
                     regularIconStyle = new ol.style.Style({
                         image: new ol.style.Icon({
                             anchor: [0.5, 1],
@@ -515,7 +503,6 @@
                             scale: 1.1
                         })
                     });
-
                 }
                 else if (clickedFeature.get('features')[0].get('hasvalue') == true) {
                     regularIconStyle = [
@@ -551,7 +538,6 @@
                 }
                 clickedFeature.setStyle(regularIconStyle);
             }
-
             map.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 if (layer === pointsLayer) {
                     const clusterFeatures = feature.get('features');
@@ -573,7 +559,6 @@
                             });
                         }
                         else if (clusterFeatures[0].get('hasvalue') == true) {
-
                             selectedIconStyle = [
                                 new ol.style.Style({
                                     image: new ol.style.Icon({
@@ -605,27 +590,20 @@
                                 })
                             ];
                         }
-
                         feature.setStyle(selectedIconStyle);
                         clickedFeature = feature;
-
                         clusterFeatures.forEach(childFeature => {
                             if (clickedFeature.get('features')[0].get('hasvalue') == true) {
                                 ObjectId = clickedFeature.get('features')[0].get('id');
                                 const name = clickedFeature.get('features')[0].get('name');
                                 $("#navbar-expand-rg-id").show();
-                             
                                 const navbarExpandRight = document.getElementById("navbar-expand-rg-id");
                                 const navbarExpandRightWidth = navbarExpandRight.clientWidth;
                                 contentElement.style.marginRight = navbarExpandRightWidth + "px";
                                 contentElement.classList.remove('collapsed');
                                 contentElement.classList.remove('collapsed-right');
-
                                 updateobjectdetails(ObjectId, name);
                             }
-
-
-
                         });
                     }
                 }
@@ -640,13 +618,18 @@
             $("input[name='ObjectId']").val(ObjectId);
             $("input[name='TabId']").val(tabId);
             var Date = $('#datepicker').val();
+            let tab = $("#DateListTab").find("a.nav-link.active").attr('href').replace('#', '');
+    
             $.ajax({
                 url: '/Home/GetObjectParams',
                 type: 'GET',
                 data: {
                     TabId: tabId,
                     ObjectId: ObjectId,
-                    Date: Date
+                    Date: Date,
+                    MinDateValue: sliderMinValue,
+                    MaxDateValue: sliderMaxValue,
+                    TabDate: tab
                 },
                 success: function (data) {
 
@@ -664,10 +647,8 @@
 
         const tabLinks = document.querySelectorAll('.nav-link');
 
-        // Добавить обработчик события клика для каждого таба
         tabLinks.forEach(tabLink => {
             tabLink.addEventListener('click', function () {
-                // Получить ID выбранного таба
                 const tabId = this.getAttribute('href').replace('#', '');
                
             });
@@ -680,19 +661,12 @@
             overlay.show();
             var ObjectName = $('#ObjectName');
             var tabList = document.getElementById('contactListTab');
-
             var activeTab = tabList.querySelector('.nav-link.active');
             var activeTabId = activeTab.getAttribute('href');
             setActiveTab(activeTabId, ObjectId);
-
             ObjectName.text(name.toString());
             adjustModalWidth();
         }
-
-
-
-
-
         let clickedFeature = null;
         function handlePointerMove(evt) {
             if (evt.dragging) return;
@@ -820,9 +794,6 @@
             if (!isSingleFeatureInCluster && lastHoveredFeature && lastHoveredFeature !== clickedFeature) {
                 let regularIconStyleDynamic;
                 if (lastHoveredFeature.get('features')[0].get('hasvalue') == false) {
-                    //проблема где-то тут с точками
-
-
                     regularIconStyleDynamic = new ol.style.Style({
                         image: new ol.style.Icon({
                             anchor: [0.5, 1],
@@ -877,22 +848,18 @@
         }
         function handleFeatureMoveend(evt) {
 
-            //alert(selectedFeatureId);
         }
 
 
         function addPointsToMap(points) {
             if (clickedFeature) {
-                clickedFeature.setStyle(null);  // Используйте стиль по умолчанию
+                clickedFeature.setStyle(null); 
             }
 
             if (currentLayer) {
                 map.removeLayer(currentLayer);
             }
-
             let features;
-
-
             features = points.map(point => {
                 const feature = new ol.Feature({
                     id: point.id,
@@ -905,12 +872,9 @@
                 return feature;
             });
             console.log(points);
-
-
             const vectorSource = new ol.source.Vector({
                 features: features
             });
-
             const clusterSource = new ol.source.Cluster({
                 distance: 35,
                 source: vectorSource,
@@ -920,7 +884,6 @@
                 source: clusterSource,
                 style: clusterStyle,
             });
-
             pointsLayer = layer;
             map.addLayer(layer);
             currentLayer = layer;
@@ -934,9 +897,12 @@
 
 
         let currentLayer;
-
+        let sliderMinValue;
+        let sliderMaxValue;
         function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, callback) {
-
+            let tab = $("#DateListTab").find("a.nav-link.active").attr('href').replace('#', '');
+            let selectedAgregateCalc = $("input[name='AgregateCalc']:checked").val();
+       
             $.ajax({
                 url: '../Home/GetPointsForRegion',
                 method: 'GET',
@@ -951,28 +917,30 @@
                     Dates: Dates,
                     slideMin: slideMin,
                     slideMax: slideMax,
-                    CriteriaValue: CriteriaValue
+                    CriteriaValue: CriteriaValue,
+                    TabDate: tab,
+                    AgregateCalc: selectedAgregateCalc,
+                    MinDateValue: sliderMinValue,
+                    MaxDateValue: sliderMaxValue
                 },
                 success: function (data) {
                     $("#meta table tbody").empty();
                     let hasValue;
                     var criteriaValueText = $("input[name='CriteriaRadio']:checked").val();
                     $.each(data, function (index, point) {
-                        var rowNumber = index + 1;  // Get the 1-based row number
+                        var rowNumber = index + 1;
                         var row = '<tr>' +
                             '<td style="display: none;" class="idColumn">' + point.id + '</td>' +
-                            '<td align="center">' + rowNumber + '</td>' +
+                            '<td  class="fw-bold text-1100 fs--1 mb-0" align="center">' + rowNumber + '</td>' +
                             '<td>' + point.name + '</td>' +
-                            '<td class="valueColumn">' + point.value + '</td>' +
-                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' + // Here's the hidden ID column
+                            '<td class="valueColumn fw-bold text-1100 fs--1 mb-0">' + point.value + '</td>' +
+                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' + 
                             '</tr>';
                         hasValue = point.hasValue;
                         $("#meta table tbody").append(row);
                     });
-                    //alert(hasValue);
-                    // Check hasValue and show/hide the "Value" column accordingly
-                    if (hasValue) {
 
+                    if (hasValue) {
                         $("#meta table th:nth-child(4), #meta table td.valueColumn").show();
                         $("#meta table th:nth-child(4)").text(criteriaValueText);
                     } else {
@@ -1050,11 +1018,11 @@
                         vectorContext.drawFeature(feature, style);
                     });
                     e.context.globalCompositeOperation = 'source-over';
-                    //base.un('postrender', postRenderHandler);
+
                 };
                 base.on('postrender', postRenderHandler);
                 selectedLayer = null;
-                feature = null; // Обнуление переменной feature
+                feature = null; 
                 view.setCenter(ol.proj.fromLonLat(center));
                 view.setZoom(7);
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
@@ -1170,9 +1138,6 @@
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [50, 50, 50, 50] });
             }
         });
-
-
-
     </script>
 
 }

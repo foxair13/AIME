@@ -53,29 +53,49 @@ namespace NeftViewer.MVC.Controllers
 
             return View(filterViewModel);
         }
-        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date)
+        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue, string TabDate)
         {
-			IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByObject(Date, ObjectId).Result;
-            iv = iv.OrderBy(x => x.Criterias.Name);
+            IEnumerable<IndicatorValue> iv = new List<IndicatorValue>();
+            if (TabDate == "OnDate")
+            {
+                iv = _indicatorValueService.GetIndicatorByObject(Date, ObjectId).Result;
+                iv = iv.OrderBy(x => x.Criterias.Name);
+                if (TabId == "#ObjectParams")
+                {
+                    return PartialView("_ObjectParamsPartialView", iv);
+                }
+                else if (TabId == "#Dashboards")
+                {
+                    
+                    return PartialView("_DashboardsPartialView", null);
+                }
+            }
+            else
+            if (TabDate=="OnRangeDate")
+            {
+                iv = _indicatorValueService.GetIndicatorRangeByObject(MinDateValue, MaxDateValue, ObjectId).Result;
+                iv = iv.OrderBy(x => x.Criterias.Name);
+                if (TabId == "#ObjectParams")
+                {
+                    return PartialView("_ObjectParamsPartialView", iv);
+                }
+                else if (TabId == "#Dashboards")
+                {
 
-            if (TabId == "#ObjectParams")
-            {
-                return PartialView("_ObjectParamsPartialView", iv);
+                    return PartialView("_DashboardsPartialView", null);
+                }
             }
-            else if (TabId == "#Dashboards")
-            {
-                return PartialView("_DashboardsPartialView", null);
-            }
+           
             return PartialView("_ObjectParamsPartialView", iv);
         }
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
-            var (min, max,datemin,datemax,dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
+            var (min, max, datemin, datemax, dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
 
-            return Json(new { Min = min, Max = max, DateMin= datemin, DateMax= datemax, Dates= dates });
+            return Json(new { Min = min, Max = max, DateMin = datemin, DateMax = datemax, Dates = dates });
         }
 
-        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId,bool IsBest,int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax,int CriteriaValue)
+        public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId, bool IsBest, int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax, int CriteriaValue, string TabDate, string AgregateCalc, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue)
         {
             try
             {
@@ -112,22 +132,56 @@ namespace NeftViewer.MVC.Controllers
                         Lon = obj.Longitude,
                         Lat = obj.Latitude,
                         Name = obj.Name,
-                        HasValue=false,
-                        Value=0,
-                        scaleUnit=""
+                        HasValue = false,
+                        Value = 0,
+                        scaleUnit = ""
                     }).ToList();
                 }
-                else 
+                else
                 {
                     IEnumerable<CriteriaCalcMethod> criteriaCalc = await _criteriaCalcMethodService.GetCriteriaCalcMethods();
-                    bool CalculationByMax= criteriaCalc.Where(x=>x.CriteriaId==CriteriaValue).Select(x=>x.СalculationByMax).FirstOrDefault();
-                    IEnumerable<IndicatorValue> iv = _indicatorValueService.GetIndicatorByCriteria(Dates, CriteriaValue).Result;
-                    string  Units = _criteriaService.FindCriteriaAsync(CriteriaValue).Result.Units;
-                    iv =iv.Where(x=>x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
+                    bool CalculationByMax = criteriaCalc.Where(x => x.CriteriaId == CriteriaValue).Select(x => x.СalculationByMax).FirstOrDefault();
+                    IEnumerable<IndicatorValue> iv = new List<IndicatorValue>();
+
+                    if (TabDate == "OnDate")
+                    {
+                        iv = _indicatorValueService.GetIndicatorByCriteria(Dates, CriteriaValue).Result;
+                    }
+                    else if (TabDate == "OnRangeDate")
+                    {
+                        iv = _indicatorValueService.GetIndicatorRangeByCriteria(MinDateValue, MaxDateValue, CriteriaValue).Result;
+                        iv = iv.Where(x => x.Value >= slideMin && x.Value <= slideMax)
+                             .GroupBy(x => x.CodeSUID)
+                             .Select(group => group.First())
+                             .OrderBy(x => x.Value);
+                        var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>
+                                            {
+                                             ("DateStart", MinDateValue, ">="),
+                                             ("DateStart", MaxDateValue, "<="),
+                                                ("CriteriaId", CriteriaValue, ""),
+                                            };
+                        string AgregateBy = AgregateCalc;
+
+                        var res = _indicatorValueService.GetAgregateValuesAsync(filters, AgregateBy);
+                        var updatedIv = from i in iv
+                                        join r in res on i.CodeSUID equals r.CodeSUID
+                                        select new IndicatorValue
+                                        {
+                                            Id = i.Id,
+                                            CodeSUID = i.CodeSUID,
+                                            Value = r.AggregatedValue,
+                                        };
+
+                        iv = updatedIv.ToList();
+                    }
+                    string Units = _criteriaService.FindCriteriaAsync(CriteriaValue).Result.Units;
+
+
+                    iv = iv.Where(x => x.Value >= slideMin && x.Value <= slideMax).Distinct().OrderBy(x => x.Value);
 
                     var objwithval = from x in objects
-                              join y in iv on x.CodeSUID equals y.CodeSUID
-                              select new { x,y.Value};
+                                     join y in iv on x.CodeSUID equals y.CodeSUID
+                                     select new { x, y.Value };
 
                     if (IsBest)
                     {
@@ -135,13 +189,13 @@ namespace NeftViewer.MVC.Controllers
                         {
                             objwithval = objwithval.OrderByDescending(x => x.Value).Take(EntriesID);
                         }
-                        else 
+                        else
                         {
                             objwithval = objwithval.OrderBy(x => x.Value).Take(EntriesID);
                         }
-                        
+
                     }
-                    else 
+                    else
                     {
                         if (CalculationByMax)
                         {
@@ -159,11 +213,11 @@ namespace NeftViewer.MVC.Controllers
                         Lat = obj.x.Latitude,
                         Name = obj.x.Name,
                         HasValue = true,
-                        Value = obj.Value,
+                        Value = Math.Round(obj.Value, 2),
                         scaleUnit = Units
                     }).ToList();
                 }
-              
+
                 return Json(result);
             }
             catch (Exception)

@@ -66,6 +66,97 @@ namespace NeftViewer.BL.Services
             var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
             return v.ToList();
         }
+
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByCriteria(DateTime MinDateValue, DateTime MaxDateValue, int CriteriaValue)
+        {
+            var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>
+                                            {
+                                             ("DateStart", MinDateValue, ">="),
+                                             ("DateStart", MaxDateValue, "<="),
+                                                ("CriteriaId", CriteriaValue, ""),
+                                            };
+            List<string> includs = new List<string>();
+   
+            includs.Add("Criterias");
+            includs.Add("Objects");
+
+
+            var v = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
+            return v.ToList();
+        }
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByObject(DateTime MinDateValue, DateTime MaxDateValue, string CodeSUID)
+        {
+            var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>
+                                            {
+                                             ("DateStart", MinDateValue, ">="),
+                                             ("DateStart", MaxDateValue, "<="),
+                                                ("CodeSUID", CodeSUID, ""),
+                                            };
+            List<string> includs = new List<string>();
+
+            includs.Add("Criterias");
+            includs.Add("Objects");
+
+
+            var v = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
+            return v.ToList();
+        }
+
+        public List<AggregatedResult> GetAgregateValuesAsync(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters, string AgregateBy)
+        {
+            List<string> includs = new List<string>();
+
+            includs.Add("Criterias");
+            includs.Add("Objects");
+            var query = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
+
+            List<AggregatedResult> result = null;
+
+            switch (AgregateBy)
+            {
+                case "Max":
+                    result = query.GroupBy(x => x.CodeSUID)
+                        .Select(g => new AggregatedResult
+                        {
+                            CodeSUID = g.Key,
+                            AggregatedValue = g.Max(x => x.Value)
+                        })
+                        .ToList();
+                    break;
+                case "Min":
+                    result = query.GroupBy(x => x.CodeSUID)
+                        .Select(g => new AggregatedResult
+                        {
+                            CodeSUID = g.Key,
+                            AggregatedValue = g.Min(x => x.Value)
+                        })
+                        .ToList();
+                    break;
+                case "Avg":
+                    result = query.GroupBy(x => x.CodeSUID)
+                        .Select(g => new AggregatedResult
+                        {
+                            CodeSUID = g.Key,
+                            AggregatedValue = g.Average(x => x.Value)
+                        })
+                        .ToList();
+                    break;
+                case "Sum":
+                    result = query.GroupBy(x => x.CodeSUID)
+                        .Select(g => new AggregatedResult
+                        {
+                            CodeSUID = g.Key,
+                            AggregatedValue = g.Sum(x => x.Value)
+                        })
+                        .ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID)
         {
             DateTime dateInput = Dates;

@@ -15,6 +15,9 @@ namespace NeftViewer.BL.Services.Contracts
         Task<IndicatorValue> FindIndicatorValueAsync(string? id);
         EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue);
         Task CommitChangesAsync();
+        Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByObject(DateTime MinDateValue, DateTime MaxDateValue, string CodeSUID);
+        Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByCriteria(DateTime MinDateValue, DateTime MaxDateValue, int CriteriaValue);
+        List<AggregatedResult> GetAgregateValuesAsync(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters, string AgregateBy);
         EntityEntry<IndicatorValue> DeleteIndicatorValue(string id);
         Task<bool> AddIndicatorValue(IndicatorValue indicatorValue);
         Task<bool> AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues);

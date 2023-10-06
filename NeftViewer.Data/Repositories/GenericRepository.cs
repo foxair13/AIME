@@ -125,6 +125,53 @@ namespace NeftViewer.Data.Repositories
 
             return (minVal, maxVal);
         }
+        public IQueryable<TModel> GetRangeParamValues(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters, List<string> includeTableNames)
+        {
+            var parameter = Expression.Parameter(typeof(TModel), "x");
+            Expression filterExpression = null;
+
+            foreach (var filter in filters)
+            {
+                var filterProperty = Expression.Property(parameter, filter.filterPropertyName);
+                var constant = Expression.Constant(filter.filterValue);
+                Expression comparisonExpression = null;
+                if (filter.comparisonOperator == ">=")
+                {
+                    comparisonExpression = Expression.GreaterThanOrEqual(filterProperty, constant);
+                }
+                else if (filter.comparisonOperator == "<=")
+                {
+                    comparisonExpression = Expression.LessThanOrEqual(filterProperty, constant);
+                }
+                else
+                {
+                    comparisonExpression = Expression.Equal(filterProperty, constant);
+                }
+
+                if (filterExpression == null)
+                {
+                    filterExpression = comparisonExpression;
+                }
+                else
+                {
+                    filterExpression = Expression.And(filterExpression, comparisonExpression);
+                }
+            }
+
+            var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
+            var query = _dbContext.Set<TModel>().Where(filterLambda);
+         
+            foreach (var tableName in includeTableNames)
+            {
+                query = query.Include(tableName);
+            }
+
+            return query;
+        }
+
+
+
+
 
         public IQueryable<TModel> GetItemsWithInclude(List<(string filterPropertyName, object filterValue)> filters, List<string> includeTableNames)
         {
@@ -213,7 +260,7 @@ namespace NeftViewer.Data.Repositories
                         continue;
                     }
                 }
-            
+
                 flag = true;
             }
             catch (System.Exception ex)
