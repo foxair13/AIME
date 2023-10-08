@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,59 +48,55 @@ namespace NeftViewer.MVC.Service
                                 {
                                     case TableEnum.Criterias:
                                         {
+                                            var criteriasList = new List<Criteria>();
                                             var criteriaService = scope.ServiceProvider.GetRequiredService<ICriteriaService>();
-                                            List<Criteria> criteriaList = new List<Criteria>();
                                             var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
                                             foreach (var row in viewData)
                                             {
                                                 var criteria = _mapper.Map<Dictionary<string, object>, Criteria>(row);
-                                                var targetCriterias = criteriaService.GetCriterias().Result
-                                                    .Where(c => c.Name == criteria.Name)
-                                                    .ToList();
-                                                if (targetCriterias.Any())
-                                                {
-                                                    foreach(var targetCriteria in targetCriterias)
-                                                    {
-                                                        targetCriteria.Periodicity = criteria.Periodicity;
-                                                        criteriaService.UpdateCriteria(targetCriteria);
-                                                    }
-                                                }
-                                                criteriaList.Add(criteria);
+                                                criteriasList.Add(criteria);
                                             }
-                                            await criteriaService.AddCriteriaRange(criteriaList);
+
+                                            criteriasList.DistinctBy(c => c.Name);
+
+                                            await criteriaService.UpdateCriteriaRange(criteriasList, "Name");
+                                            await criteriaService.AddCriteriaRange(criteriasList, "Name");
                                             break;
                                         }
 
                                     case TableEnum.Roads:
                                         {
+                                            var roadsList = new List<Road>();
                                             var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
-                                            List<Road> roadsList = new List<Road>();
                                             var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-
 
                                             foreach (var row in viewData)
                                             {
                                                 var road = _mapper.Map<Dictionary<string, object>, Road>(row);
                                                 roadsList.Add(road);
                                             }
-                                            await roadService.AddRoadRange(roadsList);
+
+                                            roadsList.DistinctBy(c => c.Indicator);
+
+                                            await roadService.UpdateRoadRange(roadsList, "Indicator");
+                                            await roadService.AddRoadRange(roadsList, "Indicator");
                                             break;
                                         }
 
                                     case TableEnum.ObjectItems:
                                         {
-                                            var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
                                             var objectItemsList = new List<ObjectItem>();
                                             var objectItemsUpdateList = new List<ObjectItem>();
+                                            var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
                                             var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                            var currentObjectItems = await objectItemService.GetObjectItems();
 
                                             foreach (var row in viewData)
                                             {
-                                                //var codeSuidValue = row["CodeSUID"].ToString();
                                                 var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
-                                                var currentObjectItems = await objectItemService.GetObjectItems();
-                                                var currentObjectItem = currentObjectItems.FirstOrDefault(i => i.CodeSUID == objectItem.CodeSUID);
+                                                var currentObjectItem = currentObjectItems
+                                                    .FirstOrDefault(i => i.CodeSUID == objectItem.CodeSUID);
                                                 if (currentObjectItem == null)
                                                 {
                                                     objectItemsList.Add(objectItem);
@@ -112,7 +109,10 @@ namespace NeftViewer.MVC.Service
                                                     objectItemsUpdateList.Add(currentObjectItem);
                                                 }
                                             }
+
+                                            objectItemsUpdateList = objectItemsUpdateList.DistinctBy(i => i.CodeSUID).ToList();
                                             await objectItemService.UpdateObjectItemsRange(objectItemsUpdateList);
+                                            objectItemsList = objectItemsList.DistinctBy(i => i.CodeSUID).ToList();
                                             await objectItemService.AddObjectItemRange(objectItemsList);
                                             break;
                                         }
@@ -122,7 +122,7 @@ namespace NeftViewer.MVC.Service
                                             var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
                                             var indicatorValuesList = new List<IndicatorValue>();
                                             var indicatorValuesUpdateList = new List<IndicatorValue>();
-                                            var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230130", "20230131");
+                                            var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230131");
 
                                             foreach (var row in viewData)
                                             {
@@ -139,7 +139,7 @@ namespace NeftViewer.MVC.Service
                                                 }
                                             }
 
-                                            await indicatorValueService.UpdateIndicatorValuesRange(indicatorValuesUpdateList);
+                                            //await indicatorValueService.UpdateIndicatorValuesRange(indicatorValuesUpdateList);
                                             await indicatorValueService.AddIndicatorValueRange(indicatorValuesList);
                                             break;
                                         }

@@ -82,6 +82,7 @@ namespace NeftViewer.BL.Services
             var v = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
             return v.ToList();
         }
+
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByObject(DateTime MinDateValue, DateTime MaxDateValue, string CodeSUID)
         {
             var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>

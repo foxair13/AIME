@@ -13,10 +13,12 @@ namespace NeftViewer.BL.Services.Contracts
         Task<IEnumerable<Road>> GetRoads();
         Task<Road> FindRoadAsync(string? id);
         EntityEntry<Road> UpdateRoad(Road road);
+        Task UpdateRoadRange(List<Road> roads, string targetPropertyName);
         Task CommitChangesAsync();
         EntityEntry<Road> DeleteRoad(string id);
         Task<bool> AddRoad(Road road);
         Task<bool> AddRoadRange(IEnumerable<Road> roads);
+        Task AddRoadRange(IEnumerable<Road> roads, string targetPropertyName);
         Task<IEnumerable<string>> GetCodeSUIDByRoadIdAsync(int roadId);
         Task<ObjectDetailsDTO> GetParamsBySUIDAsync(string suid);
     }

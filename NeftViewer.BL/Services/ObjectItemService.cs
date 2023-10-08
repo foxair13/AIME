@@ -24,9 +24,7 @@ namespace NeftViewer.BL.Services
 
         public async Task<IEnumerable<ObjectItem>> GetObjectItems()
         {
-
             return await _uow.ObjectItems.GetAllAsync();
-
         }
 
         public EntityEntry<ObjectItem> UpdateObjectItem(ObjectItem objectItem)
@@ -62,7 +60,7 @@ namespace NeftViewer.BL.Services
 
         public async Task<bool> AddObjectItemRange(IEnumerable<ObjectItem> objectItems)
         {
-            var res = await _uow.ObjectItems.AddRangeByCodeSuid(objectItems);
+            var res = await _uow.ObjectItems.AddRange(objectItems);
             return res;
         }
 
