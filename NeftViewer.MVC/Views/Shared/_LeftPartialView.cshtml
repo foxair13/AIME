@@ -319,8 +319,8 @@
             handleTabChange(tabId);
             var objectIdValue = $("input[name='ObjectId']").val();
             var tabIdValue = $("input[name='TabId']").val();
-
-            setActiveTab(tabIdValue, objectIdValue);
+            setActiveTab(tabIdValue, objectIdValue, 1);
+            pagef = 1;
             OnUpdate();
         });
         let isOnDate = false;
@@ -400,8 +400,8 @@
                 sliderMaxValue = formatDateToDdMmYyyy(maxDate);
                 var objectIdValue = $("input[name='ObjectId']").val();
                 var tabIdValue = $("input[name='TabId']").val();
-
-                setActiveTab(tabIdValue, objectIdValue);
+                setActiveTab(tabIdValue, objectIdValue, 1);
+                pagef = 1;
                 OnUpdate();
             }
         });
@@ -424,8 +424,8 @@
                     OnUpdate();
                     var objectIdValue = $("input[name='ObjectId']").val();
                     var tabIdValue = $("input[name='TabId']").val();
-
-                    setActiveTab(tabIdValue, objectIdValue);
+                    setActiveTab(tabIdValue, objectIdValue, 1);
+      
                 },
                 beforeShowDay: function (date) {
                     var formattedDate = $.datepicker.formatDate('dd.mm.yy', date);
@@ -528,6 +528,7 @@
             var Dates = $('#datepicker').val();
             var slideMin = $("#slider-range").slider("values", 0);
             var slideMax = $("#slider-range").slider("values", 1);
+          
             updateObjects(ownerId, areaId, TypeValue, roadId);
             getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
                 addPointsToMap(points);

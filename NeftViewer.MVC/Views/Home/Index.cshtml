@@ -42,7 +42,26 @@
         $(window).on('resize show.bs.modal', function () {
             adjustModalWidth();
         });
-
+        let pagef = 1;
+        function clickclear() {
+            pagef = 1;
+        }
+        function clickLeft() {
+            if (pagef >= 2) {
+                pagef--;
+            }
+            var objectIdValue = $("input[name='ObjectId']").val();
+            var tabIdValue = $("input[name='TabId']").val();
+            setActiveTab(tabIdValue, objectIdValue, pagef);
+        }
+        function clickRight(pagecount) {
+            if (pagef < pagecount) {
+                pagef++;
+                var objectIdValue = $("input[name='ObjectId']").val();
+                var tabIdValue = $("input[name='TabId']").val();
+                setActiveTab(tabIdValue, objectIdValue, pagef);
+            }
+        }
         function adjustModalWidth() {
             var totalWidth = $(window).width();
             var leftNavWidth = $('#navbar-expand-lg-id').is(':visible') ? $('#navbar-expand-lg-id').outerWidth() : 0;
@@ -50,7 +69,7 @@
 
             var navbarHeight = $('#navbarDefault').outerHeight();
             var footerHeight = $('#navbarFooter').outerHeight();
-            var modalWidth = totalWidth - leftNavWidth - rightNavWidth - 50; 
+            var modalWidth = totalWidth - leftNavWidth - rightNavWidth - 50;
             var allheight = $(window).height();
             var maxHeight = allheight - footerHeight - navbarHeight - 40;
             $('.overlay').css({
@@ -58,25 +77,25 @@
                 'max-height': maxHeight + 'px',
 
 
-                'overflow': 'auto'  
+                'overflow': 'auto'
             });
 
         }
 
 
-
         $(document).ready(function () {
+
             var overlay = $('.overlay');
             var closeButton = $('#CloseTab');
             var ObjectName = $('#ObjectName');
             closeButton.on('click', function () {
 
-                overlay.hide(); 
+                overlay.hide();
             });
             overlay.on('click', function (event) {
                 if (event.target === this) {
 
-                    overlay.hide(); 
+                    overlay.hide();
                 }
             });
 
@@ -86,6 +105,7 @@
                 var number = $(this).find('td:first').text();
                 var name = $(this).find('td:nth-child(3)').text();
                 ObjectId = $(this).find('td:nth-child(1)').text();
+                clickclear();
                 ObjectName.text(name);
                 updateobjectdetails(ObjectId, name)
                 overlay.show();
@@ -138,7 +158,7 @@
         function clusterMemberStyle(clusterMember) {
             if (clusterMember.get('hasvalue') === false) {
                 return new ol.style.Style({
-                
+
                     image: darkIcon,
                     text: new ol.style.Text({
                         text: clusterMember.get('name'),
@@ -193,7 +213,7 @@
                         text: new ol.style.Text({
                             text: size.toString(),
                             fill: textFill,
-                          
+
                             font: '18px Arial',
                         }),
                     }),
@@ -614,12 +634,12 @@
 
         let tId;
         let OId;
-        function setActiveTab(tabId, ObjectId) {
+        function setActiveTab(tabId, ObjectId, PageNumber) {
             $("input[name='ObjectId']").val(ObjectId);
             $("input[name='TabId']").val(tabId);
             var Date = $('#datepicker').val();
             let tab = $("#DateListTab").find("a.nav-link.active").attr('href').replace('#', '');
-    
+
             $.ajax({
                 url: '/Home/GetObjectParams',
                 type: 'GET',
@@ -629,7 +649,8 @@
                     Date: Date,
                     MinDateValue: sliderMinValue,
                     MaxDateValue: sliderMaxValue,
-                    TabDate: tab
+                    TabDate: tab,
+                    PageNumber: PageNumber
                 },
                 success: function (data) {
 
@@ -637,6 +658,9 @@
                         $('#ObjectParams').html(data);
                     } else if (tabId === '#Dashboards') {
                         $('#Dashboards').html(data);
+                    }
+                    else if (tabId === '#Charts') {
+                        $('#Charts').html(data);
                     }
                 },
                 error: function (error) {
@@ -650,7 +674,7 @@
         tabLinks.forEach(tabLink => {
             tabLink.addEventListener('click', function () {
                 const tabId = this.getAttribute('href').replace('#', '');
-               
+              
             });
         });
 
@@ -663,7 +687,8 @@
             var tabList = document.getElementById('contactListTab');
             var activeTab = tabList.querySelector('.nav-link.active');
             var activeTabId = activeTab.getAttribute('href');
-            setActiveTab(activeTabId, ObjectId);
+            setActiveTab(activeTabId, ObjectId, 1);
+
             ObjectName.text(name.toString());
             adjustModalWidth();
         }
@@ -853,7 +878,7 @@
 
         function addPointsToMap(points) {
             if (clickedFeature) {
-                clickedFeature.setStyle(null); 
+                clickedFeature.setStyle(null);
             }
 
             if (currentLayer) {
@@ -902,7 +927,7 @@
         function getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, callback) {
             let tab = $("#DateListTab").find("a.nav-link.active").attr('href').replace('#', '');
             let selectedAgregateCalc = $("input[name='AgregateCalc']:checked").val();
-       
+
             $.ajax({
                 url: '../Home/GetPointsForRegion',
                 method: 'GET',
@@ -934,7 +959,7 @@
                             '<td  class="fw-bold text-1100 fs--1 mb-0" align="center">' + rowNumber + '</td>' +
                             '<td>' + point.name + '</td>' +
                             '<td class="valueColumn fw-bold text-1100 fs--1 mb-0">' + point.value + '</td>' +
-                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' + 
+                            '<td style="display: none;" class="idColumn">' + point.id + '</td>' +
                             '</tr>';
                         hasValue = point.hasValue;
                         $("#meta table tbody").append(row);
@@ -947,6 +972,7 @@
                         $("#meta table th:nth-child(4), #meta table td.valueColumn").hide();
 
                     }
+
                     callback(data);
                 },
                 error: function (error) {
@@ -1022,7 +1048,7 @@
                 };
                 base.on('postrender', postRenderHandler);
                 selectedLayer = null;
-                feature = null; 
+                feature = null;
                 view.setCenter(ol.proj.fromLonLat(center));
                 view.setZoom(7);
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [10, 10, 10, 10] });
@@ -1138,6 +1164,8 @@
                 view.fit(ol.proj.transformExtent(belarusExtent, 'EPSG:4326', 'EPSG:3857'), { padding: [50, 50, 50, 50] });
             }
         });
+
+
     </script>
 
 }

@@ -143,7 +143,7 @@ namespace NeftViewer.MVC.Service
                                     case TableEnum.JsonCoordinates:
                                         {
                                             var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
-                                            var objects = objectItemService.GetObjectItems();
+                                            var objects = objectItemService.GetObjectItemsAsync();
                                             string url = _CoordsUrl;
                                             string json;
                                             using (var client = new WebClient())

@@ -31,7 +31,10 @@ namespace NeftViewer.Data.Repositories
         {
             return await _dbContext.Set<TModel>().ToListAsync();
         }
-
+        public virtual  IEnumerable<TModel> GetAll()
+        {
+            return  _dbContext.Set<TModel>().ToList();
+        }
         public virtual async Task<TModel> GetAsync(string id)
         {
             if (id != "")
@@ -294,7 +297,7 @@ namespace NeftViewer.Data.Repositories
 
             var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
             var query = _dbContext.Set<TModel>().Where(filterLambda);
-         
+
             foreach (var tableName in includeTableNames)
             {
                 query = query.Include(tableName);

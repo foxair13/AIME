@@ -22,11 +22,16 @@ namespace NeftViewer.BL.Services
             return _uow.ObjectItems.GetAsync(id);
         }
 
-        public async Task<IEnumerable<ObjectItem>> GetObjectItems()
+        public async Task<IEnumerable<ObjectItem>> GetObjectItemsAsync()
         {
             return await _uow.ObjectItems.GetAllAsync();
         }
+        public  IEnumerable<ObjectItem> GetObjectItems()
+        {
 
+            return  _uow.ObjectItems.GetAll();
+
+        }
         public EntityEntry<ObjectItem> UpdateObjectItem(ObjectItem objectItem)
         {
             return _uow.ObjectItems.Update(objectItem);

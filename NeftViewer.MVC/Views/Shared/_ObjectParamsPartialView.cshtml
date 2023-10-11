@@ -1,68 +1,26 @@
 ﻿@model IEnumerable<NeftViewer.Data.Models.IndicatorValue>
 
-@{
-    var distinctDates = Model.Select(x => x.DateStart).Distinct().OrderBy(x => x).ToList();
-}
-
-<style>
-    .table-fixed {
-        table-layout: fixed;
-        width: 100%;
-    }
-
-        .table-fixed th:nth-child(1),
-        .table-fixed td:nth-child(1) {
-            position: sticky;
-            left: 0;
-            z-index: 1;
-            background-color: #141824;
-        }
-
-    .table-scroll {
-        overflow-x: scroll;
-        width: 100%;
-    }
-
-        .table-scroll table {
-            width: auto;
-        }
-</style>
-
-<div class="table-scroll">
-    <table class="table table-bordered table-striped table-sm table-fixed">
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-sm" style="width: 100%;">
         <thead class="thead-light">
             <tr>
                 <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 80%;">Показатель</th>
-                @foreach (var date in distinctDates)
-                {
-                    <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">@date.ToString("dd.MM.yyyy")</th>
-                }
+                <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">@Model.Select(x => x.DateStart).FirstOrDefault().ToString("dd.MM.yyyy")</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var criteria in Model.Select(x => x.Criterias).Distinct())
+            @foreach (NeftViewer.Data.Models.IndicatorValue item in Model)
             {
                 <tr>
-                    <td class="text-center" style="width: 80%;">@criteria.Name</td>
-                    @foreach (var date in distinctDates)
-                    {
-                        var value = Model.FirstOrDefault(x => x.Criterias == criteria && x.DateStart == date)?.Value ?? 0.00M;
-                        <td class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">
-                            @value.ToString("0.00")
-                            <!-- Добавьте свой код для отображения прогресса здесь, если это необходимо -->
-                        </td>
-                    }
+                    <td class="text-center" style="width: 80%;">@item.Criterias.Name</td>
+                    <td class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 100%;">
+                        @item.Value.ToString("0.00")
+                      @*  <div class="progress bg-primary-100" style="height:3px;" role="progressbar">
+                            <div class="text-center progress-bar bg-success" style="width: 100%;" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>*@
+                    </td>
                 </tr>
             }
         </tbody>
-        <tfoot>
-            <tr>
-                <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 80%;">Показатель</th>
-                @foreach (var date in distinctDates)
-                {
-                    <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">@date.ToString("dd.MM.yyyy")</th>
-                }
-            </tr>
-        </tfoot>
     </table>
 </div>

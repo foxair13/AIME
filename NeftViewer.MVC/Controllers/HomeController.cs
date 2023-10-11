@@ -13,6 +13,7 @@ using NeftViewer.MVC.Binders;
 using NeftViewer.MVC.Models;
 using NeftViewer.MVC.Options;
 using System.Diagnostics;
+using System.Drawing.Printing;
 
 namespace NeftViewer.MVC.Controllers
 {
@@ -53,41 +54,63 @@ namespace NeftViewer.MVC.Controllers
 
             return View(filterViewModel);
         }
-        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue, string TabDate)
+        public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue, string TabDate, int PageNumber = 1)
         {
             IEnumerable<IndicatorValue> iv = new List<IndicatorValue>();
+            int totalPageCount = 0;
             if (TabDate == "OnDate")
             {
                 iv = _indicatorValueService.GetIndicatorByObject(Date, ObjectId).Result;
                 iv = iv.OrderBy(x => x.Criterias.Name);
+                totalPageCount = 1;
+                ViewData["PageCount"] = totalPageCount;
                 if (TabId == "#ObjectParams")
                 {
                     return PartialView("_ObjectParamsPartialView", iv);
                 }
                 else if (TabId == "#Dashboards")
                 {
-                    
                     return PartialView("_DashboardsPartialView", null);
                 }
+                else if (TabId == "#Charts")
+                {
+                    return PartialView("_ChartsPartialView", null);
+                }
             }
-            else
-            if (TabDate=="OnRangeDate")
+            else if (TabDate == "OnRangeDate")
             {
                 iv = _indicatorValueService.GetIndicatorRangeByObject(MinDateValue, MaxDateValue, ObjectId).Result;
                 iv = iv.OrderBy(x => x.Criterias.Name);
+
+                int pageSize = 14;
+                var distinctDates = iv.Select(x => x.DateStart).Distinct().OrderBy(x => x).ToList();
+                var pagedIv = new List<IndicatorValue>();
+                totalPageCount = (int)Math.Ceiling((double)distinctDates.Count / pageSize);
+                ViewData["PageCount"] = totalPageCount;
+                for (int i = (PageNumber - 1) * pageSize; i < distinctDates.Count && i < PageNumber * pageSize; i++)
+                {
+                    var currentDate = distinctDates[i];
+                    var currentDateIv = iv.Where(x => x.DateStart == currentDate);
+                    pagedIv.AddRange(currentDateIv);
+                }
+
                 if (TabId == "#ObjectParams")
                 {
-                    return PartialView("_ObjectParamsPartialView", iv);
+                    return PartialView("_ObjectRangeParamsPartialView", pagedIv);
                 }
                 else if (TabId == "#Dashboards")
                 {
-
                     return PartialView("_DashboardsPartialView", null);
                 }
+                else if (TabId == "#Charts")
+                {
+                    return PartialView("_ChartsPartialView", null);
+                }
             }
-           
+
             return PartialView("_ObjectParamsPartialView", iv);
         }
+
         public async Task<IActionResult> GetExtremumCriteria(int CriteriId)
         {
             var (min, max, datemin, datemax, dates) = await _indicatorValueService.GetMinMaxValues(CriteriId);
@@ -101,7 +124,7 @@ namespace NeftViewer.MVC.Controllers
             {
                 var result = new object();
                 var items = new object();
-                var objects = await _objectItemService.GetObjectItems();
+                var objects = await _objectItemService.GetObjectItemsAsync();
                 if (ownerId != 0)
                 {
                     objects = objects.Where(x => x.OwnerId == ownerId);
@@ -231,7 +254,7 @@ namespace NeftViewer.MVC.Controllers
         {
             try
             {
-                var objects = await _objectItemService.GetObjectItems();
+                var objects = await _objectItemService.GetObjectItemsAsync();
                 if (ownerId != 0)
                 {
                     objects = objects.Where(x => x.OwnerId == ownerId);

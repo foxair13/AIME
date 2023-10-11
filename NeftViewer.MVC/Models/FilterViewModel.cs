@@ -92,7 +92,7 @@ namespace NeftViewer.MVC.Models
 
         private async Task<List<DropDown>> GetObjectList()
         {
-            IEnumerable<ObjectItem> objects = await _objectItemService.GetObjectItems();
+            IEnumerable<ObjectItem> objects = await _objectItemService.GetObjectItemsAsync();
 
             var dropDownOptions = objects.Select(obj => new DropDown { Value = obj.CodeSUID, Text = obj.Name })
                                        .OrderBy(x => x.Text)
