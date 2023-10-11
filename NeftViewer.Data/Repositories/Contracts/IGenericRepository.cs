@@ -7,7 +7,7 @@ namespace NeftViewer.Data.Repositories.Contracts
     public interface IGenericRepository<TModel> where TModel : class
     {
         Task<EntityEntry<TModel>> Add(TModel obj);
-
+        IEnumerable<TModel> GetAll();
         Task<IEnumerable<TModel>> GetAllAsync();
         Task<(object? MinValue, object? MaxValue)> GetMinMaxValuesAsync<T>(string filterPropertyName, object filterValue, string valuePropertyName);
 

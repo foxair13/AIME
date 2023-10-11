@@ -1,0 +1,152 @@
+﻿@model IEnumerable<NeftViewer.Data.Models.IndicatorValue>
+
+@{
+    var distinctDates = Model.Select(x => x.DateStart).Distinct().OrderBy(x => x).ToList();
+}
+
+<style>
+    .table-fixed {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .pagination-buttons {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+
+    }
+
+
+        .pagination-buttons:hover {
+            opacity: 1;
+        }
+
+    .table-fixed th:nth-child(1),
+    .table-fixed td:nth-child(1) {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: #141824;
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        overflow-y: auto; /* Добавьте вертикальный скроллинг */
+        height: 700px; /* Установите желаемую высоту контейнера */
+        position: relative;
+    }
+
+        .table-scroll table {
+            width: auto;
+        }
+
+    .pagination-container {
+        position: relative; /* Установите позиционирование как относительное */
+        overflow: hidden; /* Скрыть содержимое, выходящее за границы контейнера */
+    }
+
+    .pagination-buttons {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        height: 100%; /* Установите 100% высоты для кнопок */
+        background-color: rgba(20, 24, 36, 0.8);
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .pagination-button {
+        width: 100%;
+        height:20%;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Показываем кнопки при наведении курсора на область таблицы */
+    .table-scroll:hover .pagination-buttons {
+        opacity: 1;
+    }
+
+
+    /* Расположение кнопок пагинации справа */
+    .pagination-buttons.right {
+        right: 0;
+        left: auto;
+    }
+
+    .pagination-buttons.left {
+        left: 0;
+    }
+
+    .table-min-width {
+        min-width: 100%; /* Задайте минимальную ширину на 100% */
+    }
+</style>
+<div class="pagination-container">
+
+    <div class="pagination-buttons left">
+        <div class="pagination-button" id="left-pagination-button"><i class="fa-sharp fa-solid fa-circle-left"></i></div>
+    </div>
+    <div class="pagination-buttons right">
+        <div class="pagination-button" id="right-pagination-button"><i class="fa-sharp fa-solid fa-circle-right"></i></div>
+    </div>
+    <div class="table-scroll">
+
+        <table class="table table-bordered table-striped table-sm table-fixed table-min-width">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 80%;">Показатель</th>
+                    @foreach (var date in distinctDates)
+                    {
+                        <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">@date.ToString("dd.MM.yyyy")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var criteria in Model.Select(x => x.Criterias).Distinct())
+                {
+                    <tr>
+                        <td class="text-center" style="width: 80%;">@criteria.Name</td>
+                        @foreach (var date in distinctDates)
+                        {
+                            var value = Model.FirstOrDefault(x => x.Criterias == criteria && x.DateStart == date)?.Value ?? 0.00M;
+                            <td class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">
+                                @value.ToString("0.00")
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 80%;">Показатель</th>
+                    @foreach (var date in distinctDates)
+                    {
+                        <th class="text-center fw-bold text-1100 fs--1 mb-0" style="width: 20%;">@date.ToString("dd.MM.yyyy")</th>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".pagination-buttons.left").click(function () {
+            clickLeft();
+        });
+
+        // Функция для обработки клика по кнопке "Вперед"
+        $(".pagination-buttons.right").click(function () {
+        
+            clickRight(@ViewData["PageCount"]);
+        });
+    });
+</script>
