@@ -87,60 +87,36 @@ namespace NeftViewer.MVC.Service
                                     case TableEnum.ObjectItems:
                                         {
                                             var objectItemsList = new List<ObjectItem>();
-                                            var objectItemsUpdateList = new List<ObjectItem>();
                                             var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
                                             var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-                                            var currentObjectItems = await objectItemService.GetObjectItems();
 
                                             foreach (var row in viewData)
                                             {
                                                 var objectItem = _mapper.Map<Dictionary<string, object>, ObjectItem>(row);
-                                                var currentObjectItem = currentObjectItems
-                                                    .FirstOrDefault(i => i.CodeSUID == objectItem.CodeSUID);
-                                                if (currentObjectItem == null)
-                                                {
-                                                    objectItemsList.Add(objectItem);
-                                                }
-                                                else
-                                                {
-                                                    currentObjectItem.Name = objectItem.Name;
-                                                    currentObjectItem.OwnerId = objectItem.OwnerId;
-                                                    currentObjectItem.AreaId = objectItem.AreaId;
-                                                    objectItemsUpdateList.Add(currentObjectItem);
-                                                }
+                                                objectItemsList.Add(objectItem);
                                             }
 
-                                            objectItemsUpdateList = objectItemsUpdateList.DistinctBy(i => i.CodeSUID).ToList();
-                                            await objectItemService.UpdateObjectItemsRange(objectItemsUpdateList);
                                             objectItemsList = objectItemsList.DistinctBy(i => i.CodeSUID).ToList();
-                                            await objectItemService.AddObjectItemRange(objectItemsList);
+                                            await objectItemService.UpdateObjectItemRange(objectItemsList, "CodeSUID");
+                                            await objectItemService.AddObjectItemRange(objectItemsList, "CodeSUID");
                                             break;
                                         }
 
                                     case TableEnum.IndicatorValues:
                                         {
-                                            var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
                                             var indicatorValuesList = new List<IndicatorValue>();
-                                            var indicatorValuesUpdateList = new List<IndicatorValue>();
+                                            var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
                                             var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230131");
 
                                             foreach (var row in viewData)
                                             {
                                                 var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
-                                                var currentIndicatorValue = await indicatorValueService.GetIndicatorValue(indicatorValue.CodeSUID, indicatorValue.DateStart, indicatorValue.CriteriaId);
-                                                if (currentIndicatorValue != null && currentIndicatorValue.Value != indicatorValue.Value)
-                                                {
-                                                    currentIndicatorValue.Value = indicatorValue.Value;
-                                                    indicatorValuesUpdateList.Add(currentIndicatorValue);
-                                                }
-                                                else
-                                                {
-                                                    indicatorValuesList.Add(indicatorValue);
-                                                }
+                                                indicatorValuesList.Add(indicatorValue);
                                             }
 
-                                            //await indicatorValueService.UpdateIndicatorValuesRange(indicatorValuesUpdateList);
-                                            await indicatorValueService.AddIndicatorValueRange(indicatorValuesList);
+                                            indicatorValuesList = indicatorValuesList.DistinctBy(i => (i.CodeSUID, i.DateStart, i.CriteriaId)).ToList();
+                                            await indicatorValueService.UpdateIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
+                                            await indicatorValueService.AddIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
                                             break;
                                         }
 

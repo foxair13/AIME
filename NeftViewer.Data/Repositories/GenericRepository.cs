@@ -91,8 +91,58 @@ namespace NeftViewer.Data.Repositories
                     updateObjs.Add(updateObj);
                 }
             }
+            try
+            {
+                _dbContext.Set<TModel>().UpdateRange(updateObjs);
+            }
+            catch (Exception ex) { }
+            _dbContext.SaveChanges();
+        }
 
-            _dbContext.Set<TModel>().UpdateRange(updateObjs);
+        public virtual async Task UpdateRange(IEnumerable<TModel> objs, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
+        {
+            var updateObjs = new List<TModel>();
+            var properties = objs.FirstOrDefault().GetType().GetProperties();
+            foreach (var obj in objs)
+            {
+                var parameter = Expression.Parameter(typeof(TModel), "o");
+
+                var left1 = Expression.Property(parameter, targetPropertyName1);
+                var right1 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName1).GetValue(obj));
+                var equal1 = Expression.Equal(left1, right1);
+
+                var left2 = Expression.Property(parameter, targetPropertyName2);
+                var right2 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName2).GetValue(obj));
+                var equal2 = Expression.Equal(left2, right2);
+
+                var left3 = Expression.Property(parameter, targetPropertyName3);
+                var right3 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName3).GetValue(obj));
+                var equal3 = Expression.Equal(left3, right3);
+
+                var body = Expression.AndAlso(Expression.AndAlso(equal1, equal2), equal3);
+                var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
+
+                var updateObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+                
+                updateObjs.Add(updateObj);
+
+                if (updateObj != null)
+                {
+                    foreach (var property in properties)
+                    {
+                        if (property.Name != "Id" && property.Name != targetPropertyName1 && property.Name != targetPropertyName2 && property.Name != targetPropertyName3)
+                        {
+                            property.SetValue(updateObj, property.GetValue(obj));
+                        }
+                    }
+                    updateObjs.Add(updateObj);
+                }
+            }
+            try
+            {
+                _dbContext.Set<TModel>().UpdateRange(updateObjs);
+            }
+            catch (Exception ex) { }
             _dbContext.SaveChanges();
         }
 
@@ -309,32 +359,6 @@ namespace NeftViewer.Data.Repositories
             .Select(group => group.Key);
         }
 
-        //public virtual async Task<bool> AddRangeByProperty(IEnumerable<TModel> objs, string propertyName)
-        //{
-        //    bool flag = false;
-        //    try
-        //    {
-        //        var prop = typeof(TModel).GetProperty(propertyName);
-        //        var newKeys = objs.Select(o => prop.GetValue(o)).ToList();
-        //        var allObjects = await _dbContext.Set<TModel>().AsNoTracking().ToListAsync();
-        //        var existingKeys = allObjects.Where(o => newKeys.Contains(prop.GetValue(o))).Select(o => prop.GetValue(o)).ToList();
-        //        var uniqueItems = objs.Where(o => !existingKeys.Contains(prop.GetValue(o))).ToList();
-
-        //        if (uniqueItems.Any())
-        //        {
-        //            _dbContext.Set<TModel>().AddRange(uniqueItems);
-        //            await _dbContext.SaveChangesAsync();
-        //        }
-
-        //        flag = true;
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-
-        //    }
-        //    return flag;
-        //}
-
         public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         {
             try
@@ -376,10 +400,82 @@ namespace NeftViewer.Data.Repositories
                     insertObjs.Add(obj);
                 }
             }
-
-            _dbContext.Set<TModel>().AddRange(insertObjs);
+            try
+            {
+                _dbContext.Set<TModel>().AddRange(insertObjs);
+            }
+            catch (System.Exception ex) { }
             _dbContext.SaveChanges();
         }
+
+        public virtual async Task AddRange(IEnumerable<TModel> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
+        {
+            var insertObjs = new List<TModel>();
+
+            foreach (var obj in indicatorValues)
+            {
+                var parameter = Expression.Parameter(typeof(TModel), "o");
+
+                var left1 = Expression.Property(parameter, targetPropertyName1);
+                var right1 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName1).GetValue(obj));
+                var equal1 = Expression.Equal(left1, right1);
+
+                var left2 = Expression.Property(parameter, targetPropertyName2);
+                var right2 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName2).GetValue(obj));
+                var equal2 = Expression.Equal(left2, right2);
+
+                var left3 = Expression.Property(parameter, targetPropertyName3);
+                var right3 = Expression.Constant(typeof(TModel).GetProperty(targetPropertyName3).GetValue(obj));
+                var equal3 = Expression.Equal(left3, right3);
+
+                var body = Expression.AndAlso(Expression.AndAlso(equal1, equal2), equal3);
+                var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
+
+                var existingObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+
+                if (existingObj == null)
+                {
+                    insertObjs.Add(obj);
+                }
+            }
+
+            try
+            {
+                _dbContext.Set<TModel>().AddRange(insertObjs);
+            }
+            catch (System.Exception ex)
+            {
+                
+            }
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+        //public virtual async Task<bool> AddRangeByProperty(IEnumerable<TModel> objs, string propertyName)
+        //{
+        //    bool flag = false;
+        //    try
+        //    {
+        //        var prop = typeof(TModel).GetProperty(propertyName);
+        //        var newKeys = objs.Select(o => prop.GetValue(o)).ToList();
+        //        var allObjects = await _dbContext.Set<TModel>().AsNoTracking().ToListAsync();
+        //        var existingKeys = allObjects.Where(o => newKeys.Contains(prop.GetValue(o))).Select(o => prop.GetValue(o)).ToList();
+        //        var uniqueItems = objs.Where(o => !existingKeys.Contains(prop.GetValue(o))).ToList();
+
+        //        if (uniqueItems.Any())
+        //        {
+        //            _dbContext.Set<TModel>().AddRange(uniqueItems);
+        //            await _dbContext.SaveChangesAsync();
+        //        }
+
+        //        flag = true;
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+
+        //    }
+        //    return flag;
+        //}
 
         //public virtual async Task<bool> AddRange(IEnumerable<TModel> objs)
         //{

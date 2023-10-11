@@ -32,9 +32,9 @@ namespace NeftViewer.BL.Services
             return _uow.ObjectItems.Update(objectItem);
         }
 
-        public async Task UpdateObjectItemsRange(List<ObjectItem> objectItems)
+        public async Task UpdateObjectItemRange(List<ObjectItem> objectItems, string targetPropertyName)
         {
-            _uow.ObjectItems.UpdateRange(objectItems);
+            _uow.ObjectItems.UpdateRange(objectItems, targetPropertyName);
         }
 
         public async Task<bool> AddObjectItem(ObjectItem objectItem)
@@ -62,6 +62,11 @@ namespace NeftViewer.BL.Services
         {
             var res = await _uow.ObjectItems.AddRange(objectItems);
             return res;
+        }
+
+        public async Task AddObjectItemRange(IEnumerable<ObjectItem> objectItems, string targetPropertyName)
+        {
+            await _uow.ObjectItems.AddRange(objectItems, targetPropertyName);
         }
 
         public async Task<bool> UpdateObjectItemCoordinatesAsync(string codeSuid, double latitude, double longitude, string ownerName)

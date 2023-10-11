@@ -178,9 +178,9 @@ namespace NeftViewer.BL.Services
             return indicatorValue;
         }
 
-        public async Task UpdateIndicatorValuesRange(List<IndicatorValue> indicatorValues)
+        public async Task UpdateIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
         {
-            await _uow.IndicatorValues.UpdateRange(indicatorValues);
+            await _uow.IndicatorValues.AddRange(indicatorValues, targetPropertyName1, targetPropertyName2, targetPropertyName3);
         }
 
         public async Task<bool> AddIndicatorValue(IndicatorValue indicatorValue)
@@ -204,10 +204,9 @@ namespace NeftViewer.BL.Services
             return res;
         }
 
-        public async Task<bool> AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues)
+        public async Task AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
         {
-            var res = await _uow.IndicatorValues.AddRange(indicatorValues);
-            return res;
+            await _uow.IndicatorValues.AddRange(indicatorValues, targetPropertyName1, targetPropertyName2, targetPropertyName3);
         }
     }
 }

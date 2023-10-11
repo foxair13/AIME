@@ -24,6 +24,7 @@ namespace NeftViewer.Data.Repositories.Contracts
         bool DeleteRange(IEnumerable<TModel> objs);
         Task<bool> AddRange(IEnumerable<TModel> objs);
         Task AddRange(IEnumerable<TModel> objs, string propertyName);
+        Task AddRange(IEnumerable<TModel> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3);
         //Task<bool> AddRangeByCodeSuid(IEnumerable<ObjectItem> objs);
         //Task<bool> AddRangeByProperty(IEnumerable<TModel> objs, string propertyName);
     }
