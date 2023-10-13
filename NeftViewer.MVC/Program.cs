@@ -37,7 +37,6 @@ builder.Services.AddScoped<IGenericRepository<AspNetUser>, AspNetUsersRepository
 builder.Services.AddScoped<IGenericRepository<NeftViewer.Data.Models.Action>, ActionRepository>();
 builder.Services.AddScoped<IGenericRepository<ActionRole>, ActionRoleRepository>();
 builder.Services.AddScoped<IGenericRepository<Criteria>, CriteriaRepository>();
-
 builder.Services.AddScoped<IGenericRepository<ObjectItem>, ObjectItemRepository>();
 builder.Services.AddScoped<IGenericRepository<Road>, RoadRepository>();
 builder.Services.AddScoped<IGenericRepository<IndicatorValue>, IndicatorValueRepository>();
@@ -45,9 +44,7 @@ builder.Services.AddScoped<IGenericRepository<ObjectOnRoad>, ObjectOnRoadReposit
 builder.Services.AddScoped<IGenericRepository<Owner>, OwnerRepository>();
 builder.Services.AddScoped<IGenericRepository<Area>, AreaRepository>();
 builder.Services.AddScoped<IGenericRepository<Agregate>, AgregateRepository>();
-
 builder.Services.AddScoped<IGenericRepository<CriteriaCalcMethod>, CriteriaCalcMethodRepository>();
-
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
 builder.Services.AddScoped<IGenericRepository<Energy>, EnergyRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

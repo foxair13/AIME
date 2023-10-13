@@ -58,7 +58,7 @@ namespace NeftViewer.MVC.Service
                                                 criteriasList.Add(criteria);
                                             }
 
-                                            criteriasList.DistinctBy(c => c.Name);
+                                            criteriasList = criteriasList.DistinctBy(c => c.Name).ToList();
 
                                             await criteriaService.UpdateCriteriaRange(criteriasList, "Name");
                                             await criteriaService.AddCriteriaRange(criteriasList, "Name");
@@ -77,7 +77,7 @@ namespace NeftViewer.MVC.Service
                                                 roadsList.Add(road);
                                             }
 
-                                            roadsList.DistinctBy(c => c.Indicator);
+                                            roadsList = roadsList.DistinctBy(c => c.Indicator).ToList();
 
                                             await roadService.UpdateRoadRange(roadsList, "Indicator");
                                             await roadService.AddRoadRange(roadsList, "Indicator");
@@ -106,7 +106,7 @@ namespace NeftViewer.MVC.Service
                                         {
                                             var indicatorValuesList = new List<IndicatorValue>();
                                             var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
-                                            var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230131");
+                                            var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230102");
 
                                             foreach (var row in viewData)
                                             {
@@ -120,25 +120,25 @@ namespace NeftViewer.MVC.Service
                                             break;
                                         }
 
-                                    case TableEnum.ObjectOnRoad:
-                                        {
-                                            var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
-                                            List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
-                                            var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
-                                            var uniqUIDObject = new List<string>();
+                                    //case TableEnum.ObjectOnRoad:
+                                    //    {
+                                    //        var objectOnRoadService = scope.ServiceProvider.GetRequiredService<IObjectOnRoadService>();
+                                    //        List<ObjectOnRoad> objectOnRoadList = new List<ObjectOnRoad>();
+                                    //        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                    //        var uniqUIDObject = new List<string>();
 
-                                            foreach (var row in viewData)
-                                            {
-                                                var roadIdValue = row["RoadId"].ToString();
-                                                if (!string.IsNullOrWhiteSpace(roadIdValue))
-                                                {
-                                                    var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
-                                                    objectOnRoadList.Add(objectOnRoad);
-                                                }
-                                            }
-                                            await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
-                                            break;
-                                        }
+                                    //        foreach (var row in viewData)
+                                    //        {
+                                    //            var roadIdValue = row["RoadId"].ToString();
+                                    //            if (!string.IsNullOrWhiteSpace(roadIdValue))
+                                    //            {
+                                    //                var objectOnRoad = _mapper.Map<Dictionary<string, object>, ObjectOnRoad>(row);
+                                    //                objectOnRoadList.Add(objectOnRoad);
+                                    //            }
+                                    //        }
+                                    //        await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
+                                    //        break;
+                                    //    }
 
                                     case TableEnum.JsonCoordinates:
                                         {

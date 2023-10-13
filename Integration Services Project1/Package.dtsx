@@ -11,8 +11,8 @@
   DTS:LocaleID="1049"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="319"
-  DTS:VersionGUID="{6C6A082C-BB90-4B4D-9466-24232A9433AC}">
+  DTS:VersionBuild="325"
+  DTS:VersionGUID="{4170A87D-7232-47D6-93CE-FB76DD8D4EDE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -29,7 +29,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAHZ3xzXWM5S/8MeQtsWta0AAAAAASAAACgAAAAEAAAAK8Eu0RTc4cHInE+BtAfbmIYAAAAvRhP8brxYztY8BFJfgl8BE6kuE8k9gE3FAAAADbn45XIwMw+S7SWkPMYiEvkD/lj</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACmqupr9mfThPqITpTTjDYXAAAAAASAAACgAAAAEAAAABWH53ZCR3VoAuTnznABTvwYAAAADlIea/9P2PRPIE8YAUm2t62fXR1cUIzOFAAAAFP7t6sdvNy9UKgOQ5JAgN3HqSlg</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,7 +46,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABvWbQ0y6+HDjbKfCTfVPMDAAAAAASAAACgAAAAEAAAADAXSJDuS5aPkrx51E9EN9MYAAAAaUng/hQFaMUA83NJVU3DwGeJRoaUx2aqFAAAAJIEgzl/3jRw+mRp1nC1OFTlyr11</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAA8RPLq/rDqh5rZc+jKnbcyAAAAAASAAACgAAAAEAAAAGdcm9VOpRp7SHGNvS2mwJUYAAAA1QSMInpaHsqjCNt+Rb9SkrhkYa5zsDd7FAAAAJTQcaNWXPB0fGlr9r/7o0nn1l10</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -61,7 +61,7 @@
           <DTS:Password
             DTS:Name="pwd"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABzdtIgmyWlsS56d8sTRJRHAAAAAASAAACgAAAAEAAAAEUSq9r4DWjRrbj+V3G2GokYAAAAVwk6f9DajQZss137e8IgY/z8BMusazbjFAAAACWaSfNiaEgSrqsaOtmGhMzj73uB</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADafmb/XU8M2rIujEybronLAAAAAASAAACgAAAAEAAAAA+PUlkjyg98zbZmZ1WjzUAYAAAAtlPoX8x5s9n8ynrab2t4eHHIsnBwIoyDFAAAAItFtziRz/15NaP8Zx/M7tdMMw+5</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -78,7 +78,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADobrLewfFlx0sPp/THPbuMAAAAAASAAACgAAAAEAAAAN5EhUfvBFxFwTv7iJA4bS8YAAAAji3FOWsD1WF5al7iSGyUsbUgUWi7vaF6FAAAAPzfHaGDWUEy77uJGuSjILhP7N51</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACjtvd4jRsJqUjbM3V3MlB+AAAAAASAAACgAAAAEAAAABekg00MULdok4//4ZnU0dAYAAAAnrd/0OQeWCufENR0KCpHW9vW0B/uwxmCFAAAAEvN/3Em7+7sXjXoKktBX0iFyrxt</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -93,7 +93,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAADT5nmC1hs1OSb8Xyw81WpuAAAAAASAAACgAAAAEAAAANqobGpgtckVHj9PE5f/IH0YAAAA6BjbzgV3+/aqctIT/aY7gLxZOrVizkCkFAAAADcTmE2D+ybueuWm6jBbQoX1CGo5</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVSMfPrY4gkee4hdrAw/A0QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAABWGyufIpCdlm+Tk9BHftjgAAAAAASAAACgAAAAEAAAAHpj1FiuKOyKwbzq3J9+HN4YAAAAor3pMnf6PG6fnLHcWY/g/9NfCOaHJxJfFAAAAHaDa5CcspclXIzndmzeN0s96Okt</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -4233,7 +4233,9 @@ where "refTable"."Id" = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4303,7 +4305,9 @@ where "refTable"."Id" = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout

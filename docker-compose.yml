@@ -1,9 +1,12 @@
-version: '3'
+version: '3.4'
 
 services:
-  neft_viewer_app:
+  neftviewer.api:
+    image: neftviewer.api:latest
     build:
-      context: ./
-      dockerfile: ./NeftViewer.MVC/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "32774:443"
+      - "8084:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

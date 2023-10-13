@@ -80,7 +80,7 @@ namespace NeftViewer.Data.Repositories
                 var body = Expression.Equal(left, right);
                 var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
 
-                var updateObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+                var updateObj = _dbContext.Set<TModel>().AsNoTracking().FirstOrDefault(lambda);
 
                 if (updateObj != null)
                 {
@@ -125,7 +125,7 @@ namespace NeftViewer.Data.Repositories
                 var body = Expression.AndAlso(Expression.AndAlso(equal1, equal2), equal3);
                 var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
 
-                var updateObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+                var updateObj = _dbContext.Set<TModel>().AsNoTracking().FirstOrDefault(lambda);
                 
                 updateObjs.Add(updateObj);
 
@@ -396,7 +396,7 @@ namespace NeftViewer.Data.Repositories
                 var body = Expression.Equal(left, right);
                 var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
 
-                var existingObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+                var existingObj = _dbContext.Set<TModel>().AsNoTracking().FirstOrDefault(lambda);
 
                 if (existingObj == null)
                 {
@@ -434,7 +434,7 @@ namespace NeftViewer.Data.Repositories
                 var body = Expression.AndAlso(Expression.AndAlso(equal1, equal2), equal3);
                 var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
 
-                var existingObj = _dbContext.Set<TModel>().FirstOrDefault(lambda);
+                var existingObj = _dbContext.Set<TModel>().AsNoTracking().FirstOrDefault(lambda);
 
                 if (existingObj == null)
                 {

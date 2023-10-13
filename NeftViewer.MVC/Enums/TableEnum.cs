@@ -15,7 +15,7 @@ namespace NeftViewer.MVC.Enums
 
         [TableText("AreaOwner")]
         JsonArea,
-        
+
         [TableText("Objects")]
         ObjectItems,
         JsonCoordinates,
@@ -23,10 +23,10 @@ namespace NeftViewer.MVC.Enums
         [TableText("IndicatorValues")]
         IndicatorValues,
 
-        [TableText("ObjectOnRoad")]
-        ObjectOnRoad,
+        //[TableText("ObjectOnRoad")]
+        //ObjectOnRoad,
 
-        [TableText("Energies")]
-        Energies,
+        //[TableText("Energies")]
+        //Energies,
     }
 }

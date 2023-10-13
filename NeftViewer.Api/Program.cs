@@ -17,8 +17,6 @@ using NeftViewer.MVC.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections = builder.Configuration.GetSection("Connections").Get<Connections>();
 var baseConnectionString = connections.BasePostgree;
