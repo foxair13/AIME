@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeftViewer.BL", "NeftViewer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeftViewer.Data", "NeftViewer.Data\NeftViewer.Data.csproj", "{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}"
 EndProject
-Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "Integration Services Project1", "Integration Services Project1\Integration Services Project1.dtproj", "{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeftViewer.Api", "NeftViewer.Api\NeftViewer.Api.csproj", "{4A88F3B6-AA3B-4FCC-8243-63AFBA915C50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeftViewer.Api", "NeftViewer.Api\NeftViewer.Api.csproj", "{4A88F3B6-AA3B-4FCC-8243-63AFBA915C50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,12 +36,6 @@ Global
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCCB6ED6-6E3E-4857-ACF1-54A983A417A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Debug|Any CPU.ActiveCfg = Development
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Debug|Any CPU.Build.0 = Development
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Development|Any CPU.ActiveCfg = Development
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Development|Any CPU.Build.0 = Development
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Release|Any CPU.ActiveCfg = Development
-		{0CDBDD30-901E-4D0B-B1C4-61EDBCA2452E}.Release|Any CPU.Build.0 = Development
 		{4A88F3B6-AA3B-4FCC-8243-63AFBA915C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A88F3B6-AA3B-4FCC-8243-63AFBA915C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A88F3B6-AA3B-4FCC-8243-63AFBA915C50}.Development|Any CPU.ActiveCfg = Debug|Any CPU

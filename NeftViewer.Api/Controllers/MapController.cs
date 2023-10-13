@@ -5,6 +5,7 @@ using NeftViewer.BL.Services.Contracts;
 namespace NeftViewer.Api.Controllers
 {
     [ApiController]
+
     [Route("[controller]")]
     public class MapController : ControllerBase
     {
