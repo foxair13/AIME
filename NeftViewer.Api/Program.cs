@@ -17,6 +17,7 @@ using NeftViewer.MVC.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("api_appsettings.json", optional: false, reloadOnChange: true);
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections = builder.Configuration.GetSection("Connections").Get<Connections>();
 var baseConnectionString = connections.BasePostgree;
@@ -73,8 +74,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 
 app.UseAuthorization();
 

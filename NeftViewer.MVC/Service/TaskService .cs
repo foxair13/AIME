@@ -33,7 +33,7 @@ namespace NeftViewer.MVC.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (1==1){
+            if (1==2){
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     GetTableService _getTableService = new GetTableService(_FinanceMssql);
@@ -102,23 +102,23 @@ namespace NeftViewer.MVC.Service
                                             break;
                                         }
 
-                                    case TableEnum.IndicatorValues:
-                                        {
-                                            var indicatorValuesList = new List<IndicatorValue>();
-                                            var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
-                                            var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230102");
+                                    //case TableEnum.IndicatorValues:
+                                    //    {
+                                    //        var indicatorValuesList = new List<IndicatorValue>();
+                                    //        var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
+                                    //        var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230102");
 
-                                            foreach (var row in viewData)
-                                            {
-                                                var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
-                                                indicatorValuesList.Add(indicatorValue);
-                                            }
+                                    //        foreach (var row in viewData)
+                                    //        {
+                                    //            var indicatorValue = _mapper.Map<Dictionary<string, object>, IndicatorValue>(row);
+                                    //            indicatorValuesList.Add(indicatorValue);
+                                    //        }
 
-                                            indicatorValuesList = indicatorValuesList.DistinctBy(i => (i.CodeSUID, i.DateStart, i.CriteriaId)).ToList();
-                                            await indicatorValueService.UpdateIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
-                                            await indicatorValueService.AddIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
-                                            break;
-                                        }
+                                    //        indicatorValuesList = indicatorValuesList.DistinctBy(i => (i.CodeSUID, i.DateStart, i.CriteriaId)).ToList();
+                                    //        await indicatorValueService.UpdateIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
+                                    //        await indicatorValueService.AddIndicatorValueRange(indicatorValuesList, "CodeSUID", "DateStart", "CriteriaId");
+                                    //        break;
+                                    //    }
 
                                     //case TableEnum.ObjectOnRoad:
                                     //    {

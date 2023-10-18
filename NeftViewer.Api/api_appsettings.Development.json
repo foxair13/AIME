@@ -14,8 +14,8 @@
     "Password": ""
   },
   "Connections": {
-    "BasePostgree": "Host=localhost;Port=5432;Database=MyPostgreDB;Username=postgres;Password=Abc7064dE",
-    //"BasePostgree": "Host=10.3.2.68;Port=5432;Database=NeftViewer;Username=postgres;Password=7f4df451",
+    //"BasePostgree": "Host=localhost;Port=5432;Database=MyPostgreDB;Username=postgres;Password=Abc7064dE",
+    "BasePostgree": "Host=10.3.2.68;Port=5432;Database=NeftViewer;Username=postgres;Password=7f4df451",
     "FinanceMssql": "Server=tunnel.it.beloil.by,14334;Database=KISjoinMDM;User ID=suid;Password=j21L&y!e;Encrypt=False",
     "CoordsUrl": "http://rl-dck-mgmt-61.it.beloil.by:8045/beloil-map/passportlist"
   }
