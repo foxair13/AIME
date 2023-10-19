@@ -9,6 +9,7 @@ using NeftViewer.Data.Models;
 using NeftViewer.MVC.Enums;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Net.Http;
 
 namespace NeftViewer.MVC.Service
 {
@@ -20,20 +21,22 @@ namespace NeftViewer.MVC.Service
         private readonly string _CoordsUrl;
         //private readonly string _CoordsUrl;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory, string coordsUrl)
+        public TaskService(IMapper mapper, string FinanceMssql, string basePostgree, IServiceScopeFactory serviceScopeFactory, string coordsUrl, IHttpClientFactory httpClientFactory)
         {
             _mapper = mapper;
             _BasePostgree = basePostgree;
             _serviceScopeFactory = serviceScopeFactory;
             _FinanceMssql = FinanceMssql;
             _CoordsUrl = coordsUrl;
+            _httpClientFactory = httpClientFactory;
         }
         private readonly TimeSpan dailyInterval = TimeSpan.FromDays(1);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (1==2){
+            if (1==1){
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     GetTableService _getTableService = new GetTableService(_FinanceMssql);
@@ -65,24 +68,24 @@ namespace NeftViewer.MVC.Service
                                             break;
                                         }
 
-                                    case TableEnum.Roads:
-                                        {
-                                            var roadsList = new List<Road>();
-                                            var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
-                                            var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
+                                    //case TableEnum.Roads:
+                                    //    {
+                                    //        var roadsList = new List<Road>();
+                                    //        var roadService = scope.ServiceProvider.GetRequiredService<IRoadService>();
+                                    //        var viewData = _getTableService.GetViewData("[SUID].[" + GetTableService.GetTableText(table) + "]");
 
-                                            foreach (var row in viewData)
-                                            {
-                                                var road = _mapper.Map<Dictionary<string, object>, Road>(row);
-                                                roadsList.Add(road);
-                                            }
+                                    //        foreach (var row in viewData)
+                                    //        {
+                                    //            var road = _mapper.Map<Dictionary<string, object>, Road>(row);
+                                    //            roadsList.Add(road);
+                                    //        }
 
-                                            roadsList = roadsList.DistinctBy(c => c.Indicator).ToList();
+                                    //        roadsList = roadsList.DistinctBy(c => c.Indicator).ToList();
 
-                                            await roadService.UpdateRoadRange(roadsList, "Indicator");
-                                            await roadService.AddRoadRange(roadsList, "Indicator");
-                                            break;
-                                        }
+                                    //        await roadService.UpdateRoadRange(roadsList, "Indicator");
+                                    //        await roadService.AddRoadRange(roadsList, "Indicator");
+                                    //        break;
+                                    //    }
 
                                     case TableEnum.ObjectItems:
                                         {
@@ -106,7 +109,7 @@ namespace NeftViewer.MVC.Service
                                     //    {
                                     //        var indicatorValuesList = new List<IndicatorValue>();
                                     //        var indicatorValueService = scope.ServiceProvider.GetRequiredService<IIndicatorValueService>();
-                                    //        var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230102");
+                                    //        var viewData = _getTableService.GetViewDataFromProcedure("[SUID].[sp_indicatorValues]", "20230101", "20230131");
 
                                     //        foreach (var row in viewData)
                                     //        {
@@ -139,6 +142,82 @@ namespace NeftViewer.MVC.Service
                                     //        await objectOnRoadService.AddObjectOnRoadRange(objectOnRoadList);
                                     //        break;
                                     //    }
+
+                                    case TableEnum.JsonTrks:
+                                        {
+                                            var trkService = scope.ServiceProvider.GetRequiredService<ITrkService>();
+                                            var tankService = scope.ServiceProvider.GetRequiredService<ITankService>();
+                                            var objectItemService = scope.ServiceProvider.GetRequiredService<IObjectItemService>();
+                                            
+                                            var objectItems = await objectItemService.GetObjectItemsAsync();
+                                            var asuClient = _httpClientFactory.CreateClient("GetAsuService");
+
+                                            var trks = new List<Trk>();
+                                            var tanks = new List<Tank>();
+
+                                            foreach(var objectItem in objectItems)
+                                            {
+                                                var objectCodeSUID = objectItem.CodeSUID;
+                                                var response = await asuClient.GetAsync(objectCodeSUID);
+
+                                                if (!response.IsSuccessStatusCode)
+                                                {
+                                                    continue;
+                                                }
+                                                var json = await response.Content.ReadAsStringAsync();
+                                                var jsonObject = JObject.Parse(json);
+                                                var results = jsonObject["data"]["result"];
+                                                if (!results.HasValues)
+                                                {
+                                                    continue;
+                                                }
+
+                                                foreach (var result in results)
+                                                {
+                                                    var metric = result["metric"];
+                                                    var codeSUID = (string)metric["Code_SUID"];
+                                                    var oil = (string)metric["Oil"];
+
+                                                    if (codeSUID.IsNullOrEmpty())
+                                                    {
+                                                        continue;
+                                                    }
+
+                                                    if (oil.IsNullOrEmpty())
+                                                    {
+                                                        var number = (string)metric["tank"];
+                                                        if (number.IsNullOrEmpty())
+                                                        {
+                                                            continue;
+                                                        }
+                                                        var newTank = new Tank
+                                                        {
+                                                            CodeSUID = objectCodeSUID,
+                                                            Number = number,
+                                                        };
+                                                        tanks.Add(newTank);
+                                                    }
+
+                                                    else
+                                                    {
+                                                        var number = (string)metric["TRK"];
+                                                        
+                                                        var newTrk = new Trk
+                                                        {
+                                                            CodeSUID = objectCodeSUID,
+                                                            Oil = oil,
+                                                            Number = number
+                                                        };
+                                                        trks.Add(newTrk);
+                                                    }
+
+                                                }
+                                            }
+                                            await tankService.AddTankRange(tanks);
+                                            await trkService.AddTrkRange(trks);
+                                            
+                                            break;
+                                        }
 
                                     case TableEnum.JsonCoordinates:
                                         {
@@ -239,28 +318,7 @@ namespace NeftViewer.MVC.Service
                                             break;
                                         }
 
-                                    //case TableEnum.Energies:
-                                    //    {
-                                    //        var energyService = scope.ServiceProvider.GetRequiredService<IEnergyService>();
-                                    //        var objects = energyService.GetEnergies();
-                                    //        string url = _CoordsUrl;
-                                    //        string json;
-                                    //        using (var client = new WebClient())
-                                    //        {
-                                    //            json = client.DownloadString(url);
-                                    //        }
-                                    //        var jsonObject = JObject.Parse(json);
-                                    //        JArray headers = (JArray)jsonObject["headers"];
-                                    //        foreach (JToken header in headers)
-                                    //        {
-                                    //            var codeSUID = (string)header["suid"];
-                                    //            var latitude = (double)header["coordinates"]["latitude"];
-                                    //            var longitude = (double)header["coordinates"]["longitude"];
-                                    //            var ownerName = (string)header["ownerName"];
-                                    //            //await energyService.UpdateObjectItemCoordinatesAsync(codeSUID, latitude, longitude, ownerName);
-                                    //        }
-                                    //        break;
-                                    //    }
+                                    
                                     default:
                                         // Обработка для других значений, если необходимо
                                         break;

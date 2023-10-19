@@ -5,40 +5,40 @@ using NeftViewer.Data.UnitOfWork.Contracts;
 
 namespace NeftViewer.BL.Services
 {
-    public class EnergyService : IEnergyService
+    public class TrkService : ITrkService
     {
         private readonly IUnitOfWork _uow;
-        public EnergyService(IUnitOfWork uow)
+        public TrkService(IUnitOfWork uow)
         {
             _uow = uow;
         }
+
         public async Task CommitChangesAsync()
         {
             await _uow.CommitAsync();
         }
 
-        public Task<Energy> FindEnergyAsync(string? id)
+        public Task<Trk> FindTrkAsync(string? id)
         {
-            return _uow.Energies.GetAsync(id);
+            return _uow.Trks.GetAsync(id);
         }
 
-        public async Task<IEnumerable<Energy>> GetEnergies()
+        public async Task<IEnumerable<Trk>> GetTrks()
         {
-
-            return await _uow.Energies.GetAllAsync();
-
+            return await _uow.Trks.GetAllAsync();
         }
 
-        public EntityEntry<Energy> UpdateEnergy(Energy energy)
+        public EntityEntry<Trk> UpdateTrk(Trk trk)
         {
-            return _uow.Energies.Update(energy);
+            return _uow.Trks.Update(trk);
         }
-        public async Task<bool> AddEnergy(Energy energy)
+
+        public async Task<bool> AddTrk(Trk trk)
         {
             bool flag = false;
             try
             {
-                await _uow.Energies.Add(energy);
+                await _uow.Trks.Add(trk);
                 flag = true;
             }
             catch
@@ -48,15 +48,15 @@ namespace NeftViewer.BL.Services
             return flag;
         }
 
-        public EntityEntry<Energy> DeleteEnergy(string id)
+        public EntityEntry<Trk> DeleteTrk(string id)
         {
-            var res = _uow.Energies.DeleteByStringID(id);
+            var res = _uow.Trks.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddEnergyRange(IEnumerable<Energy> energys)
+        public async Task<bool> AddTrkRange(IEnumerable<Trk> trks)
         {
-            var res = await _uow.Energies.AddRange(energys);
+            var res = await _uow.Trks.AddRange(trks);
             return res;
         }
     }

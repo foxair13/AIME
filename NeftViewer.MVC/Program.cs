@@ -30,6 +30,7 @@ var connections =builder.Configuration.GetSection("Connections").Get<Connections
 var baseConnectionString = connections.BasePostgree;
 var financeConnectionString = connections.FinanceMssql;
 string CoordsUrl = connections.CoordsUrl;
+var asuObjects = connections.AsuUrl;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
               options.UseNpgsql(baseConnectionString, b => b.MigrationsAssembly("NeftViewer.MVC")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -46,7 +47,8 @@ builder.Services.AddScoped<IGenericRepository<Area>, AreaRepository>();
 builder.Services.AddScoped<IGenericRepository<Agregate>, AgregateRepository>();
 builder.Services.AddScoped<IGenericRepository<CriteriaCalcMethod>, CriteriaCalcMethodRepository>();
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
-builder.Services.AddScoped<IGenericRepository<Energy>, EnergyRepository>();
+builder.Services.AddScoped<IGenericRepository<Trk>, TrkRepository>();
+builder.Services.AddScoped<IGenericRepository<Tank>, TankRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
@@ -60,9 +62,15 @@ builder.Services.AddScoped<IObjectOnRoadService, ObjectOnRoadService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<ILocalityService, LocalityService>();
-builder.Services.AddScoped<IEnergyService, EnergyService>();
+builder.Services.AddScoped<ITrkService, TrkService>();
+builder.Services.AddScoped<ITankService, TankService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+builder.Services.AddHttpClient("GetAsuService", client =>
+{
+    client.BaseAddress = new Uri(asuObjects);
+});
 
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -75,7 +83,8 @@ builder.Services.AddHostedService(serviceProvider =>
 {
     var mapper = serviceProvider.GetRequiredService<IMapper>();
     var criteriaservice = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-    return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice, CoordsUrl);
+    var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+    return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice, CoordsUrl, httpClientFactory);
 });
 AppConfig.Initialize(connections);
 builder.Services.AddResponseCaching();

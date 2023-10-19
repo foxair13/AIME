@@ -30,7 +30,8 @@ namespace NeftViewer.Data.DataContext
         public DbSet<ActionRole> ActionRoles { get; set; }
         public DbSet<CriteriaCalcMethod> CriteriaCalcMethod { get; set; }
         public DbSet<Agregate> Agregates { get; set; }
-        public DbSet<Energy> Energies { get; set; }
+        public DbSet<Trk> Trks { get; set; }
+        public DbSet<Tank> Tanks { get; set; }
         public NeftViewerContext(DbContextOptions<NeftViewerContext> options)
          : base(options)
         {

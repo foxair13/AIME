@@ -19,14 +19,14 @@ namespace NeftViewer.Data.UnitOfWork
               IGenericRepository<Road> RoadRepository,
               IGenericRepository<ObjectItem> ObjectItemRepository,
               IGenericRepository<ObjectOnRoad> ObjectOnRoadRepository,
-
               IGenericRepository<IndicatorValue> IndicatorValueRepository,
               IGenericRepository<Owner> OwnerRepository,
               IGenericRepository<Area> AreaRepository,
               IGenericRepository<Locality> LocalityRepository,
                IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethodRepository,
-                 IGenericRepository<Agregate> AgregateRepository,
-              IGenericRepository<Energy> EnergyRepository
+            IGenericRepository<Agregate> AgregateRepository,
+              IGenericRepository<Trk> TrkRepository,
+              IGenericRepository<Tank> TankRepository
             )
         {
             _context = context;
@@ -44,8 +44,8 @@ namespace NeftViewer.Data.UnitOfWork
             CriteriaCalcMethods = CriteriaCalcMethodRepository;
             CriteriaCalcMethods = CriteriaCalcMethodRepository;
             Agregates = AgregateRepository;
-
-            Energies = EnergyRepository;
+            Trks = TrkRepository;
+            Tanks = TankRepository;
         }
         public IGenericRepository<AspNetUser> AspNetUsers { get; }
         public IGenericRepository<Models.Action> Action { get; }
@@ -60,8 +60,8 @@ namespace NeftViewer.Data.UnitOfWork
         public IGenericRepository<Locality> Localities { get; }
         public IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethods { get; }
         public IGenericRepository<Agregate> Agregates { get; }
-
-        public IGenericRepository<Energy> Energies { get; }
+        public IGenericRepository<Trk> Trks { get; }
+        public IGenericRepository<Tank> Tanks { get; }
 
         public async Task CommitAsync()
         {
