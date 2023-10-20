@@ -5,12 +5,10 @@ using NeftViewer.BL.Services.Contracts;
 namespace NeftViewer.Api.Controllers
 {
     [ApiController]
-
+    
     [Route("[controller]")]
     public class MapController : ControllerBase
     {
-
-
         //private readonly ILogger<> _logger;
         private readonly IObjectItemService _objectItemService;
         public MapController(IObjectItemService objectItemService)
@@ -18,7 +16,7 @@ namespace NeftViewer.Api.Controllers
             _objectItemService = objectItemService;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public IEnumerable<PointViewModel> Get()
         {
             var objects =  _objectItemService.GetObjectItems();
