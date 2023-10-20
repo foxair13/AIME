@@ -12,7 +12,5 @@ namespace NeftViewer.MVC.Mappings
             CreateMap<ActionRoleViewModel, ActionRole>();
             CreateMap<CriteriaCalcMethodViewModel, CriteriaCalcMethod>();
         }
-
-
     }
 }

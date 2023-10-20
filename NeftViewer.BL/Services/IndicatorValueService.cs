@@ -46,8 +46,6 @@ namespace NeftViewer.BL.Services
             }
            
         }
-
- 
       
         public Task<IndicatorValue> FindIndicatorValueAsync(string? id)
         {
@@ -84,6 +82,7 @@ namespace NeftViewer.BL.Services
             var v = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
             return v.ToList();
         }
+
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorRangeByObject(DateTime MinDateValue, DateTime MaxDateValue, string CodeSUID)
         {
             var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>
@@ -171,10 +170,19 @@ namespace NeftViewer.BL.Services
             return v.ToList();
         }
 
-        public EntityEntry<IndicatorValue> UpdateIndicatorValue(IndicatorValue indicatorValue)
+        public async Task<IndicatorValue> GetIndicatorValue(string codeSUID, DateTime dateStart, int criteriaId)
         {
-            return _uow.IndicatorValues.Update(indicatorValue);
+            var indicatorValues = await _uow.IndicatorValues.GetAllAsync();
+            var indicatorValue = indicatorValues
+                .FirstOrDefault(i => i.CodeSUID == codeSUID && i.DateStart == dateStart && i.CriteriaId == criteriaId);
+            return indicatorValue;
         }
+
+        public async Task UpdateIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
+        {
+            await _uow.IndicatorValues.AddRange(indicatorValues, targetPropertyName1, targetPropertyName2, targetPropertyName3);
+        }
+
         public async Task<bool> AddIndicatorValue(IndicatorValue indicatorValue)
         {
             bool flag = false;
@@ -190,17 +198,15 @@ namespace NeftViewer.BL.Services
             return flag;
         }
 
-
         public EntityEntry<IndicatorValue> DeleteIndicatorValue(string id)
         {
             var res = _uow.IndicatorValues.DeleteByStringID(id);
             return res;
         }
 
-        public async Task<bool> AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues)
+        public async Task AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3)
         {
-            var res = await _uow.IndicatorValues.AddRange(indicatorValues);
-            return res;
+            await _uow.IndicatorValues.AddRange(indicatorValues, targetPropertyName1, targetPropertyName2, targetPropertyName3);
         }
     }
 }

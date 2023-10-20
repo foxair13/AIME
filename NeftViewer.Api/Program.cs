@@ -17,8 +17,7 @@ using NeftViewer.MVC.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
+builder.Configuration.AddJsonFile("api_appsettings.json", optional: false, reloadOnChange: true);
 builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
 var connections = builder.Configuration.GetSection("Connections").Get<Connections>();
 var baseConnectionString = connections.BasePostgree;
@@ -41,7 +40,7 @@ builder.Services.AddScoped<IGenericRepository<Agregate>, AgregateRepository>();
 builder.Services.AddScoped<IGenericRepository<CriteriaCalcMethod>, CriteriaCalcMethodRepository>();
 
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
-builder.Services.AddScoped<IGenericRepository<Energy>, EnergyRepository>();
+builder.Services.AddScoped<IGenericRepository<Trk>, TrkRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
@@ -55,7 +54,7 @@ builder.Services.AddScoped<IObjectOnRoadService, ObjectOnRoadService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<ILocalityService, LocalityService>();
-builder.Services.AddScoped<IEnergyService, EnergyService>();
+builder.Services.AddScoped<ITrkService, TrkService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
 
 
@@ -75,8 +74,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-
 
 app.UseAuthorization();
 

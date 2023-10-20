@@ -7,26 +7,30 @@ namespace NeftViewer.MVC.Enums
         [TableText("Criterias")]
         Criterias,
 
-        [TableText("Roads")]
-        Roads,
+        //[TableText("Roads")]
+        //Roads,
 
         [TableText("JsonOwner")]
         JsonOwner,
 
         [TableText("AreaOwner")]
         JsonArea,
-        
+
         [TableText("Objects")]
         ObjectItems,
         JsonCoordinates,
+
         //[TableText("IndicatorValues")]
         //IndicatorValues,
-        [TableText("ObjectOnRoad")]
-        ObjectOnRoad,
 
-       
+        [TableText("JsonTrks")]
+        JsonTrks,
+        JsonTanks
 
-        [TableText("Energies")]
-        Energies,
+        //[TableText("ObjectOnRoad")]
+        //ObjectOnRoad,
+
+        //[TableText("Energies")]
+        //Energies,
     }
 }

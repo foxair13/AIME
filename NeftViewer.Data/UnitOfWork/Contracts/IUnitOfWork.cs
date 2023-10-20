@@ -9,7 +9,6 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Models.Action> Action { get; }
         IGenericRepository<ActionRole> ActionRole { get; }
         IGenericRepository<Criteria> Criterias { get; }
-      
         IGenericRepository<ObjectItem> ObjectItems { get; }
         IGenericRepository<Road> Roads { get; }
         IGenericRepository<IndicatorValue> IndicatorValues { get; }
@@ -19,8 +18,8 @@ namespace NeftViewer.Data.UnitOfWork.Contracts
         IGenericRepository<Locality> Localities { get; }
         IGenericRepository<CriteriaCalcMethod> CriteriaCalcMethods { get; }
         IGenericRepository<Agregate> Agregates { get; }
-
-        IGenericRepository<Energy> Energies { get; }
+        IGenericRepository<Trk> Trks { get; }
+        IGenericRepository<Tank> Tanks { get; }
         Task CommitAsync();
     }
 }

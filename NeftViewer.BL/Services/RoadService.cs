@@ -32,6 +32,12 @@ namespace NeftViewer.BL.Services
         {
             return _uow.Roads.Update(road);
         }
+
+        public async Task UpdateRoadRange(List<Road> roads, string targetPropertyName)
+        {
+            await _uow.Roads.UpdateRange(roads, targetPropertyName);
+        }
+
         public async Task<bool> AddRoad(Road road)
         {
             bool flag = false;
@@ -58,12 +64,19 @@ namespace NeftViewer.BL.Services
             var res = await _uow.Roads.AddRange(roads);
             return res;
         }
+
+        public async Task AddRoadRange(IEnumerable<Road> roads, string targetPropertyName)
+        {
+            await _uow.Roads.AddRange(roads, targetPropertyName);
+        }
+
         public async Task<IEnumerable<string>> GetCodeSUIDByRoadIdAsync(int roadId)
         {
             var objectsOnRoad = await _uow.ObjectOnRoads.GetAllAsync();
             var filteredObjects = objectsOnRoad.Where(o => o.RoadId == roadId);
             return filteredObjects.Select(o => o.CodeSUID);
         }
+
         public async Task<ObjectDetailsDTO> GetParamsBySUIDAsync(string suid)
         {
             var allObjects = await _uow.ObjectItems.GetAllAsync();
