@@ -1,83 +1,93 @@
-﻿<div id="main" class="card" style="height:600px;"></div>
-<script  src="~/charts/echarts.min.js"></script>
+﻿
+<div>
+    <input type="checkbox" id="emailCheckbox" class="series-checkbox" checked> Email
+    <input type="checkbox" id="unionAdsCheckbox" class="series-checkbox" checked> Union Ads
+    <input type="checkbox" id="videoAdsCheckbox" class="series-checkbox" checked> Video Ads
+    <input type="checkbox" id="directCheckbox" class="series-checkbox" checked> Direct
+    <input type="checkbox" id="searchEngineCheckbox" class="series-checkbox" checked> Search Engine
+</div>
+<div id="main" class="card" style="height:600px;"></div>
+
+<script src="~/charts/echarts.min.js"></script>
 <script src="~/charts/charttheme.js"></script>
 <script type="text/javascript">
     // Initialize the echarts instance based on the prepared dom
-    var dom = document.getElementById('main');
-    var myChart = echarts.init(dom, 'dark', {
-        renderer: 'canvas',
-        useDirtyRect: false
-    });
-    var app = {};
+   // Initialize ECharts instance and set options
+var dom = document.getElementById('main');
+var myChart = echarts.init(dom, 'dark', {
+    renderer: 'canvas',
+    useDirtyRect: false
+});
+var app = {};
 
-    var option;
+var initialSeriesData = {
+    'Email': [120, 132, 101, 134, 90, 230, 210],
+    'Union Ads': [220, 182, 191, 234, 290, 330, 310],
+    'Video Ads': [150, 232, 201, 154, 190, 330, 410],
+    'Direct': [320, 332, 301, 334, 390, 330, 320],
+    'Search Engine': [820, 932, 901, 934, 1290, 1330, 1320]
+};
 
-    option = {
-        title: {
-            text: 'Stacked Line'
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name: 'Email',
-                type: 'line',
-                stack: 'Total',
-                data: [120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name: 'Union Ads',
-                type: 'line',
-                stack: 'Total',
-                data: [220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name: 'Video Ads',
-                type: 'line',
-                stack: 'Total',
-                data: [150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name: 'Direct',
-                type: 'line',
-                stack: 'Total',
-                data: [320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name: 'Search Engine',
-                type: 'line',
-                stack: 'Total',
-                data: [820, 932, 901, 934, 1290, 1330, 1320]
-            }
-        ]
-    };
+var option = {
+    title: {
+        text: 'Stacked Line'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: generateSeries()
+};
 
-    if (option && typeof option === 'object') {
+function generateSeries() {
+    var series = [];
+    for (var key in initialSeriesData) {
+        series.push({
+            name: key,
+            type: 'line',
+            stack: 'Total',
+            data: initialSeriesData[key],
+            show: true  // Initially, all series are visible
+        });
+    }
+    return series;
+}
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+// Function to toggle the visibility of series based on checkboxes
+$('.series-checkbox').change(function () {
+    var seriesName = $(this).next().text();
+    var seriesIndex = option.legend[0].data.indexOf(seriesName);
+    if (seriesIndex >= 0) {
+        option.series[seriesIndex].show = this.checked;
         myChart.setOption(option);
     }
+});
 
-    window.addEventListener('resize', myChart.resize);
+window.addEventListener('resize', myChart.resize);
+
 </script>

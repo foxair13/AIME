@@ -11,7 +11,7 @@
     }
 
     .pagination-buttons {
-        opacity: 0;
+        opacity: 0.4;
         transition: opacity 0.3s ease-in-out;
 
     }
@@ -31,8 +31,8 @@
 
     .table-scroll {
         overflow-x: auto;
-        overflow-y: auto; /* Добавьте вертикальный скроллинг */
-        height: 700px; /* Установите желаемую высоту контейнера */
+        overflow-y: auto; 
+        height: 700px;
         position: relative;
     }
 
@@ -41,8 +41,8 @@
         }
 
     .pagination-container {
-        position: relative; /* Установите позиционирование как относительное */
-        overflow: hidden; /* Скрыть содержимое, выходящее за границы контейнера */
+        position: relative; 
+        overflow: hidden; 
     }
 
     .pagination-buttons {
@@ -50,7 +50,7 @@
         top: 0;
         bottom: 0;
         width: 40px;
-        height: 100%; /* Установите 100% высоты для кнопок */
+        height: 100%;
         background-color: rgba(20, 24, 36, 0.8);
         z-index: 2;
         display: flex;
@@ -67,13 +67,12 @@
         cursor: pointer;
     }
 
-    /* Показываем кнопки при наведении курсора на область таблицы */
     .table-scroll:hover .pagination-buttons {
         opacity: 1;
     }
 
 
-    /* Расположение кнопок пагинации справа */
+
     .pagination-buttons.right {
         right: 0;
         left: auto;
@@ -84,7 +83,7 @@
     }
 
     .table-min-width {
-        min-width: 100%; /* Задайте минимальную ширину на 100% */
+        min-width: 100%; 
     }
 </style>
 <div class="pagination-container">

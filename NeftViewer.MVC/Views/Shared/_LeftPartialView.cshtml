@@ -47,7 +47,15 @@
     #ui-datepicker-div {
         z-index: 10212 !important;
     }
+
+    .daterangepicker {
+        margin-left: 250px;
+        z-index: 34523452345;
+    }
+
 </style>
+
+<link href="~/lib/daterangepicker/daterangepicker.min.css" rel="stylesheet" />
 <link href="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" />
 <div class="card shadow-none border border-300">
     <div class="card-header p-1 border-bottom border-300 bg-soft">
@@ -248,7 +256,7 @@
                                     <div class="mb-3">
                                         <p>
                                             <label for="amountdate">Диапазон дат:</label>
-                                            <input type="text" id="amountdate" readonly class="form-control fixed-width-dropdown text-center" />
+                                            <input type="text" data-bind="daterangepicker: dateRange" id="amountdate" readonly class="daterangepicker-field form-control fixed-width-dropdown text-center" />
                                         </p>
                                         <div id="date-range"></div>
                                     </div>
@@ -276,10 +284,18 @@
 
 
 <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
+<script src="~/lib/knockout/knockout-3.5.1.js"></script>
+<script src="~/lib/moment/moment-with-locales.min.js"></script>
 <script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
 <script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/ui/i18n/datepicker-ru.js"></script>
+<script type="module" src="~/lib/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        moment.locale('ru');
+
+
+
         $("#slider-range").slider({
             range: true,
             min: 0,
@@ -287,10 +303,10 @@
             values: [0, 0],
             slide: function (event, ui) {
                 $("#amount").val("от: " + ui.values[0] + " до: " + ui.values[1]);
-          
+
             },
             stop: function (event, ui) {
-               
+
                 OnUpdate();
             }
         });
@@ -385,17 +401,19 @@
             step: 86400,
             values: [toSec(startDate), toSec(endDate)],
             slide: function (event, ui) {
-                const minDate = new Date(ui.values[0] * 1000); // Преобразование обратно в объект даты
-                const maxDate = new Date(ui.values[1] * 1000); // Преобразование обратно в объект даты
+                const minDate = new Date(ui.values[0] * 1000);
+                const maxDate = new Date(ui.values[1] * 1000);
 
                 $("#amountdate").val(formatDateToDdMmYyyy(minDate) + " - " + formatDateToDdMmYyyy(maxDate));
-               
+
             },
             stop: function (event, ui) {
-                const minDate = new Date(ui.values[0] * 1000); // Преобразование обратно в объект даты
-                const maxDate = new Date(ui.values[1] * 1000); // Преобразование обратно в объект даты
+                const minDate = new Date(ui.values[0] * 1000);
+                const maxDate = new Date(ui.values[1] * 1000);
 
-    
+        
+                $(".daterangepicker-field").attr('data-start', formatDateToDdMmYyyy(minDate));
+                $(".daterangepicker-field").attr('data-end', formatDateToDdMmYyyy(maxDate));
                 sliderMinValue = formatDateToDdMmYyyy(minDate);
                 sliderMaxValue = formatDateToDdMmYyyy(maxDate);
                 var objectIdValue = $("input[name='ObjectId']").val();
@@ -405,6 +423,65 @@
                 OnUpdate();
             }
         });
+        $(".daterangepicker-field").daterangepicker({
+            forceUpdate: true,
+            locale: {
+                format: 'DD.MM.YYYY',
+                fromLabel: 'С',
+                toLabel: 'По',
+                customRangeLabel: 'Выбрать даты',
+                weekLabel: 'Н',
+                daysOfWeek: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                firstDay: 1,
+                yearSuffix: 'г.'
+            },
+            ranges: {
+                'Последние 30 дней': [moment().subtract(29, 'days'), moment()],
+                'Последние 90 дней': [moment().subtract(89, 'days'), moment()],
+                'Свой выбор': 'custom'
+            },
+            callback: function (startDate, endDate, period) {
+                var startDateText = startDate.format('YYYY.MM.DD');
+                var endDateText = endDate.format('YYYY.MM.DD');
+                var minSliderValue = secToDate($("#date-range").slider("option", "min"));
+                var maxSliderValue = secToDate($("#date-range").slider("option", "max"));
+                var secstartDate = toSec(startDateText);
+                var secendDate = toSec(endDateText);
+                var secminSliderValue = $("#date-range").slider("option", "min");
+                var secmaxSliderValue = $("#date-range").slider("option", "max");
+
+                if (secstartDate < secminSliderValue || secendDate >secmaxSliderValue) {
+            
+                    startDate = moment(minSliderValue, 'DD.MM.YYYY');
+                    endDate = moment(maxSliderValue, 'DD.MM.YYYY');
+                   
+                    sliderMinValue = startDate.format('DD.MM.YYYY');
+                    sliderMaxValue = endDate.format('DD.MM.YYYY');
+                    var objectIdValue = $("input[name='ObjectId']").val();
+                    var tabIdValue = $("input[name='TabId']").val();
+                    setActiveTab(tabIdValue, objectIdValue, 1);
+                    pagef = 1;
+
+                    OnUpdate();
+                }
+                else {
+                    var title = startDate.format('DD.MM.YYYY') + ' - ' + endDate.format('DD.MM.YYYY');
+                    $(this).val(title);
+                    $("#date-range").slider("values", [toSec(startDate.format('YYYY.MM.DD')), toSec(endDate.format('YYYY.MM.DD'))]);
+                    sliderMinValue = startDate.format('DD.MM.YYYY');
+                    sliderMaxValue = endDate.format('DD.MM.YYYY');
+                    var objectIdValue = $("input[name='ObjectId']").val();
+                    var tabIdValue = $("input[name='TabId']").val();
+                    setActiveTab(tabIdValue, objectIdValue, 1);
+                    pagef = 1;
+                    OnUpdate();
+                }
+
+
+            }
+        });
+
         $("#amountdate").val(secToDate($("#date-range").slider("values", 0)) +
             " - " + secToDate($("#date-range").slider("values", 1)));
         let allowedDates = [];
@@ -425,7 +502,7 @@
                     var objectIdValue = $("input[name='ObjectId']").val();
                     var tabIdValue = $("input[name='TabId']").val();
                     setActiveTab(tabIdValue, objectIdValue, 1);
-      
+
                 },
                 beforeShowDay: function (date) {
                     var formattedDate = $.datepicker.formatDate('dd.mm.yy', date);
@@ -528,7 +605,7 @@
             var Dates = $('#datepicker').val();
             var slideMin = $("#slider-range").slider("values", 0);
             var slideMax = $("#slider-range").slider("values", 1);
-          
+
             updateObjects(ownerId, areaId, TypeValue, roadId);
             getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
                 addPointsToMap(points);
@@ -585,7 +662,9 @@
                     $("#slider-range").slider("option", "min", data.min);
                     $("#slider-range").slider("option", "max", data.max);
                     sliderMinValue = secToDate($("#date-range").slider("values", 0));
+
                     sliderMaxValue = secToDate($("#date-range").slider("values", 1));
+
                     $("#amountdate").val(secToDate($("#date-range").slider("values", 0)) +
                         " - " + secToDate($("#date-range").slider("values", 1)));
                     $("#amount").val("от: " + data.min + " до: " + data.max);

@@ -1047,7 +1047,7 @@ body {
     font-size: var(--phoenix-body-font-size);
     font-weight: var(--phoenix-body-font-weight);
     line-height: var(--phoenix-body-line-height);
-    color: var(--phoenix-body-color);
+    color: #50b73e;
     text-align: var(--phoenix-body-text-align);
     background-color: var(--phoenix-body-bg);
     -webkit-text-size-adjust: 100%;
