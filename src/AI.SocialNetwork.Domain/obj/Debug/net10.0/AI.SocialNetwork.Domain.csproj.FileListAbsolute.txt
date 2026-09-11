@@ -1,0 +1,11 @@
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\bin\Debug\net10.0\AI.SocialNetwork.Domain.deps.json
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\bin\Debug\net10.0\AI.SocialNetwork.Domain.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\bin\Debug\net10.0\AI.SocialNetwork.Domain.pdb
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.AssemblyInfoInputs.cache
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.AssemblyInfo.cs
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.csproj.CoreCompileInputs.cache
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\refint\AI.SocialNetwork.Domain.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\AI.SocialNetwork.Domain.pdb
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Domain\obj\Debug\net10.0\ref\AI.SocialNetwork.Domain.dll

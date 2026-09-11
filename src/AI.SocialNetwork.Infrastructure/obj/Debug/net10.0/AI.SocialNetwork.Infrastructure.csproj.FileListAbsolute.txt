@@ -1,0 +1,15 @@
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.csproj.AssemblyReference.cache
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.AssemblyInfoInputs.cache
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.AssemblyInfo.cs
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.csproj.CoreCompileInputs.cache
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\bin\Debug\net10.0\AI.SocialNetwork.Infrastructure.deps.json
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\bin\Debug\net10.0\AI.SocialNetwork.Infrastructure.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\bin\Debug\net10.0\AI.SocialNetwork.Infrastructure.pdb
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\bin\Debug\net10.0\AI.SocialNetwork.Domain.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\bin\Debug\net10.0\AI.SocialNetwork.Domain.pdb
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.Socia.725D7F95.Up2Date
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\refint\AI.SocialNetwork.Infrastructure.dll
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\AI.SocialNetwork.Infrastructure.pdb
+D:\AIME\AI.SocialNetwork\src\AI.SocialNetwork.Infrastructure\obj\Debug\net10.0\ref\AI.SocialNetwork.Infrastructure.dll

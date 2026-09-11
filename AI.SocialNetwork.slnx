@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AI.SocialNetwork.Application/AI.SocialNetwork.Application.csproj" />
+    <Project Path="src/AI.SocialNetwork.Domain/AI.SocialNetwork.Domain.csproj" />
+    <Project Path="src/AI.SocialNetwork.Infrastructure/AI.SocialNetwork.Infrastructure.csproj" />
+    <Project Path="src/AI.SocialNetwork.Tests/AI.SocialNetwork.Tests.csproj" />
+    <Project Path="src/AI.SocialNetwork.Web/AI.SocialNetwork.Web.csproj" />
+  </Folder>
+</Solution>
