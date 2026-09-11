@@ -1,0 +1,292 @@
+﻿@model MVCDIS.Models.ReportEdit
+@using MVCDIS.Models
+<style>
+    .wt {
+        border: 1px solid midnightblue;
+        margin: 5px;
+        word-wrap: break-word;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .selBlue {
+        background-color: #5bc0de;
+        color: white;
+    }
+</style>
+<div class="row">
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Редактирование записи</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: scroll; height: 600px;  " aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+
+                <div>
+
+                    <div class="row text-center not-found">Изменение отчета</div>
+                    <input type="hidden" id="reportid" value="@Model.Report.ReportId" />
+                    <table class="with_all rep_add">
+                        <tr>
+                            <td>
+                                Уровень квалификации:
+                            </td>
+                            <td>
+                                <select class="with_all" id="activity">
+                                    @{
+                                        List<iasaActivities> acts = Model.userActivities;
+                                        <option value="0"
+                                                @if (Model.Report.ActivityId == 0) { @Html.Raw(" selected")               }>
+                                            Не выбрано
+                                        </option>
+                                        foreach (var item in acts)
+                                        {
+                                            <option value="@item.ActivityId"
+                                                    @if (item.ActivityId == Model.Report.ActivityId) { @Html.Raw(" selected")             }>
+                                                @item.ActivityName
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Вид занятости:
+                            </td>
+                            <td>
+                                <div id="updwork">
+                                    <select class="with_all" id="work">
+                                        @{
+                                            List<iasaWorks> wrks = Model.userWorks;
+                                            <option value="0"
+                                                    @if (Model.Report.WorkId == 0) { @Html.Raw(" selected")               }>
+                                                Не выбрано
+                                            </option>
+                                            foreach (var item in wrks)
+                                            {
+                                                <option value="@item.WorkId"
+                                                        @if (item.WorkId == Model.Report.WorkId) { @Html.Raw(" selected")               }>
+                                                    @item.WorkName
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                               Мероприятие:
+                            </td>
+                            <td>
+
+                                <div id="branch">
+
+                                </div>
+                                <div id="updminmax"> <input type="hidden" id="Minx" /> <input type="hidden" id="Maxy" /> </div>
+                                <input type="hidden" id="worktype" />
+                                @*<select class="with_all" id="worktype">
+                                    <option value="0">Не выбрано</option>
+                                    @foreach (var item in Model.worktypes)
+                                    {
+                                        <option value="@item.WorktypeId"
+                                                @if (item.WorktypeId == Model.Report.WorktypeId) { @Html.Raw(" selected") }>
+                                                @item.WorktypeName</option>
+                                    }
+                                </select>*@
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Сведения о выполненной работе:
+                            </td>
+                            <td>
+                                <textarea class="with_all" rows="6" id="text">@Model.Report.ReportText</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Оценка/балл
+                            </td>
+                            <td>
+
+                                <input class="dt range" size="2" type="text" value="@Model.Report.Grade" id="Grade">
+                                @*@Html.HiddenFor(x=>x.)*@
+                            </td>
+
+
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="updactiv">
+
+                                    Начальная дата:
+                                    <div class="input-append date form_datetime_begin">
+
+
+                                        <input class="dt" size="16" type="text" value="@Model.Report.ReportBegin.ToString("dd.MM.yyyy")" id="begin" readonly>
+
+
+                                        <span class="add-on"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <br />
+                                    Конечная дата:
+                                    <div class="input-append date form_datetime_end">
+
+
+
+                                        <input class="dt" size="16" type="text" value="@Model.Report.ReportEnd.ToString("dd.MM.yyyy")" id="end" readonly>
+
+                                        <span class="add-on"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <div class="text-center"><input type="button" class="btn btn-info" id="editReport" value="Сохранить отчет" /><input type="button" id="lity-close" style="display:none;" data-lity-close /> </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".range").keyup(function () {
+
+            var id = $(this).attr('data');
+
+            var val = parseInt($(this).val());
+
+            var max = parseInt($('#Maxy').val());
+            var min = parseInt($('#Minx').val());
+
+            if (val < min || val > max) {
+
+                $(this).addClass("error");
+
+            }
+            else {
+
+
+
+                $(this).css('background', 'white');
+                $(this).removeClass("error");
+            }
+
+
+
+        });
+
+
+        $(".range").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188]) !== -1 ||
+                // Allow: Ctrl+A
+        (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        function updateBranch(pid) {
+            $('#branch').html("<div class='text-center'><img src='\\Content\\Images\\loader.gif' /></div>");
+            $.get('@Url.Action("GetBranch", "Account")', { pid: pid },
+                function (viewdata) {
+                    $('#branch').html(viewdata);
+                });
+        }
+        function updwork() {
+
+
+            $.get('@Url.Action("Updwork", "Account")',
+                    function (viewdata) {
+                        if (viewdata)
+                            $('#updwork').html(viewdata);
+                        updateReportsList()
+                    });
+
+        }
+        function getCurrentBranch(id) {
+            $('#branch').html("<div class='text-center'><img src='\\Content\\Images\\loader.gif' /></div>");
+            $.get('@Url.Action("GetCurrentBranch", "Account")', { id: id },
+                function (viewdata) {
+                    $('#branch').html(viewdata);
+                });
+        }
+        var selwrkt = parseInt("@Model.Report.WorktypeId");
+
+        $.get('@Url.Action("GetMinimax", "Account")', { selwrkt: selwrkt },
+   function (viewdata) {
+       $('#updminmax').html(viewdata);
+
+   });
+        getCurrentBranch(@Model.Report.WorktypeId);
+        $('#branch').on('click', '.wt', function () {
+            if ($(this).attr("data-last") == "1") {
+                $(".wt").removeClass("selBlue");
+                $(this).addClass("selBlue");
+                $("#worktype").val($(this).attr("data-id"));
+                var selwrkt = parseInt("@Model.Report.WorktypeId");
+
+                $.get('@Url.Action("GetMinimax", "Account")', { selwrkt: selwrkt },
+           function (viewdata) {
+               $('#updminmax').html(viewdata);
+
+           });
+
+
+            } else {
+                updateBranch($(this).attr("data-id"));
+            }
+
+
+        })
+
+        $('body').on('click', '.bread', function () {
+            updateBranch($(this).attr("data-id"));
+        })
+
+        $('body').on('change', "#activity", function () {
+            var activity = this.value;
+            $.get('@Url.Action("SetDefaultActivity", "Account")', { activity: activity },
+                function (viewdata) {
+                    $('#updactiv').html(viewdata);
+                    updateBranch(0);
+                    updwork();
+                });
+        })
+    })
+</script>

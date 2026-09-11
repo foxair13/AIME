@@ -1,0 +1,42 @@
+﻿@model MVCDIS.Models.JobTitle
+
+@{
+    ViewBag.Title = "Удаление записи";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-briefcase fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Должности</b></i></strong>
+</div>
+<h3>Вы уверены, что желаете удалить эту запись?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfAreas.Name)
+        </dd>
+
+        <dt>
+            @Html.Label("Должность", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+         <div class="form-actions no-color">
+            <input type="submit" value="Удалить запись" class="btn btn-primary" /> |
+            @Html.ActionLink("Назад к списку", "Index")
+        </div>
+    }
+</div>

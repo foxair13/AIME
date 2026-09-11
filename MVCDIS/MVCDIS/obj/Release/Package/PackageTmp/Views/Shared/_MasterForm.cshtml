@@ -1,0 +1,484 @@
+﻿@using MVCDIS.Models
+
+@{
+
+    bool infomode = false;
+    int userid = WebSecurity.GetUserId(User.Identity.Name);
+    String FIO = "";
+    String email = "";
+    List<MVCDIS.Models.Roles> LRole = new List<MVCDIS.Models.Roles>();
+
+    using (var db = new MVCDIS.Models.UsersContext())
+    {
+        MVCDIS.Models.UserProfile up = db.UserProfiles.Where(x => x.UserId == userid).SingleOrDefault();
+        using (var dbc = new MVCDIS.Models.CompetenceContext())
+        {
+            int fcid = dbc._Clients.Where(x => x.ID == up.ClientsID).Select(x => x.ClientInfoID).SingleOrDefault();
+            MVCDIS.Models.ClientsInfo fci = dbc._ClientsInfo.Where(x => x.ID == fcid).SingleOrDefault();
+            try
+            {
+                FIO = fci.FIO;
+
+            }
+            catch (Exception)
+            {
+
+                FIO = "";
+
+            }
+            try
+            {
+                email = up.Email;
+            }
+            catch (Exception)
+            {
+
+                email = "";
+            }
+
+
+            LRole = dbc.Roles.ToList<MVCDIS.Models.Roles>();
+        }
+
+        if (up.State != null)
+        {
+            infomode = (bool)up.State;
+        }
+        else
+        {
+            infomode = false;
+        }
+
+    }
+
+
+
+}
+
+@Styles.Render("~/Content/bootstrapswitch")
+@Scripts.Render("~/bundles/bootstrapswitch")
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        @if (CustomAuthorizeAttribute.CheckRoles("Works"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Works\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Works\").attr(\"action-title\",\"Виды занятости(Works)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Zvanie"))
+         {
+             getInfoMode gim = new getInfoMode();
+             if (gim.Get(User.Identity.Name))
+             {
+                 @Html.Raw("$(\".Zvanie\").addClass(\"showAction\")\n");
+                 @Html.Raw("$(\".Zvanie\").attr(\"action-title\",\"Научные звания(Zvanie)\")\n");
+             }
+         }
+        @if (CustomAuthorizeAttribute.CheckRoles("Stepen"))
+         {
+             getInfoMode gim = new getInfoMode();
+             if (gim.Get(User.Identity.Name))
+             {
+                 @Html.Raw("$(\".Stepen\").addClass(\"showAction\")\n");
+                 @Html.Raw("$(\".Stepen\").attr(\"action-title\",\"Научные степени(Stepen)\")\n");
+             }
+         }
+        @if (CustomAuthorizeAttribute.CheckRoles("Templates"))
+          {
+              getInfoMode gim = new getInfoMode();
+              if (gim.Get(User.Identity.Name))
+              {
+                  @Html.Raw("$(\".Templates\").addClass(\"showAction\")\n");
+                  @Html.Raw("$(\".Templates\").attr(\"action-title\",\"Печатные шаблоны(Templates)\")\n");
+              }
+          }
+        @if (CustomAuthorizeAttribute.CheckRoles("Actis"))
+          {
+              getInfoMode gim = new getInfoMode();
+              if (gim.Get(User.Identity.Name))
+              {
+                  @Html.Raw("$(\".Actis\").addClass(\"showAction\")\n");
+                  @Html.Raw("$(\".Actis\").attr(\"action-title\",\"Виды мероприятий(Actis)\")\n");
+              }
+          }
+        @if (CustomAuthorizeAttribute.CheckRoles("InWork"))
+          {
+              getInfoMode gim = new getInfoMode();
+              if (gim.Get(User.Identity.Name))
+              {
+                  @Html.Raw("$(\".InWork\").addClass(\"showAction\")\n");
+                  @Html.Raw("$(\".InWork\").attr(\"action-title\",\"Мероприятия(InWork)\")\n");
+              }
+          }
+        @if (CustomAuthorizeAttribute.CheckRoles("ArchReports"))
+          {
+              getInfoMode gim = new getInfoMode();
+              if (gim.Get(User.Identity.Name))
+              {
+                  @Html.Raw("$(\".ArchReports\").addClass(\"showAction\")\n");
+                  @Html.Raw("$(\".ArchReports\").attr(\"action-title\",\"Архив отчетов(ArchReports)\")\n");
+              }
+          }
+        
+        @if (CustomAuthorizeAttribute.CheckRoles("Reports"))
+         {
+             getInfoMode gim = new getInfoMode();
+             if (gim.Get(User.Identity.Name))
+             {
+                 @Html.Raw("$(\".Reports\").addClass(\"showAction\")\n");
+                 @Html.Raw("$(\".Reports\").attr(\"action-title\",\"Отчеты(Reports)\")\n");
+             }
+         }
+
+        @if (CustomAuthorizeAttribute.CheckRoles("Plancreate"))
+                    {
+                        getInfoMode gim = new getInfoMode();
+                        if (gim.Get(User.Identity.Name))
+                        {
+                            @Html.Raw("$(\".Plancreate\").addClass(\"showAction\")\n");
+                            @Html.Raw("$(\".Plancreate\").attr(\"action-title\",\"Рейтинг / План(Plancreate)\")\n");
+                        }
+                    }
+
+        @if (CustomAuthorizeAttribute.CheckRoles("Userroom"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Userroom\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Userroom\").attr(\"action-title\",\"Кабинет пользователя(Userroom)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Contingent"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Contingent\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Contingent\").attr(\"action-title\",\"Контингент(Contingent)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("ClientsInfo"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".ClientsInfo\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".ClientsInfo\").attr(\"action-title\",\"Перечень кандидатов(ClientsInfo)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Roles"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Roles\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Roles\").attr(\"action-title\",\"Управление ролями(Roles)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Access"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Access\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Access\").attr(\"action-title\",\"Управление доступом(Access)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Access"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Interface\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Interface\").attr(\"action-title\",\"Управление интерфейсом(Interface)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Cvalificate"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Cvalificate\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Cvalificate\").attr(\"action-title\",\"Уровни квалификации(Cvalifacate)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Prof"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Prof\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Prof\").attr(\"action-title\",\"Категории должностей(Prof)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Jobs"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Jobs\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Jobs\").attr(\"action-title\",\"Должности(Jobs)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Cert"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Cert\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Cert\").attr(\"action-title\",\"Виды сертификатов(Cert)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Competence"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Competence\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Competence\").attr(\"action-title\",\"Компетенции(Competence)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Discipline"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Discipline\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Discipline\").attr(\"action-title\",\"Мероприятия Материала(Discipline)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Priority"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Priority\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Priority\").attr(\"action-title\",\"Приоритеты(Priority)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Priority"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Priority\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Priority\").attr(\"action-title\",\"Приоритеты(Priority)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Types"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Types\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Types\").attr(\"action-title\",\"Виды составляющих компетенций(Types)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("ConfigDiscipline"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".ConfigDiscipline\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".ConfigDiscipline\").attr(\"action-title\",\"Привязка Материала(ConfigDiscipline)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("Grades"))
+            {
+                getInfoMode gim = new getInfoMode();
+                if (gim.Get(User.Identity.Name))
+                {
+                    @Html.Raw("$(\".Grades\").addClass(\"showAction\")\n");
+                    @Html.Raw("$(\".Grades\").attr(\"action-title\",\"Редактор оценок(Grades)\")\n");
+                }
+            }
+        @if (CustomAuthorizeAttribute.CheckRoles("MenuTables"))
+              {
+                  getInfoMode gim = new getInfoMode();
+                  if (gim.Get(User.Identity.Name))
+                  {
+                      @Html.Raw("$(\".MenuTables\").addClass(\"showAction\")\n");
+                      @Html.Raw("$(\".MenuTables\").attr(\"action-title\",\"Меню - Таблицы(MenuTables)\")\n");
+                  }
+              }
+        @if (CustomAuthorizeAttribute.CheckRoles("Userslist"))
+         {
+             getInfoMode gim = new getInfoMode();
+             if (gim.Get(User.Identity.Name))
+             {
+                 @Html.Raw("$(\".Userslist\").addClass(\"showAction\")\n");
+                 @Html.Raw("$(\".Userslist\").attr(\"action-title\",\"Перечень кандидатов(Userslist)\")\n");
+             }
+         }
+        @if (CustomAuthorizeAttribute.CheckRoles("Attr"))
+          {
+              getInfoMode gim = new getInfoMode();
+              if (gim.Get(User.Identity.Name))
+              {
+                  @Html.Raw("$(\".Attr\").addClass(\"showAction\")\n");
+                  @Html.Raw("$(\".Attr\").attr(\"action-title\",\"Составляющие компетенций(Attr)\")\n");
+              }
+          }
+        $("[name='scheckbox']").attr("data-on-text", "Вкл");
+        $("[name='scheckbox']").attr("data-off-text", "Выкл");
+
+        $("[name='scheckbox']").bootstrapSwitch();
+
+        $("[name='scheckbox']").on('switchChange.bootstrapSwitch', function (event, state) {
+
+            $.get('@Url.Action("AdvancedM", "Account")', { Sel: state }, function (viewdata) {
+
+
+                location.reload();
+
+
+            });
+        });
+    }
+</script>
+
+
+<div id="top">
+    <!-- .navbar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <header class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Управление</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </header>
+            <div class="topnav">
+                @if (CustomAuthorizeAttribute.CheckRoles("AdminButton"))
+                {
+                    <div class="btn-group">
+
+                        <input type="checkbox" name="scheckbox" data-off-text="False" data-on-text="True" class="switch" @if (infomode) {  @Html.Raw(" checked")     }>
+
+                    </div>
+                }
+                <div class="btn-group">
+
+                    <a data-placement="bottom" data-original-title="Развернуть на весь экран" data-toggle="tooltip" class="btn btn-default btn-sm" id="toggleFullScreen">
+                        <i class="glyphicon glyphicon-fullscreen"></i>
+                    </a>
+                </div>
+
+                <div class="btn-group">
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <text>
+
+                            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a data-toggle="tooltip" data-original-title="Выход" data-placement="bottom" class="btn btn-metis-1 btn-sm" href="javascript:document.getElementById('logoutForm').submit()"> <i class="fa fa-power-off"></i></a>
+                            }
+                        </text>
+                    }
+
+                </div>
+                <div class="btn-group">
+                    <a data-placement="bottom" data-original-title="Скрыть/Показать меню" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <!-- .nav -->
+                @Html.Partial("_TopMenu")
+                <!-- /.nav -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- /.navbar -->
+    <header class="head">
+
+        <!-- /.search-bar -->
+        @*<div class="main-bar">
+                <center>
+                    <h3>
+                        <i class="fa fa-home"></i>&nbsp; @ViewBag.Title
+                    </h3>
+                </center>
+            </div>*@
+        <!-- /.main-bar -->
+    </header>
+    <!-- /.head -->
+</div>
+<!-- /#top -->
+<div id="left">
+    <div class="media user-media bg-dark dker">
+        <div class="user-media-toggleHover">
+            <span class="fa fa-user"></span>
+        </div>
+        <div class="user-wrapper bg-dark">
+            @{
+                MVCDIS.Models.getAvatar path = new MVCDIS.Models.getAvatar();
+                int uid = path.getuid(User.Identity.Name);
+                string pathPhoto = "";
+                string rolecombain = "";
+
+
+
+
+                pathPhoto = path.GetImage(uid);
+
+
+            }
+
+            <a class="user-link" href="">
+                <img class="media-object img-thumbnail user-img" alt="User Picture" src="@pathPhoto">
+
+            </a>
+
+
+
+            <div class="media-body">
+
+
+                @foreach (var item in System.Web.Security.Roles.GetRolesForUser(WebSecurity.CurrentUserName))
+                {
+                    string rolename = (from x in LRole where x.RoleName == item select x.RoleDescription).FirstOrDefault();
+                    rolecombain = rolecombain + rolename + " ";
+
+                }
+                <br />
+                <ul class="list-unstyled user-info">
+                    <li>Логин: <i class="fa fa-cog fa-spin fa-fw"></i>@Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: new { area = "" }, htmlAttributes: new { @class = "username", title = "Manage" })<i class="fa fa-cog fa-spin fa-fw"></i> </li>
+                    <li>Роли:  @rolecombain</li>
+                    <li>ФИО:  @FIO </li>
+                    <li>Почта:  @email </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- #menu -->
+    @Html.Partial("_LeftMenu")
+    <!-- /#menu -->
+</div>
+
+
+

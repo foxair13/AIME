@@ -1,0 +1,67 @@
+﻿
+@model MVCDIS.Models.Templates
+<script type="text/javascript">
+        $(document).ready(function () {
+
+           
+
+            $(".template-del").click(function () {
+        
+                var id = $(this).attr("data-id");
+                $.get('@Url.Action("removeTemplate", "Templates")', { id: id },
+                       function (viewdata) {
+                           if (viewdata) {
+                               $.get('@Url.Action("userTemplates", "Templates")', { act: 0 },
+                 function (viewdata) {
+                     $('#userTemplates').html(viewdata);
+                 });
+                           }
+                       })
+          
+            // other options
+        });
+
+            $(".work-row").click(function () {
+               
+                $(".fa-check").remove();
+                $(this).children(".default").children(".check").html('<i class="fa fa-check fa-2x" aria-hidden="true"></i>');
+                var id = $(this).attr("data-id");
+                $.get('@Url.Action("defaultTemplate", "Templates")', { id: id },
+                 function (viewdata) {
+                     //$('#userTemplates').html(viewdata);
+                 });
+            })
+    })
+</script>
+@if (Model.userTemplates.Count > 0)
+{
+    foreach (var item in Model.userTemplates)
+    {
+
+        <div class="row field_row work-row" data-id="@item.TemplateId">
+
+            <div class="name">@item.TemplateName</div>
+            <div class="default">
+                <div class="check" style="display:inline-block;">
+                    @if (item.TemplateId == Model.defaultTemplate)
+                    {
+                        <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+
+                    }
+                </div>
+                <i class="fa fa-trash fa-2x template-del" aria-hidden="true" data-id="@item.TemplateId" data-toggle="confirmation" data-placement="left"></i>
+            </div>
+        </div>
+
+
+    }
+
+    
+
+
+
+}
+else
+{
+    <div>Шаблоны отсутствуют</div>
+}

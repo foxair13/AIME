@@ -1,0 +1,45 @@
+﻿@model MVCDIS.Models.Roles
+
+@{
+    ViewBag.Title = "Удаление записи";
+}
+
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-gavel fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Управление ролями</b></i></strong>
+</div>
+<h3>Вы уверены, что желаете удалить эту запись?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleDescription)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить запись" class="btn btn-primary" /> |
+            @Html.ActionLink("Назад к списку", "Index")
+        </div>
+    }
+</div>

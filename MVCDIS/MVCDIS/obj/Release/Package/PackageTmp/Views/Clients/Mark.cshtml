@@ -1,0 +1,220 @@
+﻿
+@model MVCDIS.Models.CompetenceEditViewModel
+<style>
+    #example {
+        width: 100%;
+    }
+
+   
+
+table {
+    table-layout: fixed;
+}
+td{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+ #Hideme {
+        display: none;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".Sel").click(function () {
+                Sel = "@ViewBag.ClienD";
+                //var Sel = tab.row('.selected').data()[0];
+
+                $.get('@Url.Action("Advancedinfo", "Clients")', { Sel: Sel }, function (viewdata) {
+
+                    lity('#Advanced');
+
+
+                    $('#Advanced').html(viewdata);
+                });
+
+            });
+            var oldRow, nTr, oldtr, newtr, zTr;
+             var table=  $('#example').DataTable({
+                "iDisplayLength": 30,
+                "bAutoWidth": false,
+                "aaSorting": [[1, "asc"]],
+                "bProcessing": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumns": [{ "sWidth": "10%", "bSortable": false, "mDataProp": null, "sClass": "control", "sDefaultContent": '<img src="@Url.Content("~/Content/img/details_open.png")">' } ,{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "80%" }]
+            } );
+
+
+             $('#example tbody').on('click', 'td.control', function () {
+                 oldRow = nTr;
+                 
+                 oldtr = newtr
+                 newtr = $(this).closest('tr');
+                 var child = table.row(newtr).child;
+
+                 if (child.isShown()) {
+
+                     child.hide();
+                     oldRow = null;
+                     nTr = null;
+                     oldtr = null;
+                     $('img', this).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+
+                }
+                else {
+
+                     nTr = table.row(newtr).child;
+                     zTr = nTr;
+                    var id = table.row(newtr).data()[1];
+                    var pid = "";
+                    var jid = "";
+                    var lid = "";
+                    pid = "@ViewBag.pid";
+                     jid = "@ViewBag.jid";
+                     lid = "@ViewBag.LevelID";
+                     cid = "@ViewBag.ClientId";
+                    $.get(
+                        "@Url.Action("GetRowDetail", "Clients")", { id: id, pid: pid, jid: jid, lid: lid, cid:cid }, function (viewdata) {
+                            child(viewdata).show();
+                        });
+
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_close.png")');
+
+
+                }
+                 if (oldRow != nTr) {
+
+                     oldRow.hide();
+                     $('img', oldtr).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+                }
+             });
+
+          
+            $("#HB").click(function () {
+                if (zTr != undefined) {
+                    zTr.hide();
+                    zTr.child.remove();
+                }
+            });
+
+
+           
+           
+           
+          
+        
+             
+
+             $(".sum").keydown(function (e) {
+                 // Allow: backspace, delete, tab, escape, enter and .
+                 if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                     // Allow: Ctrl+A
+                     (e.keyCode == 65 && e.ctrlKey === true) ||
+                     // Allow: home, end, left, right, down, up
+                     (e.keyCode >= 35 && e.keyCode <= 40)) {
+                     // let it happen, don't do anything
+                     return;
+                 }
+                 // Ensure that it is a number and stop the keypress
+                 if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                     e.preventDefault();
+                 }
+             });
+        
+          
+
+
+
+
+
+          
+        });
+    </script>
+}
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-thumbs-up fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Редактор оценок</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Оцените состояние компетентности</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+<fieldset>
+    <h2  id="para"> </h2>
+
+       <legend>Перечень компетенций</legend>
+    <div>
+
+            ФИО: <button onclick="return false" class="btn btn-primary Sel" id="@ViewBag.ClientId">@ViewBag.ClientName</button>
+            <br />
+        Категория должности: @ViewBag.Profstr
+            <br />
+            Должность: @ViewBag.Jobstr
+            <br />
+            Наименование уровня квалификации: Уровень № @ViewBag.LevelLev "@ViewBag.LevelName"
+            <br />
+            <hr />
+
+            @using (Html.BeginForm("PriorityGet", "Competence", FormMethod.Get, new { @id = "Priority" }))
+            {
+                <table id="example" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th id="Hideme"></th>
+                            <th>Шифр</th>
+                            <th>Название</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @Html.EditorFor(x => x.CompetenceEdits)
+
+                    </tbody>
+                </table>
+                <input type="hidden" name="IDS" id="IDS" value="@ViewBag.LevelID" />
+                <input type="hidden" name="JID" id="JID" value="@ViewBag.jid" />
+
+
+                <br />
+
+            }
+</div>
+</fieldset>
+
+        </div>
+    </div>
+</div>
+
+<div class="lity-hide confirm" id="Advanced">
+
+</div>

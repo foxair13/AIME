@@ -1,0 +1,804 @@
+﻿@model List<MVCDIS.Models.DisciplineEdit>
+@using System.Web.Mvc;
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+    #Hideme {
+        display: none;
+    }
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    table.grid_table_new td, table.grid_table_new th {
+        word-wrap: break-word;
+    }
+</style>
+
+
+
+<div class="profile-container">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-address-card fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Кабинет пользователя</b></i></strong>
+    </div>
+    <div class="profile-main">
+       
+
+        <div class="row">
+            Уровни квалификации:
+        </div>
+        <div class="row" id="userActivities">
+
+        </div>
+        <div class="row text-center"><a class="lity-link" href="#add-activities" data-lity><div class="btn btn-success" id="addActivity">Выбрать уровень квалификации</div></a></div>
+
+        <br />
+
+        <div class="row" id="userWorks"></div>
+        <div id="add-activities" style="background:#fff" class="lity-hide add-activities">
+        </div>
+
+        <div id="add-works" style="background:#fff" class="lity-hide add-works">
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-xs-24 user-info">
+
+                <div class="avatar-view">
+                    @{
+                        //Ldap.Classes.getAvatar path = new Ldap.Classes.getAvatar();
+                        string pathPhoto = @ViewBag.img;
+                    }
+                    <img id="avatar-img" src="@pathPhoto" border="0" />
+                    <a href="javascript:document.getElementById('removePhoto').submit()"><div class="remove-photo" title="Удалить фото"><i class="fa fa-times"></i></div></a>
+                    @using (Html.BeginForm("RemovePhoto", "Account", FormMethod.Post, new { id = "removePhoto" }))
+                    {
+
+                    }
+
+                    <a href="#set-photo" data-lity><div class="set-photo" title="Изменить фото"><i class="fa fa-pencil"></i></div></a>
+
+
+                </div>
+                <div class="dopinfo">
+
+
+                    <ul class="list-unstyled user_data" id="add_fields">
+
+                        <li>
+                            <hr />
+                        </li>
+
+
+                        <li>
+                            <h5>@ViewBag.FIO</h5>
+                        </li>
+                        <li>
+                            <b>Категория должности:</b> @ViewBag.ProfArea
+                        </li>
+                        <li>
+                            <b>Должность:</b> @ViewBag.jobtitle
+                        </li>
+                        <li>
+                            <b>Степень:</b> @ViewBag.StepenName
+                        </li>
+                        <li>
+                            <b>Звание:</b> @ViewBag.ZvanieName
+                        </li>
+
+
+                        <li>
+                            <i class="fa fa-envelope user-profile-icon"></i> @ViewBag.email
+                        </li>
+
+                    </ul>
+                </div>
+                @if (!ViewBag.Manage)
+                {
+                    <div class="dopinfo">
+                        <a class="lity-link" href="#add-fields" data-lity><div class="btn btn-default" id="btn-add-fields">Изменить</div></a>
+                    </div>
+                }
+                else
+                {
+                    <div class="dopinfo">
+                        <h5>Куратор</h5>
+                    </div>
+                }
+
+            </div>
+            @if (!ViewBag.Manage)
+            {
+                <div class="col-md-10 col-xs-24 user-activity">
+                    <div class="row">
+
+
+                        <div class="box dark">
+                            <div style="overflow-y: auto;" aria-expanded="true" id="div-2" class="body">
+                                <header>
+                                    <div class="icons">
+                                        <i class="fa fa-edit"></i>
+                                    </div>
+                                    <h5>Информация по материалам</h5>
+
+                                    <!-- .toolbar -->
+                                    <div class="toolbar">
+                                        <nav style="padding: 8px;">
+
+                                            <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                                                <i class="fa fa-expand"></i>
+                                            </a>
+
+                                        </nav>
+                                    </div>
+                                    <!-- /.toolbar -->
+                                </header>
+                                <div style="" aria-expanded="true" id="unique1" class="body">
+                                    @if (((List<MVCDIS.Models.selgrp>)ViewBag.plansgroup).Count() != 0)
+{
+
+    <table id="example2" class="grid_table_new">
+
+
+        <thead>
+            <tr>
+                <th id="Hideme"></th>
+                <th>Код уровня</th>
+                <th>Название уровня</th>
+                <th>Максимальное значение оценок</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MVCDIS.Models.selgrp item in (List<MVCDIS.Models.selgrp>)ViewBag.plansgroup)
+            {
+                <tr>
+                    <td id="Hideme">@item.ID</td>
+                    <td>@item.Lev</td>
+                    <td>@item.Name</td>
+                    <td>@item.mark</td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr><td colspan="4"><button class="btn btn-primary" id="Sel">Ознакомиться с планом</button></td></tr>
+
+        </tfoot>
+    </table>
+}
+                                    <br />
+                                    <div id="Drophide" class="row">
+
+                                        <div class="box dark">
+                                            <header>
+                                                <div class="icons">
+                                                    <i class="fa fa-edit"></i>
+                                                </div>
+                                                <h5>План наращивания компетенции и изучения материала</h5>
+
+
+                                                <!-- .toolbar -->
+                                                <div class="toolbar">
+                                                    <nav style="padding: 8px;">
+
+                                                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                                                            <i class="fa fa-expand"></i>
+                                                        </a>
+
+                                                    </nav>
+                                                </div><!-- /.toolbar -->
+                                            </header>
+                                            <div style="" aria-expanded="true" id="unique" class="body">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    @using (Html.BeginForm("Manage", "Account"))
+                                    {
+                                        @Html.ValidationSummary(true)
+    <table id="example" class="display">
+        <thead>
+            <tr>
+                <th>Источник материала</th>
+                <th>Название материала</th>
+                <th>Оценка</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td align="left">
+
+                        @Model[i].Source
+                    </td>
+                    <td align="left">
+
+                        @Model[i].Name
+                    </td>
+                    <td>
+                        @{
+                List<SelectListItem> items = new List<SelectListItem>{ new SelectListItem{Text="Не представляю что нужно оценивать", Value="0"},
+             new SelectListItem{Text="Частично усвоил знание, но затрудняюсь с оценкой", Value="1"},
+             new SelectListItem{Text="Усвоил знания, но еще нужна консультация или дополнительное изучение материала", Value="2"},
+           new SelectListItem{Text="Усвоил знания и могу их применить на практике", Value="3"},
+             new SelectListItem{Text="Усвоил знания и могу научить других", Value="4"},
+               new SelectListItem{Text="Усвоил знания и могу на их основе создать новые", Value="5"}};
+                if (Model[i].Mark != 0)
+                {
+                    foreach (SelectListItem selitem in items)
+                    {
+                        if (selitem.Value == Model[i].Mark.ToString())
+                        {
+                            selitem.Selected = true;
+                        }
+                    }
+                }
+                else
+                {
+                    items[0].Selected = true;
+                }
+
+                        }
+
+
+                        @Html.HiddenFor(m => m[i].ID)
+                        @Html.DropDownListFor(m => m[i].Mark, items, new { @class = "form-control range", id = @Model[i].ID })
+
+                        @Html.ValidationMessageFor(m => m[i].Mark)
+
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+
+            <tr><td colspan="3">
+                  
+                <input class="btn btn-primary" type="submit" id="validsave" value="Расчет итоговых оценок"></td></tr>
+
+        </tfoot>
+    </table>
+
+                                    }
+
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            }
+
+            <canvas id="newPhoto" width="200" height="200" hidden></canvas>
+        </div>
+    </div>
+</div>
+
+
+<div id="set-photo" style="background:#fff" class="lity-hide select-photo">
+
+
+    <!-- форма загрузки -->
+    <!-- скрытые параметры -->
+    <input id="x1" type="hidden" name="x1" />
+    <input id="y1" type="hidden" name="y1" />
+    <input id="x2" type="hidden" name="x2" />
+    <input id="y2" type="hidden" name="y2" />
+
+
+    <div class="flex-row step1">Выберите изображение на компьютере</div>
+    <div class="flex-row step1"><a href="#" class="btn btn-default btn-blue" role="button" id="image-select">Выбрать изображение</a></div>
+    <div class="error"></div>
+
+    <div style="display: none;"><input id="image_file" type="file" name="image_file" onchange="fileSelectHandler()" /></div>
+
+    <div class="step2 flex-row">
+        <form id="send-image" action="/Account/UploadPhoto" method="post">
+            <div class="flex-row">Выбранная область будет выбрана в качестве Вашей фотографии.</div>
+            <div class="flex-row error"></div>
+            <div class="flex-row">
+                <img id="preview" alt="" />
+
+            </div>
+            <input type="hidden" id="new-image-base64" name="new-image-base64" />
+            <div class="flex-row"><input type="button" class="btn btn-succes disabled" value="Выбрать" id="setImage" disabled="disabled" /></div>
+        </form>
+    </div>
+
+</div>
+
+@if (!ViewBag.Manage)
+{
+    <div id="add-fields" style="background:#fff" class="lity-hide add-fields">
+        <div class="box dark">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>Редактировать профиль</h5>
+
+
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+
+            </header>
+            <div style="" aria-expanded="true" id="div-1" class="body">
+
+                <br />
+                @Html.Label("ФИО", new { @class = "control-label col-md-2" })
+                <input id="FIO" type="text" class="with_all text-left" value="@ViewBag.FIO" />
+                <br />
+                @Html.Label("@mail", new { @class = "control-label col-md-2" })
+                <input id="email" type="email" class="with_all text-left" value="@ViewBag.email " />
+                <br />
+                @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Prof", null, new { @class = "form-control" })
+                <br />
+                @Html.Label("Должность", new { @class = "control-label col-md-2" })
+                <select class="form-control" name="target" id="target"></select>
+                <br />
+                @Html.Label("Степень", new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Step", null, new { @class = "form-control", id = "target1" })
+                <br />
+                @Html.Label("Звание", new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Zvan", null, new { @class = "form-control", id = "target2" })
+                <br />
+                <div class="text-center"><div class="btn btn-success" id="add-save" data-lity-close>Сохранить</div></div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
+
+
+<div id="element" class="introLoading"></div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+    $(document).ready(function () {
+
+        $('body').on('click', '.activity-row', function () {
+            var activity = $(this).attr("id");
+            $.get('@Url.Action("SetDefaultActivity", "Account")', { activity: activity },
+                function (viewdata) {
+                    if (viewdata) {
+                        refreshActivities();
+
+
+                    }
+
+                });
+
+
+        })
+
+
+        $('body').on('click', '.work-row', function () {
+            var work = $(this).attr("id");
+            $.get('@Url.Action("SetDefaultWork", "Account")', { work: work },
+                function (viewdata) {
+                    if (viewdata) refreshWorks();
+
+                });
+
+
+        })
+        $('body').on('click', '#act-save', function () {
+            var activity = $("#activity").val();
+            acts = new Object();
+            var obj = $(".a-checkbox")
+            for (var i = 0; i < obj.length; i++) {
+                var x = $(obj[i]).attr("id").split("-");
+                acts[x[1]] = $(obj[i]).is(":checked");
+
+            }
+
+            $.get('@Url.Action("UpdateActivities", "Account")', { acts: acts },
+               function (viewdata) {
+                   if (viewdata) {
+                       refreshActivities();
+                   }
+               });
+
+        })
+
+        $('body').on('click', '#work-save', function () {
+
+            works = new Object();
+            var obj = $(".w-checkbox")
+            for (var i = 0; i < obj.length; i++) {
+                var x = $(obj[i]).attr("id").split("-");
+                works[x[1]] = $(obj[i]).is(":checked");
+
+
+            }
+
+            $.get('@Url.Action("UpdateWorks", "Account")', { works: works },
+               function (viewdata) {
+                   if (viewdata) {
+                       refreshWorks();
+                       //refreshActivitiesSelect();
+                   }
+               });
+
+        })
+
+        function refreshActivities() {
+            $.get('@Url.Action("userActivities", "Account")',
+                 function (viewdata) {
+                     refreshWorks();
+                     $('#userActivities').html(viewdata);
+                 });
+        }
+
+        function refreshWorks() {
+            $.get('@Url.Action("userWorks", "Account")',
+                 function (viewdata) {
+                     refreshWorksSelect();
+                     $('#userWorks').html(viewdata);
+                 });
+        }
+        function refreshActivitiesSelect() {
+            $.get('@Url.Action("allActivities", "Account")',
+                function (viewdata) {
+                    $('#add-activities').html(viewdata);
+                });
+        }
+        function refreshWorksSelect() {
+            $.get('@Url.Action("allWorks", "Account")',
+                function (viewdata) {
+                    $('#add-works').html(viewdata);
+                });
+        }
+
+        refreshActivities();
+        refreshActivitiesSelect();
+        refreshWorks();
+        refreshWorksSelect();
+        $('#Drophide').hide();
+        var tab = $('#example2').DataTable({
+            "iDisplayLength": 25,
+            "bAutoWidth": false,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumnDefs": [
+     { 'bSortable': false, 'aTargets': [0, 1, 2, 3] }
+            ],
+            "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "70%" }, { "sWidth": "10%" }]
+
+
+        });
+        $("#Sel").click(function () {
+            //var Sel = table.row('.selected').data();
+            var Sel = tab.row('.selected').data()[0];
+            $.get('@Url.Action("GetPlan", "Account")', { Sel: Sel }, function (viewdata) {
+
+                $('#Drophide').slideDown();
+                $('#unique').html(viewdata);
+            });
+
+        });
+        $('#example2 tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                tab.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+        $("#element").introLoader({
+            animation: {
+                name: 'doubleLoader',
+                options: {
+                    exitFx: 'fadeOut',
+                    ease: "easeInOutCirc",
+                    style: 'ocean zebra',
+                    delayBefore: 500,
+                    exitTime: 300,
+                    progbarTime: 700,
+                    progbarDelayAfter: 400,
+                    preventScroll: true
+                }
+            }
+        });
+
+
+
+
+
+
+        $(".range").keyup(function () {
+
+            var id = $(this).attr('data');
+            var val = parseInt($(this).val());
+
+            if (val < 0 || val > 5) {
+
+
+                $(this).addClass("error");
+
+            }
+            else {
+
+
+
+                $(this).css('background', 'white');
+                $(this).removeClass("error");
+            }
+
+
+
+        });
+
+
+        $(".range").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188]) !== -1 ||
+                // Allow: Ctrl+A
+        (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+        $('#example').dataTable({
+            "bFilter": false,
+            "bLengthChange": false,
+            "bAutoWidth": false,
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumnDefs": [
+     { 'bSortable': false, 'aTargets': [0, 1] }
+            ],
+            "aoColumns": [{ "sWidth": "30%" },{ "sWidth": "30%" }, { "sWidth": "40%" }]
+
+
+        });
+
+        var jcrop_api;
+        var initial_target_html = '<option value="0">Пожалуйста укажите профессию...</option>';
+        var selectvalue = $("#Prof option:selected").val();
+
+        if (selectvalue == "0" || selectvalue == null) {
+
+            $("#Sel").hide();
+            //Display initial prompt in target select if blank value selected
+            $('#target').html(initial_target_html);
+        } else {
+            //Make AJAX request, using the selected value as the GET
+
+
+            $.get('@Url.Action("GetListDetail", "Account")', { id: selectvalue }, function (viewdata) {
+                $('#target').html(viewdata);
+                $("#Sel").show();
+
+            });
+
+        }
+        $('#Prof').change(function (e) {
+            //Grab the chosen value on first select list change
+
+            selectvalue = $(this).val();
+            //Display 'loading' status in the target select list
+            $('#target').html('<option value="">Загрузка...</option>');
+
+            if (selectvalue == "0") {
+                $("#Sel").hide();
+                //Display initial prompt in target select if blank value selected
+                $('#target').html(initial_target_html);
+            } else {
+                //Make AJAX request, using the selected value as the GET
+
+
+                $.get('@Url.Action("GetListDetail", "Account")', { id: selectvalue }, function (viewdata) {
+                    $('#target').html(viewdata);
+                    $("#Sel").show();
+
+                });
+
+            }
+        });
+        $(".avatar-view").mouseover(function () {
+
+            $(".set-photo").show();
+            $(".remove-photo").show();
+
+        })
+
+        $(".avatar-view").mouseout(function () {
+
+            $(".remove-photo").hide();
+            $(".set-photo").hide();
+        })
+
+        $("#image-select").click(function () {
+
+            $("#image_file").click();
+        })
+
+
+        $('#setImage').click(function () {
+            var x1 = $("#x1").val();
+            var y1 = $("#y1").val();
+            var x2 = $("#x2").val();
+            var y2 = $("#y2").val();
+            var w = x2 - x1;
+            var h = y2 - y1;
+
+            var canvas = document.getElementById("newPhoto");
+            var context = canvas.getContext("2d");
+            var np = new Image();
+            np.src = $("#preview").attr("src");
+
+            np.onload = function () {
+                context.drawImage(np,
+                   x1, y1, w, h,
+                   0, 0, 200, 200);
+                //$("#new-image").attr("src", canvas.toDataURL("image/jpg"));
+                $("#new-image-base64").val(canvas.toDataURL("image/jpg"));
+                $("#send-image").submit();
+
+            };
+
+
+
+
+        })
+
+        $('form').on('submit', function (e) {
+            var form = this;
+
+            // Get list of visible ID values, because we do not need to duplicate them
+            var visibleIDs = [];
+            $(form).find("input,  select,  textarea").each(function (i, visibleInput) {
+                var visibleID = $(visibleInput).attr("id");
+                if (visibleID != undefined) {
+                    visibleIDs.push(visibleID);
+                }
+            });
+            var fox = "";
+            $(form).find("table.display").each(function (j, table) {
+                $(table).DataTable().$("input, select, textarea").each(function (k, input) {
+                    var type = $(input).attr("type");
+                    var useInput;
+                    if (type == "checkbox" || type == "radio") {
+                        // Must see if box is checked before converting to hidden type
+                        useInput = $(input).prop("checked");
+                    }
+                    else {
+                        // All other input types are automatically converted
+                        useInput = true;
+                    }
+                    if (useInput) {
+                        var newID = $(input).attr("id");
+
+                        // Only process the newID if it is not already a visible input
+                        if (visibleIDs.indexOf(newID) == -1) {
+                            // Use hidden type so that the form inputs are not all visible
+                            $(input).attr("style", "visibility: hidden");
+
+                            // Append all inputs, including the ones from hidden pages, to the form
+                            $(form).append(input);
+                        }
+                    }
+                });
+            });
+
+        });
+
+        $("#add-save").click(function () {
+
+
+
+            var jobid = $("#target option:selected").val();
+            var stepid = $("#target1 option:selected").val();
+            var zvanid = $("#target2 option:selected").val();
+            var fio = $("#FIO").val();
+
+            var email = $("#email").val();
+
+            if (isValidEmailAddress(email) && jobid != 0) {
+
+                $("#email").css("background-color", "transparent");
+                $.get('@Url.Action("AddFields", "Account")', { fio: fio, email: email, jobid: jobid, stepid: stepid, zvanid: zvanid },
+            function (viewdata) {
+                $('#add_fields').html(viewdata);
+            });
+            }
+            else {
+                $("#email").css("background-color", "#F7B5B5");
+            }
+
+            //$(this).html = "<img src=\"\\Content\\Images\\refresh.gif\">";
+        })
+
+        //function fileSelectHandler() {
+        $("#image_file").change(function () {
+            //    $(".lity-close").click();
+            //$(".step1").hide()
+            $("#set-photo").animate({
+                width: "100%",
+                height: "100%"
+            }, 1);
+
+        })
+        function isValidEmailAddress(emailAddress) {
+            var pattern = new RegExp("^[a-zA-Z0-9_.-]+@@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{0,4}$");
+            return pattern.test(emailAddress);
+        }
+        $(".del").click(function () {
+            $(this).parent().remove();
+        })
+
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

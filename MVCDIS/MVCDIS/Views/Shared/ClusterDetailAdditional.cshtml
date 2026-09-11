@@ -1,0 +1,162 @@
+﻿@model  List<MVCDIS.Controllers.clusters>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('.tbl').DataTable({ "bSort": false, bFilter: false, bInfo: false, "aaData": orgContent, "bLengthChange": false });
+
+
+        });
+
+
+        FusionCharts.ready(function() {
+            var categoryarray = [];
+            var datasetarray = [];
+            var dataarray = @Html.Raw(Json.Encode((List<MVCDIS.Controllers.clusters>) Model));
+            for (var i = 0; i < dataarray.length; i++) {
+
+                categoryarray.push({ label: dataarray[i].clusterid + 1 });
+            }
+            for (var i = 0; i < dataarray[0].additional.length; i++) {
+                var data = [];
+                var vv = 0;
+                for (var k = 0; k < dataarray.length; k++) {
+                    vv = k;
+                    var value = dataarray[k].additional[i].mean - dataarray[k].additional[i].bottom;
+                    data.push({ value: dataarray[k].additional[i].mean / 100, errorvalue: value / 100 });
+
+
+                }
+                datasetarray.push({ seriesname: dataarray[0].additional[i].shifr, data: data });
+
+            }
+            var estProcChart = new FusionCharts({
+                type: 'errorbar2d',
+                renderAt: 'chart-container',
+                width: '100%',
+                height: '650',
+                dataFormat: 'json',
+                dataSource: {
+                    "chart": {
+                        "theme": "fint",
+                        "xaxisname": "№ Группы",
+                        "yaxisname": "Значения",
+                        "numberSuffix": "",
+                        "caption": "График средних и доверительных интервалов (95.00 %)",
+                        "subcaption": "По результатам кластерного анализа",
+                        "showvalues": "0",
+                        "halferrorbar": "0",
+                        "setAdaptiveYMin": "1",
+                        "syncAxisLimits": "1",
+                        "plotTooltext": "<div id='nameDiv' style='font-size: 14px; border-bottom: 1px dashed #999999; font-weight:bold; padding-bottom: 3px; margin-bottom: 5px; display: inline-block;'>Группа № $label , Шифр: $seriesname </div>{br}Среднее значение: <b>$dataValue</b>{br}Отклонение : <b>± $errorDataValue</b>"
+
+                    },
+                    "categories": [
+                        {
+                            "category": categoryarray
+                        }
+                    ],
+                    "dataset": datasetarray
+                }
+            });
+            estProcChart.render();
+        });
+
+    </script>
+
+<style type="text/css">
+    .toop {
+        display: inline;
+        position: relative;
+    }
+
+
+
+    .toop:hover:after {
+        background: #333;
+        background: rgba(0, 0, 0, .8);
+        border-radius: 5px;
+        bottom: 26px;
+        color: #fff;
+        content: attr(title);
+        left: 20%;
+        padding: 5px 15px;
+        position: absolute;
+        z-index: 98;
+        width: 220px;;;
+    }
+</style>
+@if (Model == null)
+{
+    <center>
+        <h1>Проверьте указанное значение количества кластеров. </h1>
+    </center>
+}
+else
+{
+
+    foreach (MVCDIS.Controllers.clusters itemcluster in Model)
+    {
+        <h5>Группа № - @(itemcluster.clusterid + 1)</h5>
+
+        <table class="tbl table table-striped table-bordered" cellspacing="0">
+
+            <thead>
+
+            <tr>
+                <th width="20%">
+                    <b>Ф.И.О.</b>
+                </th>
+                <th>
+                    <b>Рейтинг (%)</b>
+                </th>
+                @foreach (MVCDIS.Controllers.competenceclust competence in itemcluster.clients[0].competences)
+                {
+                    <th>
+                        <b class="toop" title="@competence.tittle">
+                            @competence.shifr
+                        </b>
+                    </th>
+                }
+            </tr>
+            </thead>
+
+            @foreach (MVCDIS.Controllers.clientclust clientclust in itemcluster.clients)
+            {
+                <tbody>
+                <tr>
+                    <td>
+                        <b>
+                            @clientclust.clientfio
+                        </b>
+                    </td>
+                    <td>
+                        <b>
+                            @clientclust.rate %
+                        </b>
+                    </td>
+                    @foreach (MVCDIS.Controllers.competenceclust itemcompetence in clientclust.competences)
+                    {
+                        <td>
+                            @Math.Round(itemcompetence.value/100, 2)
+                        </td>
+
+                    }
+
+                </tr>
+                </tbody>
+
+            }
+
+
+        </table>
+        <hr/>
+
+    }
+
+    <div id="chart-container"></div>
+
+}

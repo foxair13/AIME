@@ -1,0 +1,31 @@
+﻿@model MVCDIS.Models.iasaZvanie
+
+@{
+    ViewBag.Title = "Информация по научному званию";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-graduation-cap fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Научные звания</b></i></strong>
+</div>
+
+
+
+<div>
+ 
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ZvanieName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZvanieName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ZvanieId }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

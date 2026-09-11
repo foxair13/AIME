@@ -1,0 +1,35 @@
+﻿@model MVCDIS.Models.iasaStepen
+
+@{
+    ViewBag.Title = "Удаление записи по научной степени";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-graduation-cap fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Научные степени</b></i></strong>
+</div>
+
+<h3>Вы уверены в том , что хотите удалить эту запись ?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StepenName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StepenName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить запись" class="btn btn-primary" /> |
+            @Html.ActionLink("Вернуться назад", "Index")
+        </div>
+    }
+</div>

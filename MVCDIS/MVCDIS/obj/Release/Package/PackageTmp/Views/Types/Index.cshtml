@@ -1,0 +1,118 @@
+﻿@model IEnumerable<MVCDIS.Models.TypeAttributes>
+@using MvcContrib;
+@using MVCDIS.Models;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.UI.Grid.ActionSyntax;
+@{
+    ViewBag.Title = "Виды составляющих компетенций";
+}
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').dataTable({
+                "iDisplayLength": 25,
+                "bAutoWidth": false,
+                "aaSorting": [[1, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumnDefs": [
+         { 'bSortable': false, 'aTargets': [1, 2, 3] }
+                ],
+                "aoColumns": [ { "sWidth": "70%" }, { "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "10%" }]
+
+
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-cubes fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Виды составляющих компетенций</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Таблица водов составляющих компетенций</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+                <p>
+                    @Html.ActionLink("Добавить новую запись", "Create")
+                </p>
+
+                <div>
+
+                    @Html.Grid(Model).Columns(col =>
+{
+
+    col.For(c => c.Name).Named("Название");
+    col.For(c => Html.ActionLink("Изменить", "Edit", new { id = c.ID })).Encode(false).Sortable(false);
+    col.For(c => Html.ActionLink("Просмотр", "Details", new { id = c.ID })).Encode(false).Sortable(false);
+    col.For(c => Html.ActionLink("Удалить", "Delete", new { id = c.ID })).Encode(false).Sortable(false);
+}).Attributes(id => "example")
+
+
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

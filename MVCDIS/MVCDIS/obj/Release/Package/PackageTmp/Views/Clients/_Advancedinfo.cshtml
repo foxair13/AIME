@@ -1,0 +1,48 @@
+﻿
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Дополнительная информация</h5>
+
+
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+
+                    
+
+                </nav>
+            </div>
+
+        </header>
+        <div style="" aria-expanded="true" id="div-1" class="body">
+            @{string pathPhoto = @ViewBag.img;}
+            <div class="avatar-viewu" align="center">
+                <img id="avatar-img" src="@pathPhoto" border="0" />
+            </div>
+                <br />
+                @Html.Label("ФИО: " ) @ViewBag.FIO
+
+                <br />
+                @Html.Label("Почта: ") @ViewBag.email
+
+               
+
+                <br />
+                @Html.Label("Должность: ") @ViewBag.Job
+
+                <br />
+                @Html.Label("Степень: ") @ViewBag.Step
+
+                <br />
+                @Html.Label("Звание: ") @ViewBag.Zvan
+
+                <br />
+            
+
+            </div>
+    </div>
+
+

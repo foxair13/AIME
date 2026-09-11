@@ -1,0 +1,129 @@
+﻿@model IEnumerable<MVCDIS.Models.Clients>
+@using MVCDIS.Models;
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+      
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+        var table= $('#example2').dataTable({
+            "iDisplayLength": 25,
+            "bAutoWidth": false,
+            "aaSorting": [[1, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "20%" }, { "sWidth": "20%" }, { "sWidth": "10%" }, { "sWidth": "20%" }, { "sWidth": "10%" }, { "sWidth": "10%" }]
+
+
+        });
+
+        $(".Sel").click(function () {
+            Sel = $(this).attr('id')
+            //var Sel = tab.row('.selected').data()[0];
+            
+            $.get('@Url.Action("Advancedinfo", "Clients")', { Sel: Sel }, function (viewdata) {
+
+                lity('#Advanced');
+               
+            
+               $('#Advanced').html(viewdata);
+           });
+
+           });
+     
+
+        $('#example2 tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+        $("#opener1").click(function () {
+            var table = $('#example2').DataTable();
+            var Sel = table.row('.selected').data();
+            if (Sel != undefined) {
+     
+                $("#IDCLIENT").val(Sel[0]);
+              
+                $("#ClientMark").submit();
+                    } else {
+
+                        $("#dialog p").text("Укажите кандидата , которого необходимо оценить");
+                        $("#dialog").dialog("open");
+                    }
+
+        });
+
+    });
+  </script>
+
+@using (Html.BeginForm("Mark", "Clients", FormMethod.Get, new { @id = "ClientMark" }))
+{ 
+                          <input type="hidden" name="levid" id="levid" value="@ViewBag.Levid" />
+                     <input type="hidden" name="pid" id="pid" value="@ViewBag.pid" />
+                     <input type="hidden" name="jid" id="jid" value="@ViewBag.jid" />
+       <input type="hidden" name="IDCLIENT" id="IDCLIENT" value="0" />
+    
+<table id="example2">
+    <thead>
+        <tr>
+             <th id="Hideme"></th>
+            <th>ФИО</th>
+            <th>Должность</th>
+            <th>Степень</th>
+            <th>Звание</th>
+            <th>Email</th>
+           
+
+<th>Информация</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (MVCDIS.Models.Clients item in Model)
+        {
+        
+            <tr>
+                <td id="Hideme">
+                 
+
+                    @item.ID
+                </td>
+                <td>@item.ClientsInfo.FIO</td>
+                <td>@item.JobTitle.Name</td>
+                <td>@item.iasaStepen.StepenName</td>
+                <td>@item.iasaZvanie.ZvanieName</td>
+                <td>@item.ClientsInfo.Email</td>
+               
+                <td align="right"><button onclick="return false" class="btn btn-primary Sel" id="@item.ID ">Дополнительно</button></td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+    
+}
+<div id="dialog" title="Внимание сообщение!">
+    <p></p>
+</div>
+
+<div class="lity-hide confirm" id="Advanced">
+    
+</div>
+<button class="btn btn-primary" id="opener1">Отправить</button>

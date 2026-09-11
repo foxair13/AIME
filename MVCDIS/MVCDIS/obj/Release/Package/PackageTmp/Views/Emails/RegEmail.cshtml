@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: iasa_robot@pac.by
+Subject: Авторизация нового пользователя
+
+Здравствуйте @ViewBag.UserName,
+
+Для того, чтобы продолжить регистрацию и активировать ваш аккаунт перейдите по ссылке @Url.Action("RegisterConfirmation", "Account", new { Id = ViewBag.ConfirmationToken }, "http")
+
+

@@ -1,0 +1,38 @@
+﻿@model MVCDIS.Models.RegisterModel
+
+@using (Html.BeginForm("JsonRegister", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { Id = "registerForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h1>Регистрация</h1>
+    <div id="HideRegister">
+        <p>
+            @Html.LabelFor(m => m.UserName, new Dictionary<string, Object> { { "class", "uname" }, { "data-icon", "u" } })
+            @Html.TextBoxFor(m => m.UserName, new Dictionary<string, Object> { { "id", "registerName" }, { "required", "required" }, { "placeholder", "Введите ваш логин" } })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Email, new Dictionary<string, Object> { { "class", "youmail" }, { "data-icon", "e" } })
+            @Html.TextBoxFor(m => m.Email, new Dictionary<string, Object> { { "required", "required" }, { "type", "email" }, { "placeholder", "xxx@xx.xx" } })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Password, new Dictionary<string, Object> { { "class", "youpasswd" }, { "data-icon", "p" } })
+            @Html.PasswordFor(m => m.Password, new Dictionary<string, Object> { { "placeholder", "Введите ваш пароль" }, { "required", "required" } })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.ConfirmPassword, new Dictionary<string, Object> { { "class", "youpasswd" }, { "data-icon", "p" } })
+            @Html.PasswordFor(m => m.ConfirmPassword, new Dictionary<string, Object> { { "placeholder", "Повторите ваш пароль" }, { "required", "required" } })
+        </p>
+        @Html.ValidationSummary()
+        <p class="signin button">
+            <input id="showRegister" type="submit" value="Создать" />
+        </p>
+
+    </div>
+    <div id="divResult" style='color: #ff0000; font-family: arial; font-size: large;'></div>
+    <p class="change_link">
+        Если зарегистрированы ?
+	<a href="#tologin" class="to_register">Авторизация </a>
+    </p>
+    
+    
+}

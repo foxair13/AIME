@@ -1,0 +1,586 @@
+﻿@model MVCDIS.Models.ClientCalcValueEditViewModel
+@{
+    ViewBag.Title = "Результаты оценки компетентности";
+}
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+@Styles.Render("~/Content/bootstrapswitch")
+@section scripts
+{
+
+    @Scripts.Render("~/bundles/fusioncharts")
+    @Scripts.Render("~/bundles/bootstrapswitch")
+    @Scripts.Render("~/bundles/canvasjs")
+    <script type="text/javascript">
+        window.onload = function () {
+
+            $(function(argument) {
+                $('[type="checkbox"]').attr("data-on-text", "Вкл");
+                $('[type="checkbox"]').attr("data-off-text", "Выкл");
+                $('[type="checkbox"]').bootstrapSwitch();
+            });
+
+
+
+            $("#ClustButton").click(function () {
+                var array = [];
+                $('input:checked').each(function() {
+                    array.push($(this).val());
+                });
+                var values="";
+                var levelid= "@ViewBag.LevelID";
+                var jidt= "@ViewBag.jid";
+                var rate = $("#Clusterrate").val();
+                var ratemax = $("#Clusterratemax").val();
+                
+                values= array.join(",");
+                $.get('@Url.Action("Clst", "Calculate")', {levelid: levelid,jidt: jidt,rate:rate,ratemax:ratemax, values:values}, function (viewdata) {
+
+
+                    $('#clst').html(viewdata);
+                });
+            });
+
+
+
+            var dataP = [];
+            var table1=@Html.Raw(Json.Encode((List<MVCDIS.Models.CompetenceEdit>)ViewBag.Come));
+            for (var i = 0; i <= table1.length-1; i++)
+            {
+                var str = "";
+                str=table1[i].Value;
+                var tt = 0;
+                tt=str.replace(",", ".");
+                if (tt!=0) {
+                    dataP.push({ legendText: table1[i].Shifr, y: tt ,label:table1[i].Shifr});
+                }
+
+            }
+            var piechart = new CanvasJS.Chart("piechartContainer",
+      {
+          animationEnabled: true,
+          animationDuration: 2000,
+          title:{
+              text: "Веса компетенций"
+          },
+          legend: {
+              maxWidth: 350,
+              itemWidth: 120
+          },
+          data: [
+          {
+              type: "pie",
+              toolTipContent: "{label} - <strong>{y}%</strong>",
+              showInLegend: false,
+              indexLabel: "{label} - {y}%",
+              dataPoints:dataP
+          }
+          ]
+      });
+            piechart.render();
+
+            var oldRow, nTr, oldtr, newtr, zTr;
+            var table=  $('#CoList').DataTable({
+                "iDisplayLength": 30,
+                "bAutoWidth": false,
+                "aaSorting": [[2, "asc"]],
+                "bProcessing": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumns": [{ "sWidth": "10%", "bSortable": false, "mDataProp": null, "sClass": "control", "sDefaultContent": '<img src="@Url.Content("~/Content/img/details_open.png")">' } ,{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "70%" },{ "sWidth": "10%" }]
+            } );
+            $('#CoList tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $('#CoList tbody').on('click', 'td.control', function () {
+                oldRow = nTr;
+
+                oldtr = newtr
+                newtr = $(this).closest('tr');
+                var child = table.row(newtr).child;
+
+                if (child.isShown()) {
+
+                    child.hide();
+                    oldRow = null;
+                    nTr = null;
+                    oldtr = null;
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+
+                }
+                else {
+
+                    nTr = table.row(newtr).child;
+                    zTr = nTr;
+                    var id = table.row(newtr).data()[1];
+                    var pid = "";
+                    var jid = "";
+                    var lid = "";
+                    pid = "@ViewBag.pid";
+                    jid = "@ViewBag.jid";
+                    lid = "@ViewBag.LevelID";
+                    $.get(
+                        "@Url.Action("GetRowDetail", "Calculate")", { id: id, pid: pid, jid: jid, lid: lid }, function (viewdata) {
+                            child(viewdata).show();
+
+                        });
+
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_close.png")');
+
+
+                }
+                if (oldRow != nTr) {
+
+                    oldRow.hide();
+                    $('img', oldtr).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+                }
+            });
+
+
+            $("#opener1").click(function () {
+                var table = $('#CoList').DataTable();
+                var Sel = table.row('.selected').data();
+                if (Sel != undefined) {
+
+                    $("#IDCLIENT").val(Sel[1]);
+                    $("#PComp").val(Sel[4]);
+
+                    $("#ShowResult").submit();
+                } else {
+
+                    $("#dialog H1").text("Укажите кандидата для которого необходимо построить план ");
+
+                    $("#dialog").dialog("open");
+                }
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+            $('#example2').dataTable({
+                "iDisplayLength": 6,
+                "bAutoWidth": false,
+
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumnDefs": [
+         { 'bSortable': false, 'aTargets': [2,3] }
+                ],
+                "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "50%" }, { "sWidth": "20%" }, { "sWidth": "20%" }]
+
+
+            });
+
+            var dataPoints = [];
+            var tablearray=@Html.Raw(Json.Encode((List<MVCDIS.Models.RANGEVALUES>)ViewBag.MinMaxTable));
+            for (var i = 0; i <= tablearray.length -1; i++)
+            {
+                dataPoints.push({ label: tablearray[i].Shifr, y: [tablearray[i]._MiN, tablearray[i]._MAX]  });
+            }
+            $(".chartContainer").CanvasJSChart({
+                animationEnabled: true,
+                animationDuration: 2000,
+                title: {
+                    text: "Уровень отдельных компетенций"
+                },
+                exportEnabled: true,
+                axisY: {
+                    includeZero: false,
+                    title: "Показатель компетенции"
+                },
+                axisX: {
+                    interval: 1
+                },
+                toolTip: {
+                    content: "Компетенция: {label}  <br/> Минимальное значение: {y[0]} <br/> Максимальное значение: {y[1]}"
+                },
+                data: [
+                {
+                    type: "rangeBar",
+                    dataPoints:dataPoints
+                }
+                ]
+            });
+
+        }
+    </script>
+
+}
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-line-chart fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Рейтинг / План</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Диаграмма важности компетенций</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <div>
+
+                    <div id="piechartContainer" style="height: 500px; width: 100%;"></div>
+
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<br />
+<hr />
+<br />
+<h3>Категория должности: @ViewBag.Profstr</h3>
+
+<h3>
+    Должность: @ViewBag.Jobstr
+</h3>
+
+<h3>
+    Наименование уровня квалификации: Уровень № @ViewBag.LevelLev "@ViewBag.LevelName"
+
+</h3>
+<h3>
+    Метод отбора:  @ViewBag.Cvalif
+</h3>
+
+
+<br />
+<hr />
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box dark">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>График диапазона компетенций</h5>
+
+                <!-- .toolbar -->
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+                <!-- /.toolbar -->
+            </header>
+            <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+                <fieldset>
+
+                    <legend>Шифр компетенций</legend>
+
+                    <div>
+                        <div class="chartContainer" style="width: 100%; height: 600px; "></div>
+
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <div class="box dark">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>Таблица диапазона компетенций</h5>
+
+                <!-- .toolbar -->
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+                <!-- /.toolbar -->
+            </header>
+            <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+                <fieldset>
+                    <h2 id="para"> </h2>
+
+                    <legend>Перечень компетенций</legend>
+                    <div>
+                        <table id="example2" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Шифр</th>
+                                    <th>Компетенция</th>
+                                    <th>ФИО:(MIN)</th>
+                                    <th>ФИО:(MAX)</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (MVCDIS.Models.RANGEVALUES item in @ViewBag.MinMaxTable)
+                                {
+                                    <tr>
+                                        <td> <b>@item.Shifr</b></td>
+                                        <td> @item.Name</td>
+                                        <td>@item.MinClientName: <br />(<b>@item._MiN</b>)</td>
+                                        <td>@item.MaxClientName: <br />(<b>@item._MAX</b>)</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Классификация по компетенциям</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <div>
+
+                    <table class="tbl table table-striped table-bordered" width="100%">
+                        @foreach (MVCDIS.Models.RANGEVALUES item in @ViewBag.MinMaxTable)
+                        {
+                            <tr>
+                                <td width="10%">
+                                    <b>
+                                        @item.Shifr
+                                    </b>
+
+                                </td>
+                                <td width="10%" valign="middle">
+
+                                    @Html.CheckBox(String.Concat("CH", item.CompetenceID.ToString()), true, new { Value = item.CompetenceID, @class = "make-switch" })
+
+                                </td>
+                                <td>
+                                    <b>
+                                        @item.Name
+                                    </b>
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
+
+
+                    <center>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <h3>Минимальное значение рейтинга (%)</h3>
+                                </td>
+                                <td>
+                                    <h3>Максимальное значение рейтинга (%)</h3>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="Clusterrate" name="Clusterrate" class="form-control" value="0" type="text">
+                                </td>
+                                <td>
+                                    <input id="Clusterratemax" name="Clusterratemax" class="form-control" value="100" type="text">
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <br />
+                        <button type="button" id="ClustButton" class="btn btn-primary">Разбить по группам</button>
+                    </center>
+                    <div id="clst">
+
+                    </div>
+                </div>
+
+            </fieldset>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+<div class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Рейтинг компетенций</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <legend>Таблица рейтинга компетенций</legend>
+                <div>
+                    @using (Html.BeginForm("BranchAndBound", "Calculate", FormMethod.Get, new { @id = "ShowResult" }))
+                    {
+
+                        <input type="hidden" name="IDCLIENT" id="IDCLIENT" value="0" />
+                        <input type="hidden" name="levid" id="levid" value="@ViewBag.LevelID" />
+                        <input type="hidden" name="pid" id="pid" value="@ViewBag.pid" />
+                        <input type="hidden" name="jid" id="jid" value="@ViewBag.jid" />
+                        <input type="hidden" name="Cvalif" id="Cvalif" value="@ViewBag.Cvalif" />
+                        <input type="hidden" name="PComp" id="PComp" value="0" />
+                        <table id="CoList" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th id="Hideme"></th>
+                                    <th>№</th>
+                                    <th>ФИО</th>
+                                    <th>Показатель компетентности (%)</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @Html.EditorFor(x => x.ClientCalcValueEdits)
+
+                            </tbody>
+                        </table>
+                        <div id="dialog" title="Внимание сообщение!">
+
+                            <h1></h1>
+                            <br />
+
+                        </div>
+
+
+                    }
+
+
+                    <button class="btn btn-primary" id="opener1">Перейти к этапу планирования</button>
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+

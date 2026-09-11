@@ -1,0 +1,84 @@
+﻿@model  List<MVCDIS.Models.EventsAttributesNEW>
+@{
+    int i = 0;
+}
+<script type="text/javascript">
+
+    var table = $('@String.Concat("#DiscTable_", ViewBag.attridi)').dataTable({
+
+        "bAutoWidth": false,
+        "bFilter": false,
+        "paging": false,
+        "aaSorting": [[0, "asc"]],
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ Записей на странице"
+        },
+        "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "40%" }, { "sWidth": "40%" }, { "sWidth": "10%" }]
+    });
+    $('@String.Concat("#dialog_", ViewBag.attridi)').dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+    });
+
+</script>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id='@String.Concat("dialog_", ViewBag.attridi)' title="Внимание сообщение!">
+            <p></p>
+        </div>
+        <center>
+            <h3> @ViewBag.__attributes.Name</h3>
+        </center>
+        <div id="manage_user">
+            <table id='@String.Concat("DiscTable_", ViewBag.attridi)' class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Уровень квалификации</th>
+                        <th>Мероприятие</th>
+                        <th class="ticons"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (MVCDIS.Models.EventsAttributesNEW item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @{
+                        using (var db = new MVCDIS.Models.CompetenceContext())
+                        {
+                            MVCDIS.Models.iasaActivities iasct = db.tableIasaActivities.Where(x => x.ActivityId == item.ActivityId).FirstOrDefault();
+                            @iasct.ActivityName
+                        }
+                                }
+
+                            </td>
+                            <td>@item.Name </td>
+                            <td class="ticons"><a href='@String.Concat("#confirm-delete_", ViewBag.attridi)'><i class="fa fa-ban delete-finally pointer" data-id="@item.ID"></i></a> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-24 text-center">
+                <a href='@String.Concat("#form_report_", ViewBag.attridi)' id='@String.Concat("add_report_", ViewBag.attridi)' data-lity><input type="button" class="btn btn-info" value="Добавить запись" /></a>
+
+
+
+            </div>
+        </div>
+        <div class="lity-hide" id='@String.Concat("form_report_", ViewBag.attridi)'>
+
+        </div>
+    </div>
+</div>

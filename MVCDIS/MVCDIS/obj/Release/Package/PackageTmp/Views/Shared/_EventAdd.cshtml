@@ -1,0 +1,165 @@
+﻿
+@model MVCDIS.Models.IASAModel
+@using MVCDIS.Models
+<style>
+    .wt {
+        border: 1px solid midnightblue;
+        margin: 5px;
+        word-wrap: break-word;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .wf {
+        border: 1px solid white;
+        margin: 5px;
+        word-wrap: break-word;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .selBlue {
+        background-color: #5bc0de;
+        color: white;
+    }
+</style>
+<div class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Привязка мероприятия</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: scroll; height: 600px;  " aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+
+                <div>
+                    <div class="text-center not-found">Привязка мероприятия</div>
+
+                    <table class="with_all   rep_add">
+                        <tr>
+                            <td width="20%">
+                                Уровень квалификации:
+                            </td>
+                            <td width="80%">
+                                <select class="with_all" id='@String.Concat("activity_", ViewBag.attridi)'>
+                                    @{
+                                        List<MVCDIS.Models.iasaActivities> acts = Model.userActivities;
+                                        <option value="0"
+                                                @if (Model.defaultUserActivity == 0) { @Html.Raw(" selected")               }>
+                                            Не выбрано
+                                        </option>
+                                        foreach (var item in acts)
+                                        {
+                                            <option value="@item.ActivityId"
+                                                    @if (item.ActivityId == Model.defaultUserActivity) { @Html.Raw(" selected")             }>
+                                                @item.ActivityName
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                               Мероприятие:
+                            </td>
+                            <td>
+                                <div id="curr" style="color:green;"></div>
+                                <div id='@String.Concat("branch_", ViewBag.attridi)'>
+
+                                </div>
+                                <input type="hidden" id='@String.Concat("worktype_", ViewBag.attridi)' />
+
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <div class="text-center"><input type="button" class="btn btn-info" id='@String.Concat("editReport_", ViewBag.attridi)' value="Добавить показатель" /><input type="button" id='@String.Concat("lity-close_", ViewBag.attridi)' style="display:none;" data-lity-close /> </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      
+        var coidi = "@ViewBag.coidi";
+        var pidi = "@ViewBag.pidi";
+        var jidi = "@ViewBag.jidi";
+        var lidi = "@ViewBag.lidi";
+        var attridi = "@ViewBag.attridi";
+        
+      
+      
+        
+       
+        function updateBranch(pid, coidii, jidii, pidii, lidii, attridii) {
+            $('@String.Concat("#branch_", ViewBag.attridi)').html("<div class='text-center'><img src='\\Content\\Images\\loader.gif' /></div>");
+            $.get('@Url.Action("GetBranch", "Discipline")', { pid: pid, coidi: coidi, jidi: jidi, pidi: pidi, lidi: lidi, attridi: attridi },
+                function (viewdata) {
+                    $('@String.Concat("#branch_", ViewBag.attridi)').html(viewdata);
+                });
+        }
+       
+
+        updateBranch(0, coidi, jidi, pidi, lidi, attridi);
+        $('@String.Concat("#branch_", ViewBag.attridi)').on('click', '.wt', function () {
+          
+            if ($(this).attr("data-last") == "1") {
+                $(".wt").removeClass("selBlue");
+                $(this).addClass("selBlue");
+                $('@String.Concat("#worktype_", ViewBag.attridi)').val($(this).attr("data-id"));
+            } else {
+                updateBranch($(this).attr("data-id"), coidi, jidi, pidi, lidi, attridi);
+            }
+
+
+        })
+
+        $('body').on('click', '.bread', function () {
+            updateBranch($(this).attr("data-id"), coidi, jidi, pidi, lidi, attridi);
+        })
+
+        $('body').on('change', '@String.Concat("#activity_", ViewBag.attridi)', function () {
+            var activity = this.value;
+            $.get('@Url.Action("SetDefaultActivity", "Account")', { activity: activity },
+                function (viewdata) {
+                   
+                    updateBranch(0, coidi, jidi, pidi, lidi, attridi);
+                   
+                });
+        })
+
+        $(".dt").click(function () {
+            $(this).css("background-color", "white");
+        })
+    })
+</script>
+

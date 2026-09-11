@@ -1,0 +1,56 @@
+﻿@model MVCDIS.Models.Attributes
+
+@{
+    ViewBag.Title = "Редактировать данные составляющей компетенции";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-cube fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Составляющие компетенции</b></i></strong>
+</div>
+<div>
+
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+ 
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompetenceID, "Шифр", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CompetenceID", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+
+                @Html.ValidationMessageFor(model => model.CompetenceID)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypeID, "Тип составляющей компетенции", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeID", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+
+                @Html.ValidationMessageFor(model => model.TypeID)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+             @Html.TextAreaFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить изменения" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+

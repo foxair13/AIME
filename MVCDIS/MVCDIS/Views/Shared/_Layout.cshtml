@@ -1,0 +1,123 @@
+﻿@using System.Web.Optimization
+
+@{
+    int zem = 0;
+  
+}
+
+@if (@User.Identity.IsAuthenticated )
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+
+        <title>@ViewBag.Title</title>
+        <!--IE Compatibility modes-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!--Mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        @Styles.Render("~/Content/css")
+
+        @Styles.Render("~/Content/themes/base/css")
+        @Styles.Render("~/Content/awesome")
+        @Scripts.Render("~/bundles/less")
+       
+     
+        @Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/Content/datatables")
+  @Styles.Render("~/Content/introLoader")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jcrop")
+
+
+        @Scripts.Render("~/bundles/lity")
+        
+     
+    </head>
+    <body class="menu-affix">
+        <div class="bg-dark dk" id="wrap">
+          
+
+            @Html.Partial("_MasterForm")
+            <div id="content">
+                <div class="outer">
+                    <div class="inner bg-light lter">
+                        <div class="col-lg-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.Partial("_Chat")
+
+        </div>
+
+
+        <!-- /#wrap -->
+        <footer class="Footer bg-dark dker">
+            @*<p>&copy; @DateTime.Now.Year  Работа аспиранта Академии управления при Президенте Республики Беларусь : Lisichenok S.I. / Лисичёнок С.И., Научный руководитель : Ивановский А.В.   </p>*@
+        </footer>
+        <!-- /#footer -->
+        @if (zem != 0)
+        {
+            @Html.Partial("_HelpModal")
+        }
+
+
+
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/bootstrap")
+   
+        @Scripts.Render("~/bundles/introLoader")
+        @Scripts.Render("~/bundles/datatables")
+        @Scripts.Render("~/bundles/signalR")
+        @Scripts.Render("~/bundles/screenfull")
+        @Scripts.Render("~/bundles/core")
+        @Scripts.Render("~/bundles/app")
+
+        @RenderSection("scripts", required: false)
+
+    </body>
+    </html>
+
+
+}
+else
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/LogRegCSS")
+        @Scripts.Render("~/bundles/modernizr")
+        
+        
+    </head>
+    <body>
+
+        <div id="container_demo" >
+            <a class="hiddenanchor" id="toregister"></a>
+            <a class="hiddenanchor" id="torecovermail"></a>
+            <a class="hiddenanchor" id="tologin"></a>
+
+            <div id="wrapper">
+                @RenderBody()
+            </div>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+
+ 
+        @Scripts.Render("~/bundles/datatables")
+
+        @Scripts.Render("~/bundles/ajaxlogin")
+        
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+    
+}   

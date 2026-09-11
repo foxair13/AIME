@@ -1,0 +1,194 @@
+﻿@using MVCDIS.Models
+@model MVCDIS.Models.Preview
+@{
+    MVCDIS.Models.CompetenceContext db = new MVCDIS.Models.CompetenceContext();
+    ViewBag.Title = "Предварительный просмотр";
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $("#table_preview").dataTable({
+
+            "bAutoWidth": false,
+            "bFilter": false,
+            "paging": false,
+            "aaSorting": [[0, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            }
+        });
+
+        $(".grade").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188]) !== -1 ||
+                // Allow: Ctrl+A
+        (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+        $("#unlockrep").click(function () {
+            var id = "@ViewBag.GID"
+            window.location.href = "@Url.Action("Unlockreport","Preview")" + "/"+ id;
+          
+        });
+        $('.grade').keyup(function () {
+            id = $(this).attr('name');
+            var sDiap = $(".range[data='" + id + "']").text();
+            var aDiap = sDiap.split("-");
+            var min = parseInt(aDiap[0]);
+            var max = parseInt(aDiap[1]);
+            var val = parseInt($(this).val());
+            var pole = $(".range[data='" + id + "']");
+            if (val < min || val > max) {
+
+                pole.css('color', 'red');
+                pole.css('font-weight', 'bold');
+                $(this).css('background', 'IndianRed');
+                pole.addClass("error");
+                //$("#save").attr("disabled", "disabled");
+
+            }
+            else {
+                pole.css('color', 'black');
+                pole.css('font-weight', 'normal');
+                $(this).css('background', 'white');
+                pole.removeClass("error");
+                //$("#save").removeAttr("disabled");
+            }
+            var errs = $(".error").length;
+
+            if (errs == 0) {
+                var grds = $(".grade");
+                var zero = 0;
+                $.each(grds, function () {
+                    if ($(this).val() == 0)
+                        zero++;
+                });
+                if (zero > 0)
+                    $("#save").attr("disabled", "disabled");
+                else
+                    $("#save").removeAttr("disabled");
+
+            }
+            else
+                $("#save").attr("disabled", "disabled");
+        });
+    });
+
+</script>
+
+<div>
+    <div class="col-md-24 text-center">
+        <div><h3>Предварительный просмотр</h3></div>
+        <div><h4>отчет c @ViewBag.Begin по @ViewBag.End</h4></div>
+    </div>
+</div>
+
+<div>
+    <div class="col-md-24">
+        <div><strong>Ф.И.О. :</strong> @db._ClientsInfo.Where(x => x.ID == Model.User.ClientInfoID).Select(x => x.FIO).FirstOrDefault()  </div>
+        <div><strong>Должность: </strong>@db._JobTitle.Where(x => x.ID == Model.User.JobTitleID).Select(x => x.Name).FirstOrDefault()</div>
+        <div><strong>Степень: </strong> @db.tableIasaStepen.Where(x => x.StepenId == Model.User.StepenId).Select(x => x.StepenName).FirstOrDefault()</div>
+        <div><strong>Звание:</strong> @db.tableIasaZvanie.Where(x => x.ZvanieId == Model.User.ZvanieId).Select(x => x.ZvanieName).FirstOrDefault()</div>
+        <hr />
+        <div><strong>Уровень квалификации: </strong> @Model.Activity</div>
+        <div><strong>Вид занятости: </strong> @Model.Workt</div>
+        <hr />
+    </div>
+</div>
+<div>
+    <div class="col-md-24">
+        @if (Model.Reports.Count == 0)
+        {
+            <div class="text-center"><h5>Записи отсутствуют</h5></div>
+        }
+        else
+        {
+            <div id="targetid" class="alert-success"></div>
+            bool flag = ViewBag.Manager;
+            if (flag == null)
+            {
+                flag = false;
+            }
+            using (Html.BeginForm("ChangeGrade", "Preview"))
+            {
+
+                @Html.ValidationSummary(true)
+                <table id="table_preview">
+                    <thead>
+
+                        <tr>
+                            <th>Мероприятие</th>
+                            <th>Выполненная работа</th>
+                            <th>Оценка/Балл</th>
+                            <th>Диапазон оценки</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Reports)
+                        {
+                            <tr>
+                                <td>@item.bread @item.Report.iasaWorktypesTree.WorktypeName</td>
+                                <td>@item.Report.ReportText</td>
+
+                                @if (flag == true)
+                                {
+
+                                    <td>  @Html.TextBox(item.Report.ReportId.ToString(), item.Report.Grade, new { id = item.Report.ReportId, @class = "form-control grade" })</td>
+                                }
+                                else
+                                {
+                                    if (item.Report.iasaWorktypesTree.MinGrade != null && item.Report.iasaWorktypesTree.MaxGrade != null)
+                                    {
+
+                                        <td>@String.Concat(item.Report.Grade, " (" + item.Report.iasaWorktypesTree.MinGrade + " / " + item.Report.iasaWorktypesTree.MaxGrade + ")")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@String.Concat(item.Report.Grade, " (0 / 5)")</td>
+                                    }
+                                }
+                                <td class="range" data="@item.Report.ReportId">
+                                    @if (item.Report.iasaWorktypesTree.MinGrade != null && item.Report.iasaWorktypesTree.MaxGrade != null)
+                                    {
+
+                                        @String.Concat(item.Report.iasaWorktypesTree.MinGrade + "-" + item.Report.iasaWorktypesTree.MaxGrade)
+
+                                    }
+                                    else
+                                    {
+                                        @String.Concat("0-5")
+
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                if (flag == true)
+                {
+                    
+                    <div class="text-center row-padding">
+                        <input class="btn btn-primary" type="submit" id="save" value="Оценить отчет">
+                        <button class="btn btn-primary" id="unlockrep" type="button">Разблокировать отчет</button>
+                      
+                    </div>
+                }
+                  <a href='@Url.Action("ClearTemplate", "Preview", new { @ids = ViewBag.GID.ToString() }, null)' class="btn btn-info">Печать отчета</a>
+
+            }
+
+        }
+    </div>
+</div>

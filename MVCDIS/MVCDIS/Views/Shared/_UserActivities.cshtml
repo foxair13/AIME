@@ -1,0 +1,24 @@
+﻿
+@model MVCDIS.Models.UserActivities
+@try
+{
+    foreach (var item in Model.iasaActivities)
+    {
+        <div class="row field_row activity-row" id="@item.ActivityId">
+            <div class="name">@item.ActivityName</div>
+            @if (item.ActivityId == Model.DefaultActivityId)
+            {
+                <div class="default"><i class="fa fa-check" aria-hidden="true"></i></div>
+            }
+
+        </div>
+
+    }
+}
+catch (Exception)
+{
+    <div>Уровни квалификации не добавлены</div>
+
+}
+
+

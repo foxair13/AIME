@@ -1,0 +1,29 @@
+﻿@model MVCDIS.Models.iasaWorks
+@{
+    ViewBag.Title = "Информация по виду работы";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-bullseye fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Виды занятости</b></i></strong>
+</div>
+
+
+<div>
+   
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.WorkId }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

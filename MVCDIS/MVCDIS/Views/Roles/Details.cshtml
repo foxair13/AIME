@@ -1,0 +1,37 @@
+﻿@model MVCDIS.Models.Roles
+
+@{
+    ViewBag.Title = "Просмотр информации по выбранной роли";
+}
+
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-gavel fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Управление ролями</b></i></strong>
+</div>
+<div>
+   
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.RoleId }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>
+

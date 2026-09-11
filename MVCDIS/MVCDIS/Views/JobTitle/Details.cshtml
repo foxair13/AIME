@@ -1,0 +1,36 @@
+﻿@model MVCDIS.Models.JobTitle
+
+@{
+    ViewBag.Title = "Просмотр информации по указанной должности";
+}
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-briefcase fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Должности</b></i></strong>
+</div>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Категория должности")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfAreas.Name)
+        </dd>
+
+        <dt>
+            @Html.Label("Должность")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>
+

@@ -1,0 +1,499 @@
+﻿@{
+    ViewBag.Title = "Формирование плана наращивания компетенций";
+    int i = 0;
+}
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+@section scripts
+    {
+    @Scripts.Render("~/bundles/canvasjs")
+    <script type="text/javascript">
+    window.onload = function () {
+
+
+
+        $("#Competence").hide();
+        $("#PlanButton").click(function () {
+            $("#Competence").slideDown();
+          
+            var levelid= "@ViewBag.LevelID";
+            var jidt= "@ViewBag.jid";
+            var clientid="@ViewBag.ClienD";
+            var tab = $('#example2').DataTable();
+            var Sel = tab.row('.selected').data();
+
+            var competenceid=Sel[0];
+
+            var min = parseInt( $('#min').val(), 10 );
+            var max = parseInt( $('#max').val(), 10 );
+            
+            var mark = parseInt( $('#Mark').val(), 10 );
+            var errs = $(".error").length;
+   
+            if (errs == 0) 
+            {
+            
+            
+            $.get('@Url.Action("ResultPlan", "Calculate")', {competenceid:competenceid, levelid: levelid,jidt: jidt, clientid:clientid,min:min,max:max,mark:mark}, function (viewdata) {
+
+       
+                    $('#unique1').html(viewdata);
+                });
+            } else
+            {
+                alert("Проверьте диапазон значения оценок!");
+            }
+
+
+        });
+        $(".Sel").click(function () {
+            Sel = "@ViewBag.ClienD";
+            //var Sel = tab.row('.selected').data()[0];
+
+            $.get('@Url.Action("Advancedinfo", "Clients")', { Sel: Sel }, function (viewdata) {
+
+                lity('#Advanced');
+
+
+                $('#Advanced').html(viewdata);
+            });
+
+        });
+        $("#Mark").keyup(function () {
+
+                var id = $(this).attr('data');
+                var val = parseInt($(this).val());
+
+                if (val < 0 || val > 5) {
+
+
+                    $(this).css('background', 'IndianRed');
+                    $(this).addClass("error");
+
+                }
+                else {
+
+
+
+                    $(this).css('background', 'white');
+                    $(this).removeClass("error");
+                }
+
+
+            });
+
+            $("#Mark").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188]) !== -1 ||
+                    // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+                    // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $("#Par").hide();
+            var table=  $('#example2').dataTable({
+                "iDisplayLength": 5,
+                "bAutoWidth": false,
+                "aaSorting": [[1, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+
+                "aoColumns": [{ "sWidth": "10%" },{ "sWidth": "10%" },{ "sWidth": "10%" }, { "sWidth": "50%" }, { "sWidth": "20%" }]
+
+
+            });
+            var table2 = $('#example2').DataTable();
+            $('#min, #max').keyup( function() {
+                table.$('tr.selected').removeClass('selected');
+                $("#COMPSHIFR").text("");
+                $("#Par").hide();
+                table2.draw();
+            } );
+            $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var age = parseFloat(data[4]) || 100;
+
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && age <= max ) ||
+             ( min <= age   && isNaN( max ) ) ||
+             ( min <= age   && age <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+);
+            $('#example2 tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $("#COMPSHIFR").text("");
+                    $("#Competence").hide();
+                    $("#Par").hide();
+
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+
+                    var tab = $('#example2').DataTable();
+                    var Sel = tab.row('.selected').data();
+                    if (Sel != undefined)
+                    {
+
+                        $("#COMPSHIFR").text(Sel[2]+" "+Sel[3]);
+                        $("#MinP").text( parseInt( $('#min').val(), 10 )+"%");
+                        $("#MaxP").text( parseInt( $('#max').val(), 10 )+"%");
+              
+                        $('#Par').slideDown();
+
+                    }
+
+                }
+            });
+
+
+
+            var dataP = [];
+            var table1=@Html.Raw(Json.Encode((List<MVCDIS.Models.CompetenceEdit>)ViewBag.Come));
+            for (var i = 0; i <= table1.length-1; i++)
+    {
+        var str = "";
+        str=table1[i].Value;
+        var tt = 0;
+        tt=str.replace(",", ".");
+        if (tt!=0) {
+            dataP.push({ legendText: table1[i].Shifr, y: tt ,label:table1[i].Shifr});
+        }
+
+    }
+    var piechart = new CanvasJS.Chart("piechartContainer",
+{
+    animationEnabled: true,
+    animationDuration: 2000,
+    title:{
+        text: "Веса компетенций"
+    },
+    legend: {
+        maxWidth: 350,
+        itemWidth: 120
+    },
+    data: [
+    {
+        type: "pie",
+        toolTipContent: "{label} - <strong>{y}%</strong>",
+        showInLegend: false,
+        indexLabel: "{label} - {y}%",
+        dataPoints:dataP
+    }
+    ]
+});
+    piechart.render();
+
+    }
+
+    </script>
+
+
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-line-chart fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Рейтинг / План</b></i></strong>
+</div>
+
+
+<h3>ФИО СПЕЦИАЛИСТА: <button onclick="return false" class="btn btn-primary Sel" id="@ViewBag.ClienD">@ViewBag.FIO</button> </h3>
+<h3>Категория должности: @ViewBag.Profstr</h3>
+
+<h3>
+    Должность: @ViewBag.Jobstr
+</h3>
+
+<h3>
+    Наименование уровня квалификации: Уровень № @ViewBag.LevelLev "@ViewBag.LevelName"
+
+</h3>
+<h3>
+    Метод отбора:  @ViewBag.Cvalif
+</h3>
+<h3>
+    Показатель компетентности:  <b> @ViewBag.PComp</b>
+</h3>
+
+<br />
+<hr />
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box dark">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>Диаграмма важности компетенций</h5>
+
+                <!-- .toolbar -->
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+                <!-- /.toolbar -->
+            </header>
+            <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+                <fieldset>
+
+                    <div>
+
+                        <div id="piechartContainer" style="height: 500px; width: 100%;"></div>
+
+
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-lg-6">
+        <div class="box dark">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>Таблица уровня овладения компетенциями</h5>
+
+                <!-- .toolbar -->
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+                <!-- /.toolbar -->
+            </header>
+            <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+                <fieldset>
+
+                    <div>
+                        <table border="0" cellpadding="5" cellspacing="5">
+                            <tbody>
+                                <tr>
+                                    <td>Минимальное значение компетенции %: &nbsp; </td>
+                                    <td><input id="min" name="min" class="form-control" type="text" value="0"></td>
+                                </tr>
+                                <tr>
+                                    <td>Максимальное значение компетенции %: &nbsp;</td>
+                                    <td><input id="max" name="max" class="form-control" type="text"  value="100"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <table id="example2" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th id="Hideme"></th>
+                                    <th>№</th>
+                                    <th>Шифр</th>
+                                    <th>Компетенция</th>
+
+                                    <th>Степень овладения (%)</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (MVCDIS.Models.RANGEVALUES item in @ViewBag.RVC)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td id="Hideme">@item.CompetenceID</td>
+                                        <td>@i</td>
+                                        <td> @item.Shifr</td>
+                                        <td> @item.Name</td>
+                                        @if (Double.IsNaN(item._MAX))
+                                        {
+                                            <td><b>0</b></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item._MAX</td>
+                                        }
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+
+
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div id="Par" class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Исходные параметры построения плана наращивания компетенций</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <div>
+
+                    <center>
+                        <h5>Построение плана будет осуществляться на основе компетенции:</h5>
+
+                        <h3 id="COMPSHIFR"></h3>
+                        <hr />
+                        <table>
+                            <tr>
+                                <td><h3>Минимальное значение для каждой компетенции &nbsp;</h3></td>
+                                <td><h3><b id="MinP"></b></h3></td>
+                            </tr>
+                            <tr>
+                                <td><h3>Максимальное значение для каждой компетенции &nbsp;</h3></td>
+                                <td><h3><b id="MaxP"></b></h3></td>
+                            </tr>
+                            <tr>
+                                <td><h3>Укажите максимальную оценку для каждой составляющей компетенции в баллах &nbsp;</h3></td>
+                                <td><input id="Mark" class="form-control" type="text" value="5"></td>
+                            </tr>
+                        </table>
+                        <hr />
+                        <button type="button" id="PlanButton" class="btn btn-primary">Построить план</button>
+                    </center>
+
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+<div id="Competence" class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>План наращивания компетенций</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <div id="unique1">
+
+
+
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+<div class="lity-hide confirm" id="Advanced">
+
+</div>

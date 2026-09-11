@@ -1,0 +1,605 @@
+﻿@model  List<MVCDIS.Controllers.clusterspoint>
+<style type="text/css">
+    #dendrogramFrame {
+        position: absolute;
+        margin: 0 0 0 36px;
+        font-size: 75%;
+        border: 0px solid white;
+    }
+
+        #dendrogramFrame .leaf {
+            position: absolute;
+            padding: 1px 3px 1px 3px;
+            border: 1px solid #555555;
+            minWidth: 20px;
+            width: 200px;
+            text-align: center;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        #dendrogramFrame .cap {
+            position: absolute;
+            border-left: 1px solid #555555;
+        }
+
+        #dendrogramFrame .drop {
+            position: absolute;
+            border-top: 1px solid #555555;
+        }
+
+        #dendrogramFrame .drop1 {
+            position: absolute;
+            border-top: 1px solid red;
+        }
+
+    #df2 {
+        margin: 0 0 0 36px;
+    }
+
+    #df3 {
+        margin: 0 0 0 36px;
+    }
+
+    #gFrame {
+        margin: 16px 20px 32px 20px;
+    }
+</style>
+
+<script type="text/javascript">
+
+
+
+    main('random');
+    function randomDistances(n) {
+        //  For this demo we need artificial data.  This is an
+        //  indirect but realistic approach: assign random inter-point
+        //  distances, then do hierarchic clustering to build the tree.
+        var distances=[];
+        var names = [];
+
+
+        var tablearray=@Html.Raw(Json.Encode((List<MVCDIS.Controllers.clusterspoint>)Model));
+
+        var tablearrayfio=@Html.Raw(Json.Encode((String[])ViewBag.FiosStr));
+        for (var i = 0; i <tablearrayfio.length; i++) {
+            names[i]=tablearrayfio[i];
+        }
+        for (var i = 0; i <tablearray.length; i++) {
+            var hashKey=tablearray[i].startpoint+"~"+tablearray[i].endpoint;
+            distances[hashKey]=tablearray[i].distance;
+
+
+        }
+
+
+
+
+        return { "names": names, "distances": distances };
+    }
+    function HSVtoRGB(h, s, v, opacity) {
+        // inputs h=hue=0-360, s=saturation=0-1, v=value=0-1
+        // algorithm from Wikipedia on HSV conversion
+        var toHex = function (decimalValue, places) {
+            if (places == undefined || isNaN(places)) places = 2;
+            var hex = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
+            var next = 0;
+            var hexidecimal = "";
+            decimalValue = Math.floor(decimalValue);
+            while (decimalValue > 0) {
+                next = decimalValue % 16;
+                decimalValue = Math.floor((decimalValue - next) / 16);
+                hexidecimal = hex[next] + hexidecimal;
+            }
+            while (hexidecimal.length < places) {
+                hexidecimal = "0" + hexidecimal;
+            }
+            return hexidecimal;
+        }
+
+        var hi = Math.floor(h / 60) % 6;
+        var f = h / 60 - Math.floor(h / 60);
+        var p = v * (1 - s);
+        var q = v * (1 - f * s);
+        var t = v * (1 - (1 - f) * s);
+        var r = v;  // case hi==0 below
+        var g = t;
+        var b = p;
+        switch (hi) {
+            case 1: r = q; g = v; b = p; break;
+            case 2: r = p; g = v; b = t; break;
+            case 3: r = p; g = q; b = v; break;
+            case 4: r = t; g = p; b = v; break;
+            case 5: r = v; g = p; b = q; break;
+        }
+        //  At this point r,g,b are in 0...1 range.  Now convert into rgba or #FFFFFF notation
+        if (opacity) {
+            return "rgba(" + Math.round(255 * r) + "," + Math.round(255 * g) + "," + Math.round(255 * b) + "," + opacity + ")";
+        } else {
+            return "#" + toHex(r * 255) + toHex(g * 255) + toHex(b * 255);
+        }
+    }
+    function hexToCanvasColor(hexColor, opacity) {
+        // Convert #AA77CC to rbga() format for Firefox
+        opacity = opacity || "1.0";
+        hexColor = hexColor.replace("#", "");
+        var r = parseInt(hexColor.substring(0, 2), 16);
+        var g = parseInt(hexColor.substring(2, 4), 16);
+        var b = parseInt(hexColor.substring(4, 6), 16);
+        return "rgba(" + r + "," + g + "," + b + "," + opacity + ")";
+    }
+    function treeWalk(currentNode, tree, depth, doLeafAction, doDownAction, doUpAction) {
+        //  General purpose recursive binary depth-first tree walk, with three possible action functions:
+        //  at each leaf node, on the way down a branch, and on the way back up a branch.
+        if (tree[currentNode].leftChild > -1) {
+            depth += 1;
+            if (doDownAction) { doDownAction(currentNode, tree, depth) }
+            treeWalk(tree[currentNode].leftChild, tree, depth, doLeafAction, doDownAction, doUpAction);
+        }
+        if (tree[currentNode].rightChild == -1) { // It's a leaf node
+            if (doLeafAction) { doLeafAction(currentNode, tree, depth) }
+        }
+        if (tree[currentNode].rightChild > -1) {
+            treeWalk(tree[currentNode].rightChild, tree, depth, doLeafAction, doDownAction, doUpAction);
+            if (doUpAction) { doUpAction(currentNode, tree, depth) };
+            depth -= 1;
+        }
+    }
+    function addClosestPair(tree, distances) {
+        //  Identify closest pair
+        var n = tree.length;
+        var dMin = Infinity;
+        for (var i = 0; i < n - 1; i++) {
+            for (var j = i + 1; j < n; j++) {
+                var d = distances[i + "~" + j];
+                if (d < dMin && tree[i].inPlay && tree[j].inPlay) {
+                    var iMin = i;
+                    var jMin = j;
+                    dMin = d;
+                }
+            }
+        }
+        //  Add new node and flag old ones
+        tree.push({ "parent": -1, "leftChild": iMin, "rightChild": jMin, "inPlay": true });
+        tree[iMin].inPlay = false;
+        tree[iMin].parent = n;  // the new one we just created
+        tree[jMin].inPlay = false;
+        tree[jMin].parent = n;  // the new one we just created
+        //  Add distances to the new node
+        for (var i = 0; i <= n; i++) {
+            var di = distances[Math.min(i, iMin) + "~" + Math.max(i, iMin)];  // Hash code has left<right key always
+            var dj = distances[Math.min(i, jMin) + "~" + Math.max(i, jMin)];
+            if (di && dj) { distances[i + "~" + n] = (di + dj) / 2 }
+        }
+    }
+    function buildTree(n, source) {
+
+        var dataObj = randomDistances(n);
+        //  Initialize tree
+        n = dataObj.names.length;  //  in case a fixed dataset doesn't have this many nodes
+        var tree = [];
+        for (var i = 0; i < n; i++) {
+            tree.push({ "parent": -1, "leftChild": -1, "rightChild": -1, "inPlay": true });
+        }
+        while (tree.length < (2 * n - 1)) {
+            addClosestPair(tree, dataObj.distances);    //  Classic hierarchic clustering
+        }
+
+        //  Add the weight of each node = number of sub-nodes it has,
+        //  and coloring index = sequence of visit
+        var index = 0;
+        var root = tree.length - 1;
+        treeWalk(root, tree, 0, function (currentNode, tree, depth) {
+            tree[currentNode].weight = 1;
+            tree[currentNode].index = index;
+            index += 1;
+        }, null, function (currentNode, tree, depth) {
+            var leftWeight = tree[tree[currentNode].leftChild].weight;
+            var rightWeight = tree[tree[currentNode].rightChild].weight;
+            tree[currentNode].weight = leftWeight + rightWeight;
+        });
+
+        return { "tree": tree, "distances": dataObj.distances, "root": root, "names": dataObj.names };
+    }
+
+    function drawCircularDendrogram(tree, root, names, divId, width, showLabels) {
+        if (showLabels) {
+            //  We need to assure our frame doesn't clip the labels, so we find the longest label here.
+            var maxLabel = -Infinity;
+            for (var i = 0; i < names.length; i++) {
+                maxLabel = Math.max(maxLabel, names[i].length);
+            }
+        }
+        var pxPerPtPerChar = 0.507;  //  Empirical finding for bold sans in canvas
+        var edge = Math.round(1 + maxLabel * 12 * pxPerPtPerChar);
+
+        var e = document.getElementById(divId);
+        if (tree.length > 50) { width *= 1.5 }
+        width = 2 * edge + Math.round(50 * Math.sqrt(tree.length));
+        e.width = width;
+        e.height = width;
+        var maxR = Math.round((width - 2 * edge) / 2);
+        var ctx = e.getContext('2d');
+        if (!ctx) { return }
+        ctx.translate(width / 2, width / 2);
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(0,0,0,0.3)";
+        //   ctx.arc(0,0,maxR,0.0,2*Math.PI,false);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(0,0,0,0.6)";
+
+        //  Set the positions
+        var theta = 0.0;
+        var dTheta = 4.0 * Math.PI / (tree.length + 1);
+        var maxWeight = -Infinity;
+
+        function weightToRadius(wt) {
+            var f = (maxWeight - wt) / (maxWeight - 1);
+            return 6 + (maxR - 32) * f * f;
+        }
+
+        treeWalk(root, tree, 0, function (node, tree, depth) {
+            tree[node].radius = maxR;
+            tree[node].theta = theta;
+            theta += dTheta;
+        },
+        null,
+        function (node, tree, depth) {
+            tree[node].theta = (tree[tree[node].leftChild].theta + tree[tree[node].rightChild].theta) / 2;;
+            if (tree[node].weight > maxWeight) { maxWeight = tree[node].weight }
+        });
+
+        for (var i = 0; i < tree.length; i++) {
+            tree[i].radius = weightToRadius(tree[i].weight);
+        }
+
+        //   Draw the diagram
+        ctx.fillStyle = "rgba(0,0,0,1)";
+        ctx.font = 'bold 12px sans-serif';
+        var blobRadius = 12;
+
+        treeWalk(root, tree, 0, function (node, tree, depth) {
+            //   Draw leaf labels
+            var thisNode = tree[node];
+            var hue = Math.round(250 * thisNode.index / ((1 + tree.length) / 2));
+            var color = HSVtoRGB(hue, 0.3, 1);
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = "rgba(0,0,0,1)";
+
+            ctx.fillStyle = hexToCanvasColor(color, 0.8);
+
+            if (!showLabels) {
+                //  Just show numbered circles
+                var r = maxR - blobRadius - 2;
+                var px = Math.round(r * Math.cos(thisNode.theta));
+                var py = Math.round(r * Math.sin(thisNode.theta));
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(px, py, blobRadius, 0.0, 2 * Math.PI, false);
+                ctx.fill();
+                ctx.closePath();
+                ctx.fillStyle = "rgba(0,0,0,0.8)";
+                var w = ctx.measureText(node).width;
+                ctx.fillText(node, px - w / 2, py + 4);
+                ctx.stroke();
+                ctx.restore();
+            } else {
+                //  Show color dots and rotated text labels
+                var r = maxR - 19;
+                var px = Math.round(r * Math.cos(thisNode.theta));
+                var py = Math.round(r * Math.sin(thisNode.theta));
+                ctx.save();
+                ctx.fillStyle = hexToCanvasColor(color, 1);
+                ctx.shadowColor = "rgba(0,0,0,0.3)";
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+                ctx.shadowBlur = 4;
+                ctx.beginPath();
+                ctx.arc(px, py, 7, 0.0, 2 * Math.PI, false);
+                ctx.fill();
+                ctx.fillStyle = "rgba(0,0,0,0.4)";
+                ctx.shadowColor = "rgba(0,0,0,0)"; // nix the shadow
+                ctx.rotate(thisNode.theta);
+                var w = ctx.measureText(names[node]).width;
+                if (thisNode.theta < 1.57 || thisNode.theta > 4.71) { // right of center, so text OK
+                    ctx.fillText(names[node], r + 12, 4);
+                } else {                                          // left of center, so flip the text
+                    ctx.save();
+                    ctx.rotate(Math.PI);
+                    ctx.fillText(names[node], -r - w - 12, 4);
+                    ctx.restore();
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+        },
+        null,
+        function (node, tree, depth) {  //  Draw the connecting lines on the way back up the traverse
+            var thisNode = tree[node];
+            var th1 = tree[thisNode.leftChild].theta;
+            var th2 = tree[thisNode.rightChild].theta;
+            var w1 = tree[thisNode.leftChild].left - thisNode.left;
+            var w2 = tree[thisNode.rightChild].left - thisNode.left;
+
+            var r1 = weightToRadius(tree[thisNode.leftChild].weight);
+            var r2 = weightToRadius(tree[thisNode.rightChild].weight);
+            var px = Math.round(r1 * Math.cos(th1));
+            var py = Math.round(r1 * Math.sin(th1));
+            //  Emphasize local clusters with darker connectors
+            ctx.strokeStyle = "rgba(0,0,0," + Math.pow(0.5 * (r1 + r2) / maxR, 2) + ")";
+            ctx.lineWidth = 1.5; // Math.max(0.75,2*r/maxR);
+
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.arc(0, 0, thisNode.radius, th1, th2, false);
+
+            px = Math.round(r2 * Math.cos(th2));
+            py = Math.round(r2 * Math.sin(th2));
+            ctx.lineTo(px, py);
+            ctx.stroke();
+        });
+    }
+    function drawBezierDendrogram(tree,root,names,divId,useBeziers,flushRight){
+        var e=document.getElementById(divId);
+        var dy=20; //  fixed for legibility
+        //  Scale for legibility
+        var width=Math.round(50*Math.sqrt(tree.length));
+        e.width=width;
+        e.height=Math.round(dy*(1+tree.length)/2);
+        var ctx=e.getContext('2d');
+        if(!ctx){return}
+
+        //  Set the positions
+        var y=0;
+        var maxLabelWidth=200;
+        var maxWeight=-Infinity;
+        treeWalk(root,tree,0,function(node,tree,depth){
+            tree[node].top=y;
+            y+=dy;
+        },
+        null,
+        function(node,tree,depth){
+            tree[node].top=Math.round((tree[tree[node].leftChild].top+tree[tree[node].rightChild].top)/2);
+            if(tree[node].weight>maxWeight){maxWeight=tree[node].weight}
+        });
+
+        //  Adjust the x-coordinates to fit the given frame.  Note scale compression to show leaf details
+        var maxLinks=-Infinity;
+        for(var i=0;i<tree.length;i++){
+            var linksToRoot=0;
+            var node=i;
+            while(node!=root){
+                var parent=tree[node].parent;
+                linksToRoot+=1;
+                node=parent;
+            }
+            tree[i].linksToRoot=linksToRoot;
+            maxLinks=Math.max(maxLinks,linksToRoot);
+        }
+        for(var i=0;i<tree.length;i++){
+            if(flushRight){
+                tree[i].left=2+Math.round((width-maxLabelWidth-3)*Math.pow((maxWeight-tree[i].weight)/(maxWeight-1),2));
+            }else{
+                tree[i].left=2+Math.round((width-maxLabelWidth-3)*Math.pow(tree[i].linksToRoot/maxLinks,1));
+            }
+        }
+
+        //   Draw the diagram
+        ctx.save();
+        ctx.fillStyle="rgba(0,0,0,1)";
+        ctx.font='bold 11px sans-serif';
+
+        treeWalk(root,tree,0,function(node,tree,depth){
+            //   Draw leaf labels
+            var thisNode=tree[node];
+            var hue=Math.round(250*thisNode.index/((1+tree.length)/2));
+            var color=HSVtoRGB(hue,0.3,1);
+            ctx.lineWidth=1;
+            ctx.strokeStyle="rgba(0,0,0,0.7)";
+            ctx.fillStyle=hexToCanvasColor(color,1);
+            var w=ctx.measureText(names[node]).width;
+            ctx.shadowColor="rgba(0,0,0,0.7)";
+            ctx.shadowOffsetX=1;
+            ctx.shadowOffsetY=1;
+            ctx.shadowBlur=4;
+            ctx.fillRect(thisNode.left,thisNode.top,maxLabelWidth,14);
+            ctx.shadowOffsetX=0;
+            ctx.shadowOffsetY=0;
+            ctx.shadowBlur=0;
+            //    ctx.strokeRect(thisNode.left,thisNode.top,maxLabelWidth,14);
+            ctx.fillStyle="rgba(0,0,0,0.7)";
+            ctx.fillText(names[node],thisNode.left+4,thisNode.top+11);
+        },
+        null,
+        function(node,tree,depth){  //  Draw the connecting lines on the way back up the traverse
+            var thisNode=tree[node];
+            var y1=Math.round(tree[thisNode.leftChild].top+dy/2-2);
+            var y2=Math.round(tree[thisNode.rightChild].top+dy/2-2);
+            var w1=Math.round(tree[thisNode.leftChild].left-thisNode.left);
+            var w2=Math.round(tree[thisNode.rightChild].left-thisNode.left);
+
+            ctx.beginPath();
+            ctx.strokeStyle="rgba(0,0,0,0.8)";
+            ctx.lineWidth=1.5;
+
+            if(useBeziers){
+                ctx.moveTo(thisNode.left+w1,y1);
+                ctx.bezierCurveTo(thisNode.left+w1/2,y1,thisNode.left+w2/2,(y1+y2)/2,thisNode.left,(y1+y2)/2);
+                ctx.moveTo(thisNode.left+w2,y2);
+                ctx.bezierCurveTo(thisNode.left+w2/2,y2,thisNode.left+w2/2,(y1+y2)/2,thisNode.left,(y1+y2)/2);
+            }else{
+                ctx.moveTo(thisNode.left+w1,y1);
+                ctx.lineTo(thisNode.left,y1);
+                ctx.lineTo(thisNode.left,y2);
+                ctx.lineTo(thisNode.left+w2,y2);
+            }
+            ctx.stroke();
+        });
+        ctx.restore();
+    }
+    function drawDendrogram(tree,root,names,divId,width){
+        var e=document.getElementById(divId);
+        e.style.position="relative";
+        var dy=20; //  fixed for legibility
+        e.style.width=width+"px";
+        e.style.height=Math.round((0.5*tree.length+2)*dy)+"px";
+
+        //  Set the positions
+        var y=0;
+        var maxWeight=-Infinity;
+        treeWalk(root,tree,0,function(node,tree,depth){
+            y+=dy;
+            tree[node].top=y;
+        },
+        null,
+        function(node,tree,depth){
+            tree[node].top=(tree[tree[node].leftChild].top+tree[tree[node].rightChild].top)/2;
+            if(tree[node].weight>maxWeight){maxWeight=tree[node].weight}
+        });
+
+        //  Adjust the x-coordinates to fit the given frame.  Note scale compression to show leaf details
+        for(var i=0;i<tree.length;i++){
+            tree[i].left=Math.round(width*Math.pow((maxWeight-tree[i].weight)/(maxWeight-1),3));
+        }
+
+        //   Draw the diagram
+        var t="";
+        treeWalk(root,tree,0,function(node,tree,depth){
+            var thisNode=tree[node];
+            var hue=Math.round(250*thisNode.index/((1+tree.length)/2));
+            var color=HSVtoRGB(hue,0.3,1);
+            t+="<div class='leaf' style='background:"+color+";top:"+(thisNode.top-7)+"px;left:"+thisNode.left+"px;'><b>"+names[node]+"<\/b><\/div>";
+        },
+        null,
+        function(node,tree,depth){  //  Draw the connecting lines on the way back up the traverse
+            var thisNode=tree[node];
+            var y1=tree[thisNode.leftChild].top;
+            var y2=tree[thisNode.rightChild].top;
+            var w1=tree[thisNode.leftChild].left-thisNode.left;
+            var w2=tree[thisNode.rightChild].left-thisNode.left;
+            t+="<div class='cap'  style='top:"+y1+"px;left:"+thisNode.left+"px;height:"+(y2-y1)+"px;'><\/div>";
+            t+="<div class='drop' style='top:"+y1+"px;left:"+thisNode.left+"px;width:"+w1+"px;'>&nbsp;<\/div>";
+            t+="<div class='drop' style='top:"+y2+"px;left:"+thisNode.left+"px;width:"+w2+"px;'>&nbsp;<\/div>";
+        });
+        e.innerHTML=t;
+    }
+
+    function main(source) {
+        var e = document.getElementById("treeSize");
+        var numLeaves = e.options[e.selectedIndex].value;
+        var treeObj = buildTree(numLeaves, source);
+        var tree = treeObj.tree;
+        var root = treeObj.root;
+        var names = treeObj.names;
+        $("#dendrogramFrame").html("");
+
+        if (numLeaves==2) {
+
+            drawDendrogram(tree,root,names,"dendrogramFrame",200);
+            $("#dendrogramFrame").removeAttr("height");
+        }
+        else
+            if (numLeaves==1)
+            {
+                $("#dendrogramFrame").html("<canvas height='525' width='100%' id='df2'> <br> <img  src='Dendrograms_files/Dendrogram.png'> </canvas>");
+                drawBezierDendrogram(tree,root,names,"df2",true,false);
+                $("#dendrogramFrame").removeAttr("height");
+            }
+            else
+                if (numLeaves==0)
+                {
+
+                    $("#dendrogramFrame").html("<canvas height='525' width='100%' id='df2'> <br> <img src='Dendrograms_files/Dendrogram.png'> </canvas>");
+                    drawCircularDendrogram(tree,root,names,"df2",400,true);
+                    $("#dendrogramFrame").css("height","700px");
+                }
+
+
+
+
+    }
+    $("#ClustButtonAdd").click(function () {
+
+
+        var kcount = $("#ClusterCount").val();
+
+        var levelid = "@ViewBag.levelid";
+        var ratemax = $("#Clusterratemax").val();
+                
+      
+
+        var jidto = "@ViewBag.jidt";
+       var rate = $("#Clusterrate").val();
+       var array = [];
+       $('input:checked').each(function() {
+           array.push($(this).val());
+       });
+       var values="";
+       values= array.join(",");
+        if (kcount > 0)
+        {
+
+
+
+            $.get('@Url.Action("ClstKmeans", "Calculate")', {levelid: levelid, jidto: jidto,  kcount:kcount,rate:rate,ratemax:ratemax,values:values}, function (viewdata) {
+
+
+                $('#ClusterAdditional').html(viewdata);
+            });
+        } else
+        {
+            alert("Проверьте указанное количество кластеров! ");
+        }
+
+
+    });
+
+
+
+</script>
+
+<div style="margin: 32px 0 12px 20px;">
+    <h3>Тип дендрограммы &nbsp;</h3>
+
+    <select id="treeSize" class="form-control">
+        <option value="0">Круговая</option>
+        <option value="1">Безье</option>
+        <option value="2" selected="selected">Простая</option>
+    </select>
+    <br />
+    <input onclick="main('random')" value="Показать дендрограмму" class="btn btn-primary" type="button">
+    <hr />
+
+
+</div>
+
+<div id="gFrame">
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td valign="top" width="60%">
+
+                    <div id='dendrogramFrame'></div>
+                </td>
+
+                <td valign="top" width="40%">
+
+                    <h1>Описательные статистики &nbsp;</h1>
+
+                    <h3>Количество групп &nbsp;</h3>
+                    <input id="ClusterCount" name="ClusterCount" class="form-control" value="1" type="text">
+                    <br />
+                    <input id="ClustButtonAdd" value="Показать результаты" class="btn btn-primary" type="button">
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <hr />
+    <div id="ClusterAdditional"></div>
+</div>
+

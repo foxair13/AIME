@@ -1,0 +1,249 @@
+﻿@using MVCDIS.Models
+<ul id="menu" class="bg-blue dker">
+    <li class="nav-header">Главное меню</li>
+    <li class="nav-divider"></li>
+    <li class="">
+        <a href="@Url.Action("Index", "Home")">
+            <i class="fa fa-home" aria-hidden="true"></i> <span class="link-title">&nbsp;Главная страница</span>
+        </a>
+    </li>
+    @if (CustomAuthorizeAttribute.CheckRoles("Plancreate"))
+    {
+        <li class="Plancreate">
+            <a href="@Url.Action("PjList", "Calculate")">
+                <i class="fa fa fa-line-chart"></i> <span class="link-title">&nbsp;Рейтинг / План</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Reports"))
+    {
+        <li class="Reports">
+            <a href="@Url.Action("Reports", "Account")">
+                <i class="fa fa-newspaper-o"></i><span class="link-title">&nbsp;Отчеты</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("ArchReports"))
+    {
+        <li class="ArchReports">
+            <a href="@Url.Action("ReportsList", "Preview")">
+                <i class="fa fa-archive "></i><span class="link-title">&nbsp;Архив отчетов</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Userroom"))
+    {
+        <li class="Userroom">
+            <a href="@Url.Action("Manage", "Account")">
+                <i class="fa fa fa-address-card"></i> <span class="link-title">&nbsp;Кабинет пользователя</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Roles"))
+    {
+        <li class="Roles">
+            <a href="@Url.Action("Index", "Roles")">
+                <i class="fa fa fa-gavel"></i> <span class="link-title">&nbsp;Управление ролями</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Access"))
+    {
+        <li class="Access">
+            <a href="@Url.Action("Users", "Main")">
+                <i class="fa fa fa-shield"></i> <span class="link-title">&nbsp;Управление доступом</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Interface"))
+    {
+        <li class="Interface">
+            <a href="@Url.Action("Action", "Main")">
+                <i class="fa fa fa-television"></i> <span class="link-title">&nbsp;Управление интерфейсом</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Contingent"))
+    {
+        <li class="Contingent">
+            <a href="@Url.Action("Index", "Clients")">
+                <i class="fa fa-user-o"></i><span class="link-title">&nbsp;Контингент</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("InWork"))
+    {
+        <li class="InWork">
+            <a href="@Url.Action("Index", "Tree")">
+                <i class="fa fa-sitemap"></i><span class="link-title">&nbsp;Мероприятия</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Templates"))
+    {
+        <li class="Templates">
+            <a href="@Url.Action("Index", "Templates")">
+                <i class="fa fa-print"></i><span class="link-title">&nbsp;Печатные шаблоны</span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("MenuTables"))
+    {
+        <li class="MenuTables">
+            <a href="javascript:;">
+                <i class="fa fa-table"></i>
+                <span class="link-title">Таблицы</span>
+                <span class="fa arrow"></span>
+            </a>
+            <ul>
+                @if (CustomAuthorizeAttribute.CheckRoles("Userslist"))
+                {
+
+                    <li class="Userslist">
+                        <a href="@Url.Action("Index", "ClientsInfo")">
+                            <i class="fa fa-address-book"></i>&nbsp;Перечень кандидатов
+                        </a>
+                    </li>
+                }
+
+                @if (CustomAuthorizeAttribute.CheckRoles("Cvalificate"))
+                {
+                    <li class="Cvalificate">
+                        <a href="@Url.Action("Index", "Level")">
+                            <i class="fa fa-level-up"></i>&nbsp;Уровни квалификации
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Prof"))
+                {
+                    <li class="Prof">
+                        <a href="@Url.Action("Index", "ProfArea")">
+                            <i class="fa fa-sitemap"></i>&nbsp;Категории должностей
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Jobs"))
+                {
+                    <li class="Jobs">
+                        <a href="@Url.Action("Index", "JobTitle")">
+                            <i class="fa fa-briefcase"></i>&nbsp;Должности
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Cert"))
+                {
+                    <li class="Cert">
+                        <a href="@Url.Action("Index", "Certification")">
+                            <i class="fa fa-certificate "></i>&nbsp;Виды сертификатов
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Competence"))
+                {
+                    <li class="Competence">
+                        <a href="@Url.Action("Index", "Competence")">
+                            <i class="fa fa-ellipsis-v "></i>&nbsp;Компетенции
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Attr"))
+                {
+                    <li class="Attr">
+                        <a href="@Url.Action("Index", "Attributes")">
+                            <i class="fa fa-cube "></i>&nbsp;Составляющие компетенций
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Discipline"))
+                {
+                    <li class="Discipline">
+                        <a href="@Url.Action("Index", "Discipline")">
+                            <i class="fa fa-book "></i>&nbsp;Материалы
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Types"))
+                {
+                    <li class="Types">
+                        <a href="@Url.Action("Index", "Types")">
+                            <i class="fa fa-cubes"></i>&nbsp;Виды составляющих компетенций
+                        </a>
+                    </li>
+                }
+
+                @if (CustomAuthorizeAttribute.CheckRoles("Actis"))
+                {
+                    <li class="Actis">
+                        <a href="@Url.Action("Index", "Act")">
+                            <i class="fa fa-tasks"></i>&nbsp;Виды мероприятий
+                        </a>
+                    </li>
+                }
+              
+                @if (CustomAuthorizeAttribute.CheckRoles("Stepen"))
+                {
+                    <li class="Stepen">
+                        <a href="@Url.Action("Index", "Stepen")">
+                            <i class="fa fa-graduation-cap"></i>&nbsp;Научные степени
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Zvanie"))
+                {
+                    <li class="Zvanie">
+                        <a href="@Url.Action("Index", "Zvan")">
+                            <i class="fa fa-suitcase"></i>&nbsp;Научные звания
+                        </a>
+                    </li>
+                }
+                @if (CustomAuthorizeAttribute.CheckRoles("Works"))
+                {
+                    <li class="Works">
+                        <a href="@Url.Action("Index", "Works")">
+                            <i class="fa fa-bullseye"></i>&nbsp;Виды занятости
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+
+    @if (CustomAuthorizeAttribute.CheckRoles("Priority"))
+    {
+        <li class="Priority">
+            <a href="@Url.Action("PjList", "ProfArea")">
+                <i class="fa fa-pie-chart"></i>
+                <span class="link-title">
+                    Приоритеты
+                </span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("ConfigDiscipline"))
+    {
+        <li class="ConfigDiscipline">
+            <a href="@Url.Action("PjList", "Discipline")">
+                <i class="fa fa-anchor"></i>
+                <span class="link-title">
+                    Привязка Материала
+                </span>
+            </a>
+        </li>
+    }
+    @if (CustomAuthorizeAttribute.CheckRoles("Grades"))
+    {
+        <li class="Grades">
+            <a href="@Url.Action("PjList", "Clients")">
+                <i class="fa fa-thumbs-up "></i>
+                <span class="link-title">
+                    Редактор оценок
+                </span>
+            </a>
+        </li>
+    }
+
+    <li class="nav-divider"></li>
+    <li class="nav-header">© Лисичёнок С.И.</li>
+    <li class="nav-divider"></li>
+
+</ul>

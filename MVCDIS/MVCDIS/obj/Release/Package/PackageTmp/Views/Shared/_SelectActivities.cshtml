@@ -1,0 +1,36 @@
+﻿
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("[name='switcher']").attr("data-on-text", "Вкл");
+        $("[name='switcher']").attr("data-off-text", "Выкл");
+
+        $("[name='switcher']").bootstrapSwitch();
+    });
+</script>
+
+
+@model MVCDIS.Models.AllUserActivities
+<div class="row">
+    <table class="rep_add" >
+        @foreach (var item in Model.iasaActivities)
+        {
+            <tr>
+                <td>
+                    @item.Key.ActivityName
+                </td>
+                <td align="right">
+                    <input name="switcher" type="checkbox" class="checkbox a-checkbox" id="activity-@item.Key.ActivityId"
+                           @if (item.Value) { @Html.Raw("checked")       } /><label for="activity-@item.Key.ActivityId"></label>
+                </td>
+               
+            </tr>
+
+        }
+
+        <tr>
+            <td colspan="2">
+                <div class="text-center"><div class="btn btn-success" id="act-save" data-lity-close>Сохранить</div></div>
+            </td>
+        </tr>
+    </table>
+</div>

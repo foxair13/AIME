@@ -1,0 +1,13 @@
+﻿@{
+    Layout = null;
+}
+
+To: @ViewBag.To
+From: iasa_robot@pac.by
+Subject: Сброс пароля для @ViewBag.UserName
+
+Здравствуйте @ViewBag.UserName,
+
+Для того, чтобы продолжить перейдите по ссылке @Url.Action("ResetPassword", "Account", new { Id = ViewBag.ConfirmationToken }, "http")
+
+

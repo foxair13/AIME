@@ -1,0 +1,172 @@
+﻿@model List<MVCDIS.Models.CalcResult>
+@{
+    int i = 0;
+    int t = 0;
+    int j = 0;
+    int n = 0;
+    int z = 0;
+    int an = 0;
+    double sum2 = 0;
+    double sum1 = 0;
+    double sump = 0;
+}
+<script type="text/javascript">
+    var dataPoints = [];
+    var tablearray=@Html.Raw(Json.Encode((List<MVCDIS.Models.CalcGroupCOResult>)ViewBag.Rate));
+    for (var i = 0; i <= tablearray.length -1; i++)
+    {
+        dataPoints.push({  y: tablearray[i].Value, label: tablearray[i].Shifr   });
+    }
+    var chart = new CanvasJS.Chart("barchartContainer",
+    {
+        animationEnabled: true,
+        animationDuration: 2000,
+        title: {
+            text: "Итоговые показатели  компетенций"
+        },
+        axisX: {
+            interval: 1
+        },
+        data: [
+        {
+            type: "bar",
+            dataPoints: dataPoints
+        }
+        ]
+    });
+
+    chart.render();
+</script>
+@Scripts.Render("~/bundles/canvasjs")
+<div id="barchartContainer" style="height: 300px; width: 100%;"></div>
+
+<table style="border: 1px solid black;" align="center">
+    <caption align="top">
+        <h1>Аттестационный лист</h1>
+    </caption>
+    <tbody>
+        <tr>
+            <td style="background-color: rgb(224, 224, 224);" colspan="5" align="center">
+                <strong>  @ViewBag.jobstr &nbsp; @ViewBag.FIO</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Шифр</strong></td>
+            <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Компетенция</strong></td>
+            <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Составляющая компетенции </strong></td>
+            <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Вес, %</strong></td>
+            <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Оценка, балл</strong></td>
+        </tr>
+        @{
+            n = ((List<MVCDIS.Models.Competence>)ViewBag.Competence).Count();
+            MVCDIS.Models.CompetenceContext db = new MVCDIS.Models.CompetenceContext();
+        }
+
+        @foreach (MVCDIS.Models.Competence item in @ViewBag.Competence)
+        {
+            var c = from k in Model
+                    join a in db._Attributes on k.AttributesID equals a.ID
+                    join m in db._TypeAttributes on a.TypeID equals m.ID
+                    where k.CompetenceID == item.ID
+                    orderby a.TypeID
+                    select new { k.Name, k.Value, k.Grade, k.CalcCol, a.TypeID, NameValue = m.Name };
+            var counts = from tt in c
+                         group tt by tt.NameValue into grp
+                         select new { key = grp.Key, cnt = grp.Count() };
+
+            int num = counts.Count();
+            i = 0;
+            j++;
+            sum1 = 0;
+            sump = 0;
+          
+            z = 0;
+            foreach (var itemCalc in c)
+            {
+                an = c.Count() + num;
+                i++;
+
+                if (itemCalc.TypeID != t)
+                {
+                    z++;
+                    if (z != 1 && c.Count()>0)
+                    {
+                        <tr>
+
+                            <td colspan="3" style="background-color: rgb(239, 239, 239);" align="center"><b>@itemCalc.NameValue</b>   </td>
+
+
+                        </tr>
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" style="background-color: rgb(239, 239, 239);"></td>
+                            <td colspan="3" style="background-color: rgb(239, 239, 239);" align="center"><b>@itemCalc.NameValue</b>   </td>
+
+
+                        </tr>
+                    }
+
+                }
+                if (i == 1)
+                {
+
+                    <tr>
+
+                        <td style="background-color: rgb(239, 239, 239);" align="center" rowspan="@an">@item.Shifr  </td>
+                        <td style="background-color: rgb(239, 239, 239);" align="left" rowspan="@an">@item.Name</td>
+                        <td style="background-color: rgb(239, 239, 239);" align="left">@itemCalc.Name</td>
+                        <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Value %</td>
+                        <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Grade</td>
+                    </tr>
+                    sum1 += @itemCalc.CalcCol;
+                    sump += @itemCalc.Value;
+                }
+                else
+                {
+
+
+                    <tr>
+
+
+                        <td style="background-color: rgb(239, 239, 239);" align="left">@itemCalc.Name</td>
+                        <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Value %</td>
+                        <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Grade</td>
+                    </tr>
+                    sum1 += @itemCalc.CalcCol;
+                    sump += @itemCalc.Value;
+                }
+                t = itemCalc.TypeID;
+            }
+            if (sum1 != 0 || i==c.Count() && c.Count()!=0)
+            {
+                
+                <tr>
+                    <td style="background-color: rgb(239, 239, 239);" align="left">ИТОГО:</td>
+                    <td style="background-color: rgb(239, 239, 239);" align="center"><strong>@sump %</strong></td>
+                    <td style="background-color: rgb(239, 239, 239);" align="center"><strong>@Math.Round(sum1 / 100, 2)</strong></td>
+                </tr>
+            }
+        
+
+
+            sum2 += sum1;
+            if (j == n)
+            {
+
+                <tr>
+                    <td style="background-color: rgb(239, 239, 239);" colspan="4" align="center"><strong>ВСЕГО:</strong></td>
+                    <td style="background-color: rgb(239, 239, 239);" align="center"><strong>@Math.Round(sum2 / 100, 2)</strong></td>
+                </tr>
+            }
+
+        }
+
+
+
+
+
+    </tbody>
+</table>

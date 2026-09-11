@@ -1,0 +1,11 @@
+﻿@model MVCDIS.Models.iasaWorktypesTree
+
+
+@if (@Model.MinGrade != null && @Model.MaxGrade != null)
+{
+    <input type="hidden" id="Minx" value="@Model.MinGrade" /> <input type="hidden" id="Maxy" value="@Model.MaxGrade" />
+}
+else
+{
+    <input type="hidden" id="Minx" value="0" /> <input type="hidden" id="Maxy" value="5" />
+}

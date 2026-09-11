@@ -1,0 +1,116 @@
+﻿
+@model MVCDIS.Models.UserActivities
+@using MVCDIS.Models
+
+
+@{
+    ViewBag.Title = "Шаблоны для экспорта";
+
+    CompetenceContext db = new CompetenceContext();
+    int da = ViewBag.DefAct;
+}
+
+
+<div class="profile-container">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-print  fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Печатные шаблоны</b></i></strong>
+    </div>
+    <div class="profile-main">
+        <div class="row">
+            <div class="col-md-12 col-xs-24">
+                <p>Загрузка шаблонов для экспорта</p>
+                <p>Шаблоном для экспорта является файл Miscrosoft Office Word, в котором в местах, где должна выводится информация, используются специальные метки.</p>
+              
+            </div>
+            <div class="col-md-12 col-xs-24">
+                <div>Уровни квалификации:</div>
+                <div class="row-padding">
+                    <select class="form-control" id="activity">
+                        @foreach (var item in Model.iasaActivities)
+                        {
+
+                            if (item.ActivityId == da)
+                            {
+                                <option value="@item.ActivityId" selected>@item.ActivityName</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ActivityId">@item.ActivityName</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div>Ваши шаблоны:</div>
+                <div id="userTemplates"></div>
+                <div class="row-padding">
+                    <label class="control-label">Допустимые расширения: docx</label>
+                    <input id="template" name="template" type="file" class="file">
+                    <div id="errorBlock" class="help-block"></div>
+                    <br />
+                    <a href='@Url.Action("GetTemp", "Templates")' class="btn btn-info">Скачать шаблон</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#template").fileinput({
+            showPreview: false,
+            language: "ru",
+            allowedFileExtensions: [ "docx"],
+            elErrorContainer: "#errorBlock"
+        });
+
+
+        function refreshTemplates(act) {
+            $.get('@Url.Action("userTemplates", "Templates")', { act: act },
+                 function (viewdata) {
+                     $('#userTemplates').html(viewdata);
+                 });
+        }
+
+        refreshTemplates(@Model.DefaultActivityId)
+
+        $("#activity").change(function () {
+            refreshTemplates($(this).val());
+        })
+
+        $(".fileinput-upload-button").click(function (event) {
+            event.preventDefault();
+            var files = document.getElementById('template').files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        data.append("file" + i, files[i]);
+                    }
+                    var act = $("#activity").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("uploadTemplates", "Templates")',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            refreshTemplates(act);
+                        }
+                    });
+                } else {
+                    alert("Ваш браузер не поддерживает Html5!");
+                }
+            }
+
+        })
+
+
+        $('body').on('click', '.template-del', function () {
+            //alert($(this).attr('data-id'))
+        })
+
+    })
+</script>

@@ -1,0 +1,8 @@
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\TemplateEngine.Docx.dll
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\TemplateEngine.Docx.pdb
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\DocumentFormat.OpenXml.dll
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\Newtonsoft.Json.dll
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\Newtonsoft.Json.pdb
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\bin\Release\Newtonsoft.Json.xml
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\obj\Release\TemplateEngine.Docx.dll
+D:\MVCDIS\MVCDIS\TemplateEngine.Docx\obj\Release\TemplateEngine.Docx.pdb

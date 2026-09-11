@@ -1,0 +1,45 @@
+﻿@model MVCDIS.Models.TypeAttributes
+
+@{
+    ViewBag.Title = "Добавить вид составляющей компетенции";
+}
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-cubes fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Виды составляющих компетенций</b></i></strong>
+</div>
+<div>
+
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+     <div class="form-group">
+
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @Html.LabelFor(model => model.Name, new { @class = "control-label col-lg-4" })
+        <div class="col-lg-6">
+
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+
+
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+
+       
+        <div class="col-lg-6">
+            <input type="submit" value="Добавить новую запись" class="btn btn-primary" />
+        </div>
+
+    </div>
+    
+   
+
+}
+
+

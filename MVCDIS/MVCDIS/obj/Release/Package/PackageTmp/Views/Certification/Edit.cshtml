@@ -1,0 +1,115 @@
+﻿@model List<MVCDIS.Models.AdditionalServicesCompetenceModel>
+
+@{
+    ViewBag.Title = "Виды сертификатов";
+}
+
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').dataTable({
+                "iDisplayLength": 25,
+                "bAutoWidth": false,
+                "aaSorting": [[0, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumnDefs": [
+         { 'bSortable': false, 'aTargets': [2] }
+                ],
+                "aoColumns": [{ "sWidth": "20%" }, { "sWidth": "70%" }, { "sWidth": "10%" }]
+
+
+            });
+        });
+    </script>
+}
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-certificate fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Виды сертификатов</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5><br /> Уровень  @ViewBag.Level -  @ViewBag.LevelName  </h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+                @using (Html.BeginForm("Edit", "Certification", FormMethod.Post, new { @id = "Edit", Value = Session["LevelId"].ToString() }))
+                {
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Шифр
+                                </th>
+                                <th>Компетенция</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+
+
+
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => m[i].Shifr)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => m[i].Name)
+                                </td>
+                                <td>
+                                    @Html.HiddenFor(m => m[i].ID)
+                                    @Html.CheckBoxFor(m => m[i].IsSelected)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <input class="btn btn-primary" type="submit" />
+                }
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>

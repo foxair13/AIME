@@ -1,0 +1,301 @@
+﻿@model MVCDIS.Models.IASAModel
+@{
+    ViewBag.Title = "Отчеты";
+}
+@using System.Web.Optimization
+@using MVCDIS.Models;
+@{
+    MVCDIS.Models.CompetenceContext db = new MVCDIS.Models.CompetenceContext();
+    int uid = WebSecurity.GetUserId(User.Identity.Name);
+
+    int da = 0;
+
+    using (var dbc = new UsersContext())
+    {
+
+        UserProfile up = dbc.UserProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+        da = (int)db._Clients.Where(x => x.ID == up.ClientsID).Select(x => x.DefaultActivityId).FirstOrDefault();
+
+
+    }
+}
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-newspaper-o fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Отчеты</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Редактор отчетов</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+                <div class="profile-container">
+                   
+
+                            <div id="reportsList"></div>
+               
+                </div>
+
+                <div class="lity-hide" id="form_report" >
+
+                </div>
+
+                <div class="lity-hide confirm" id="confirm-delete">
+                    <div class="text-center row-padding">Вы действительно хотите удалить этот отчет?</div>
+                    <div class="text-red text-center row-padding">ИНФОРМАЦИЯ БУДЕТ УДАЛЕНА!</div>
+                    <div class="text-center row-padding">Для удаления введите слово "УДАЛИТЬ" в поле ниже</div>
+                    <div class="row-padding"><input class="with_all" type="text" id="delete-word" /></div>
+                    <div class="text-center row-padding"><div class="btn btn-danger" disabled="disabled" id="delete-finally">Удалить окончательно</div></div>
+                </div>
+
+                <div class="lity-hide range" id="select-range">
+
+                    <div class="box dark">
+                        <header>
+                            <div class="icons">
+                                <i class="fa fa-edit"></i>
+                            </div>
+                            <h5>Построение отчета</h5>
+
+                            <!-- .toolbar -->
+                            <div class="toolbar">
+                                <nav style="padding: 8px;">
+
+
+                                </nav>
+                            </div>
+                            <!-- /.toolbar -->
+                        </header>
+                        <div aria-expanded="true" id="div-1" style=" height: 280px;  " class="body">
+                            <fieldset>
+
+                                @{
+                                    DateTime bdate = (DateTime)db.tableIasaActivities.Where(x => x.ActivityId == da).FirstOrDefault().BeginDate;
+                                    DateTime edate = (DateTime)db.tableIasaActivities.Where(x => x.ActivityId == da).FirstOrDefault().EndDate;
+                                }
+                                <div>
+                                    <div class="text-center"><h4>@db.tableIasaActivities.Where(x => x.ActivityId == da).Select(x => x.ActivityName).FirstOrDefault()</h4></div>
+                                    <hr />
+                                    <div>C: <input class="form-control dt" id="pr-begin" value="@bdate.ToShortDateString()" readonly /></div>
+                                    <div>ПО: <input class="form-control dt" id="pr-end" readonly value="@edate.ToShortDateString()"></div>
+                                    <hr />
+                                    <div class="text-center row-padding"><div class="btn btn-success" id="go_preview">Построить</div></div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+
+
+
+              
+                </div>
+
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#delete-word").keyup(function () {
+            if ($(this).val() == "УДАЛИТЬ") {
+                $("#delete-finally").removeAttr("disabled")
+                $("#delete-finally").attr("data-lity-close", "")
+            } else {
+                $("#delete-finally").attr("disabled","disabled")
+                $("#delete-finally").removeAttr("data-lity-close")
+            }
+
+        })
+
+        $('body').on('click', ".remove",function () {
+            var lightbox = lity();
+            lightbox('#confirm-delete');
+            $("#delete-word").val("")
+            $("#delete-finally").attr("disabled","disabled")
+            $("#delete-finally").removeAttr("data-lity-close")
+            $("#delete-finally").attr("data-id", $(this).attr("data-id"))
+        })
+
+      
+
+        $('body').on('change', "#work", function () {
+            var work = this.value;
+            $.get('@Url.Action("SetDefaultWork", "Account")', { work: work },
+                    function (viewdata) {
+                        if (viewdata)
+                            updateReportsList()
+                    });
+        })
+
+
+
+       
+
+
+        $("body").on("click", "#add_report", function () {
+            updateReportAdd();
+        })
+
+        $("body").on("click", "#go_preview", function () {
+         
+            var begin = $("#pr-begin").val();
+            var end = $("#pr-end").val();
+     
+            $.get('@Url.Action("CheckReport", "Account")',
+              function (viewdata) {
+                
+                  if (viewdata=="True") {
+                      document.location.href = "/Preview?begin=" + begin + "&end=" + end;
+                  }
+                  else
+                  {
+                      alert("Отчет уже сформирован и был проверен");
+                  }
+              });
+             
+
+        })
+
+        //$("#form_report").css("width", (document.body.clientWidth-40)+"px");
+
+        function updateReportsList()
+        {
+            $('#reportsList').html("<div class=\"text-center\"><img src=\"/Content/Images/loader.gif\" ></div>")
+            $.get('@Url.Action("updateReportsList", "Account")',
+                function (viewdata) {
+                    $('#reportsList').html(viewdata);
+                });
+        }
+
+        function updateReportAdd() {
+            $.get('@Url.Action("updateReportAdd", "Account")',
+                function (viewdata) {
+                    $('#form_report').html(viewdata);
+                });
+        }
+
+        function updateReportEdit(id) {
+            $('#form_report').html("<div class='text_center'><img src=\"/Content/Images/loader.gif\" ></div>")
+            $.get('@Url.Action("updateReportEdit", "Account")', {id : id},
+                function (viewdata) {
+                    $('#form_report').html(viewdata);
+                });
+        }
+
+        function updateReportInfo(id) {
+            $.get('@Url.Action("updateReportInfo", "Account")', { id: id },
+                function (viewdata) {
+                    $('#form_report').html(viewdata);
+                });
+        }
+
+        updateReportsList();
+        updateReportAdd();
+
+        $('body').on('click', '#editReport', function () {
+            var activity = $("#activity").val();
+            var work = $("#work").val();
+            var worktype = $("#worktype").val();
+            var text = $("#text").val();
+            var begin = $("#begin").val();
+            var end = $("#end").val();
+            var id = $("#reportid").val();
+            var grade =parseInt( $("#Grade").val());
+            var max = parseInt($('#Maxy').val());
+            var min = parseInt($('#Minx').val());
+      
+           
+            if (worktype == "") {
+                alert("Выберите  мероприятие!");
+            }
+            if (grade == "") {
+                alert("Укажите оценку/балл!");
+            }
+            if (begin == "") {
+                $("#begin").css("background-color", "red");
+            }
+            if (end == "") {
+                $("#end").css("background-color", "red");
+            }
+
+         
+            if (worktype != "" && begin != "" && end != "" && grade != "" && (grade <= max && grade >= min)) {
+                $("#lity-close").click();
+                $.get('@Url.Action("editReport", "Account")', {
+                    grade:grade,
+                    activity: activity,
+                    work: work,
+                    worktype: worktype,
+                    text: text,
+                    begin: begin,
+                    end: end,
+                    id: id
+                    
+
+                },
+                    function (viewdata) {
+                        updateReportsList();
+                    });
+             }
+
+        })
+
+
+        $('body').on('click', '.edit', function () {
+            var id = $(this).attr("data-id");
+            updateReportEdit(id);
+        })
+
+        $('body').on('click', '.delete-finally', function () {
+            if (!$(this).attr("disabled")) {
+                var id = $(this).attr("data-id");
+                $.get('@Url.Action("removeReport", "Account")', { id: id },
+                   function (viewdata) {
+                       updateReportsList();
+                   });
+            }
+
+        })
+
+        $('body').on('click', '.info', function () {
+            var id = $(this).attr("data-id");
+            updateReportInfo(id);
+        })
+
+
+    })
+</script> 

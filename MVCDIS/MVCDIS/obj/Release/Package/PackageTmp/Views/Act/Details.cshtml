@@ -1,0 +1,46 @@
+﻿@model MVCDIS.Models.iasaActivities
+
+@{
+    ViewBag.Title = "Информация по виду деятельности";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-tasks fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Виды мероприятий</b></i></strong>
+</div>
+
+
+<div>
+   
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeginDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeginDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ActivityId }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

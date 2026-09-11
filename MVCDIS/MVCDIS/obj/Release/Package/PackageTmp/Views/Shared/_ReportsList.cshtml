@@ -1,0 +1,110 @@
+﻿@model MVCDIS.Models.IASAModel
+@using MVCDIS.Models;
+@{
+    MVCDIS.Models.CompetenceContext db = new  MVCDIS.Models.CompetenceContext();
+    string activity = "", work = "", info = "";
+    try
+    {
+        activity = db.tableIasaActivities.Where(a => a.ActivityId == Model.defaultUserActivity).FirstOrDefault().ActivityName;
+        work = db.tableIasaWorks.Where(w => w.WorkId == Model.defaultUserWork).FirstOrDefault().WorkName;
+        info = (activity + ", " + work);
+    }
+    catch (Exception)
+    {
+
+    }
+    int i = 1;
+
+}
+
+<div class="not-found">Мероприятие</div>
+<div class="text-center">@info</div>
+<hr />
+
+<table class="dataTable" id="dtReports">
+    <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Мероприятие</th>
+            <th>Сведения о выполненной работе</th>
+            <th class="tdate">Начальная дата</th>
+            <th class="tdate">Конечная дата</th>
+            <th class="tdate">Дата добавления</th>
+            <th>Оценка/Балл (Диапазон)</th>
+            <th class="ticons"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.records)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.iasaWorktypesTree.WorktypeName</td>
+                <td>@item.ReportText</td>
+                <td class="tdate">@item.ReportBegin.ToString("dd.MM.yyyy")</td>
+                <td class="tdate">@item.ReportEnd.ToString("dd.MM.yyyy")</td>
+                <td class="tdate">@item.ReportCreate.ToString("dd.MM.yyyy hh:mm")</td>
+                @if (item.iasaWorktypesTree.MinGrade!=null && item.iasaWorktypesTree.MaxGrade!=null)
+                {
+                        
+                    <td>@String.Concat(item.Grade, " (" + item.iasaWorktypesTree.MinGrade + " / " + item.iasaWorktypesTree.MaxGrade + ")")</td>
+                }
+                else 
+                {
+                      <td>@String.Concat(item.Grade, " (0 / 5)")</td>
+                }
+            
+                <td class="ticons"><a href="#form_report" data-lity><i class="fa fa-pencil edit pointer" data-id="@item.ReportId"></i></a>  <a href="#confirm-delete" ><i class="fa fa-ban delete-finally pointer" data-id="@item.ReportId"></i></a> </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-24 text-center">
+        <a href="#form_report" id="add_report" data-lity><input type="button" class="btn btn-info" value="Добавить запись" /></a>
+        @if (Model.records.Count > 0)
+{
+    <a href="#select-range" id="" data-lity><input type="button" class="btn btn-success" value="Сформировать отчет" /></a>
+}
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+      
+
+        var dtable = $("#dtReports").DataTable({
+            language:
+        {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+        }
+
+
+        });
+    })
+</script>
+
+

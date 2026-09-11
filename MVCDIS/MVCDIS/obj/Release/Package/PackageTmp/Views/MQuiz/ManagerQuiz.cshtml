@@ -1,0 +1,247 @@
+﻿
+@model MVCDIS.Models.CompetenceEditViewModel
+<style>
+    .container {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        padding: 10px;
+
+    }
+
+    .video-block {
+        width: 50%;
+        float: right;
+        margin-right: 1%;
+    }
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+
+
+<link href="~/Content/css/lightbox.css" rel="stylesheet" />
+@section scripts{
+<script src="~/Scripts/lightbox.js"></script>
+<script src="~/Scripts/bootstrap-filestyle.js"></script>
+    <script type="text/javascript">
+        $('.hide-video').hide();
+        $('.video-block').hide();
+ 
+       
+        var i = 0;
+        $('.toggle-link').on('click', function () {
+
+           
+                
+          
+
+            var $this = $(this);
+        
+                
+            
+            // Hide video block and expanding info block
+            if ($this.hasClass('hide-video')) {
+                $(this).hide();
+                $('.show-video').show().css('display', 'inline-block');
+                $('.video-block').animate({
+                    width: 'toggle',
+                    opacity: '0'
+                }, 200);
+                $('.info-block').animate({
+                    width: '100%'
+                }, 500);
+            } else {
+                // Show video block again and return right block to the former position
+                $(this).hide();
+                $('.hide-video').show();
+                $('.video-block').animate({
+                    width: 'toggle',
+                    opacity: '1'
+                }, 400);
+                $('.info-block').show('400').animate({
+                    width: '50%'
+                }, 0);
+            }
+
+        });
+        $(document).ready(function () {
+            var oldRow, nTr, oldtr, newtr, zTr;
+            var table=  $('#example').DataTable({
+                "iDisplayLength": 30,
+                "bAutoWidth": false,
+                "aaSorting": [[1, "asc"]],
+                "bProcessing": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumns": [{ "sWidth": "10%", "bSortable": false, "mDataProp": null, "sClass": "control", "sDefaultContent": '<img src="@Url.Content("~/Content/img/details_open.png")">' } ,{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "80%" }]
+            } );
+
+
+            $('#example tbody').on('click', 'td.control', function () {
+                oldRow = nTr;
+
+                oldtr = newtr
+                newtr = $(this).closest('tr');
+                var child = table.row(newtr).child;
+
+                if (child.isShown()) {
+
+                    child.hide();
+                    oldRow = null;
+                    nTr = null;
+                    oldtr = null;
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+
+                }
+                else {
+
+                    nTr = table.row(newtr).child;
+                    zTr = nTr;
+                    var id = table.row(newtr).data()[1];
+                    var pid = "";
+                    var jid = "";
+                    var lid = "";
+                    pid = "@ViewBag.pid";
+                    jid = "@ViewBag.jid";
+                    lid = "@ViewBag.LevelID";
+                    $.get(
+                        "@Url.Action("MquizDetail", "MQuiz")", { id: id, pid: pid, jid: jid, lid: lid }, function (viewdata) {
+                            child(viewdata).show();
+                        });
+
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_close.png")');
+
+
+                }
+                if (oldRow != nTr) {
+
+                    oldRow.hide();
+                    $('img', oldtr).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+                }
+            });
+
+
+            $("#HB").click(function () {
+                if (zTr != undefined) {
+                    zTr.hide();
+                    zTr.child.remove();
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+}
+
+<div class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Редактор тестов</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <div class="container">
+                <div class="video-block" >
+                    <div id="viewdata">
+
+                    </div>
+                </div>
+                <div class="info-block">
+                    <fieldset>
+                        <h2 id="para"> </h2>
+
+                        
+                        <legend>Перечень компетенций</legend>
+
+
+                        Категория должности: @ViewBag.Profstr
+                        <br />
+                        Должность: @ViewBag.Jobstr
+                        <br />
+                        Наименование уровня квалификации: Уровень № @ViewBag.LevelLev "@ViewBag.LevelName"
+                        <br />
+                        <hr />
+
+                        @using (Html.BeginForm("ManagerQuiz", "MQuiz", FormMethod.Get, new { @id = "Priority" }))
+                        {
+                            <table id="example" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th id="Hideme"></th>
+                                        <th>Шифр</th>
+                                        <th>Название</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @Html.EditorFor(x => x.CompetenceEdits)
+
+                                </tbody>
+                            </table>
+                            <input type="hidden" name="IDS" id="IDS" value="@ViewBag.LevelID" />
+                            <input type="hidden" name="JID" id="JID" value="@ViewBag.jid" />
+
+
+                            <br />
+
+                        }
+
+                    </fieldset>
+
+
+                </div>
+                </div>
+            </div>
+    </div>
+</div>

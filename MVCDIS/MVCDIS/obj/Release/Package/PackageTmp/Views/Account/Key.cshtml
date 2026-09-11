@@ -1,0 +1,66 @@
+﻿@model MVCDIS.Models.Keys
+
+@{
+    ViewBag.Title = "Регистрация программного продукта";
+}
+
+    <h1>Регистрация программного продукта</h1>
+
+    
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+
+    <article id="content1">
+        <ul>
+            <li id="_Register">
+                <div class="box1">
+                    <div class="inner">
+                        <a href="#" class="close" data-type="close"><span></span></a>
+                        <div class="wrapper">
+
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.ValidationSummary(true)
+                                <fieldset>
+                                    <h2>Ваша копия не зарегистрирована!</h2>
+                                    <p>
+                                        Что бы успешно зарегистрировать программу необходимо отправить ваши данные  на Email: foxair13@gmail.com , дополнительную информацию можно узнать по телефону  (+375 25) 913-19-72
+                                    </p>
+
+
+                                    <div>
+                                        @Html.LabelFor(model => model.MashineID)
+                                    </div>
+                                    <div>
+                                        <h1> @Model.MashineID</h1>
+
+                                    </div>
+
+                                    <h2>
+                                        @Html.LabelFor(model => model.UserKey)
+                                    </h2>
+                                    <div style>
+                                        @Html.EditorFor(model => model.UserKey, new { id = "data", style = "float:left;margin:0;width:525px;height:16px;background:#fff;padding:4px 10px;color:#000000;font:16px 'Trebuchet MS', Arial, Helvetica, sans-serif" })
+                                        @Html.ValidationMessageFor(model => model.UserKey)
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <p>
+                                        <input type="submit" class="button" value="Зарегистрировать" />
+                                    </p>
+                                </fieldset>
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </article>

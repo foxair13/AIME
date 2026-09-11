@@ -1,0 +1,39 @@
+﻿@model MVCDIS.Models.UserWorks
+@using MVCDIS.Models
+@try
+{
+
+    int da = ViewBag.DefaultActivityId;
+    if (da != 0)
+    {
+        <div class="row">Виды занятости:</div>
+        foreach (var item in Model.iasaWorks)
+        {
+            <div class="row field_row work-row" id="@item.WorkId">
+                <div class="name">@item.WorkName</div>
+                @if (item.WorkId == Model.DefaultWorkId)
+                {
+                    <div class="default"><i class="fa fa-check" aria-hidden="true"></i></div>
+                }
+
+            </div>
+
+        }
+        <div class="row text-center">
+            <a class="lity-link" href="#add-works" data-lity><div class="btn btn-success" id="addWork">Выбрать вид занятости</div></a>
+            @if (Model.DefaultWorkId != 0)
+            {   <a href="/Account/Reports">
+                <div class="btn btn-primary">Перейти к отчетам</div>
+            </a>
+            }
+            
+        </div>
+     <br /> 
+    }
+}
+catch (Exception)
+{
+    <div>Виды занятости не добавлены</div>
+
+}
+

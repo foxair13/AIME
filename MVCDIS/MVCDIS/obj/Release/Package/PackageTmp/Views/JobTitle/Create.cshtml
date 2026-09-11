@@ -1,0 +1,47 @@
+﻿@model MVCDIS.Models.JobTitle
+
+@{
+    ViewBag.Title = "Добавить новую должности";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-briefcase fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Должности</b></i></strong>
+</div>
+<div>
+
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProfAreaID", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.ProfAreaID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Должность", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Добавить новую запись" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+

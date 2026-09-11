@@ -1,0 +1,75 @@
+﻿@model MVCDIS.Models.UserDetails
+
+@{
+   
+    var roles = ((string[])ViewBag.Roles).OrderBy(x => x);
+    int i = 0;
+    int j = 0;
+}
+
+    @*  <script type="text/javascript">
+          @foreach (var item in roles)
+	{
+              var str=String.Concat("#",@Model.UserName,j.ToString());
+              $(str).change(
+                  function() {
+              alert("checked");
+          });
+        j++;
+	}
+          
+
+    </script>*@
+
+
+<script>
+    $(function () {
+        $('.checkboxs').change(function () {
+            var self = $(this);
+          
+            var url = self.data('url');
+            var id = self.attr('id');
+            var value = self.prop('checked');
+
+            $.ajax({
+                url: url,
+                data: { id: id, ischecked: value },
+                type: 'POST',
+                success: function (response) {
+                 
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<table>
+    <tr>
+        <td><h5>Логин</h5></td>
+        <td>@Model.UserName</td>
+    </tr>
+    <tr>
+        <td><h5>Почтовый адресс</h5></td>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <td><h5>Роли</h5></td>
+       @foreach (var role in roles)
+                {
+
+           
+                    <td>
+                         @role @Html.CheckBoxFor(m=>m.Flag[i],new {data_url = Url.Action("UserToRole", "Main"), @class = "checkboxs", @id=String.Concat(Model.UserName+" ",@role+" "+i.ToString())})
+                    </td>
+              
+
+    
+       
+
+                    i++;
+}
+
+    </tr>
+</table>

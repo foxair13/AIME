@@ -1,0 +1,43 @@
+﻿@model MVCDIS.Models.iasaActivities
+Начальная дата:
+<div class="input-append date form_datetime_begin">
+
+    @{
+
+
+        if (Model== null)
+        {
+            <input class="dt" size="16" type="text" value="" id="begin" readonly>
+        }
+        else
+        {
+          
+                    <input class="dt" size="16" type="text" value="@Model.BeginDate" id="begin" readonly>
+           
+        }
+
+    }
+
+    <span class="add-on"><i class="fa fa-calendar"></i></span>
+</div>
+<br />
+Конечная дата:
+<div class="input-append date form_datetime_end">
+
+    @{
+
+
+        if (Model == null)
+        {
+            <input class="dt" size="16" type="text" value="" id="begin" readonly>
+        }
+        else
+        {
+          
+                    <input class="dt" size="16" type="text" value="@Model.EndDate" id="end" readonly>
+           
+        }
+
+    }
+    <span class="add-on"><i class="fa fa-calendar"></i></span>
+</div>

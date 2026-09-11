@@ -1,0 +1,148 @@
+﻿@model  MVCDIS.Models.DisciplineViewModel
+
+
+
+<script type="text/javascript">
+    var table= $('#DiscTable').dataTable({
+
+        "bAutoWidth": false,
+        "bFilter": false,
+        "paging": false,
+        "aaSorting": [[0, "asc"]],
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ Записей на странице"
+        },
+        "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "70%" }, { "sWidth": "20%" }]
+    });
+
+    $("#dialog").dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+    });
+
+    $("#Sel").click(function () {
+       
+        var rr = [];
+        $('#lstFruits :selected').each(function(i, selected){
+            rr[i] = $(selected).val();
+        });
+        var attr="@ViewBag.__attributes.ID";
+
+        $.get('/Discipline/GetSelected', $.param({ array: rr, attr:attr }, true), function (viewdata) {
+            $("#dialog p").text(viewdata);
+            $("#dialog").dialog("open");
+
+        });
+
+    });
+    var serilized= @Html.Raw(Json.Encode((List<MVCDIS.Models.Disciplines>)ViewBag.Disc));
+    var content0 = '';
+    var t = 0;
+    $('#lstFruits :selected').each(function (i, selected) {
+        t++;
+        var TimeD=0;
+        for (var i = 0; i < serilized.length; i++) {
+            if(serilized[i].ID==$(selected).val())
+            {
+                Timed=serilized[i].Time
+            }
+        }
+        content0 += '<tr><td>' + t + '</td>' + '<td>' + $(selected).text() + '</td>' + '<td>' + Timed + '</td></tr>';
+
+    });
+    $('#manage_user table tbody:first').html(content0);
+    $('[id*=lstFruits]').multiselect({
+        includeSelectAllOption: false,
+        enableFiltering: false,
+        maxHeight: 200,
+        checkboxName: function (option) {
+            return 'multiselect[]';
+        },
+        numberDisplayed: 1,
+        onChange: function (option, checked, select) {
+            var foo = [];
+
+            var content = '';
+            var z = 0;
+
+            var serilized= @Html.Raw(Json.Encode((List<MVCDIS.Models.Disciplines>)ViewBag.Disc));
+            $('#lstFruits :selected').each(function (i, selected) {
+                z++;
+                var TimeD=0;
+                for (var i = 0; i < serilized.length; i++) {
+                    if(serilized[i].ID==$(selected).val())
+                    {
+                        Timed=serilized[i].Time
+                    }
+                }
+                content += '<tr><td>' + z + '</td>' + '<td>' + $(selected).text() + '</td>' + '<td>' + Timed + '</td></tr>';
+
+            });
+
+
+            $('#manage_user table tbody:first').html(content);
+
+        },
+        buttonWidth: '100%',
+        enableCaseInsensitiveFiltering: true,
+        buttonText: function (options, select) {
+            if (options.length === 0) {
+                return 'Не выбрано ни одного материала ...';
+            }
+            else if (options.length > 3) {
+                return 'Более чем три позиции выбрано!';
+            }
+            else {
+                var labels = [];
+                options.each(function () {
+                    if ($(this).attr('label') !== undefined) {
+                        labels.push($(this).attr('label'));
+                    }
+                    else {
+                        labels.push($(this).html());
+                    }
+                });
+                return labels.join(', ') + '';
+            }
+        }
+    });
+
+</script>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="dialog" title="Внимание сообщение!">
+            <p></p>
+        </div>
+        <center>
+            <h3> @ViewBag.__attributes.Name</h3>
+        </center>
+        @Html.ListBoxFor(m => m.SelectedDisciplines, Model.Disciplines, new { @name = "multiselect[]", @multiple = "multiple", ID = "lstFruits", size = 5 })
+        <div id="manage_user">
+            <table id="DiscTable" class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Название материала</th>
+                        <th>Всего времени(час)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div>
+            <button class="btn btn-primary" id="Sel" style="display: inline-block;">Отправить</button>
+
+
+
+
+        </div>
+    </div>
+</div>

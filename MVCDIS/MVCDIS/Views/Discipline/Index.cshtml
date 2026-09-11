@@ -1,0 +1,143 @@
+﻿@model IEnumerable<MVCDIS.Models.Disciplines>
+
+@{
+    ViewBag.Title = "Материалы";
+}
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        var table = $(document).ready(function () {
+            $('#example').dataTable({
+                "iDisplayLength": 30,
+                "bAutoWidth": false,
+                "aaSorting": [[0, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumnDefs": [
+         { 'bSortable': false, 'aTargets': [2] }
+                ],
+                "aoColumns": [{ "sWidth": "30%" }, { "sWidth": "40%" }, { "sWidth": "10%" }, { "sWidth": "20%" }]
+            });
+
+
+        });
+
+
+    </script>
+}
+
+
+
+
+
+<div class="row">
+
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-book fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Материалы</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Таблица перечня материалов</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+                <p>
+                    @Html.ActionLink("Добавить новую запись", "Create")
+                </p>
+
+                <div>
+
+                  
+
+                    <table class="table" id="example">
+
+                        <thead>
+                         
+                            <tr>
+                                <th>
+                                    @Html.Label("Источник материала", new { @class = "control-label col-md-2" })
+                                </th>
+                                <th>
+                                    @Html.Label("Название материала", new { @class = "control-label col-md-2" })
+                                </th>
+                                <th>
+                                    @Html.Label("Время обучения (часы)", new { @class = "control-label col-md-2" })
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Source)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Discipline)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Time)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Изменить", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Просмотр", "Details", new { id = item.ID }) |
+                                        @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+</table>
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+

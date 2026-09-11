@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Регистрация завершена";
+}
+@using (Html.BeginForm("ConfirmationSuccess", "Account", new { Id = ViewBag.Data, flag = true }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div id="login" class="animate form">
+        <h1>Регистрация завершена</h1>
+        <p>Вы успешно зарегистрировались. Теперь вы можете войти в систему нажав "Вход"</p>
+
+        <p class="signin button">
+            <input  id="logins" type="submit" value="Вход" />
+        </p>
+        <p class="change_link">
+
+
+          
+        </p>
+
+    </div>
+}
+

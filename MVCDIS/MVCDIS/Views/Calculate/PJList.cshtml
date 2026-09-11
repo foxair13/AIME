@@ -1,0 +1,250 @@
+﻿@{
+
+    ViewBag.Title = "Категория должности";
+
+
+
+}
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+
+@section scripts{
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var selectvalue = $("#Prof option:selected").val();
+
+            //Display 'loading' status in the target select list
+            $('#target').html('<option value="">Загрузка...</option>');
+
+            if (selectvalue == "0") {
+                $("#Sel").hide();
+                //Display initial prompt in target select if blank value selected
+                $('#target').html(initial_target_html);
+            } else {
+                //Make AJAX request, using the selected value as the GET
+
+
+                $.get('@Url.Action("GetListDetail", "Calculate")', { id: selectvalue }, function (viewdata) {
+                    $('#target').html(viewdata);
+                    $("#Sel").show();
+
+                });
+
+            }
+            $("#element").introLoader({
+                animation: {
+                    name: 'doubleLoader',
+                    options: {
+                        exitFx: 'fadeOut',
+                        ease: "easeInOutCirc",
+                        style: 'ocean zebra',
+                        delayBefore: 500,
+                        exitTime: 300,
+                        progbarTime: 700,
+                        progbarDelayAfter: 400,
+                        preventScroll: true
+                    }
+                }
+            });
+            var initial_target_html = '<option value="0">Пожалуйста укажите профессию...</option>';
+            $('#Drophide').hide();
+            $('#Drophide1').hide();
+            $("#Sel").hide();
+            $('#target').html(initial_target_html);
+
+            $("#Sel").click(function () {
+                var Prof = $("#Prof option:selected").val();
+                var targv = $("#target option:selected").val();
+                $.get('@Url.Action("ShowPJList", "Calculate")', { targv: targv, Prof: Prof }, function (viewdata) {
+                    $('#Drophide').slideDown();
+                    $('#unique').html(viewdata);
+                });
+            });
+            $('#Prof').change(function (e) {
+                //Grab the chosen value on first select list change
+                selectvalue = $(this).val();
+
+                //Display 'loading' status in the target select list
+                $('#target').html('<option value="">Загрузка...</option>');
+
+                if (selectvalue == "0") {
+                    $("#Sel").hide();
+                    //Display initial prompt in target select if blank value selected
+                    $('#target').html(initial_target_html);
+                } else {
+                    //Make AJAX request, using the selected value as the GET
+
+
+                    $.get('@Url.Action("GetListDetail", "Calculate")', { id: selectvalue }, function (viewdata) {
+                        $('#target').html(viewdata);
+                        $("#Sel").show();
+
+                    });
+
+                }
+            });
+        });
+
+
+
+    </script>
+}
+
+<div id="element" class="introLoading"></div>
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-line-chart fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Рейтинг / План</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Выбор категории должности</h5>
+
+
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+
+        </header>
+        <div style="" aria-expanded="true" id="div-1" class="body">
+
+
+            <br />
+            @if (ViewBag.Manage)
+            {
+                @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Prof", null, new { @class = "form-control", @disabled = "disabled" })
+            }
+            else
+            {
+                @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+                @Html.DropDownList("Prof", null, new { @class = "form-control" })
+            }
+            <br />
+            @Html.Label("Должность", new { @class = "control-label col-md-2" })
+            @if (ViewBag.Manage)
+            {
+                <select class="form-control" disabled="disabled" name="target" id="target"></select>
+            }
+            else
+            {
+                <select class="form-control" name="target" id="target"></select>
+            }
+
+            <br />
+            <p>
+
+                <button class="btn btn-primary" id="Sel">Отправить</button>
+
+
+
+
+
+            </p>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="Drophide" class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Выберите требуемый уровень квалификации</h5>
+
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div><!-- /.toolbar -->
+        </header>
+        <div style="" aria-expanded="true" id="unique" class="body">
+
+        </div>
+
+    </div>
+</div>
+
+<div id="Drophide1" class="row">
+
+
+    <div class="box dark">
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-2" class="body">
+            <header>
+                <div class="icons">
+                    <i class="fa fa-edit"></i>
+                </div>
+                <h5>Квалификация</h5>
+
+                <!-- .toolbar -->
+                <div class="toolbar">
+                    <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                            <i class="fa fa-expand"></i>
+                        </a>
+
+                    </nav>
+                </div>
+                <!-- /.toolbar -->
+            </header>
+            <div style="" aria-expanded="true" id="unique1" class="body">
+            </div>
+        </div>
+    </div>
+</div>
+
+

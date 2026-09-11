@@ -1,0 +1,265 @@
+﻿@model  List<MVCDIS.Models.ReportsList>
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "iDisplayLength": 25,
+            "bAutoWidth": false,
+            "aaSorting": [[1, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            }
+
+
+        });
+
+        $('body').on('click', '.delete-finally', function () {
+
+            var id = $(this).attr("data-id");
+
+            $.get('@Url.Action("removeArch", "Preview")', { id: id },
+               function (viewdata) {
+                   $('#tablearch').html(viewdata);
+               });
+
+
+        })
+
+        var table = $('#example').DataTable();
+        $('#Drophide1').hide();
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+        $("#opener").click(function () {
+
+            var table = $('#example').DataTable();
+            var Sel = table.row('.selected').data();
+
+            if (Sel != null) {
+                $.get('@Url.Action("ShowArch", "Preview")', { id: Sel[0] }, function (viewdata) {
+
+                    $('#Drophide1').slideDown();
+                    $('#unique1').html(viewdata);
+                });
+
+
+            } else {
+
+                $("#dialog p").text("Выберите отчет");
+                $("#dialog").dialog("open");
+            }
+
+        });
+
+    });
+</script>
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-archive fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Архив отчетов</b></i></strong>
+    </div>
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Архив отчетов</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+
+
+                <div id="tablearch">
+                    <table id="example" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                @if (Model.Count != 0)
+                                {
+                                    <th id="Hideme">
+
+                                    </th>}
+
+                                <th>
+                                    Ф.И.О.
+                                </th>
+                                <th>
+                                    Уровень квалификации
+                                </th>
+                                <th>
+                                    Вид занятости
+                                </th>
+                                <th>
+                                    Должность
+                                </th>
+                                <th>
+                                    Дата начальная
+                                </th>
+                                <th>
+                                    Дата конечная
+                                </th>
+                                <th>
+                                    Дата создания
+                                </th>
+                                <th>
+                                    Статус
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (MVCDIS.Models.ReportsList item in Model)
+                            {
+
+
+                                using (var db = new MVCDIS.Models.CompetenceContext())
+                                {
+
+                                    using (var dbc = new MVCDIS.Models.UsersContext())
+                                    {
+
+                                        int uid = WebSecurity.GetUserId(User.Identity.Name);
+                                        var up = dbc.UserProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+                                        <tr>
+
+                                            @if (Model.Count != 0)
+                                            {
+                                                <td id="Hideme">@item.GroupId</td>
+                                            }
+
+                                            <td>
+
+
+                                                @db._Clients.Where(x => x.ID == up.ClientsID).Select(x => x.ClientsInfo.FIO).FirstOrDefault()
+
+
+                                            </td>
+                                            <td>
+                                                @db.tableIasaActivities.Where(x => x.ActivityId == item.ActivityId).Select(x => x.ActivityName).FirstOrDefault();
+
+                                            </td>
+                                            <td>
+                                                @db.tableIasaWorks.Where(x => x.WorkId == item.WorkId).Select(x => x.WorkName).FirstOrDefault();
+
+                                            </td>
+                                            <td>@db._Clients.Where(x => x.ID == up.ClientsID).Select(x => x.JobTitle.Name).FirstOrDefault()</td>
+
+                                            <td>@item.DateBegin</td>
+                                            <td>@item.DateEnd</td>
+                                            <td>@item.DateCreate</td>
+                                            <td>
+                                                @if (item.Confirmat)
+                                                {
+                                                    <i class="fa fa-toggle-on" aria-hidden="true">&nbsp;&nbsp;&nbsp;Проверено</i>
+
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-toggle-off" aria-hidden="true">&nbsp;&nbsp;&nbsp;Не проверено</i>
+                                                }
+
+                                            </td>
+                                            @{
+
+                                                bool flag = false;
+                                                flag=ViewBag.Manager;
+                                                if (flag == null)
+                                                {
+                                                    flag = false;
+                                                }
+                                                if (flag)
+                                                {
+                                                    <td><a href="#confirm-delete"><i class="fa fa-ban delete-finally pointer" data-id="@item.GroupId"></i></a> </td>
+                                                }
+                                                else
+                                                {
+                                                <td></td>}
+
+
+
+}
+                                        </tr>
+                                    }
+                                }
+
+                            }
+
+
+                        </tbody>
+                    </table>
+                    <hr />
+
+
+
+                    <div id="dialog" title="Внимание сообщение!">
+                        <p></p>
+                    </div>
+                    <button class="btn btn-primary" id="opener">Просмотр</button>
+
+
+                </div>
+            </fieldset>
+            <div id="Drophide1"><div id="unique1"></div>   </div>
+        </div>
+    </div>
+
+
+</div>

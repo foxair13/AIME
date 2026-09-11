@@ -1,0 +1,56 @@
+﻿
+@model MVCDIS.Models.Nodes
+
+@if (Model.breadcrumbs != null)
+{
+    <ol class="breadcrumb">
+        <li><a href="#" data-id="0" class="bread">Верхний уровень</a></li>
+        @foreach (var breadcrumb in Model.breadcrumbs)
+        {
+            if (breadcrumb != Model.breadcrumbs.Last())
+            {
+                <li><a href="#" data-id="@breadcrumb.WorktypeId" class="bread link-blue">@breadcrumb.WorktypeName</a></li>
+            }
+            else
+            {
+                <li><span data-id="@breadcrumb.WorktypeId" class="active">@breadcrumb.WorktypeName</span></li>
+            }
+        }
+    </ol>
+}
+
+<hr />
+@if (Model.lNodes != null && Model.lNodes.Count > 0)
+{
+    foreach (var node in Model.lNodes)
+    {
+          bool flag = false;
+      
+        int v = (bool)node.Value ? 1 : 0;
+        <div class="row wt @if (node.Key.WorktypeId == Model.currentId) {@Html.Raw("selBlue") }" data-id="@node.Key.WorktypeId" data-last="@v">
+
+            @if (node.Key.WorktypeId == Model.currentId) { }
+
+            @if ((bool)node.Value)
+            {
+                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+            }
+            else
+            {
+                <i class="fa fa-folder-o" aria-hidden="true"></i>
+            }
+            @node.Key.WorktypeName
+        </div>
+    }
+}
+else
+{
+    <div class="text-center">Мероприятие отсутствует</div>
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    })
+</script>

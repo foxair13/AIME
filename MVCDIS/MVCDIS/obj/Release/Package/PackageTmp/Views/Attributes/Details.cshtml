@@ -1,0 +1,45 @@
+﻿@model MVCDIS.Models.Attributes
+
+@{
+    ViewBag.Title = "Информация по  составляющей  компетенции";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-cube fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Составляющие компетенций</b></i></strong>
+</div>
+
+<div>
+  
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Competence.Shifr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Competence.Shifr)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeAttributes.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeAttributes.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>
+

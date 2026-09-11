@@ -1,0 +1,392 @@
+﻿@model List<MVCDIS.Models.CalcResult>
+@{
+    int p = 0;
+    int m = 0;
+    int j = 0;
+    int n = 0;
+    int t = 0;
+    int an = 0;
+    double sum1 = 0;
+    string sum = "";
+    bool flag = false;
+    int iter = 0;
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable(
+            {
+                "bSort": false,
+                "iDisplayLength": 25,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                }
+            });
+    });
+    $("#dialog").dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+    });
+
+    var competenceid = "@ViewBag.competenceid";
+    var levelid = "@ViewBag.levelid";
+    var jidt = "@ViewBag.jidt";
+    var clientid = "@ViewBag.clientid";
+    var min = "@ViewBag.min";
+    var max = "@ViewBag.max";
+    var mark = "@ViewBag.mark";
+    var Competence = new Array();
+    var CompetenceS = "";
+    @foreach (var item in ViewBag.ShortPath)
+	{
+		 @:Competence.push("@item");
+            	}
+    CompetenceS = Competence.toString();
+    $("#SavePlanButton").click(function () {
+
+        $.get('@Url.Action("SaveResultPlan", "Calculate")', { competenceid: competenceid, levelid: levelid, jidt: jidt, clientid: clientid, min: min, max: max, mark: mark, Competence: CompetenceS }, function (viewdata) {
+
+            $('#dialog p').html(viewdata);
+            $("#dialog").dialog("open");
+
+        });
+
+
+    });
+</script>
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    div.samp {
+        min-height: 100%;
+        text-align: center;
+        font-family: 'Merriweather Sans', arial, verdana;
+    }
+
+
+
+
+    .breadcrumb {
+        /*centering*/
+        display: inline-block;
+        box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        border-radius: 5px;
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+        .breadcrumb a {
+            text-decoration: none;
+            outline: none;
+            display: block;
+            float: left;
+            font-size: 12px;
+            line-height: 36px;
+            color: white;
+            /*need more margin on the left of links to accomodate the numbers*/
+            padding: 0 10px 0 60px;
+            background: #666;
+            background: linear-gradient(#666, #333);
+            position: relative;
+        }
+            /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+            .breadcrumb a:first-child {
+                padding-left: 46px;
+                border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+            }
+
+                .breadcrumb a:first-child:before {
+                    left: 14px;
+                }
+
+            .breadcrumb a:last-child {
+                border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+                padding-right: 20px;
+            }
+
+            /*hover/active styles*/
+            .breadcrumb a.active, .breadcrumb a:hover {
+                background: #333;
+                background: linear-gradient(#333, #000);
+            }
+
+                .breadcrumb a.active:after, .breadcrumb a:hover:after {
+                    background: #333;
+                    background: linear-gradient(135deg, #333, #000);
+                }
+
+            /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+            .breadcrumb a:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: -18px; /*half of square's length*/
+                /*same dimension as the line-height of .breadcrumb a */
+                width: 36px;
+                height: 36px;
+                /*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's:
+    length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
+    if diagonal required = 1; length = 1/1.414 = 0.707*/
+                transform: scale(0.707) rotate(45deg);
+                /*we need to prevent the arrows from getting buried under the next link*/
+                z-index: 1;
+                /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+                background: #666;
+                background: linear-gradient(135deg, #666, #333);
+                /*stylish arrow design using box shadow*/
+                box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4), 3px -3px 0 2px rgba(255, 255, 255, 0.1);
+                /*
+    5px - for rounded arrows and
+    50px - to prevent hover glitches on the border created using shadows*/
+                border-radius: 0 5px 0 50px;
+            }
+            /*we dont need an arrow after the last link*/
+            .breadcrumb a:last-child:after {
+                content: none;
+            }
+            /*we will use the :before element to show numbers*/
+            .breadcrumb a:before {
+                content: counter(flag);
+                counter-increment: flag;
+                /*some styles now*/
+                border-radius: 100%;
+                width: 20px;
+                height: 20px;
+                line-height: 20px;
+                margin: 8px 0;
+                position: absolute;
+                top: 0;
+                left: 30px;
+                background: #444;
+                background: linear-gradient(#444, #222);
+                font-weight: bold;
+            }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+
+        .flat a:before {
+            background: white;
+            box-shadow: 0 0 0 1px #ccc;
+        }
+
+        .flat a:hover, .flat a.active,
+        .flat a:hover:after, .flat a.active:after {
+            background: #9EEB62;
+        }
+</style>
+<hr />
+
+<div class="samp">
+    <a name="UP"></a>
+    <div class="breadcrumb flat">
+
+        @{
+
+            for (int i = 1; i < @ViewBag.breadcrumb.Length - 1; i++)
+            {
+                sum += @ViewBag.breadcrumb[i];
+            }
+            String[] array = ViewBag.breadcrumb;
+            var result = array.Where(str => array.Count(s => s == str) > 1).Distinct();
+            if (sum != "" && result.Count() == 1)
+            {
+
+
+                for (int i = 1; i < @ViewBag.breadcrumb.Length - 1; i++)
+                {
+                    flag = true;
+
+                    <a href="#@ViewBag.breadcrumb1[i]">@ViewBag.breadcrumb[i]</a>
+
+
+                }
+            }
+            else
+            {
+                flag = false;
+                <h1>Для данного ребра компетенции невозможно построить план с учетом указанных параметров</h1>
+            }
+        }
+
+
+
+    </div>
+    <hr />
+    @if (flag)
+    {
+
+
+
+        <table style="border: 1px solid white;" align="center">
+            <caption align="top">
+                <h1>План наращивания компетенций</h1>
+            </caption>
+            <tbody>
+                <tr>
+                    <td style="background-color: rgb(224, 224, 224);" colspan="5" align="center">
+                        <strong>  @ViewBag.jobstr &nbsp; @ViewBag.FIO</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Шифр</strong></td>
+                    <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Компетенция</strong></td>
+                    <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Составляющая компетенций </strong></td>
+                    <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Вес, %</strong></td>
+                    <td style="background-color: rgb(224, 224, 224);" align="center"><strong>Оценка, балл</strong></td>
+                </tr>
+                @{
+        n = ((List<MVCDIS.Models.Competence>)ViewBag.Competence).Count();
+        MVCDIS.Models.CompetenceContext db = new MVCDIS.Models.CompetenceContext();
+        int tn = 0;
+                }
+
+                @foreach (MVCDIS.Models.Competence item in @ViewBag.Competence)
+                {
+                    var c = from k in Model
+                            join a in db._Attributes on k.AttributesID equals a.ID
+                            join v in db._TypeAttributes on a.TypeID equals v.ID
+                            where k.CompetenceID == item.ID && k.Grade <= ViewBag.mark && k.Value != 0
+                            orderby a.TypeID ascending, k.Value descending
+                            select new { k.Name, k.Value, k.Grade, k.CalcCol, a.TypeID, NameValue = v.Name };
+                    tn = c.Select(inf => inf.TypeID).Distinct().Count() + c.Count();
+
+                    m = 0;
+                    sum1 = 0;
+
+                    p = 0;
+                    foreach (var itemCalc in c)
+                    {
+
+
+                        m++;
+                        if (itemCalc.TypeID != t)
+                        {
+                            p++;
+                            if (p != 1)
+                            {
+                                <tr>
+
+                                    <td colspan="3" style="background-color: rgb(239, 239, 239);" align="center"><b>@itemCalc.NameValue</b>   </td>
+
+
+                                </tr>
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2" style="background-color: rgb(239, 239, 239);"></td>
+                                    <td colspan="3" style="background-color: rgb(239, 239, 239);" align="center"><b>@itemCalc.NameValue</b>   </td>
+
+
+                                </tr>
+                            }
+
+                        }
+                        if (m == 1)
+                        {
+
+                            <tr style="border: 1px solid white;">
+                                <td style="background-color: rgb(239, 239, 239);" rowspan="@tn" align="center"><a name="@item.ID"></a><a href="#UP">@item.Shifr</a></td>
+                                <td style="background-color: rgb(239, 239, 239);" rowspan="@tn" align="left">@item.Name</td>
+                                <td style="background-color: rgb(239, 239, 239);" align="left">@itemCalc.Name</td>
+                                <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Value %</td>
+                                <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Grade</td>
+                            </tr>
+                            sum1 += @itemCalc.CalcCol;
+
+                        }
+                        else
+                        {
+                            <tr style="border: 1px solid white;">
+                                <td style="background-color: rgb(239, 239, 239);" align="left">@itemCalc.Name</td>
+                                <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Value %</td>
+                                <td style="background-color: rgb(239, 239, 239);" align="center">@itemCalc.Grade</td>
+                            </tr>
+                            sum1 += @itemCalc.CalcCol;
+
+                        }
+                        t = itemCalc.TypeID;
+                    }
+                    if (sum1 != 0)
+                    {
+                        <tr style="border: 1px solid white;"></tr>
+                    }
+
+
+
+
+
+                }
+
+
+
+
+
+            </tbody>
+        </table>
+        <table id="example">
+            <caption align="top">
+                <h1>Предлагаемый порядок изучения материала</h1>
+            </caption>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Источник материала</th>
+                    <th>Название материала</th>
+
+                    <th>Необходимое время для обучения (час)</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (MVCDIS.Models.DiscipSort item in ViewBag.ldsf)
+                {
+                    iter++;
+
+                    <tr>
+                        <td><b>@iter</b></td>
+                        <td>@item.Source</td>
+                        <td>@item.name</td>
+
+                        <td>@item.Time</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="button" id="SavePlanButton" class="btn btn-primary">Сохранить план для (@ViewBag.FIO)</button>
+        <div id="dialog" title="Внимание сообщение!">
+            <p></p>
+        </div>
+    }
+
+</div>

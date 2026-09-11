@@ -1,0 +1,55 @@
+﻿@model MVCDIS.Models.RegisterModel
+       @section scripts{
+       
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#element").introLoader({
+                animation: {
+                    name: 'doubleLoader',
+                    options: {
+                        exitFx: 'fadeOut',
+                        ease: "easeInOutCirc",
+                        style: 'ocean zebra',
+                        delayBefore: 500,
+                        exitTime: 300,
+                        progbarTime: 700,
+                        progbarDelayAfter: 400,
+                        preventScroll: true
+                    }
+                }
+            });
+        });
+            </script>}
+  <div id="element" class="introLoading"></div>
+@using (Html.BeginForm("JsonRecover", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { Id = "recoverForm" }))
+{
+  
+     
+
+    <h1>Восстановление пароля</h1>
+    <div id="HideRecover">
+        @Html.AntiForgeryToken()
+
+        <p>
+            @Html.LabelFor(m => m.Email, new Dictionary<string, Object> { { "class", "youmail" }, { "data-icon", "e" } })
+            @Html.TextBoxFor(m => m.Email, new Dictionary<string, Object> { { "required", "required" }, { "type", "email" }, { "placeholder", "Укажите ваш Email" } })
+        </p>
+
+        @Html.ValidationSummary()
+
+        <p class="recover button">
+            <input id="showRecover" type="submit" value="Отправить" />
+        </p>
+    </div>
+    <div id="divReсover" style='color: #ff0000; font-family: arial; font-size: large;'></div>
+   
+   
+
+    <p class="change_link">
+        Если зарегистрированы ?
+	<a href="#tologin" class="to_register">Авторизация </a>
+    </p>
+    
+    
+}

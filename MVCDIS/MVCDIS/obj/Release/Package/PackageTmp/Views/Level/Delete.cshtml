@@ -1,0 +1,42 @@
+﻿@model MVCDIS.Models.Levels
+
+@{
+    ViewBag.Title = "Удаление записи по выбранному уровню";
+}
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-level-up fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Уровни квалификации</b></i></strong>
+</div>
+
+<h3>Вы уверены в том , что хотите удалить эту запись ?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Lev)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lev)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить запись" class="btn btn-primary" /> |
+            @Html.ActionLink("Вернуться назад", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,184 @@
+﻿
+@model MVCDIS.Models.MarksEditViewModel
+
+
+<h3>Расставьте оценки по составляющим компетенциям </h3>
+
+<script type="text/javascript">
+
+
+
+        function cbWrapper(fn) {
+            return function () {
+                try {
+                    return (fn.apply(this, arguments));
+                } catch (e) {
+                    alert(e);
+                }
+            };
+        }
+        $("#element").introLoader({
+
+            animation: {
+                name: 'simpleLoader',
+                options: {
+                    exitFx: 'slideUp',
+                    ease: "easeInOutCirc",
+                    style: 'dark'
+                }
+            },
+            spinJs: {
+                lines: 10, // The number of lines to draw
+                length: 10, // The length of each line
+                radius: 30, // The radius of the inner circle
+                width: 8, // The line thickness
+                color: '#fff' // #rgb or #rrggbb or array of colors
+            }
+
+        });
+        $("#button_@ViewBag.ID").click(function ()
+        {
+
+            var errs = $(".error").length;
+         
+
+            var it = 0;
+
+            var coidt = "";
+            var coid = "";
+            var pidt = "";
+            var jidt = "";
+            var lidt = "";
+            coidt = "@ViewBag.ClientId";
+            lidt = "@ViewBag.LevelID";
+            coid = "@ViewBag.coid";
+           
+            var data = new Array();
+            var dt = $(".sum_@ViewBag.ID");
+            var datas = {
+                id: coidt,
+                lid: lidt,
+                coid: coid
+            };
+            $.each(dt, function (key, value) {
+                var subRuleCode = value.id.toString();
+                var valuestr = value.value.toString();
+                datas['postData[' + it + '].Key'] = subRuleCode;
+                datas['postData[' + it + '].Value'] = valuestr;
+
+                it++;
+            });
+          
+            if (errs == 0) {
+
+                // alert(JSON.stringify(datas));
+                $("#dynElement").introLoader({
+                    animation: {
+                        name: 'gifLoader',
+                        options: {
+                            ease: "easeInOutCirc",
+                            style: 'light',
+                            delayBefore: 500,
+                            delayAfter: 0,
+                            exitTime: 300
+                        }
+                    }
+                });
+               
+                $.ajax({
+                    url: '@Url.Action("PostAjax", "Clients")',
+                    type: 'GET',
+                    traditional: true,
+                    data: datas,
+                    success: function (result) {
+                        var loader = $('#dynElement').data('introLoader');
+                        loader.stop();
+                        $("#FMESAGE_@ViewBag.ID").html(result);
+
+
+                    },
+                    dataType: 'HTML'
+                });
+            } else
+            {
+                alert("Проверьте диапазон значения оценок!");
+            }
+
+        });
+
+
+    $("#button_@ViewBag.ID").hide();
+   
+
+
+   
+  
+        $("#button_@ViewBag.ID").show();
+
+   
+   
+    $(".sum_@ViewBag.ID").keyup(function () {
+  
+        var id = $(this).attr('data');
+        var val = parseInt($(this).val());
+
+        if (val < 0 || val > 5) {
+         
+     
+            $(this).css('background', 'IndianRed');
+            $(this).addClass("error");
+
+        }
+        else {
+
+            
+      
+            $(this).css('background', 'white');
+            $(this).removeClass("error");
+        }
+        
+       
+            });
+
+
+            $(".sum_@ViewBag.ID").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188]) !== -1 ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+            });
+</script>
+@Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+<table id="@String.Concat("t_", @ViewBag.ID)" class="display" cellspacing="0" width="100%">
+
+    <tbody>
+        @Html.EditorFor(x => x.MarksEdits)
+
+
+
+    </tbody>
+</table>
+<div id="@String.Concat("FMESAGE_", @ViewBag.ID)"></div>
+<div id="dynElement">
+</div>
+<button type="button" id="@String.Concat("button_", @ViewBag.ID)" class="btn btn-primary">Применить</button>
+
+
+
+
+
+
+<br />

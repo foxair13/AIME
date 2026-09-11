@@ -1,0 +1,116 @@
+﻿@model MVCDIS.Models.QuizEditViewModel
+
+<h1>Выберите из списка  составляющую компетенции</h1>
+@Styles.Render("~/Content/bootstrapswitch")
+
+
+
+
+    @Scripts.Render("~/bundles/bootstrapswitch")
+
+
+<script type="text/javascript">
+    $('.BSswitch').attr("data-on-text", "Вкл");
+    $('.BSswitch').attr("data-off-text", "Выкл");
+
+    $('.BSswitch').bootstrapSwitch('state', true);
+
+
+    var str = "@String.Concat("exampe_", @ViewBag.ID)";
+    
+   
+    $('input[name="GroupedSwitches"]').on('switchChange.bootstrapSwitch', function (event, state) {
+       
+        
+      
+        if (i==0) {
+            if ($(this).attr('checked')) {
+                $('.video-block').animate({
+                    width: 'toggle',
+                    opacity: '1'
+                }, 400);
+                $('.info-block').show('400').animate({
+                    width: '50%'
+                }, 0);
+            }
+        }
+       i= $('input:radio:checked').length;
+    
+       var attr = $('input:radio:checked').val();
+       
+       var LevelID = @ViewBag.LevelID;
+
+       var pid = @ViewBag.pid;
+       var jid = @ViewBag.jid; 
+       var coid = @ViewBag.coid;
+       $.get('@Url.Action("CreateQuiz", "MQuiz")', { coid: coid, jid: jid, pid: pid, LevelID: LevelID,attr:attr }, function (viewdata) {
+           
+           $('#viewdata').html(viewdata);
+       });
+      
+        
+       
+    });
+    
+
+    function cbWrapper(fn) {
+        return function () {
+            try {
+                return (fn.apply(this, arguments));
+            } catch (e) {
+                alert(e);
+            }
+        };
+    }
+    $("#element").introLoader({
+
+        animation: {
+            name: 'simpleLoader',
+            options: {
+                exitFx: 'slideUp',
+                ease: "easeInOutCirc",
+                style: 'dark'
+            }
+        },
+        spinJs: {
+            lines: 10, // The number of lines to draw
+            length: 10, // The length of each line
+            radius: 30, // The radius of the inner circle
+            width: 8, // The line thickness
+            color: '#fff' // #rgb or #rrggbb or array of colors
+        }
+
+    });
+
+
+</script>
+@Scripts.Render("~/bundles/jqueryval")
+
+
+   
+
+
+        
+
+
+
+        <table id="@String.Concat("exampe_", @ViewBag.ID)" class="display" cellspacing="0" width="100%">
+
+            <tbody>
+                @Html.EditorFor(x => x.QuizEdits)
+
+
+
+            </tbody>
+        </table>
+        <div id="@String.Concat("FMESAGE_", @ViewBag.ID)"></div>
+        <div id="dynElement">
+        </div>
+
+
+
+
+
+
+
+        <br />

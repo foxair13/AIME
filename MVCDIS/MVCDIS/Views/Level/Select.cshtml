@@ -1,0 +1,165 @@
+﻿@model IEnumerable<MVCDIS.Models.Levels>
+
+@using MvcContrib;
+@using MVCDIS.Models;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.UI.Grid.ActionSyntax;
+@{string inn, jnn, knn = "";}
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').dataTable({
+                "iDisplayLength": 25,
+                "bAutoWidth": false,
+                "aaSorting": [[1, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "80%" }]
+
+
+            });
+        });
+
+        $(document).ready(function () {
+            var table = $('#example').DataTable();
+
+            $('#example tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+
+        });
+
+        $('#button').click(function () {
+            var table = $('#example').DataTable();
+            var SelID = table.row('.selected').data()[0];
+            $('#dialog p').text(SelID);
+           
+        });
+
+
+
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $("#opener").click(function () {
+                var table = $('#example').DataTable();
+                var Sel = table.row('.selected').data();
+                if (Sel != undefined) {
+
+                    $('#IDS').val(Sel[0]);
+                    $('#ShifrS').val(Sel[1]);
+                    $('#NameS').val(Sel[2]);
+                    var url = '@Url.Action("Priority", "Competence")';
+                    $("#CompetencePriority").submit();
+                } else {
+
+                    $("#dialog p").text("Укажите уровень по которому идет отбор кандидата");
+                    $("#dialog").dialog("open");
+                }
+
+            });
+        });
+    </script>
+}
+
+<div class="row">
+<div class="box dark">
+                  <header>
+                    <div class="icons">
+                      <i class="fa fa-edit"></i>
+                    </div>
+                    <h5>Категория должности: @ViewBag.Profstr -  Должность: @ViewBag.Jobstr</h5>
+
+                    <!-- .toolbar -->
+                    <div class="toolbar">
+                      <nav style="padding: 8px;">
+                        <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                          <i class="fa fa-minus"></i>
+                        </a> 
+                        <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                          <i class="fa fa-expand"></i>
+                        </a> 
+                    
+                      </nav>
+                    </div><!-- /.toolbar -->
+                  </header>
+                  <div style="" aria-expanded="true" id="div-1" class="body">
+              <h5>Выберите требуемый уровень квалификации</h5>
+                      <br />
+                          
+
+
+           
+
+
+
+
+@using (Html.BeginForm("Priority", "Competence", FormMethod.Post, new { @id = "CompetencePriority" }))
+{ 
+    <input type="hidden" name="IDS" id="IDS" value="" />
+    <input type="hidden" name="ShifrS" id="ShifrS" value="" />
+    <input type="hidden" name="NameS" id="NameS" value="" />
+    @Html.Grid(Model).Columns(col =>
+{
+    col.For(c => c.ID).Named("ID").Attributes(ID => "Hideme").HeaderAttributes(ID => "Hideme");
+    col.For(c => c.Lev).Named("Уровень");
+    col.For(c => c.Name).Named("Название");
+}).Attributes(id => "example", @class => "display")
+  
+}
+<div id="dialog" title="Внимание сообщение!">
+    <p></p>
+</div>
+
+<button class="btn btn-primary" id="opener">Отправить</button>
+
+                  </div>
+                </div>
+</div>
+
+
+
+
+
+
+
+

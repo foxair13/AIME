@@ -1,0 +1,43 @@
+﻿@model MVCDIS.Models.ClientsInfo
+
+@{
+    ViewBag.Title = "Удаление кандидата";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-address-book fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Перечень кандидатов</b></i></strong>
+</div>
+
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("ФИО")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+       <div class="form-actions no-color">
+            <input type="submit" value="Удалить запись" class="btn btn-primary" /> |
+            @Html.ActionLink("Вернуться назад", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,132 @@
+﻿@using MVCDIS.Models
+@model MVCDIS.Models.Preview
+@{
+    MVCDIS.Models.CompetenceContext db = new MVCDIS.Models.CompetenceContext();
+    ViewBag.Title = "Предварительный просмотр";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#table_preview").dataTable({
+
+            "bAutoWidth": false,
+            "bFilter": false,
+            "paging": false,
+            "aaSorting": [[0, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumns": [{ "sWidth": "40%" }, { "sWidth": "30%" }, { "sWidth": "10%" },  { "sWidth": "10%" }, { "sWidth": "10%" }]
+        });
+      
+            var begin = "@ViewBag.Begin";
+            var end = "@ViewBag.End";
+
+
+    
+    })
+
+</script>
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-newspaper-o fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Отчеты</b></i></strong>
+</div>
+<div class="box dark">
+    <header>
+        <div class="icons">
+            <i class="fa fa-edit"></i>
+        </div>
+        <h5>Предварительный просмотр</h5>
+
+        <!-- .toolbar -->
+        <div class="toolbar">
+            <nav style="padding: 8px;">
+                <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                    <i class="fa fa-minus"></i>
+                </a>
+                <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                    <i class="fa fa-expand"></i>
+                </a>
+
+            </nav>
+        </div>
+        <!-- /.toolbar -->
+    </header>
+    <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+        <fieldset>
+            <div class="profile-container">
+                <div class="row">
+                    <div class="col-md-24 text-center">
+                        <div><h3>Предварительный просмотр</h3></div>
+                        <div><h4>отчет c @ViewBag.Begin по @ViewBag.End</h4></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="col-md-24">
+                        <div><strong>Ф.И.О. :</strong> @db._ClientsInfo.Where(x => x.ID == Model.User.ClientInfoID).Select(x => x.FIO).FirstOrDefault()  </div>
+                        <div><strong>Должность: </strong>@db._JobTitle.Where(x => x.ID == Model.User.JobTitleID).Select(x => x.Name).FirstOrDefault()</div>
+                        <div><strong>Степень: </strong> @db.tableIasaStepen.Where(x => x.StepenId == Model.User.StepenId).Select(x => x.StepenName).FirstOrDefault()</div>
+                        <div><strong>Звание:</strong> @db.tableIasaZvanie.Where(x => x.ZvanieId == Model.User.ZvanieId).Select(x => x.ZvanieName).FirstOrDefault()</div>
+                        <hr />
+                        <div><strong>Уровень квалификации: </strong> @Model.Activity</div>
+                        <div><strong>Вид занятости: </strong> @Model.Workt</div>
+                        <hr />
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-24">
+                        @if (Model.Reports.Count == 0)
+                        {
+                            <div class="text-center"><h5>Записи отсутствуют</h5></div>
+                        }
+                        else
+                        {
+                            <table id="table_preview">
+                                <thead>
+
+                                    <tr>
+                                        <th>Мероприятие</th>
+                                        <th>Выполненная работа</th>
+                                        <th>Оценка/Балл (Диапазон)</th>
+                                        <th>Начало</th>
+                                        <th>Окончание</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Reports)
+                                    {
+                                        <tr>
+                                            <td>@item.bread @item.Report.iasaWorktypesTree.WorktypeName</td>
+                                            <td>@item.Report.ReportText</td>
+                                            @if (item.Report.iasaWorktypesTree.MinGrade != null && item.Report.iasaWorktypesTree.MaxGrade != null)
+                                            {
+
+                                                <td>@String.Concat(item.Report.Grade, " (" + item.Report.iasaWorktypesTree.MinGrade + " / " + item.Report.iasaWorktypesTree.MaxGrade + ")")</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@String.Concat(item.Report.Grade, " (0 / 10)")</td>
+                                            }
+                                            <td>@item.Report.ReportBegin.ToString("dd.MM.yyy")</td>
+                                            <td>@item.Report.ReportEnd.ToString("dd.MM.yyyy")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="text-center row-padding">
+                                <a href='@Url.Action("GetTemplates", "Preview")' class="btn btn-info">Черновая печать</a>
+                                <a href='@Url.Action("SaveReport", "Preview")'  class="btn btn-success" id="SaveReport">Сохранить в архив</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+        </fieldset>
+
+    </div>
+</div>

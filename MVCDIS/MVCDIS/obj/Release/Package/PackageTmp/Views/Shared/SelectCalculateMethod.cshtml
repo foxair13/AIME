@@ -1,0 +1,171 @@
+﻿@model IEnumerable<MVCDIS.Models.Levels>
+
+@using MvcContrib;
+@using MVCDIS.Models;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.UI.Grid.ActionSyntax;
+@{string inn, jnn, knn = "";}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "iDisplayLength": 25,
+            "bAutoWidth": false,
+            "aaSorting": [[1, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "80%" }]
+
+
+        });
+
+
+
+
+    });
+    $('#Drophide1').hide();
+    $(document).ready(function () {
+        var table = $('#example').DataTable();
+
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+
+    });
+
+    $('#button').click(function () {
+        var table = $('#example').DataTable();
+        var SelID = table.row('.selected').data()[0];
+        $('#dialog p').text(SelID);
+      
+    });
+
+
+
+    $(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+        $("#opener").click(function () {
+
+            var table = $('#example').DataTable();
+            var Sel = table.row('.selected').data();
+            var pidt = "@ViewBag.pid";
+            var jidt = "@ViewBag.jid";
+            if (Sel != null) {
+                $.get('@Url.Action("ShowMethods", "Calculate")', { levelid: Sel[0], pidt: pidt, jidt: jidt }, function (viewdata) {
+
+                    $('#Drophide1').slideDown();
+                    $('#unique1').html(viewdata);
+                });
+
+
+            } else {
+
+                $("#dialog p").text("Выберите отчет который вы желаете увидить");
+                $("#dialog").dialog("open");
+            }
+
+        });
+    });
+
+
+
+
+    @*   $("#Sel").click(function () {
+         var Prof = $("#Prof option:selected").val();
+         var targv = $("#target option:selected").val();
+
+     });*@
+
+
+
+
+</script>
+
+
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+
+    #Hideme {
+        display: none;
+    }
+</style>
+
+
+<h5>Категория должности: @ViewBag.Profstr -  Должность: @ViewBag.Jobstr </h5>
+<br />
+
+
+
+
+
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th id="Hideme"></th>
+            <th>Уровень</th>
+            <th>Название</th>
+
+
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (Levels item in Model)
+        {
+            <tr>
+                <td id="Hideme">@item.ID</td>
+                <td>@item.Lev</td>
+                <td>@item.Name</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@*    @ViewBag.pid"
+    @ViewBag.jid" *@
+
+
+<div id="dialog" title="Внимание сообщение!">
+    <p></p>
+</div>
+
+<button class="btn btn-primary" id="opener">Отправить</button>
+
+
+

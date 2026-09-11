@@ -1,0 +1,37 @@
+﻿@model MVCDIS.Models.Levels
+
+@{
+    ViewBag.Title = "Информация по выбранному уровню";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-level-up fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Уровни квалификации</b></i></strong>
+</div>
+
+<div>
+   
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Lev)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lev)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

@@ -1,0 +1,37 @@
+﻿@model MVCDIS.Models.ClientsInfo
+
+@{
+    ViewBag.Title = "Дополнительная информация по выбранному кандидату";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-address-book fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Перечень кандидатов</b></i></strong>
+</div>
+
+<div>
+   
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("ФИО")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FIO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

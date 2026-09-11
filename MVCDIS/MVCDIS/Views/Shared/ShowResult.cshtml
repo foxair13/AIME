@@ -1,0 +1,31 @@
+﻿
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+
+
+<article id="content">
+    <ul>
+        <li id="_ShowResult">
+            <div class="box1">
+                <div class="inner">
+                    <a href="#" class="close" data-type="close"><span></span></a>
+                    <div class="wrapper" align="center">
+                        @if (ViewBag.flag)
+                        {
+                            <h1>Вы успешно зарегистрировали программу</h1>
+                        }
+                        else
+                        {
+                            <h1>Данный ключ продукта недопустим</h1>
+                        }
+
+
+                        <a href='@Url.Action("Index", "Home")' >Продолжить</a>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</article>
+

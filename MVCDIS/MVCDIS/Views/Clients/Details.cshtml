@@ -1,0 +1,51 @@
+﻿@model MVCDIS.Models.Clients
+
+@{
+    ViewBag.Title = "Информация по выбранному кандидату";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-user-o fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Контингент</b></i></strong>
+</div>
+
+<div>
+
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("ФИО", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientsInfo.FIO)
+        </dd>
+
+        <dt>
+            @Html.Label("Должность", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobTitle.Name)
+        </dd>
+        <dt>
+            @Html.Label("Степень", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iasaStepen.StepenName)
+        </dd>
+        <dt>
+            @Html.Label("Звание", new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iasaZvanie.ZvanieName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>

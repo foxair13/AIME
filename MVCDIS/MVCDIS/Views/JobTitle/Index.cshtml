@@ -1,0 +1,125 @@
+﻿@model IEnumerable<MVCDIS.Models.JobTitle>
+@{
+    ViewBag.Title = "Должности";
+}
+<style>
+    #example {
+        width: 100%;
+    }
+
+
+
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        var table = $(document).ready(function () {
+            $('#example').dataTable({
+                "iDisplayLength": 30,
+                "bAutoWidth": false,
+                "aaSorting": [[0, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumnDefs": [
+         { 'bSortable': false, 'aTargets': [2] }
+                ],
+                "aoColumns": [{ "sWidth": "30%" }, { "sWidth": "50%" }, { "sWidth": "20%" }]
+            });
+
+
+        });
+
+
+    </script>
+}
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-briefcase fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Должности</b></i></strong>
+</div>
+
+
+
+
+
+<div class="row">
+
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Таблица должностей по различным категориям</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+                <p>
+                    @Html.ActionLink("Добавить новую запись", "Create")
+                </p>
+                <div>
+                    <table id="example" class="table">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.Label("Категория должности", new { @class = "control-label col-md-2" })
+                                </th>
+                                <th>
+                                    @Html.Label("Должность", new { @class = "control-label col-md-2" })
+                                </th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProfAreas.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Изменить", "Edit", new { id = item.ID }) |
+                                    @Html.ActionLink("Просмотр", "Details", new { id = item.ID }) |
+                                    @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>

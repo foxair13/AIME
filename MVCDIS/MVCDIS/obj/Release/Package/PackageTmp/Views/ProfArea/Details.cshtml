@@ -1,0 +1,31 @@
+﻿@model MVCDIS.Models.ProfArea
+
+@{
+    ViewBag.Title = "Просмотр категории должности";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-sitemap fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Категории должностей</b></i></strong>
+</div>
+
+<div>
+  
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Категория должности")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Вернуться назад", "Index")
+</p>
+
+

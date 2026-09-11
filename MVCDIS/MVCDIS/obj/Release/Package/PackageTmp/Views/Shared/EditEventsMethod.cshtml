@@ -1,0 +1,95 @@
+﻿@using System.Text
+@using MVCDIS.Models;
+@{
+    int attrt = ViewBag.attridi;
+}
+<div id='@String.Concat("reportsList_", ViewBag.attridi)' ></div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    $('@String.Concat("#DiscTable_", ViewBag.attridi)').dataTable().fnDestroy()
+    var table = $('@String.Concat("#DiscTable_", ViewBag.attridi)').dataTable({
+
+        "bAutoWidth": false,
+        "bFilter": false,
+        "paging": false,
+        "aaSorting": [[0, "asc"]],
+        "oLanguage": {
+            "sLengthMenu": "_MENU_ Записей на странице"
+        },
+        "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "45%" }, { "sWidth": "45%" }]
+    });
+    $('@String.Concat("#dialog_", ViewBag.attridi)').dialog({
+        autoOpen: false,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+    });
+    coidi = "@ViewBag.coidi";
+    attridi = "@ViewBag.attridi";
+    pidi = "@ViewBag.pidi";
+    lidi = "@ViewBag.lidi";
+    jidi = "@ViewBag.jidi";
+  
+    
+   
+    function updateReportsList(coid, jid, pid, LevelID, attr) {$('@String.Concat("#reportsList_", ViewBag.attridi)').html("<div class=\"text-center\"><img src=\"/Content/Images/loader.gif\" ></div>");$.get('@Url.Action("updateReportsList", "Discipline")', { coid: coid, jid: jid, pid: pid, LevelID: LevelID, attr: attr },function (viewdata) {$('@String.Concat("#reportsList_", ViewBag.attridi)').html(viewdata);}); }
+    @*@Html.Raw(Html.RegisterJS(attrt));*@
+    function updateReportAdd(coid, jid, pid, LevelID, attr) {
+        $.get('@Url.Action("updateReportAdd", "Discipline")', { coid: coid, jid: jid, pid: pid, LevelID: LevelID, attr: attr },
+            function (viewdata) {
+
+                $('@String.Concat("#form_report_", ViewBag.attridi)').html(viewdata);
+            });
+    }
+    $('body').on('click', '.delete-finally', function () {
+       
+        var id = $(this).attr("data-id");
+      
+            $.get('@Url.Action("removeReport", "Discipline")', { id: id },
+               function (viewdata) {
+                   updateReportsList(coidi, jidi, pidi, lidi, attridi);
+               });
+      
+
+    })
+    $("body").on("click", '@String.Concat("#add_report_", ViewBag.attridi)', function () {
+
+        updateReportAdd(coidi, jidi, pidi, lidi, attridi);
+    })
+    updateReportsList(coidi, jidi, pidi, lidi, attridi);
+    $('body').on('click', '@String.Concat("#editReport_", ViewBag.attridi)', function () {
+        var activity = $('@String.Concat("#activity_", ViewBag.attridi)').val();
+        
+       
+        var worktype = $('@String.Concat("#worktype_", ViewBag.attridi)').val();
+        var worktype = $('@String.Concat("#worktype_", ViewBag.attridi)').val();
+        var id = $('@String.Concat("#reportid_", ViewBag.attridi)').val();
+     
+        if (worktype == "") {
+            alert("Выберите мероприятие!");
+        }
+        if (worktype != "") {
+            $('@String.Concat("#lity-close_", ViewBag.attridi)').click();
+            $.get('@Url.Action("AddEvent", "Discipline")', {
+                activity: activity,
+                worktype: worktype,
+                attr:attridi,
+                id: 0
+            },
+                function (viewdata) {
+                    updateReportsList(coidi, jidi, pidi, lidi, attridi);
+                });
+        }
+
+    })
+    })
+</script>
+
+

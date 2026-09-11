@@ -1,0 +1,26 @@
+﻿@model MVCDIS.Models.QuizEdit
+
+<tr>
+
+    <td style="width:80%; word-wrap:break-word;">
+
+      
+  
+
+      
+        @Html.ValueFor(x => x.Name)
+
+    </td>
+    <td style="width:20%; ">
+        <p align="right">
+           Материалы
+            <input type="radio" name="GroupedSwitches" value="@Model.ID" id="@string.Concat("radio_",Model.ID)" data-off-text="False" data-on-text="True" checked="false" class="BSswitch">
+        </p>
+        <p align="right">
+           Мероприятия
+            <input type="radio" name="GroupedSwitches" value='@String.Concat(Model.ID,".dis")' id="@string.Concat("radio_",Model.ID)" data-off-text="False" data-on-text="True" checked="false" class="BSswitch">
+        </p>
+    </td>
+
+
+</tr>

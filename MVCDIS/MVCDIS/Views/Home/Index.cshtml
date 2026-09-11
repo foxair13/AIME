@@ -1,0 +1,368 @@
+﻿@using MVCDIS.Models
+@model MVCDIS.Models.LoginModel
+@{
+
+    ViewBag.Title = "Главная страница";
+}
+@functions{
+    public string GetAntiForgeryToken()
+    {
+        string cookieToken, formToken;
+        AntiForgery.GetTokens(null, out cookieToken, out formToken);
+        return cookieToken + ":" + formToken;
+    }
+}
+<style>
+    .amarelo {
+        background: #4DC74D;
+    }
+
+    .vermelho {
+        background: #428bca;
+    }
+
+    .azul {
+        background: #0F4489;
+    }
+
+    .verde {
+        background-color: #00A8C9;
+    }
+
+
+    .pagina {
+        width: auto;
+        height: auto;
+    }
+
+    .linha {
+        width: auto;
+        padding: 5px;
+        height: auto;
+        display: table;
+    }
+
+    .tile {
+        height: 250px;
+        width: 24.6%;
+        min-width: 250px;
+        float: left;
+        margin: 0 5px 5px 0;
+        padding: 2px;
+    }
+
+    .tileLargo {
+        width: 24.6%;
+        min-width: 250px;
+    }
+
+    .selecionado {
+        background-color: #EE465A;
+    }
+
+    .Aligner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .elementID {
+        color: #fff;
+        text-shadow: 1px 1px 1px #ccc;
+    }
+</style>
+
+@section scripts{
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function () {
+                $(".tile").mousedown(function () {
+                    $(this).addClass("selecionado");
+                });
+
+                $(".tile").mouseup(function () {
+                    $(this).removeClass("selecionado");
+                });
+            });
+
+            $("#element").introLoader({
+                animation: {
+                    name: 'doubleLoader',
+                    options: {
+                        exitFx: 'fadeOut',
+                        ease: "easeInOutCirc",
+                        style: 'ocean zebra',
+                        delayBefore: 500,
+                        exitTime: 300,
+                        progbarTime: 700,
+                        progbarDelayAfter: 400,
+                        preventScroll: true
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+
+@if (@User.Identity.IsAuthenticated)
+{
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-home fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Главная страница</b></i></strong>
+    </div>
+    <div id="element" class="introLoading"></div>
+
+
+    <div class="pagina">
+        <div class="linha">
+            @if (CustomAuthorizeAttribute.CheckRoles("Plancreate"))
+            {
+                <div class="tile tileLargo vermelho text-center Aligner Plancreate">
+                    <a href="@Url.Action("PjList", "Calculate")">
+                        <i class="fa fa-line-chart fa-5x elementID" aria-hidden="true"><h2>Рейтинг / План</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Reports"))
+            {
+                <div class="tile tileLargo vermelho text-center Aligner Reports">
+                    <a href="@Url.Action("Reports", "Account")">
+                        <i class="fa fa-newspaper-o fa-5x elementID" aria-hidden="true"><h2>Отчеты</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("ArchReports"))
+            {
+                <div class="tile tileLargo vermelho text-center Aligner ArchReports">
+                    <a href="@Url.Action("ReportsList", "Preview")">
+                        <i class="fa fa-archive fa-5x elementID" aria-hidden="true"><h2>Архив отчетов</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Userroom"))
+            {
+                <div class="tile verde text-center Aligner Userroom">
+                    <a href="@Url.Action("Manage", "Account")">
+                        <i class="fa fa-address-card fa-5x elementID" aria-hidden="true"><h2>Кабинет пользователя</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Contingent"))
+            {
+                <div class="tile amarelo text-center Aligner Contingent">
+                    <a href="@Url.Action("Index", "Clients")">
+                        <i class="fa fa-user-o fa-5x elementID" aria-hidden="true"><h2>Контингент</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Userslist"))
+            {
+                <div class="tile amarelo text-center Aligner Userslist">
+                    <a href="@Url.Action("Index", "ClientsInfo")">
+                        <i class="fa fa-address-book fa-5x elementID" aria-hidden="true"><h2>Перечень кандидатов</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Roles"))
+            {
+                <div class="tile amarelo text-center Aligner Roles">
+                    <a href="@Url.Action("Index", "Roles")">
+                        <i class="fa fa-gavel fa-5x elementID" aria-hidden="true"><h2>Управление ролями</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Access"))
+            {
+                <div class="tile amarelo text-center Aligner Access">
+                    <a href="@Url.Action("Users", "Main")">
+                        <i class="fa fa-shield fa-5x elementID" aria-hidden="true"><h2>Управление доступом</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Interface"))
+            {
+                <div class="tile amarelo text-center Aligner Interface">
+                    <a href="@Url.Action("Action", "Main")">
+                        <i class="fa fa-television  fa-5x elementID" aria-hidden="true"><h2>Управление интерфейсом</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Actis"))
+            {
+                <div class="tile verde text-center Aligner Actis">
+                    <a href="@Url.Action("Index", "Act")">
+                        <i class="fa fa-tasks fa-5x elementID" aria-hidden="true"><h2>Виды мероприятий</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Templates"))
+            {
+                <div class="tile verde text-center Aligner Templates">
+                    <a href="@Url.Action("Index", "Templates")">
+                        <i class="fa fa-print  fa-5x elementID" aria-hidden="true"><h2>Печатные шаблоны</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("InWork"))
+            {
+                <div class="tile verde text-center Aligner InWork">
+                    <a href="@Url.Action("Index", "Tree")">
+                        <i class="fa fa-sitemap fa-5x elementID" aria-hidden="true"><h2>Мероприятия</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Stepen"))
+            {
+                <div class="tile verde text-center Aligner Stepen">
+                    <a href="@Url.Action("Index", "Stepen")">
+                        <i class="fa fa-graduation-cap fa-5x elementID" aria-hidden="true"><h2>Научные степени</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Zvanie"))
+            {
+                <div class="tile verde text-center Aligner Zvanie">
+                    <a href="@Url.Action("Index", "Zvan")">
+                        <i class="fa fa-suitcase fa-5x elementID" aria-hidden="true"><h2>Научные звания</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Works"))
+            {
+                <div class="tile verde text-center Aligner Works">
+                    <a href="@Url.Action("Index", "Works")">
+                        <i class="fa fa-bullseye fa-5x elementID" aria-hidden="true"><h2>Виды занятости</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Cvalificate"))
+            {
+                <div class="tile amarelo text-center  Aligner Cvalificate">
+                    <a href="@Url.Action("Index", "Level")">
+                        <i class="fa fa-level-up  fa-5x elementID" aria-hidden="true"><h2>Уровни квалификации</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Prof"))
+            {
+                <div class="tile amarelo text-center Aligner Prof">
+                    <a href="@Url.Action("Index", "ProfArea")">
+                        <i class="fa fa-sitemap  fa-5x elementID" aria-hidden="true"><h2>Категории должностей</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Jobs"))
+            {
+                <div class="tile amarelo text-center Aligner Jobs">
+                    <a href="@Url.Action("Index", "JobTitle")">
+                        <i class="fa fa-briefcase   fa-5x elementID" aria-hidden="true"><h2>Должности</h2></i>
+                    </a>
+
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Cert"))
+            {
+                <div class="tile amarelo text-center Aligner Cert">
+                    <a href="@Url.Action("Index", "Certification")">
+                        <i class="fa fa-certificate  fa-5x elementID" aria-hidden="true"><h2>Сертификация</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Competence"))
+            {
+                <div class="tile amarelo text-center Aligner Competence">
+                    <a href="@Url.Action("Index", "Competence")">
+                        <i class="fa fa-ellipsis-v fa-5x elementID" aria-hidden="true"><h2>Компетенции</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Attr"))
+            {
+                <div class="tile amarelo text-center Aligner Attr">
+                    <a href="@Url.Action("Index", "Attributes")">
+                        <i class="fa fa-cube  fa-5x elementID" aria-hidden="true"><h2>Составляющие компетенций</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Discipline"))
+            {
+                <div class="tile amarelo text-center Aligner Discipline">
+                    <a href="@Url.Action("Index", "Discipline")">
+                        <i class="fa fa-book  fa-5x elementID" aria-hidden="true"><h2>Материалы</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Priority"))
+            {
+                <div class="tile amarelo text-center Aligner Priority">
+                    <a href="@Url.Action("PjList", "ProfArea")">
+                        <i class="fa fa-pie-chart fa-5x elementID" aria-hidden="true"><h2>Приоритеты</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Types"))
+            {
+                <div class="tile amarelo text-center Aligner Types">
+                    <a href="@Url.Action("Index", "Types")">
+                        <i class="fa fa-cubes fa-5x elementID" aria-hidden="true"><h2>Виды составляющих компетенций</h2></i>
+                    </a>
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("ConfigDiscipline"))
+            {
+                <div class="tile amarelo text-center Aligner ConfigDiscipline">
+                    <a href="@Url.Action("PjList", "Discipline")">
+                        <i class="fa fa-anchor fa-5x elementID" aria-hidden="true"><h2>Привязка Материала</h2></i>
+                    </a>
+
+                </div>
+            }
+            @if (CustomAuthorizeAttribute.CheckRoles("Grades"))
+            {
+                <div class="tile amarelo text-center Aligner Grades">
+                    <a href="@Url.Action("PjList", "Clients")">
+
+                        <i class="fa fa-thumbs-up  fa-5x elementID" aria-hidden="true"><h2>Редактор оценок</h2></i>
+
+                    </a>
+                </div>
+            }
+        </div>
+
+    </div>
+
+}
+else
+{
+    if (CheckLicense.Check())
+    {
+        <div id="login" class="animate form">
+
+            @Html.Partial("_Login")
+        </div>
+
+        <div id="recovermail" class="animate form">
+            @Html.Partial("_Recover")
+        </div>
+
+        <div id="register" class="animate form">
+            @Html.Partial("_Register")
+        </div>
+    }
+    else
+    {
+      
+
+
+
+          Html.RenderAction("Key", "Account");
+
+       
+    }
+
+
+
+}

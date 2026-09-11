@@ -1,0 +1,56 @@
+﻿@model MVCDIS.Models.Levels
+
+@{
+    ViewBag.Title = "Редактировать данные уровня";
+}
+
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-level-up fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Уровни квалификации</b></i></strong>
+</div>
+<div>
+
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+
+
+    <div class="form-group">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+            @Html.LabelFor(model => model.Lev, new { @class = "control-label col-lg-4" })
+            <div class="col-lg-6">
+
+                    @Html.TextBoxFor(model => model.Lev, new { @class = "form-control" })
+
+
+                @Html.ValidationMessageFor(model => model.Lev)
+            </div>
+
+   
+       
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-lg-4" })
+        <div class="col-lg-6">
+
+            @Html.TextAreaFor(model => model.Name, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+
+
+        <div class="col-lg-6">
+            <input type="submit" value="Сохранить изменения" class="btn btn-primary" />
+        </div>
+
+    </div>
+}

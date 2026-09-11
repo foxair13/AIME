@@ -1,0 +1,90 @@
+﻿@model MVCDIS.Models.Clients
+
+@{
+    ViewBag.Title = "Редактировать данные выбранного кандидата";
+}
+@Styles.Render("~/Content/bootstrapswitch")
+@Scripts.Render("~/bundles/bootstrapswitch")
+<script type="text/javascript">
+    window.onload = function () {
+        $(".switch").attr("data-on-text", "Вкл");
+        $(".switch").attr("data-off-text", "Выкл");
+
+        $(".switch").bootstrapSwitch();
+    }
+</script>
+<br />
+<div class="alert alert-info">
+    <strong><i class="fa fa-user-o fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Контингент</b></i></strong>
+</div>
+<div>
+
+    @Html.ActionLink("Вернуться назад", "Index")
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+      
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.Label("ФИО", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClientInfoID", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.ClientInfoID)
+            </div>
+           
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Должность", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("JobTitleID", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.JobTitleID)
+            </div>
+            
+        </div>
+        <div class="form-group">
+            @Html.Label("Степень", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("StepenId", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.StepenId)
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Звание", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ZvanieId", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.ZvanieId)
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Уровень квалификации", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DefaultActivityId", null, String.Empty, new { @class = "form-control chzn-select-deselect" })
+                @Html.ValidationMessageFor(model => model.DefaultActivityId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Куратор", new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Manager, new { @class = "switch" })
+   
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить изменения" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

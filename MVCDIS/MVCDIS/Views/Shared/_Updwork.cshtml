@@ -1,0 +1,19 @@
+﻿
+@model List<SelectListItem>
+<select class="with_all">
+
+
+    @foreach (SelectListItem item in Model)
+    {
+        if (item.Selected == true)
+        {
+            <option value="@item.Value" selected="selected"> @item.Text  </option>
+        }
+        else
+        {
+            <option value="@item.Value"> @item.Text  </option>
+        }
+
+    }
+
+</select>

@@ -1,0 +1,40 @@
+﻿@model MVCDIS.Models.LoginModel
+
+@using (Html.BeginForm("JsonLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginForm" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <h1>Авторизация</h1>
+
+    <p>
+        @Html.LabelFor(m => m.UserName, new Dictionary<string, Object> { { "class", "uname" }, { "data-icon", "u" } })
+        @Html.TextBoxFor(m => m.UserName, new Dictionary<string, Object> { { "autofocus", "autofocus" }, { "id", "loginName" }, { "placeholder", "Введите ваш логин" }, { "required", "required" } })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </p> 
+    <p>
+        @Html.LabelFor(m => m.Password, new Dictionary<string, Object> { { "class", "youpasswd" }, { "data-icon", "p" } })
+        @Html.PasswordFor(m => m.Password, new Dictionary<string, Object> { { "placeholder", "Введите ваш пароль" }, { "required", "required" } })
+        @Html.ValidationMessageFor(m => m.Password)
+    </p>
+    <p class="keeplogin">
+        @Html.CheckBoxFor(m => m.RememberMe)
+        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+        
+    </p> 
+    <div>
+        Если вы забыли пароль ?
+	<a href="#torecovermail"  >Восстановить пароль</a>
+    </div>
+    @Html.ValidationSummary() 
+    <p class="login button">
+        <input  id="showLogin" type="submit" value="Войти" />
+    </p>
+ 
+    <p class="change_link">
+        Если еще не зарегистрированы ?
+	<a href="#toregister" class="to_register">Регистрация</a>
+    </p>
+
+
+}

@@ -1,0 +1,141 @@
+﻿@model IEnumerable<MVCDIS.Models.Clients>
+
+
+<style>
+
+
+    form.Frm {
+        margin: 0px 0;
+    }
+    div.ww {
+        clear: both;
+        margin: -40px 0px;
+    }
+
+    label {
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid #D1D3D4;
+    }
+
+    /* hide input */
+    input.radio:empty {
+        margin-left: -999px;
+    }
+
+        /* style label */
+        input.radio:empty ~ label {
+            position: relative;
+            
+            line-height: 5.5em;
+            text-indent: 3.25em;
+            margin-top: 2em;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            input.radio:empty ~ label:before {
+                position: absolute;
+                display: block;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                content: '';
+                width: 2.5em;
+                background: #D1D3D4;
+                border-radius: 3px 0 0 3px;
+            }
+
+    /* toggle hover */
+    input.radio:hover:not(:checked) ~ label:before {
+        content: '\2714';
+        text-indent: .9em;
+        color: #C2C2C2;
+    }
+
+    input.radio:hover:not(:checked) ~ label {
+        color: #888;
+    }
+
+    /* toggle on */
+    input.radio:checked ~ label:before {
+        content: '\2714';
+        text-indent: .9em;
+        color: #9CE2AE;
+        background-color: #4DCB6D;
+    }
+
+    input.radio:checked ~ label {
+        color: #777;
+    }
+
+    /* radio focus */
+
+
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+
+     
+
+
+        $("#opener1").click(function () {
+            var table = $('#example2').DataTable();
+            
+            if ($("#radio1").prop("checked") == true) {
+                $("#IDCLIENT").val($("#radio1").val());
+            } else if ($("#radio2").prop("checked") == true)
+            {
+                $("#IDCLIENT").val($("#radio2").val());
+            }
+
+           
+
+            $("#Methods").submit();
+            
+
+        });
+
+    });
+</script>
+
+@using (Html.BeginForm("ShowResult", "Calculate", FormMethod.Get, new { @id = "Methods", @class = "Frm" }))
+{
+    <input type="hidden" name="levid" id="levid" value="@ViewBag.Levid" />
+    <input type="hidden" name="pid" id="pid" value="@ViewBag.pid" />
+    <input type="hidden" name="jid" id="jid" value="@ViewBag.jid" />
+    <input type="hidden" name="IDCLIENT" id="IDCLIENT" value="0" />
+
+    <div class="ww">
+        <input type="radio" name="radio" id="radio1" class="radio" value="0" checked />
+        <label for="radio1">СПЕЦИАЛИСТЫ С ВЫСОКИМ УРОВНЕМ КВАЛИФИКАЦИИ</label>
+    </div>
+
+    <div class ="ww">
+        <input type="radio" name="radio" id="radio2" class="radio" value="1" />
+        <label for="radio2">СПЕЦИАЛИСТЫ С НИЗКИМ УРОВНЕМ КВАЛИФИКАЦИИ</label>
+    </div>
+
+   
+}
+<br />
+<br />
+<br />
+<br />
+<button class="btn btn-primary" id="opener1">Отправить</button>

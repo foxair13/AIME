@@ -1,0 +1,388 @@
+﻿@model MVCDIS.Models.Attributes
+
+@using MvcContrib;
+@using MVCDIS.Models;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.UI.Grid.ActionSyntax;
+
+<script type="text/javascript">
+
+    $(":file").filestyle({ iconName: "glyphicon glyphicon-camera", buttonText: "", input: false, badge: false });
+    var r = null;
+    var dataA = { expandA: '<td></td><td colspan="4"><table class="table table-striped responsive-table" border="1" id="AnsTable_1" bordercolor="#ddd" width="100%"><tr><td width="5%">№</td><td>Ответ</td><td width="35px"></td><td width="200px">Изображение</td><td width="55px"></td> <td colspan="2" width="80px"></td></tr><tr><td valign="middle" align="center">1</td><td valign="middle" align="center"><textarea id="AnsTable_1_AnsA_1" class="form-control"></textarea> </td><td  align="center"><input type="checkbox" id="AnsTable_1_AnsS_1" name="AnsTableN_1" /></td><td valign="middle" align="center"><a data-lightbox="AnsTable_1_ANSPQA_1" href="#" id="AnsTable_1_ANSPQAID_1"><img id="AnsTable_1_ANSPQI_1" src="" style="width: 150px; height: 150px;" alt="" /></a></td><td valign="middle" align="center"><input id="AnsTable_1_ANSPQ_1"  style="visibility:hidden;position:absolute;top:0;left:0;clip: rect(0px, 0px, 0px, 0px);" onchange="readAnsURL(this);" type="file" data-badge="false" class="filestyle" data-input="false" data-iconname="glyphicon glyphicon-camera"> <div class="bootstrap-filestyle input-group"><span  class="group-span-filestyle "><label for="AnsTable_1_ANSPQ_1" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-camera"></span> <span class="buttonText"></span></label></span></div> <hr /> <a onclick="deletepAnsPhoto(this)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a> </td>  <td valign="middle" align="center" colspan="2"><a onclick="deleteAnsRow(this)" class="btn btn-default btn-lg btn-rect"><i class="glyphicon glyphicon-minus"></i></a><br /><a onclick="insAnsRow(this)" class="btn btn-primary btn-lg btn-rect"><i class="glyphicon glyphicon-plus"></i></a></td></tr></table></td>' };
+    var dataB = { expandB: '<td></td><td colspan="4"><table class="table table-striped responsive-table" border="1" id="AnsTable_1" bordercolor="#ddd" width="100%"><tr><td width="5%">№</td><td>Ответ</td><td width="35px"></td><td width="200px">Изображение</td><td width="55px"></td> <td colspan="2" width="80px"></td></tr><tr><td valign="middle" align="center">1</td><td valign="middle" align="center"><textarea id="AnsTable_1_AnsA_1" class="form-control"></textarea> </td><td  align="center"><input type="radio" id="AnsTable_1_AnsS_1" name="AnsTableN_1" /></td><td valign="middle" align="center"><a data-lightbox="AnsTable_1_ANSPQA_1" href="#" id="AnsTable_1_ANSPQAID_1"><img id="AnsTable_1_ANSPQI_1" src="" style="width: 150px; height: 150px;" alt="" /></a></td><td valign="middle" align="center"><input id="AnsTable_1_ANSPQ_1"  style="visibility:hidden;position:absolute;top:0;left:0;clip: rect(0px, 0px, 0px, 0px);" onchange="readAnsURL(this);" type="file" data-badge="false" class="filestyle" data-input="false" data-iconname="glyphicon glyphicon-camera"> <div class="bootstrap-filestyle input-group"><span  class="group-span-filestyle "><label for="AnsTable_1_ANSPQ_1" class="btn btn-default "><span class="icon-span-filestyle glyphicon glyphicon-camera"></span> <span class="buttonText"></span></label></span></div> <hr /> <a onclick="deletepAnsPhoto(this)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a> </td>  <td valign="middle" align="center" colspan="2"><a onclick="deleteAnsRow(this)" class="btn btn-default btn-lg btn-rect"><i class="glyphicon glyphicon-minus"></i></a><br /><a onclick="insAnsRow(this)" class="btn btn-primary btn-lg btn-rect"><i class="glyphicon glyphicon-plus"></i></a></td></tr></table></td>' };
+
+    function getParent() {
+        var t = this.parentNode;
+        tagName = "table";
+
+        while (t) {
+            if (t.tagName && t.tagName.toLowerCase() == tagName) {
+                r = t.id;
+
+                return;
+            }
+            else {
+                t = t.parentNode;
+            }
+
+        }
+        return null;
+    }
+    function deleteRow(row) {
+
+
+        var x = document.getElementById('POITable');
+        var len = x.rows.length;
+        if (len > 3) {
+            var i = row.parentNode.parentNode.rowIndex;
+            document.getElementById('POITable').deleteRow(i + 1);
+            document.getElementById('POITable').deleteRow(i);
+        }
+        else if (len == 3) {
+            alert('Нельзя удалить последний элемент');
+        }
+    }
+    function deleteAnsRow(row) {
+        getParent.call(row);
+        var x = document.getElementById(r);
+        var len = x.rows.length;
+        if (len > 2) {
+            var i = row.parentNode.parentNode.rowIndex;
+            getParent.call(row);
+            document.getElementById(r).deleteRow(i);
+        }
+        else if (len == 2) {
+            alert('Нельзя удалить последний элемент');
+        }
+    }
+
+    function insRow() {
+
+        var selval = $("#SelAns").val();
+        var x = document.getElementById('POITable').getElementsByTagName('tbody')[0];
+        var k = new Array();
+        var mn = 0;
+        var z = 0;
+        for (var i = 1; i <= x.rows.length / 2; i++) {
+
+            k[i] = x.rows[z + 1].cells[0].innerHTML;
+
+            z = z + 2;
+
+        }
+        k.sort(function (a, b) { return a - b });
+
+        for (var i = 1; i <= k.length; i++) {
+            if (k[0] == 1) {
+
+
+                if (k[i] - k[i - 1] != 1) {
+
+                    mn = k[i] - 1;
+
+                    break;
+                }
+            }
+            else {
+                mn = 1;
+                break;
+            }
+        }
+
+        var new_row = x.rows[1].cloneNode(true);
+        var len = x.rows.length;
+
+        if (isNaN(mn)) {
+            len = (len - 1) / 2 + 1;
+        } else {
+            len = mn;
+        }
+        new_row.cells[0].innerHTML = len;
+        var inp1 = new_row.cells[1].getElementsByTagName('textarea')[0];
+        inp1.id = 'QuestA_' + len;
+        inp1.value = '';
+        var inp2 = new_row.cells[1].getElementsByTagName('select')[0];
+        inp2.id = 'QuestB_' + len;
+
+
+
+
+
+        var inp3 = new_row.cells[3].getElementsByTagName('input')[0];
+        inp3.id = 'PhotoQuest_' + len;
+        inp3.value = '';
+
+        var inp6 = new_row.cells[3].getElementsByTagName('label')[0];
+
+        inp6.attributes['for'].value = 'PhotoQuest_' + len;
+
+        var inp4 = new_row.cells[2].getElementsByTagName('a')[0];
+        inp4.attributes['data-lightbox'].value = 'PhotoQuestA_' + len;
+        inp4.id = 'PhotoQuestAID_' + len;
+        inp4.attributes['href'].value = '#';
+        var inp5 = new_row.cells[2].getElementsByTagName('img')[0];
+        inp5.attributes['src'].value = '';
+        inp5.id = 'PhotoQuestI_' + len;
+        x.appendChild(new_row);
+        var tr = document.createElement('tr');
+        if (selval == 'two') {
+            tr.innerHTML = dataA.expandA;
+
+        }
+        else
+            if (selval == 'one') {
+                tr.innerHTML = dataB.expandB;
+            }
+
+
+        new_row = tr;
+
+        if (selval == 'two') {
+
+            inp2.name = "multi";
+
+        }
+        else {
+
+            inp2.name = "single";
+        }
+        new_row.cells[1].childNodes[0].id = 'AnsTable_' + len.toString();
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].name = 'AnsTableN_' + len.toString();
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].id = 'AnsTable_' + len.toString() + '_AnsS_1';
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[2].childNodes[0].value = 1;
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].id = 'AnsTable_' + len.toString() + '_AnsA_1';
+
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[3].childNodes[0].id = 'AnsTable_' + len.toString() + '_ANSPQAID_1';
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[3].childNodes[0].childNodes[0].id = 'AnsTable_' + len.toString() + '_ANSPQI_1';
+
+
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[3].childNodes[0].attributes['data-lightbox'].value = 'AnsTable_' + len.toString() + '_ANSPQA_1';
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[4].childNodes[0].id = 'AnsTable_' + len.toString() + '_ANSPQ_1';
+        new_row.cells[1].childNodes[0].childNodes[0].childNodes[1].childNodes[4].childNodes[2].childNodes[0].childNodes[0].attributes['for'].value = 'AnsTable_' + len.toString() + '_ANSPQ_1';
+
+        x.appendChild(new_row);
+    }
+
+    function insAnsRow(row) {
+        getParent.call(row);
+        var x = document.getElementById(r).getElementsByTagName('tbody')[0];
+        var k = new Array();
+        var mn = 0;
+        var z = 0;
+
+        for (var i = 1; i < x.rows.length; i++) {
+            k[i - 1] = x.rows[i].cells[0].innerHTML;
+        }
+        k.sort(function (a, b) { return a - b });
+        for (var i = 1; i <= k.length; i++) {
+            if (k[0] == 1) {
+
+
+                if (k[i] - k[i - 1] != 1) {
+
+                    mn = k[i] - 1;
+
+                    break;
+                }
+            }
+            else {
+                mn = 1;
+                break;
+            }
+        }
+
+
+        var new_row = x.rows[1].cloneNode(true);
+        var len = x.rows.length;
+        if (!isNaN(mn)) {
+            len = mn;
+        }
+        new_row.cells[0].innerHTML = len;
+
+        var inp1 = new_row.cells[1].getElementsByTagName('textarea')[0];
+
+        inp1.id = r + '_AnsA_' + len;
+        inp1.value = '';
+        var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
+        inp2.id = r + '_AnsS_' + len;
+        inp2.value = len;
+
+
+        var inp3 = new_row.cells[4].getElementsByTagName('input')[0];
+        inp3.id = r + '_ANSPQ_' + len;
+        inp3.value = '';
+
+        var inp6 = new_row.cells[4].getElementsByTagName('label')[0];
+
+        inp6.attributes['for'].value = r + '_ANSPQ_' + len;
+
+        var inp4 = new_row.cells[3].getElementsByTagName('a')[0];
+        inp4.attributes['data-lightbox'].value = r + '_ANSPQA_' + len;
+        inp4.attributes['href'].value = '#';
+        inp4.id = r + '_ANSPQAID_' + len;
+        var inp5 = new_row.cells[3].getElementsByTagName('img')[0];
+        inp5.attributes['src'].value = '';
+        inp5.id = r + '_ANSPQI_' + len;
+
+
+        x.appendChild(new_row);
+    }
+
+    function readURL(raw) {
+        if (raw.files && raw.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+
+                document.getElementById('PhotoQuestI_' + raw.parentNode.parentNode.childNodes[1].innerHTML).src = e.target.result;
+                document.getElementById('PhotoQuestAID_' + raw.parentNode.parentNode.childNodes[1].innerHTML).href = e.target.result;
+            }
+
+            reader.readAsDataURL(raw.files[0]);
+        }
+    }
+    function readAnsURL(raw) {
+        getParent.call(raw);
+
+        if (raw.files && raw.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (parseInt(raw.parentNode.parentNode.childNodes[1].innerHTML)) {
+                    alert(raw.parentNode.parentNode.childNodes[1].innerHTML);
+                    document.getElementById(r + '_ANSPQI_' + raw.parentNode.parentNode.childNodes[1].innerHTML).src = e.target.result;
+                    document.getElementById(r + '_ANSPQAID_' + raw.parentNode.parentNode.childNodes[1].innerHTML).href = e.target.result;
+                } else
+                    if (parseInt(raw.parentNode.parentNode.childNodes[0].innerHTML)) {
+                        alert(raw.parentNode.parentNode.childNodes[0].innerHTML);
+                        document.getElementById(r + '_ANSPQI_' + raw.parentNode.parentNode.childNodes[0].innerHTML).src = e.target.result;
+                        document.getElementById(r + '_ANSPQAID_' + raw.parentNode.parentNode.childNodes[0].innerHTML).href = e.target.result;
+                    }
+
+            }
+
+            reader.readAsDataURL(raw.files[0]);
+        }
+    }
+
+    function SaveQuest(raw) {
+
+        var x = document.getElementById('AnsTable_' + raw.parentNode.parentNode.childNodes[1].innerHTML);
+        var y = document.getElementById('PhotoQuest_1_' + raw.parentNode.parentNode.childNodes[1].innerHTML);
+        var formdata = new FormData();
+        var fileInput = null;
+        fileInput = document.getElementById('PhotoQuest_' + raw.parentNode.parentNode.childNodes[1].innerHTML);
+        var e = document.getElementById('QuestB_' + raw.parentNode.parentNode.childNodes[1].innerHTML);
+        formdata.append('PhotoQuest_' + raw.parentNode.parentNode.childNodes[1].innerHTML, fileInput.files[0]);
+        for (var i = 1; i <= x.rows.length - 1; i++) {
+            fileInput = document.getElementById('AnsTable_' + raw.parentNode.parentNode.childNodes[1].innerHTML + '_ANSPQ_' + i);
+            formdata.append('AnsTable_' + raw.parentNode.parentNode.childNodes[1].innerHTML + '_ANSPQ_' + i, fileInput.files[0]);
+
+            formdata.append('Answers', document.getElementById('AnsTable_' + raw.parentNode.parentNode.childNodes[1].innerHTML + '_AnsA_' + i).value);
+
+
+
+        }
+        $('input[name="AnsTableN_' + raw.parentNode.parentNode.childNodes[1].innerHTML + '"]:checked').each(function () {
+            formdata.append('AnswersC', this.value);
+        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/MQuiz/Upload');
+        alert(document.getElementById('QuestA_' + raw.parentNode.parentNode.childNodes[1].innerHTML).nodeValue);
+        xhr.setRequestHeader('Questid', raw.parentNode.parentNode.childNodes[1].innerHTML);
+        xhr.setRequestHeader('Quest', document.getElementById('QuestA_' + raw.parentNode.parentNode.childNodes[1].innerHTML).value);
+        xhr.setRequestHeader('QuestT', e.options[e.selectedIndex].value);
+        xhr.setRequestHeader('Coidi', '@ViewBag.coidi');
+        xhr.setRequestHeader('Attridi', '@ViewBag.attridi');
+        xhr.setRequestHeader('pidi', '@ViewBag.pidi');
+        xhr.setRequestHeader('lidi', '@ViewBag.lidi');
+       
+
+        xhr.setRequestHeader('TypeQ', document.getElementById('QuestB_' + raw.parentNode.parentNode.childNodes[1].innerHTML).name);
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        }
+    }
+
+    function deletepQuastPhoto(raw) {
+        document.getElementById('PhotoQuestI_' + raw.parentNode.parentNode.childNodes[1].innerHTML).src = '';
+        document.getElementById('PhotoQuestAID_' + raw.parentNode.parentNode.childNodes[1].innerHTML).href = '';
+    }
+    function deletepAnsPhoto(raw) {
+        getParent.call(raw);
+        if (parseInt(raw.parentNode.parentNode.childNodes[1].innerHTML)) {
+            document.getElementById(r + '_ANSPQI_' + raw.parentNode.parentNode.childNodes[1].innerHTML).src = '';
+            document.getElementById(r + '_ANSPQAID_' + raw.parentNode.parentNode.childNodes[1].innerHTML).href = '';
+        } else
+            if (parseInt(raw.parentNode.parentNode.childNodes[0].innerHTML)) {
+                document.getElementById(r + '_ANSPQI_' + raw.parentNode.parentNode.childNodes[0].innerHTML).src = '';
+                document.getElementById(r + '_ANSPQAID_' + raw.parentNode.parentNode.childNodes[0].innerHTML).href = '';
+            }
+
+    }
+
+
+</script>
+
+
+<p align="justify"><b>@Model.Name</b></p>
+<div id="POItablediv">
+    <a id="addmorePOIbutton" onclick="insRow()" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus">&nbsp;</i>Добавить новый вопрос</a>
+
+    <select id="SelAns" class="form-control autotab" name="tabs1_7">
+        <option value="one">Только один правильный ответ</option>
+        <option value="two">Несколько верных ответов</option>
+    </select>
+    <table id="POITable" class="table" border="1" bordercolor="#ddd" width="100%">
+        <tbody>
+            <tr>
+                <td width="5%">№</td>
+                <td>Вопрос</td>
+                <td width="200px">Изображение</td>
+                <td width="55px"></td>
+                <td width="90px"></td>
+            </tr>
+            <tr>
+                <td align="center">1</td>
+                <td>
+                    <select id="QuestB_1" name="multi" class="form-control autotab" >
+                        <option selected="selected" value="0">Нет ограничений по времени</option>
+                        <option value="1">1 минута</option>
+                        <option value="2">2 минуты</option>
+                        <option value="3">3 минуты</option>
+                        <option value="4">4 минуты</option>
+                        <option value="5">5 минут</option>
+                        <option value="6">6 минут</option>
+                        <option value="7">7 минут</option>
+                        <option value="8">8 минут</option>
+                        <option value="9">9 минут</option>
+                        <option value="10">10 минут</option>
+                    </select><br />
+                    <textarea id="QuestA_1" class="form-control"></textarea>
+
+                </td>
+                <td valign="middle" align="center">
+                    <a data-lightbox="PhotoQuestA_1" href="#" id="PhotoQuestAID_1"><img id="PhotoQuestI_1" src="" style="width: 150px; height: 150px;" alt="" /></a>
+
+                </td>
+                <td valign="middle" align="center">
+                    <input id="PhotoQuest_1" onchange="readURL(this);" type="file" data-badge="false" title="Загрузить" class="filestyle" data-input="false" data-iconname="glyphicon glyphicon-camera">
+                    <hr />
+                    <a onclick="deletepQuastPhoto(this)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a>
+                    <hr />
+                    <a onclick="SaveQuest(this)" class="btn btn-success"><i class="glyphicon glyphicon-save "></i></a>
+                </td>
+                <td valign="middle" align="center"><a onclick="deleteRow(this)" class="btn btn-default btn-lg btn-rect"><i class="glyphicon glyphicon-minus"></i></a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="4"> <table class="table  table-striped responsive-table"  border="1" id="AnsTable_1" bordercolor="#ddd" width="100%"> <tr> <td width="5%">№</td> <td>Ответ</td> <td width="35px"></td> <td width="200px">Изображение</td> <td width="55px"></td> <td colspan="2" width="80px"></td> </tr> <tr> <td valign="middle" align="center">1</td> <td valign="middle" align="center"> <textarea id="AnsTable_1_AnsA_1" class="form-control"></textarea> </td> <td align="center"><input type="checkbox" id="AnsTable_1_AnsS_1" value="1" name="AnsTableN_1" /></td> <td valign="middle" align="center"> <a data-lightbox="AnsTable_1_ANSPQA_1" href="#" id="AnsTable_1_ANSPQAID_1"><img id="AnsTable_1_ANSPQI_1" src="" style="width: 150px; height: 150px;" alt="" /></a> </td> <td valign="middle" align="center"> <input id="AnsTable_1_ANSPQ_1" style="visibility:hidden;position:absolute;top:0;left:0" onchange="readAnsURL(this);" type="file" data-badge="false" class="filestyle" data-input="false" data-iconname="glyphicon glyphicon-camera"> <hr /> <a onclick="deletepAnsPhoto(this)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a> </td>  <td valign="middle" align="center" colspan="2"><a onclick="deleteAnsRow(this)" class="btn btn-default btn-lg btn-rect"><i class="glyphicon glyphicon-minus"></i></a><br /><a onclick="insAnsRow(this)" class="btn btn-primary btn-lg btn-rect"><i class="glyphicon glyphicon-plus"></i> </a> </td> </tr> </table> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

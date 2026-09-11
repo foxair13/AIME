@@ -1,0 +1,139 @@
+@section scripts{
+
+    <script type="text/javascript">
+        var table;
+        $(document).ready(function () {
+            var lastIdx = null;
+            var oldRow, nTr, oldtr, newtr;
+            table = $('#example').DataTable({
+                "bAutoWidth": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("IndexHandler", "Main")",
+                "bProcessing": true,
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ Записей на странице"
+                },
+                "aoColumns": [
+                         { "bSortable": false, "mDataProp": null, "sClass": "control", "sDefaultContent": '<img src="@Url.Content("~/Content/img/details_open.png")">' },
+                         { "data": "UserName" },
+                         { "data": "Fio" },
+                         { "data": "Email" },
+                         { "data": "CreateDate", "bSortable": false },
+                         { "data": "LastPasswordFailureDate", "bSortable": false },
+                         { "data": "PasswordChangedDate", "bSortable": false }
+                ]
+
+            });
+
+
+
+
+
+
+            $('#example tbody').on('click', 'td.control', function () {
+                oldRow = nTr;
+                oldtr = newtr
+                newtr = $(this).closest('tr');
+                var child = table.row(newtr).child;
+
+                if (child.isShown()) {
+
+                    child.hide();
+                    oldRow = null;
+                    nTr = null;
+                    oldtr = null;
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+
+                }
+                else {
+
+                    nTr = table.row(newtr).child;
+                    var UserName = table.row(newtr).data().UserName;
+                    var Email = table.row(newtr).data().Email;
+                    $.get(
+                        "@Url.Action("GetRowDetail", "Main")", { login: UserName, email: Email }, function (viewdata) {
+                            child(viewdata).show();
+                        });
+
+                    $('img', this).attr('src', '@Url.Content("~/Content/img/details_close.png")');
+
+
+                }
+                if (oldRow != nTr) {
+
+                    oldRow.hide();
+                    $('img', oldtr).attr('src', '@Url.Content("~/Content/img/details_open.png")');
+
+                }
+            });
+
+
+
+        });
+
+
+
+
+
+
+    </script>
+}
+
+<div class="row">
+    <br />
+    <div class="alert alert-info">
+        <strong><i class="fa fa-shield fa-2x elementID" aria-hidden="true"><b>&nbsp;&nbsp;Управление доступом</b></i></strong>
+    </div>
+    <div class="box dark">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Таблица управления доступом</h5>
+
+            <!-- .toolbar -->
+            <div class="toolbar">
+                <nav style="padding: 8px;">
+                    <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                        <i class="fa fa-expand"></i>
+                    </a>
+
+                </nav>
+            </div>
+            <!-- /.toolbar -->
+        </header>
+        <div style="overflow-y: auto;" aria-expanded="true" id="div-1" class="body">
+            <fieldset>
+                <table id="example" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Логин</th>
+                            <th>ФИО</th>
+                            <th>Email</th>
+                            <th>Дата создания</th>
+                            <th>Неверный ввод</th>
+                            <th>Пароль изменен</th>
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+
+                    </tfoot>
+
+
+                </table>
+
+            </fieldset>
+
+        </div>
+    </div>
+
+
+</div>
+

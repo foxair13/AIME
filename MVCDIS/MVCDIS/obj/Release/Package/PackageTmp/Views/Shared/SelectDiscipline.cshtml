@@ -1,0 +1,123 @@
+﻿@model IEnumerable<MVCDIS.Models.Levels>
+
+@using MvcContrib;
+@using MVCDIS.Models;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.UI.Grid.ActionSyntax;
+@{string inn, jnn, knn = "";}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "iDisplayLength": 25,
+            "bAutoWidth": false,
+            "aaSorting": [[1, "asc"]],
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ Записей на странице"
+            },
+            "aoColumns": [{ "sWidth": "10%" }, { "sWidth": "10%" }, { "sWidth": "80%" }]
+
+
+        });
+    });
+
+    $(document).ready(function () {
+        var table = $('#example').DataTable();
+
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+
+    });
+
+    $('#button').click(function () {
+        var table = $('#example').DataTable();
+        var SelID = table.row('.selected').data()[0];
+        $('#dialog p').text(SelID);
+       
+    });
+
+
+
+    $(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+        $("#opener").click(function () {
+            var table = $('#example').DataTable();
+            var Sel = table.row('.selected').data();
+            if (Sel != undefined) {
+
+                $('#IDS').val(Sel[0]);
+                $('#ShifrS').val(Sel[1]);
+                $('#NameS').val(Sel[2]);
+                var url = '@Url.Action("ManagerDiscipline", "Discipline")';
+                $("#CompetencePriority").submit();
+            } else {
+
+                $("#dialog p").text("Укажите уровень по которому идет отбор кандидата");
+                $("#dialog").dialog("open");
+            }
+
+        });
+    });
+</script>
+
+
+
+
+
+<h5>Категория должности: @ViewBag.Profstr -  Должность: @ViewBag.Jobstr </h5>
+<br />
+
+
+
+
+
+
+
+
+@using (Html.BeginForm("ManagerDiscipline", "Discipline", FormMethod.Get, new { @id = "CompetencePriority" }))
+{
+    <input type="hidden" name="IDS" id="IDS" value="" />
+    <input type="hidden" name="ShifrS" id="ShifrS" value="" />
+    <input type="hidden" name="NameS" id="NameS" value="" />
+    <input type="hidden" name="pid" id="pid" value="@ViewBag.pid" />
+    <input type="hidden" name="jid" id="jid" value="@ViewBag.jid" />
+
+    @Html.Grid(Model).Columns(col =>
+{
+    col.For(c => c.ID).Named("ID").Attributes(ID => "Hideme").HeaderAttributes(ID => "Hideme");
+    col.For(c => c.Lev).Named("Уровень");
+    col.For(c => c.Name).Named("Название");
+}).Attributes(id => "example", @class => "display")
+
+}
+<div id="dialog" title="Внимание сообщение!">
+    <p></p>
+</div>
+
+<button class="btn btn-primary" id="opener">Отправить</button>
+
+
+
+
+
+
