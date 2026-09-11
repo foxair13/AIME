@@ -685,40 +685,109 @@ public class SkillService : ISkillService
 
 public class MathService : IMathService
 {
-    // (3.2)/(3.3) нормировка оценки навыка к [0..1]
+    // (3.2) нормировка «больше — лучше» с обязательным отсечением к [0..1].
+    // Диссертация задаёт кусочную функцию с клампами: значения вне [min..max] не должны
+    // давать xi > 1 или xi < 0, иначе взвешенная сумма (3.1) теряет смысл вероятностной меры.
     public decimal Normalize(decimal x, decimal min, decimal max)
     {
-        if (max == min)
+        if (max <= min)
         {
-            return 1m;
+            // Вырожденный диапазон: требование либо выполнено, либо нет — без интерполяции.
+            return x >= max ? 1m : 0m;
         }
-        return (x - min) / (max - min);
+        var t = (x - min) / (max - min);
+        return t < 0m ? 0m : (t > 1m ? 1m : t);
     }
 
-    // (3.1) взвешенная сумма нормированных оценок: RoleFit = Σ(Vi · xi)
+    // (3.3) нормировка «меньше — лучше» (например, время реакции, число ошибок).
+    public decimal NormalizeDescending(decimal x, decimal min, decimal max)
+    {
+        return 1m - Normalize(x, min, max);
+    }
+
+    // (3.1) взвешенная сумма нормированных оценок: RoleFit = Σ(Vi · xi).
+    // Веса Vi по смыслу образуют полную группу (Σ Vi = 1). Если сумма отличается,
+    // веса приводятся к единице — иначе результат не сопоставим между ролями.
     public decimal RoleFit(decimal[] weights, decimal[] scores, decimal[] maxScores)
     {
         if (weights.Length != scores.Length || weights.Length != maxScores.Length || weights.Length == 0)
         {
             return 0m;
         }
+
+        decimal weightSum = 0m;
+        for (int i = 0; i < weights.Length; i++)
+        {
+            if (weights[i] < 0m)
+            {
+                return 0m;
+            }
+            weightSum += weights[i];
+        }
+        if (weightSum <= 0m)
+        {
+            return 0m;
+        }
+
         decimal sum = 0m;
         for (int i = 0; i < weights.Length; i++)
         {
             decimal xi = Normalize(scores[i], 0m, maxScores[i]);
-            sum += weights[i] * xi;
+            sum += (weights[i] / weightSum) * xi;
         }
         return sum;
     }
 
-    // Кривая обучения/забывания (3.27–3.30): F(t) = Fmax − (Fmax − F0)·e^(−k·t)
-    // Здесь F0 = currentLevel, Fmax = maxLevel, k = decayRate, t = дни с последнего подтверждения
-    public decimal CurrentLevel(decimal maxLevel, decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now)
+    // (3.28) Кривая обучения: рост уровня при систематической практике.
+    // F(t) = Fmax − (Fmax − F0)·e^(−k·t) — асимптотическое приближение к потолку Fmax.
+    public decimal LearningCurve(decimal maxLevel, decimal startLevel, decimal learningRate, decimal days)
+    {
+        if (days <= 0m)
+        {
+            return startLevel;
+        }
+        var e = (decimal)Math.Exp((double)(-1m * learningRate * days));
+        return maxLevel - (maxLevel - startLevel) * e;
+    }
+
+    // (3.29) Скорость освоения: сколько дней нужно, чтобы дойти от startLevel до targetLevel.
+    // Обратная к (3.28): t = −ln((Fmax − Fцель)/(Fmax − F0)) / k.
+    public decimal DaysToReach(decimal maxLevel, decimal startLevel, decimal targetLevel, decimal learningRate)
+    {
+        if (learningRate <= 0m || targetLevel <= startLevel)
+        {
+            return 0m;
+        }
+        if (targetLevel >= maxLevel)
+        {
+            return decimal.MaxValue;
+        }
+        var ratio = (double)((maxLevel - targetLevel) / (maxLevel - startLevel));
+        return (decimal)(-Math.Log(ratio) / (double)learningRate);
+    }
+
+    // (3.30) Затухание компетенции без подтверждения: уровень ПАДАЕТ к остаточному floor.
+    // F(t) = floor + (F0 − floor)·e^(−λ·t). Прежняя реализация ошибочно тянула уровень
+    // ВВЕРХ к maxLevel — навык «рос» от бездействия.
+    public decimal DecayedLevel(decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now, decimal floorLevel = 0m)
     {
         var days = (decimal)(now - lastConfirmedAt).TotalDays;
-        var exponent = -1m * decayRate * Math.Max(days, 0m);
-        var decay = (decimal)Math.Exp((double)exponent);
-        return maxLevel - (maxLevel - currentLevel) * decay;
+        if (days <= 0m || decayRate <= 0m)
+        {
+            return currentLevel;
+        }
+        if (currentLevel <= floorLevel)
+        {
+            return currentLevel;
+        }
+        var e = (decimal)Math.Exp((double)(-1m * decayRate * days));
+        return floorLevel + (currentLevel - floorLevel) * e;
+    }
+
+    [Obsolete("Семантически неверно: тянула уровень вверх к maxLevel. Используйте DecayedLevel (3.30) или LearningCurve (3.28).")]
+    public decimal CurrentLevel(decimal maxLevel, decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now)
+    {
+        return DecayedLevel(currentLevel, lastConfirmedAt, decayRate, now);
     }
 
     // Расстояние между координатами по формуле Гаверсина (км)
@@ -960,7 +1029,8 @@ public class CompetenceService : ICompetenceService
         {
             return 0m;
         }
-        return _math.CurrentLevel(10m, userSkills.Level, userSkills.LastConfirmedAt, userSkills.DecayRate, DateTime.UtcNow);
+        // (3.30) уровень с учётом затухания: без подтверждения компетенция падает, а не растёт.
+        return _math.DecayedLevel(userSkills.Level, userSkills.LastConfirmedAt, userSkills.DecayRate, DateTime.UtcNow);
     }
 }
 

@@ -129,8 +129,14 @@ public interface IReputationService
 public interface IMathService
 {
     decimal RoleFit(decimal[] weights, decimal[] scores, decimal[] maxScores);         // (3.1)
-    decimal Normalize(decimal x, decimal min, decimal max);                            // (3.2)/(3.3)
-    decimal CurrentLevel(decimal maxLevel, decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now); // (3.27–3.30)
+    decimal Normalize(decimal x, decimal min, decimal max);                            // (3.2) больше — лучше
+    decimal NormalizeDescending(decimal x, decimal min, decimal max);                  // (3.3) меньше — лучше
+    decimal LearningCurve(decimal maxLevel, decimal startLevel, decimal learningRate, decimal days);       // (3.28)
+    decimal DaysToReach(decimal maxLevel, decimal startLevel, decimal targetLevel, decimal learningRate);  // (3.29)
+    decimal DecayedLevel(decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now, decimal floorLevel = 0m); // (3.30)
+
+    [Obsolete("Семантически неверно. Используйте DecayedLevel (3.30) или LearningCurve (3.28).")]
+    decimal CurrentLevel(decimal maxLevel, decimal currentLevel, DateTime lastConfirmedAt, decimal decayRate, DateTime now);
     double HaversineDistance(double lat1, double lon1, double lat2, double lon2);
     // C4: кластеризация пользователей по профилям (география или навыки)
     int[] KMeansCluster(double[][] points, int k, int maxIterations = 100);
@@ -140,6 +146,51 @@ public interface IMathService
 
 // Результат решения задачи о рюкзаке методом ветвей и границ
 public record KnapsackResult(double TotalValue, double TotalWeight, int[] SelectedIndices);
+
+/// <summary>
+/// Параметры кандидата как звена контура управления (диссертация, гл. 2, рис. 3, с. 66).
+/// </summary>
+/// <param name="Competence">Kкомпет — коэффициент интегральной составляющей [0.01..1].</param>
+/// <param name="Motivation">Tмотив — коэффициент пропорциональной составляющей [0.1..20].</param>
+/// <param name="EnvironmentInertia">Tэ — инерция среды/экономики (мес.), по умолчанию 0.5.</param>
+/// <param name="ObjectInertia">Тоб — инерция объекта управления (мес.), по умолчанию 15.</param>
+/// <param name="ObjectGain">Kоб — коэффициент передачи объекта, по умолчанию 1.</param>
+/// <param name="RequiredLevel">r — требуемый уровень эффективности, по умолчанию 1.</param>
+/// <param name="HorizonMonths">Горизонт планирования в месяцах.</param>
+public record DynamicFitInput(
+    double Competence,
+    double Motivation,
+    double EnvironmentInertia = 0.5,
+    double ObjectInertia = 15.0,
+    double ObjectGain = 1.0,
+    double RequiredLevel = 1.0,
+    double HorizonMonths = 36.0);
+
+/// <param name="LossArea">Интегральные потери ∫max(r−y,0)dt — главный критерий отбора.</param>
+/// <param name="TimeToCompetenceMonths">Время вхождения в должность (выход на 95 % от r).</param>
+/// <param name="SteadyStateLevel">Установившийся уровень эффективности.</param>
+/// <param name="OvershootPercent">Перерегулирование, % — риск «выгорания»/избыточной активности.</param>
+/// <param name="Trajectory">Прореженная траектория y(t) для графика.</param>
+public record DynamicFitResult(
+    double LossArea,
+    double TimeToCompetenceMonths,
+    double SteadyStateLevel,
+    double OvershootPercent,
+    IReadOnlyList<double> Trajectory);
+
+public record CandidateProfile(long CandidateId, string DisplayName, DynamicFitInput Input);
+
+public record RankedCandidate(long CandidateId, string DisplayName, DynamicFitResult Result, int Rank);
+
+/// <summary>
+/// Динамическая оценка пригодности кадра (DFS) — отбор по площади потерь, а не по баллам.
+/// </summary>
+public interface IDynamicFitService
+{
+    DynamicFitResult Evaluate(DynamicFitInput input);
+    decimal RotationCost(DynamicFitInput input, decimal vacancyMonths, decimal actingEfficiency, decimal monthlyValue);
+    IReadOnlyList<RankedCandidate> Rank(IEnumerable<CandidateProfile> candidates, double horizonMonths);
+}
 
 public interface IAuthService
 {

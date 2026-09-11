@@ -46,22 +46,73 @@ public class MathServiceTests
     }
 
     [Fact]
-    public void CurrentLevel_NoTimePassed_ReturnsInitialLevel()
+    public void Normalize_ClampsOutOfRangeValues()
     {
-        var now = new DateTime(2026, 9, 7, 12, 0, 0, DateTimeKind.Utc);
-        var level = _math.CurrentLevel(10m, 4m, now, 0.02m, now);
-        Assert.Equal(4m, level, 2);
+        // Была живая ошибка: Normalize(10,0,5) возвращал 2.0 и ломал (3.1).
+        Assert.Equal(1m, _math.Normalize(10m, 0m, 5m));
+        Assert.Equal(0m, _math.Normalize(-3m, 0m, 5m));
     }
 
     [Fact]
-    public void CurrentLevel_DecaysTowardMaxLevel()
+    public void NormalizeDescending_InvertsScale()
+    {
+        Assert.Equal(1m, _math.NormalizeDescending(0m, 0m, 10m));
+        Assert.Equal(0.5m, _math.NormalizeDescending(5m, 0m, 10m));
+        Assert.Equal(0m, _math.NormalizeDescending(10m, 0m, 10m));
+    }
+
+    [Fact]
+    public void RoleFit_NormalizesWeights_SoResultStaysInUnitRange()
+    {
+        // Веса не образуют полную группу — результат всё равно должен быть в [0..1].
+        decimal[] weights = [2m, 2m];
+        decimal[] scores = [10m, 10m];
+        decimal[] maxScores = [10m, 10m];
+        Assert.Equal(1m, _math.RoleFit(weights, scores, maxScores));
+    }
+
+    [Fact]
+    public void LearningCurve_GrowsTowardCeiling()
+    {
+        var day0 = _math.LearningCurve(10m, 2m, 0.05m, 0m);
+        var day30 = _math.LearningCurve(10m, 2m, 0.05m, 30m);
+        var day365 = _math.LearningCurve(10m, 2m, 0.05m, 365m);
+
+        Assert.Equal(2m, day0);
+        Assert.True(day30 > day0);
+        Assert.True(day365 > day30);
+        Assert.InRange(day365, 9.9m, 10m);
+    }
+
+    [Fact]
+    public void DaysToReach_IsInverseOfLearningCurve()
+    {
+        var days = _math.DaysToReach(10m, 2m, 6m, 0.05m);
+        var achieved = _math.LearningCurve(10m, 2m, 0.05m, days);
+        Assert.InRange(achieved, 5.95m, 6.05m);
+    }
+
+    [Fact]
+    public void DecayedLevel_FallsWithoutConfirmation()
     {
         var baseTime = new DateTime(2026, 9, 1, 12, 0, 0, DateTimeKind.Utc);
-        var now = baseTime.AddDays(10);
-        var level = _math.CurrentLevel(10m, 2m, baseTime, 0.05m, now);
 
-        // Ожидаем 10 - (10-2)·e^(-0.5) ≈ 10 - 8·0.6065 ≈ 5.148
-        Assert.InRange(level, 5.0m, 5.4m);
+        Assert.Equal(8m, _math.DecayedLevel(8m, baseTime, 0.05m, baseTime));
+
+        var after30 = _math.DecayedLevel(8m, baseTime, 0.05m, baseTime.AddDays(30));
+        var after90 = _math.DecayedLevel(8m, baseTime, 0.05m, baseTime.AddDays(90));
+
+        Assert.True(after30 < 8m, "уровень обязан падать без подтверждения");
+        Assert.True(after90 < after30);
+        Assert.True(after90 >= 0m);
+    }
+
+    [Fact]
+    public void DecayedLevel_RespectsResidualFloor()
+    {
+        var baseTime = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        var level = _math.DecayedLevel(8m, baseTime, 0.05m, baseTime.AddDays(3650), floorLevel: 3m);
+        Assert.InRange(level, 3m, 3.01m);
     }
 
     [Fact]

@@ -108,6 +108,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IReputationService, ReputationService>();
 builder.Services.AddScoped<IMathService, MathService>();
+builder.Services.AddScoped<IDynamicFitService, DynamicFitService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<IModerationService, OllamaModerationService>();
