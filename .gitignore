@@ -26,3 +26,6 @@ dist/
 Desktop.ini
 Thumbs.db
 .DS_Store
+# Python (исследовательские скрипты в tools/)
+__pycache__/
+*.pyc
