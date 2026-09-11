@@ -31,3 +31,7 @@ __pycache__/
 *.pyc
 cv/_*.txt
 cv/*_extracted.txt
+
+# Секреты
+.env
+src/AI.SocialNetwork.Web/appsettings.Development.json
