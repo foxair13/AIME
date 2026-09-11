@@ -14,12 +14,24 @@ using NeftViewer.Data.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using NeftViewer.Data.Repositories.EntityRepositories;
 using NeftViewer.MVC.Service;
+using NeftViewer.SV.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+CryptoService cryptoService = new CryptoService(builder.Configuration);
+//builder.Configuration.AddJsonFile("api_appsettings.json", optional: false, reloadOnChange: true);
+builder.Services.Configure<Connections>(cryptoService.HitConnectionsInConfig().GetSection("Connections"));
+var attribute = (Prot)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(Prot));
+var prot = "";
+if (attribute != null)
+{
+    prot = attribute.P;
+}
+var connections = new Connections(prot)
+{
+    BasePostgree = cryptoService.GetConfiguration().GetSection("Connections:BasePostgree").Value,
+};
 
-builder.Configuration.AddJsonFile("api_appsettings.json", optional: false, reloadOnChange: true);
-builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
-var connections = builder.Configuration.GetSection("Connections").Get<Connections>();
 var baseConnectionString = connections.BasePostgree;
 builder.Services.AddDbContext<NeftViewerContext>(options =>
     options.UseNpgsql(baseConnectionString, b => b.MigrationsAssembly("NeftViewer.Api")),
@@ -41,6 +53,7 @@ builder.Services.AddScoped<IGenericRepository<CriteriaCalcMethod>, CriteriaCalcM
 
 builder.Services.AddScoped<IGenericRepository<Locality>, LocalityRepository>();
 builder.Services.AddScoped<IGenericRepository<Trk>, TrkRepository>();
+builder.Services.AddScoped<IGenericRepository<Tank>, TankRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAspNetUsersService, AspNetUsersService>();
 builder.Services.AddScoped<IActionService, ActionService>();
@@ -55,12 +68,12 @@ builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IAreaService, AreaService>();
 builder.Services.AddScoped<ILocalityService, LocalityService>();
 builder.Services.AddScoped<ITrkService, TrkService>();
+builder.Services.AddScoped<ITankService, TankService>();
 builder.Services.AddScoped<IActionRoleService, ActionRoleService>();
-
 
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
 
-AppConfig.Initialize(connections);
+AppConfig.Initialize(cryptoService, prot);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

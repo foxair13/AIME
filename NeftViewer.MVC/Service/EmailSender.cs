@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using NeftViewer.MVC.Options;
+#region 
+[assembly: Prot("J1Tfy2RuM_RBtYdogsBYsNvzrOUfu_PsKkN0rf9JjZg")]
+//[assembly: Prot("D")]
+#endregion
+
 
 namespace NeftViewer.MVC.Service
 {

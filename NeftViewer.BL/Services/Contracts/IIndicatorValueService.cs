@@ -23,5 +23,6 @@ namespace NeftViewer.BL.Services.Contracts
         Task<bool> AddIndicatorValue(IndicatorValue indicatorValue);
         Task AddIndicatorValueRange(IEnumerable<IndicatorValue> indicatorValues, string targetPropertyName1, string targetPropertyName2, string targetPropertyName3);
         Task<(decimal? MinValue, decimal? MaxValue, DateTime? MinDate, DateTime? MaxDate,List<DateTime> dates)> GetMinMaxValues(int CriteriaId);
+        List<CalculatCriteriaResult> GetCalculatesValuesByCryteriaAsync(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters,  List<int> avgCriteriaIds, List<int> desiredCriteriaIds);
     }
 }

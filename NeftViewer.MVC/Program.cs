@@ -17,16 +17,31 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using System.Configuration;
 using NeftViewer.MVC.Options;
 using NeftViewer.MVC;
-
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Reflection;
+using NeftViewer.SV.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+CryptoService cryptoService = new CryptoService(builder.Configuration);
 builder.Services.Configure<SmtpParam>(builder.Configuration.GetSection("SmtpParam"));
-builder.Services.Configure<Connections>(builder.Configuration.GetSection("Connections"));
-var connections =builder.Configuration.GetSection("Connections").Get<Connections>();
+builder.Services.Configure<Connections>(cryptoService.HitConnectionsInConfig().GetSection("Connections"));
+var attribute = (Prot)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(Prot));
+var prot = "";
+if (attribute!=null)
+{
+     prot = attribute.P;
+}
+var connections = new Connections(prot)
+{
+    BasePostgree = cryptoService.GetConfiguration().GetSection("Connections:BasePostgree").Value,
+    FinanceMssql = cryptoService.GetConfiguration().GetSection("Connections:FinanceMssql").Value,
+    CoordsUrl = cryptoService.GetConfiguration().GetSection("Connections:CoordsUrl").Value,
+    AsuUrl = cryptoService.GetConfiguration().GetSection("Connections:AsuUrl").Value
+};
+
 var baseConnectionString = connections.BasePostgree;
 var financeConnectionString = connections.FinanceMssql;
 string CoordsUrl = connections.CoordsUrl;
@@ -73,6 +88,7 @@ builder.Services.AddHttpClient("GetAsuService", client =>
 });
 
 builder.Services.AddScoped<CustomAuthorizeAttribute>();
+builder.Services.AddScoped<LogService>();
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql(baseConnectionString));
@@ -86,16 +102,23 @@ builder.Services.AddHostedService(serviceProvider =>
     var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
     return new TaskService(mapper, financeConnectionString, baseConnectionString, criteriaservice, CoordsUrl, httpClientFactory);
 });
-AppConfig.Initialize(connections);
+AppConfig.Initialize(cryptoService, prot);
 builder.Services.AddResponseCaching();
 builder.Services.AddRazorPages();
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders(); 
+    loggingBuilder.AddConsole();     
+});
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
+    var logService = scope.ServiceProvider.GetRequiredService<LogService>();
+    logService.GETHID();
     var neftViewerDbContext = scope.ServiceProvider.GetRequiredService<NeftViewerContext>();
     neftViewerDbContext.Database.EnsureCreated();
 }
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -103,7 +126,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 app.UseHttpsRedirection();
@@ -111,6 +133,8 @@ app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
     {
+        ctx.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+        ctx.Context.Response.Headers["Cache-Control"] = "public, max-age=31536000"; // Adjust max-age as needed
         if (ctx.File.Name.EndsWith(".js"))
         {
             ctx.Context.Response.Headers["Content-Type"] = "application/javascript";

@@ -11,12 +11,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="theme-color" content="#ffffff">
+    <meta name="msapplication-TileColor" content="#ffffff">
     <title>@ViewData["Title"] - NeftViewer.MVC</title>
-    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="@Url.Content("~/css/site.css")" rel="stylesheet" asp-append-version="true" />
     <title>Белоруснефть-Нефтехимпроект</title>
 
-    <link href="~/lib/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/fontawesome-free-6.4.0-web/css/all.css")" rel="stylesheet" />
     @await RenderSectionAsync("HeadArea", required: false)
 
 </head>
@@ -87,22 +87,15 @@
                 @await Html.PartialAsync("_LoginPartial")
 
             </div>
-            <div class="footer navbar-bottom fixed-bottom" id="navbarFooter">
-                <div class="row g-0 align-items-center h-100">
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 mt-2 mt-sm-0 text-900">
-                            Белоруснефть-Нефтехимпроект<span class="d-none d-sm-inline-block"></span><span class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none">2023 ©<a class="mx-1" href="https://nhp.by">https://nhp.by/</a>
-                        </p>
-                    </div>
-                    <div class="col-12 col-sm-auto text-center">
-                        <p class="mb-0 text-600">v1.0.0</p>
-                    </div>
+            <div class="footer navbar-bottom fixed-bottom" style="padding-top: 5px; padding-bottom: 5px;" id="navbarFooter">
+                <div id="AvgInfo" class="row  g-0 align-items-center w-100 h-100">
+                
                 </div>
             </div>
             <div class="content" id="contentId">
                 <!-- Основной контент -->
                 <div class="col">
-                    <div class="overlay bg-soft">
+                    <div class="scrollbar overlay bg-soft">
 
                         <div class="card shadow-none border border-300">
                             <div class="card-header p-1 border-bottom border-300 bg-soft">
@@ -127,10 +120,10 @@
                                                 <li class="nav-item" role="presentation">
                                                     <a class="nav-link cursor-pointer active" data-bs-toggle="tab" href="#ObjectParams" role="tab" aria-selected="true">Параметры объекта</a>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a class="nav-link cursor-pointer" data-bs-toggle="tab" href="#Charts" role="tab" aria-selected="true">Графики и диаграммы</a>
+                                                <li class="nav-item" role="presentation" hidden>
+                                                    <a class="nav-link cursor-pointer" data-bs-toggle="tab" href="#Charts" role="tab" aria-selected="true">Графики</a>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                <li class="nav-item" role="presentation" hidden>
                                                     <a class="nav-link cursor-pointer" data-bs-toggle="tab" href="#Dashboards" role="tab" aria-selected="false" tabindex="-1">Дашборды</a>
                                                 </li>
 
@@ -176,11 +169,11 @@
 
             </div>
 
-            <script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
-            <script type="module" src="~/lib/popper/dist/popper.min.js"></script>
-            <script type="module" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-            <script src="~/js/site.js" asp-append-version="true"></script>
+            <script type="text/javascript" src="@Url.Content("~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js")"></script>
+            <script type="module" src="@Url.Content("~/lib/popper/dist/popper.min.js")"></script>
+            <script type="module" src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+             
+            <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
             <script type="text/javascript">
                 $(document).ready(function () {
 

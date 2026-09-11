@@ -55,57 +55,8 @@
 
 </style>
 
-<link href="~/lib/daterangepicker/daterangepicker.min.css" rel="stylesheet" />
-<link href="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.css" rel="stylesheet" />
-<div class="card shadow-none border border-300">
-    <div class="card-header p-1 border-bottom border-300 bg-soft">
-        <div class="row  justify-content-between align-items-center">
-            <div class="col-12 col-md" align="center">
-                <p class="text-900 mb-0">ТИП ОБЪЕКТА</p>
-            </div>
-        </div>
-    </div>
-    <div class="p-2">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-body center-content">
-                    @foreach (var item in Model.TypeRadioOptions)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="@item.Id" name="TypeRadio" value="@item">
-                            <label class="form-check-label" for="TypeRadio">@item.Value</label>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<hr />
-<div class="card shadow-none border border-300">
-    <div class="card-header p-1 border-bottom border-300 bg-soft">
-        <div class="row  justify-content-between align-items-center">
-            <div class="col-12 col-md" align="center">
-                <p class="text-900 mb-0">ВЫБОР ПОН</p>
-            </div>
-        </div>
-    </div>
-    <div class="p-2">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-body center-content">
-                    <select id="OwnersID" class="form-select fixed-width-dropdown" aria-label="Выбор ПОН">
-                        @foreach (var item in Model.OwnersDropDown)
-                        {
-                            <option value="@item.Value">@item.Text</option>
-                        }
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<hr />
+<link href="@Url.Content("~/lib/daterangepicker/daterangepicker.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.css")" rel="stylesheet" />
 <div class="card shadow-none border border-300">
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
@@ -145,6 +96,57 @@
     <div class="card-header p-1 border-bottom border-300 bg-soft">
         <div class="row  justify-content-between align-items-center">
             <div class="col-12 col-md" align="center">
+                <p class="text-900 mb-0">ВЫБОР ПОН</p>
+            </div>
+        </div>
+    </div>
+    <div class="p-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body center-content">
+                    <select id="OwnersID" class="form-select fixed-width-dropdown" aria-label="Выбор ПОН">
+                        @foreach (var item in Model.OwnersDropDown)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="card shadow-none border border-300">
+    <div class="card-header p-1 border-bottom border-300 bg-soft">
+        <div class="row  justify-content-between align-items-center">
+            <div class="col-12 col-md" align="center">
+                <p class="text-900 mb-0">ТИП ОБЪЕКТА</p>
+            </div>
+        </div>
+    </div>
+    <div class="p-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body center-content">
+                    @foreach (var item in Model.TypeRadioOptions)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="@item.Id" name="TypeRadio" value="@item">
+                            <label class="form-check-label" for="@item.Id">@item.Value</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+
+<div class="card shadow-none border border-300">
+    <div class="card-header p-1 border-bottom border-300 bg-soft">
+        <div class="row  justify-content-between align-items-center">
+            <div class="col-12 col-md" align="center">
                 <p class="text-900 mb-0">ПОКАЗАТЕЛИ</p>
             </div>
         </div>
@@ -170,7 +172,7 @@
                                                 <div class="card text-dark p-2">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" id="@typeitem.Id" name="CriteriaRadio" value="@typeitem.Value">
-                                                        <label class="form-check-label" for="CriteriaRadio">@typeitem.Value</label>
+                                                        <label class="form-check-label" for="@typeitem.Id">@typeitem.Value</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,107 +190,16 @@
 
 <hr />
 
-<div class="card shadow-none border border-300">
-    <div class="card-header p-1 border-bottom border-300 bg-soft">
-        <div class="row  justify-content-between align-items-center">
-            <div class="col-12 col-md" align="center">
-                <p class="text-900 mb-0">СРАВНИТЕЛЬНАЯ АНАЛИТИКА</p>
-            </div>
-        </div>
-    </div>
-    <div class="p-2">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-body center-content">
-
-                    <div class="row justify-content-center p-2">
-                        <div class="col-md-12 text-center">
-                            <div class="mb-3 form-check form-switch">
-                                <label for="IsBest" class="form-check-label"></label>
-                                <input type="checkbox" id="IsBest" name="IsBest" checked class="form-check-input">
-                                <span class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-12 text-center ">
-                            <select id="EntriesID" class="form-select fixed-width-dropdown" aria-label="Выбор объектов">
-                                @foreach (var item in Model.TopEntries)
-                                {
-                                    <option value="@item.Value">@item.Text</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center p-2">
-                        <div class="col-md-12 text-center ">
-                            <ul class="nav nav-phoenix-pills mb-5  d-xl-flex" id="DateListTab" data-chat-thread-tab="data-chat-thread-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link cursor-pointer active" data-bs-toggle="tab" href="#OnDate" role="tab" aria-selected="true">День</a>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link cursor-pointer" data-bs-toggle="tab" href="#OnRangeDate" role="tab" aria-selected="false" tabindex="-1">Период</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="DateListTabContent">
-                                <div class="tab-pane show active" id="OnDate" role="tabpanel">
-                                    <div class="mb-3">
-                                        <label for="datepicker">На дату:</label>
-                                        <input type="text" id="datepicker" placeholder="" class="form-control fixed-width-dropdown">
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="OnRangeDate" role="tabpanel">
-                                    <label>Параметры:</label>
-                                    <div class="card p-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="AgregateCalc" value="Min">
-                                            <label class="form-check-label" for="AgregateCalc">Мин</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="AgregateCalc" value="Max">
-                                            <label class="form-check-label" for="AgregateCalc">Макс</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="AgregateCalc" value="Avg" checked>
-                                            <label class="form-check-label" for="AgregateCalc">Среднее</label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <p>
-                                            <label for="amountdate">Диапазон дат:</label>
-                                            <input type="text" data-bind="daterangepicker: dateRange" id="amountdate" readonly class="daterangepicker-field form-control fixed-width-dropdown text-center" />
-                                        </p>
-                                        <div id="date-range"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row full-width-row">
-                        <div class="col-md-12 text-center">
-                            <div class="mb-3">
-                                <p>
-                                    <label for="amount">Диапазон значений:</label>
-                                    <input type="text" id="amount" readonly class="form-control fixed-width-dropdow">
-                                </p>
-
-                                <div id="slider-range"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<script src="~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js"></script>
-<script src="~/lib/knockout/knockout-3.5.1.js"></script>
-<script src="~/lib/moment/moment-with-locales.min.js"></script>
-<script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.js"></script>
-<script type="module" src="~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/ui/i18n/datepicker-ru.js"></script>
-<script type="module" src="~/lib/daterangepicker/daterangepicker.min.js"></script>
+
+<script type="text/javascript" src="@Url.Content("~/lib/datatables/jquery-3.7.0/jquery-3.7.0.min.js")"></script>
+<script src="@Url.Content("~/lib/knockout/knockout-3.5.1.js")"></script>
+
+<script src="@Url.Content("~/lib/moment/moment-with-locales.min.js")"></script>
+<script type="module" src="@Url.Content("~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/jquery-ui.min.js")"></script>
+<script type="module" src="@Url.Content("~/lib/datatables/jquery-3.7.0/jquery-ui-1.13.2.custom/ui/i18n/datepicker-ru.js")"></script>
+<script type="module" src="@Url.Content("~/lib/daterangepicker/daterangepicker.min.js")"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -339,16 +250,63 @@
             pagef = 1;
             OnUpdate();
         });
+        $("#contactListTab").on('click', 'a.nav-link', function (event) {
+           
+            event.preventDefault();
+            const tabId = $(this).attr('href');
+            handleTabChange(tabId);
+            var objectIdValue = $("input[name='ObjectId']").val();
+
+          
+            setActiveTab(tabId, objectIdValue, 1);
+            pagef = 1;
+            OnUpdate();
+        });
         let isOnDate = false;
         function handleTabChange(tabId) {
+            // Получаем ссылки на вкладки
+            var chartsTab = document.querySelector('a[href="#Charts"]');
+            var dashboardsTab = document.querySelector('a[href="#Dashboards"]');
+            var objectParamsTab = document.querySelector('a[href="#ObjectParams"]');
+
+            // Получаем ссылки на соответствующие элементы списка
+            var chartsNavItem = chartsTab.parentElement;
+            var dashboardsNavItem = dashboardsTab.parentElement;
+            var objectParamsNavItem = objectParamsTab.parentElement;
+
+            // Получаем соответствующие таб-панели
+            var chartsTabPane = document.querySelector('#Charts');
+            var dashboardsTabPane = document.querySelector('#Dashboards');
+
+            var objectParamsTabPane = document.querySelector('#ObjectParams');
+
             if (tabId === 'OnDate') {
+
                 isOnDate = true;
-                console.log('Выбрана вкладка "День"');
+                chartsNavItem.hidden = true;
+                dashboardsNavItem.hidden = true;
+                var objectIdValue = $("input[name='ObjectId']").val();
+                setActiveTab('#ObjectParams', objectIdValue, 1);
+                pagef = 1;
+       
+                chartsTab.classList.remove('active');
+                dashboardsTab.classList.remove('active');
+                objectParamsTab.classList.remove('active');
+                chartsTabPane.classList.remove('show', 'active');
+                dashboardsTabPane.classList.remove('show', 'active');
+                objectParamsTab.classList.add('active');
+           
+            
+                objectParamsTabPane.classList.add('show', 'active');
+             
 
             } else if (tabId === 'OnRangeDate') {
                 isOnDate = false;
-                console.log('Выбрана вкладка "Период"');
-
+                var objectIdValue = $("input[name='ObjectId']").val();
+                setActiveTab('#ObjectParams', objectIdValue, 1);
+                pagef = 1;
+                chartsNavItem.hidden = false;
+                dashboardsNavItem.hidden = false;
             }
         }
 
@@ -567,9 +525,9 @@
         } else {
             $('label[for="IsBest"]').text('ХУДШИЙ ОБЪЕКТ');
         }
-        getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
-            addPointsToMap(points);
-        });
+        //getPointsForRegion(ownerId, areaId, TypeValue, roadId, objectId, IsBest, EntriesID, Dates, slideMin, slideMax, CriteriaValue, function (points) {
+        //    addPointsToMap(points);
+        //});
         function updateObjects(ownerId, areaId, TypeValue, roadId) {
             $.ajax({
                 url: '../Home/GetObjects',

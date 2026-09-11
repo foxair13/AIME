@@ -1,4 +1,9 @@
-﻿namespace NeftViewer.Api.ViewModels
+﻿#region 
+using NeftViewer.MVC.Options;
+[assembly: Prot("J1Tfy2RuM_RBtYdogsBYsNvzrOUfu_PsKkN0rf9JjZg")]
+//[assembly: Prot("D")]
+#endregion
+namespace NeftViewer.Api.ViewModels
 {
     public class PointViewModel
     {

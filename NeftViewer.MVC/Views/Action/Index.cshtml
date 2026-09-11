@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadArea {
-    <link href="~/lib/datatables/datatables-1.13.6/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/datatables/DataTables-1.13.6/css/jquery.dataTables.min.css")" rel="stylesheet" />
 }
 <div class="card border border-primary">
     <div class="card-body">
@@ -52,11 +52,11 @@
 
 <br />
 @section Scripts {
-    <script src="~/lib/datatables/datatables-1.13.6/js/jquery.datatables.min.js"></script>
+    <script src="@Url.Content("~/lib/datatables/DataTables-1.13.6/js/jquery.dataTables.min.js")"></script>
     <script type="text/javascript">
         var table = new DataTable('.table', {
             language: {
-                url: '../lib/datatables/ru.json'
+                url: '@Url.Content("~/lib/datatables/ru.json")'
             }
         });
     </script>

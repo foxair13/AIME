@@ -140,15 +140,15 @@ namespace NeftViewer.MVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var isFirstUser = await _userManager.Users.CountAsync() == 1;
-                    if (isFirstUser)
-                    {
+                    //var isFirstUser = await _userManager.Users.CountAsync() == 1;
+                    //if (isFirstUser)
+                    //{
                         if (!await _roleManager.RoleExistsAsync("Admin"))
                         {
                             await _roleManager.CreateAsync(new IdentityRole("Admin"));
                         }
                         _userManager.AddToRoleAsync(user, "Admin").Wait();
-                    }
+                    //}
                  
                     _logger.LogInformation("Пользователь создал новую учетную запись с паролем.");
 

@@ -57,6 +57,21 @@ namespace NeftViewer.MVC.Controllers
         public IActionResult GetObjectParams(string TabId, string ObjectId, [ModelBinder(typeof(RussianDateBinder))] DateTime Date, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue, string TabDate, int PageNumber = 1)
         {
             IEnumerable<IndicatorValue> iv = new List<IndicatorValue>();
+            List<int> desiredCriteriaIds = new List<int>
+                    {
+                         1,2,3,4,
+                         6,
+                         36,37,38,40,41,
+                         8,
+                         9,10,11,12,
+                         13,14,15,16,17,
+                         18,19,
+                         20,21,
+                         22,23,24,
+                         25,
+                         26,27,
+                         28,29,30,31,32,33,34,35
+                    };
             int totalPageCount = 0;
             if (TabDate == "OnDate")
             {
@@ -70,11 +85,13 @@ namespace NeftViewer.MVC.Controllers
                 }
                 else if (TabId == "#Dashboards")
                 {
-                    return PartialView("_DashboardsPartialView", null);
+                    iv = iv.Where(x => desiredCriteriaIds.Contains(x.CriteriaId)).ToList();
+                    return PartialView("_DashboardsPartialView", iv);
                 }
                 else if (TabId == "#Charts")
                 {
-                    return PartialView("_ChartsPartialView", null);
+
+                    return PartialView("_ChartsPartialView", iv);
                 }
             }
             else if (TabDate == "OnRangeDate")
@@ -100,11 +117,36 @@ namespace NeftViewer.MVC.Controllers
                 }
                 else if (TabId == "#Dashboards")
                 {
-                    return PartialView("_DashboardsPartialView", null);
+
+                    iv = iv.Where(x => x.DateStart >= MinDateValue && x.DateStart <= MaxDateValue && desiredCriteriaIds.Contains(x.CriteriaId))
+                                             .ToList();
+
+
+                    return PartialView("_DashboardsPartialView", iv);
                 }
                 else if (TabId == "#Charts")
                 {
-                    return PartialView("_ChartsPartialView", null);
+                    iv = iv.Distinct().ToList();
+
+                    TimeSpan interval = MaxDateValue - MinDateValue;
+                    int numberOfIntervals = 2;
+                    TimeSpan intervalSize = new TimeSpan(interval.Ticks / numberOfIntervals);
+
+                    var ivList = new List<IndicatorValue>();
+
+                    for (int i = 0; i < numberOfIntervals; i++)
+                    {
+                        DateTime intervalStart = MinDateValue + TimeSpan.FromTicks(i * intervalSize.Ticks);
+                        DateTime intervalEnd = MinDateValue + TimeSpan.FromTicks((i + 10) * intervalSize.Ticks);
+
+                        var dataInInterval = iv
+                            .Where(x => x.DateStart >= intervalStart && x.DateStart <= intervalEnd)
+                            .ToList();
+
+                        ivList.AddRange(dataInInterval);
+                    }
+
+                    return PartialView("_ChartsPartialView", ivList);
                 }
             }
 
@@ -118,10 +160,80 @@ namespace NeftViewer.MVC.Controllers
             return Json(new { Min = min, Max = max, DateMin = datemin, DateMax = datemax, Dates = dates });
         }
 
+        public async Task<IActionResult> GetCalcRegionValues(int ownerId, int areaId, string TypeValue, int roadId, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue, string TabDate, string objectId="")
+        {
+            try
+            {
+                List<int> avgCriteriaIds = new List<int>
+                    {
+                         1,2,3,4,5,18,19
+                    };
+                List<int> desiredCriteriaIds = new List<int>
+                    {
+                         30,31,32,33,34,35,20,25
+                    };
+                var result = new object();
+                var items = new object();
+                var objects = await _objectItemService.GetObjectItemsAsync();
+                if (ownerId != 0)
+                {
+                    objects = objects.Where(x => x.OwnerId == ownerId);
+                }
+                if (areaId != 0)
+                {
+                    objects = objects.Where(x => x.AreaId == areaId);
+                }
+                if (TypeValue != null)
+                {
+                    objects = objects.Where(x => x.CodeSUID.Contains(TypeValue));
+                }
+                if (objectId != "0")
+                {
+                    objects = objects.Where(x => x.CodeSUID == objectId);
+                }
+                IEnumerable<IndicatorValue> iv = new List<IndicatorValue>();
+                if (TabDate == "OnDate")
+                {
+                    var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>();
+                    if (Dates != DateTime.MinValue)
+                    {
+                        filters.Add(("DateStart", Dates, ""));
+
+                    }
+                    else
+                    {
+                        filters.Add(("DateStart", MinDateValue, ">="));
+                        filters.Add(("DateStart", MaxDateValue, "<="));
+                    }
+                    var res = _indicatorValueService.GetCalculatesValuesByCryteriaAsync(filters,  avgCriteriaIds, desiredCriteriaIds);
+               
+
+                }
+                else if (TabDate == "OnRangeDate")
+                {
+                  
+
+                    var filters = new List<(string filterPropertyName, object filterValue, string comparisonOperator)>
+                                            {
+                                             ("DateStart", MinDateValue, ">="),
+                                             ("DateStart", MaxDateValue, "<="),
+
+                                            };
+                }
+                return PartialView("_AvgInfo", null);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
         public async Task<IActionResult> GetPointsForRegion(int ownerId, int areaId, string TypeValue, int roadId, string objectId, bool IsBest, int EntriesID, [ModelBinder(typeof(RussianDateBinder))] DateTime Dates, decimal slideMin, decimal slideMax, int CriteriaValue, string TabDate, string AgregateCalc, [ModelBinder(typeof(RussianDateBinder))] DateTime MinDateValue, [ModelBinder(typeof(RussianDateBinder))] DateTime MaxDateValue)
         {
             try
             {
+              
                 var result = new object();
                 var items = new object();
                 var objects = await _objectItemService.GetObjectItemsAsync();

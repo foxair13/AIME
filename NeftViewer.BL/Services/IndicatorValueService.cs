@@ -22,9 +22,9 @@ namespace NeftViewer.BL.Services
         {
             await _uow.CommitAsync();
         }
-        public async Task<(decimal? MinValue, decimal? MaxValue,DateTime? MinDate,DateTime? MaxDate,List<DateTime> dates)> GetMinMaxValues(int CriteriaId)
+        public async Task<(decimal? MinValue, decimal? MaxValue, DateTime? MinDate, DateTime? MaxDate, List<DateTime> dates)> GetMinMaxValues(int CriteriaId)
         {
-          
+
             var value = await _uow.IndicatorValues.GetMinMaxValuesAsync<decimal?>("CriteriaId", CriteriaId, "Value");
             var date = await _uow.IndicatorValues.GetMinMaxValuesAsync<DateTime?>("CriteriaId", CriteriaId, "DateStart");
             List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
@@ -44,15 +44,15 @@ namespace NeftViewer.BL.Services
 
                 throw;
             }
-           
+
         }
-      
+
         public Task<IndicatorValue> FindIndicatorValueAsync(string? id)
         {
             return _uow.IndicatorValues.GetAsync(id);
         }
 
-        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByCriteria(DateTime Dates,  int CriteriaValue)
+        public async Task<IEnumerable<IndicatorValue>> GetIndicatorByCriteria(DateTime Dates, int CriteriaValue)
         {
             DateTime dateInput = Dates;
 
@@ -60,7 +60,7 @@ namespace NeftViewer.BL.Services
             List<string> includs = new List<string>();
             filters.Add(new ValueTuple<string, object>("DateStart", Dates));
             filters.Add(new ValueTuple<string, object>("CriteriaId", CriteriaValue));
-           
+
             var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
             return v.ToList();
         }
@@ -74,7 +74,7 @@ namespace NeftViewer.BL.Services
                                                 ("CriteriaId", CriteriaValue, ""),
                                             };
             List<string> includs = new List<string>();
-   
+
             includs.Add("Criterias");
             includs.Add("Objects");
 
@@ -89,8 +89,12 @@ namespace NeftViewer.BL.Services
                                             {
                                              ("DateStart", MinDateValue, ">="),
                                              ("DateStart", MaxDateValue, "<="),
-                                                ("CodeSUID", CodeSUID, ""),
                                             };
+            if (CodeSUID != "0")
+            {
+                filters.Add(("CodeSUID", CodeSUID, ""));
+
+            }
             List<string> includs = new List<string>();
 
             includs.Add("Criterias");
@@ -98,7 +102,7 @@ namespace NeftViewer.BL.Services
 
 
             var v = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
-            return v.ToList();
+            return v;
         }
 
         public List<AggregatedResult> GetAgregateValuesAsync(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters, string AgregateBy)
@@ -155,19 +159,59 @@ namespace NeftViewer.BL.Services
 
             return result;
         }
+        public List<CalculatCriteriaResult> GetCalculatesValuesByCryteriaAsync(List<(string filterPropertyName, object filterValue, string comparisonOperator)> filters,  List<int> avgCriteriaIds, List<int> desiredCriteriaIds)
+        {
+            List<string> includs = new List<string>();
 
+            includs.Add("Criterias");
+            includs.Add("Objects");
+            IQueryable<IndicatorValue> query = _uow.IndicatorValues.GetRangeParamValues(filters, includs);
+
+            List<CalculatCriteriaResult> avgvals = null;
+
+
+            avgvals = query
+                     .Where(x => avgCriteriaIds.Contains(x.CriteriaId))
+                     .GroupBy(x => x.CriteriaId)
+                     .Select(g => new CalculatCriteriaResult
+                      {
+                         CriteriaId = g.Key,
+                         AggregatedValue = g.Average(x => x.Value)
+                      })
+                       .ToList();
+            List<CalculatCriteriaResult> sumvals = null;
+            sumvals = query
+                   .Where(x => desiredCriteriaIds.Contains(x.CriteriaId))
+                   .GroupBy(x => x.CriteriaId)
+                   .Select(g => new CalculatCriteriaResult
+                   {
+                       CriteriaId = g.Key,
+                       AggregatedValue = g.Sum(x => x.Value)
+                   })
+                     .ToList();
+
+            return null;
+        }
         public async Task<IEnumerable<IndicatorValue>> GetIndicatorByObject(DateTime Dates, string CodeSUID)
         {
             DateTime dateInput = Dates;
 
             List<(string filterPropertyName, object filterValue)> filters = new List<(string, object)>();
             List<string> includs = new List<string>();
-            filters.Add(new ValueTuple<string, object>("DateStart", Dates));
-            filters.Add(new ValueTuple<string, object>("CodeSUID", CodeSUID));
+            if (Dates != DateTime.MinValue)
+            {
+                filters.Add(new ValueTuple<string, object>("DateStart", Dates));
+            }
+
+            if (CodeSUID != "0")
+            {
+                filters.Add(new ValueTuple<string, object>("CodeSUID", CodeSUID));
+            }
+
             includs.Add("Criterias");
             includs.Add("Objects");
             var v = _uow.IndicatorValues.GetItemsWithInclude(filters, includs);
-            return v.ToList();
+            return v;
         }
 
         public async Task<IndicatorValue> GetIndicatorValue(string codeSUID, DateTime dateStart, int criteriaId)

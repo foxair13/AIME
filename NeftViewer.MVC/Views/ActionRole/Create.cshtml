@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section HeadArea {
-    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/Select2/dist/css/select2.min.css")" rel="stylesheet" />
 }
 <div class="card border border-primary">
     <div class="card-body">
@@ -45,7 +45,7 @@
             });
         });
     </script>
-    <script type="module" src="~/lib/select2/dist/js/select2.min.js"></script>
+    <script type="module" src="@Url.Content("~/lib/Select2/dist/js/select2.min.js")"></script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

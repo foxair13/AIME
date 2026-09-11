@@ -15,6 +15,7 @@
     <PackageReference Include="Bootstrap.Less" Version="3.4.1" />
     <PackageReference Include="FontAwesome" Version="4.7.0" />
     <PackageReference Include="FontAwesome.less" Version="4.7.0" />
+    <PackageReference Include="Hardware.Info" Version="100.0.0" />
     <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.22" />
@@ -34,12 +35,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Npgsql" Version="7.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NeftViewer.BL\NeftViewer.BL.csproj" />
     <ProjectReference Include="..\NeftViewer.Data\NeftViewer.Data.csproj" />
+    <ProjectReference Include="..\NeftViewer.SV\NeftViewer.SV.csproj" />
   </ItemGroup>
 
   <ItemGroup>

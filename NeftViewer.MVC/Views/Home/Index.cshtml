@@ -23,7 +23,7 @@
     </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="~/lib/ol/ol.css" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/ol/ol.css")" rel="stylesheet" />
 
 
 }
@@ -36,9 +36,11 @@
 <br />
 @section Scripts {
 
-    <script type="text/javascript" src="~/lib/ol/dist/ol.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/lib/ol/dist/ol.js")"></script>
 
     <script type="text/javascript">
+        let checkboxState = {};
+        let charttype="";
         $(window).on('resize show.bs.modal', function () {
             adjustModalWidth();
         });
@@ -117,13 +119,15 @@
         const centerLon = (belarusExtent[2] + belarusExtent[0]) / 2;
         const centerLat = (belarusExtent[3] + belarusExtent[1]) / 2;
         const center = [centerLon, centerLat];
+        //const base = new ol.layer.Tile({
+        //    source: new ol.source.XYZ({
+        //        url: 'http://10.3.2.68:8081/tile/{z}/{x}/{y}.png'
+        //    })
+        //});
+
         const base = new ol.layer.Tile({
-            source: new ol.source.XYZ({
-                url: 'http://10.3.2.68:8081/tile/{z}/{x}/{y}.png'
-            })
+            source: new ol.source.OSM(),
         });
-
-
         const outerCircleFill = new ol.style.Fill({
             color: 'rgba(255, 153, 102, 0.3)',
         });
@@ -147,12 +151,12 @@
         });
         const darkIcon = new ol.style.Icon({
             anchor: [0.5, 1],
-            src: '../img/offpick.png',
+            src: '@Url.Content("~/img/offpick.png")',
             scale: 0.1
         });
         const valueIcon = new ol.style.Icon({
             anchor: [0.5, 1.45],
-            src: '../img/anchor.png',
+            src: '@Url.Content("~/img/anchor.png")',
             scale: 0.3
         });
         function clusterMemberStyle(clusterMember) {
@@ -514,7 +518,7 @@
                     regularIconStyle = new ol.style.Style({
                         image: new ol.style.Icon({
                             anchor: [0.5, 1],
-                            src: '../img/offpick.png',
+                            src: '@Url.Content("~/img/offpick.png")',
                             scale: 0.1
                         }),
                         text: new ol.style.Text({
@@ -529,7 +533,7 @@
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 anchor: [0.5, 1],
-                                src: '../img/offpick.png',
+                                src: '@Url.Content("~/img/offpick.png")',
                                 scale: 0.1
                             }),
                             text: new ol.style.Text({
@@ -583,7 +587,7 @@
                                 new ol.style.Style({
                                     image: new ol.style.Icon({
                                         anchor: [0.5, 1],
-                                        src: '../img/onpick.png',
+                                        src: '@Url.Content("~/img/onpick.png")',
                                         scale: 0.1
                                     }),
                                     text: new ol.style.Text({
@@ -658,9 +662,11 @@
                         $('#ObjectParams').html(data);
                     } else if (tabId === '#Dashboards') {
                         $('#Dashboards').html(data);
+                        $('#ObjectParams').html("");
                     }
                     else if (tabId === '#Charts') {
                         $('#Charts').html(data);
+                        $('#ObjectParams').html("");
                     }
                 },
                 error: function (error) {
@@ -674,7 +680,7 @@
         tabLinks.forEach(tabLink => {
             tabLink.addEventListener('click', function () {
                 const tabId = this.getAttribute('href').replace('#', '');
-              
+
             });
         });
 
@@ -710,7 +716,7 @@
                             hoverIconStyleDynamic = new ol.style.Style({
                                 image: new ol.style.Icon({
                                     anchor: [0.5, 1],
-                                    src: '../img/onpick.png',
+                                    src: '@Url.Content("~/img/onpick.png")',
                                     scale: 0.15
                                 }),
                                 text: new ol.style.Text({
@@ -724,7 +730,7 @@
                                 new ol.style.Style({
                                     image: new ol.style.Icon({
                                         anchor: [0.5, 1],
-                                        src: '../img/onpick.png',
+                                        src: '@Url.Content("~/img/onpick.png")',
                                         scale: 0.1
                                     }),
                                     text: new ol.style.Text({
@@ -761,7 +767,7 @@
                                 regularIconStyleDynamic = new ol.style.Style({
                                     image: new ol.style.Icon({
                                         anchor: [0.5, 1],
-                                        src: '../img/offpick.png',
+                                        src: '@Url.Content("~/img/offpick.png")',
                                         scale: 0.1
                                     }),
                                     text: new ol.style.Text({
@@ -778,7 +784,7 @@
                                     new ol.style.Style({
                                         image: new ol.style.Icon({
                                             anchor: [0.5, 1],
-                                            src: '../img/offpick.png',
+                                            src: '@Url.Content("~/img/offpick.png")',
                                             scale: 0.1
                                         }),
                                         text: new ol.style.Text({
@@ -822,7 +828,7 @@
                     regularIconStyleDynamic = new ol.style.Style({
                         image: new ol.style.Icon({
                             anchor: [0.5, 1],
-                            src: '../img/offpick.png',
+                            src: '@Url.Content("~/img/offpick.png")',
                             scale: 0.1
                         }),
                         text: new ol.style.Text({
@@ -838,7 +844,7 @@
                         new ol.style.Style({
                             image: new ol.style.Icon({
                                 anchor: [0.5, 1],
-                                src: '../img/offpick.png',
+                                src: '@Url.Content("~/img/offpick.png")',
                                 scale: 0.1
                             }),
                             text: new ol.style.Text({
@@ -896,7 +902,7 @@
                 });
                 return feature;
             });
-            console.log(points);
+         
             const vectorSource = new ol.source.Vector({
                 features: features
             });
@@ -979,6 +985,30 @@
                     console.error("An error occurred:", error);
                 }
             });
+
+            $.ajax({
+                url: '../Home/GetCalcRegionValues',
+                method: 'GET',
+                data: {
+                    ownerId: ownerId,
+                    areaId: areaId,
+                    TypeValue: TypeValue,
+                    roadId: roadId,
+                    Dates: Dates,
+                    MinDateValue: sliderMinValue,
+                    MaxDateValue: sliderMaxValue,
+                    TabDate: tab,
+                    objectId: objectId
+                },
+                success: function (data) {
+                    $('#AvgInfo').html(data);
+                },
+                error: function (error) {
+                    console.error("An error occurred:", error);
+                }
+            });
+
+
         }
         class HomeControl extends ol.control.Control {
             constructor() {

@@ -1,93 +1,194 @@
-﻿
-<div>
-    <input type="checkbox" id="emailCheckbox" class="series-checkbox" checked> Email
-    <input type="checkbox" id="unionAdsCheckbox" class="series-checkbox" checked> Union Ads
-    <input type="checkbox" id="videoAdsCheckbox" class="series-checkbox" checked> Video Ads
-    <input type="checkbox" id="directCheckbox" class="series-checkbox" checked> Direct
-    <input type="checkbox" id="searchEngineCheckbox" class="series-checkbox" checked> Search Engine
+﻿@model IEnumerable<NeftViewer.Data.Models.IndicatorValue>
+@{
+    var distinctDates = Model.Select(x => x.DateStart).Distinct().OrderBy(x => x).ToList();
+    var distinctCriteria = Model.Select(x => x.Criterias).Distinct().ToList();
+}
+<style>
+      #legend-container {
+            display: none;
+        }
+</style>
+<script type="text/javascript" src="@Url.Content("~/lib/graf/echarts.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/lib/graf/theme.js")"></script>
+<div id="legend-container">
+    @foreach (var criteria in distinctCriteria)
+    {
+        <div class="mb-3 form-check form-switch">
+            <label for="@("checkbox-" + criteria.Name)" class="form-check-label">@Html.Raw(criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name)</label>
+            <input type="checkbox" id="@("checkbox-" + (criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name))" checked="checked" class="form-check-input" onchange="toggleSeries('@Html.Raw(criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name)')">
+        </div>
+    }
 </div>
-<div id="main" class="card" style="height:600px;"></div>
+<div id="chart-container" class="card" style="height:600px;"></div>
 
-<script src="~/charts/echarts.min.js"></script>
-<script src="~/charts/charttheme.js"></script>
+
 <script type="text/javascript">
-    // Initialize the echarts instance based on the prepared dom
-   // Initialize ECharts instance and set options
-var dom = document.getElementById('main');
-var myChart = echarts.init(dom, 'dark', {
-    renderer: 'canvas',
-    useDirtyRect: false
-});
-var app = {};
 
-var initialSeriesData = {
-    'Email': [120, 132, 101, 134, 90, 230, 210],
-    'Union Ads': [220, 182, 191, 234, 290, 330, 310],
-    'Video Ads': [150, 232, 201, 154, 190, 330, 410],
-    'Direct': [320, 332, 301, 334, 390, 330, 320],
-    'Search Engine': [820, 932, 901, 934, 1290, 1330, 1320]
-};
+    var dom = document.getElementById('chart-container');
 
-var option = {
-    title: {
-        text: 'Stacked Line'
-    },
-    tooltip: {
-        trigger: 'axis'
-    },
-    legend: {
-        data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-    },
+    var myChart = echarts.init(dom, 'dark', {
+        renderer: 'canvas',
+        useDirtyRect: false,
+    });
+   
+    
+    var app = {};
+    var seriesData = [];
+
+    var xAxisData = [@foreach (var date in distinctDates)
+    {
+        <text>'@date.ToString("dd.MM.yyyy")', </text>
+    }];
+
+    @foreach (var criteria in distinctCriteria)
+    {
+        var seriesValues = new List<decimal>();
+        decimal lastvalue = 0.00M;
+        foreach (var date in distinctDates)
+        {
+            var value = Model.FirstOrDefault(x => x.Criterias == criteria && x.DateStart == date)?.Value ?? 0.00M;
+
+            if (value != 0.00M)
+            {
+                lastvalue = value;
+                seriesValues.Add(value);
+            }
+            else if (value == 0.00M)
+            {
+                seriesValues.Add(lastvalue);
+
+            }
+
+        }
+
+        var criteriaName = Html.Raw(criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name);
+       
+        <text>
+            seriesData.push({
+                name: '@criteriaName',
+                type: 'line',
+                animation: false,
+                data: @Html.Raw(Json.Serialize(seriesValues)),
+            });
+        </text>
+    }
+
+                var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        dataZoom: [
+            {
+                type: 'slider',
+                show: true,
+                xAxisIndex: [0], // Apply the data zoom to the first x-axis (you can adjust this if you have multiple x-axes).
+                start: 0,       // Start position of the slider (0% in this case).
+                end: 100,       // End position of the slider (100% in this case).
+                handleSize: 8,  // Size of the slider handle.
+            },
+        ],
+        legend: {
+            data: [@foreach (var criteria in distinctCriteria)
+    {
+        string crit = criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name;
+        <text>'@Html.Raw(crit)', </text>
+    }],
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            width: 300,
+            selected: {
+    @foreach (var criteria in distinctCriteria)
+    {
+        string crit = criteria.Name.Length > 30 ? criteria.Name.Substring(0, 30) + "..." : criteria.Name;
+        <text>'@Html.Raw(crit)': false, </text>
+    }
+        },
+                        },
     grid: {
         left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    toolbox: {
-        feature: {
-            saveAsImage: {}
-        }
+            right: 300,
+                bottom: '3%',
+                    containLabel: true
     },
     xAxis: {
         type: 'category',
-        boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            boundaryGap: false,
+                data: xAxisData,
+
     },
     yAxis: {
         type: 'value'
     },
-    series: generateSeries()
-};
+    series: seriesData
+                };
 
-function generateSeries() {
-    var series = [];
-    for (var key in initialSeriesData) {
-        series.push({
-            name: key,
-            type: 'line',
-            stack: 'Total',
-            data: initialSeriesData[key],
-            show: true  // Initially, all series are visible
+
+
+    function toggleSeries(seriesName) {
+        checkboxState[seriesName] = !checkboxState[seriesName];
+        var checkbox = document.getElementById("checkbox-" + seriesName);
+        if (checkbox) {
+            checkbox.checked = checkboxState[seriesName];
+        }
+        var selected = {};
+        selected[seriesName] = checkboxState[seriesName];
+        myChart.setOption({
+            legend: {
+                selected: selected
+            }
         });
     }
-    return series;
-}
 
-if (option && typeof option === 'object') {
-    myChart.setOption(option);
-}
 
-// Function to toggle the visibility of series based on checkboxes
-$('.series-checkbox').change(function () {
-    var seriesName = $(this).next().text();
-    var seriesIndex = option.legend[0].data.indexOf(seriesName);
-    if (seriesIndex >= 0) {
-        option.series[seriesIndex].show = this.checked;
+    myChart.on('legendselectchanged', function (params) {
+        var seriesName = params.name;
+        var isSeriesSelected = params.selected[seriesName];
+        var checkboxId = "checkbox-" + seriesName;
+        var checkbox = document.getElementById(checkboxId);
+
+        if (checkbox) {
+            checkbox.checked = isSeriesSelected;
+            checkboxState[seriesName] = params.selected[seriesName];
+        }
+
+    });
+
+
+    if (option && typeof option === 'object') {
         myChart.setOption(option);
     }
-});
+    function synchronizeCheckboxesWithSeries() {
+        var legend = myChart.getOption().legend[0].data;
+        var selected = myChart.getOption().legend[0].selected;
 
-window.addEventListener('resize', myChart.resize);
+        for (var i = 0; i < legend.length; i++) {
+            var seriesName = legend[i];
+            var checkboxId = "checkbox-" + seriesName;
+
+            var checkbox = document.getElementById(checkboxId);
+
+            if (checkbox) {
+                checkbox.checked = selected[seriesName];
+
+            }
+        }
+    }
+    synchronizeCheckboxesWithSeries();
+    var selected = {};
+    for (var seriesName in checkboxState) {
+        if (checkboxState[seriesName] == true) {
+            selected[seriesName] = checkboxState[seriesName];
+
+            myChart.setOption({
+                legend: {
+                    selected: selected
+                }
+            });
+        }
+    }
+    window.addEventListener('resize', myChart.resize);
 
 </script>

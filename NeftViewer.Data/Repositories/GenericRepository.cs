@@ -31,9 +31,9 @@ namespace NeftViewer.Data.Repositories
         {
             return await _dbContext.Set<TModel>().ToListAsync();
         }
-        public virtual  IEnumerable<TModel> GetAll()
+        public virtual IEnumerable<TModel> GetAll()
         {
-            return  _dbContext.Set<TModel>().ToList();
+            return _dbContext.Set<TModel>().ToList();
         }
         public virtual async Task<TModel> GetAsync(string id)
         {
@@ -126,7 +126,7 @@ namespace NeftViewer.Data.Repositories
                 var lambda = Expression.Lambda<Func<TModel, bool>>(body, parameter);
 
                 var updateObj = _dbContext.Set<TModel>().AsNoTracking().FirstOrDefault(lambda);
-                
+
                 updateObjs.Add(updateObj);
 
                 if (updateObj != null)
@@ -319,19 +319,38 @@ namespace NeftViewer.Data.Repositories
                 else
                     filterExpression = Expression.And(filterExpression, equality);
             }
-            var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
 
-            var query = _dbContext.Set<TModel>().Where(filterLambda);
-
-            // Добавляем Include для указанных таблиц
-            foreach (var tableName in includeTableNames)
+            if (filterExpression != null)
             {
-                query = query.Include(tableName);
-            }
 
-            return query;
+
+                var filterLambda = Expression.Lambda<Func<TModel, bool>>(filterExpression, parameter);
+
+                var query = _dbContext.Set<TModel>().Where(filterLambda);
+
+                // Добавляем Include для указанных таблиц
+                foreach (var tableName in includeTableNames)
+                {
+                    query = query.Include(tableName);
+                }
+
+                return query;
+            }
+            else 
+            {
+
+                var query = _dbContext.Set<TModel>().Select(x=>x);
+
+                // Добавляем Include для указанных таблиц
+                foreach (var tableName in includeTableNames)
+                {
+                    query = query.Include(tableName);
+                }
+
+                return query;
+            }
         }
-        
+
         public IQueryable<T> GetUniqueItems<T>(List<(string filterPropertyName, object filterValue)> filters, string uniqueColumnName)
         {
             var parameter = Expression.Parameter(typeof(TModel), "x");
@@ -448,7 +467,7 @@ namespace NeftViewer.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                
+
             }
             await _dbContext.SaveChangesAsync();
         }

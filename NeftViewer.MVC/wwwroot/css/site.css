@@ -1051,7 +1051,8 @@ body {
     text-align: var(--phoenix-body-text-align);
     background-color: var(--phoenix-body-bg);
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0,0,0,0)
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    text-size-adjust: 100%;
 }
 
 hr {
@@ -28124,8 +28125,11 @@ h3, .h3 {
 }
 
 .input-spin-none[type=number] {
-    -moz-appearance: textfield
+    -moz-appearance: textfield; /* For Firefox */
+    -webkit-appearance: none; /* For Webkit-based browsers (Chrome, Safari) */
+    appearance: none; /* For other browsers (Chrome 84+, Safari 15.4+) */
 }
+
 
 .form-check-line-through + label {
     -webkit-transition: all .2s ease-in-out;
@@ -28666,7 +28670,8 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs {
 
 @media(min-width: 992px) {
     .navbar-vertical.navbar-expand-lg {
-        width: fit-content;
+        width: fit-content; /* For browsers that support the property */
+        width: -moz-fit-content; /* For Firefox (3+) and Firefox for Android (4+) */
         min-width: 15.875rem;
         border-right: 1px solid var(--phoenix-navbar-vertical-border-color);
         margin: 0;
@@ -37131,7 +37136,9 @@ a[href].bg-200:hover, a[href].bg-200:focus {
 }
 
     .verification-form .form-control {
-        -moz-appearance: textfield
+        -moz-appearance: textfield; /* For Firefox */
+        -webkit-appearance: none; /* For Webkit-based browsers (Chrome, Safari) */
+        appearance: none; /* For other browsers (Chrome 84+, Safari 15.4+) */
     }
 
         .verification-form .form-control::-webkit-outer-spin-button, .verification-form .form-control::-webkit-inner-spin-button {

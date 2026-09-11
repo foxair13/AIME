@@ -62,7 +62,7 @@ namespace NeftViewer.MVC.Models
                 new RadioOption { Id = "id1", Value = "СХН" },
                 new RadioOption { Id = "AZS", Value = "АЗС" },
                 new RadioOption { Id = "id3", Value = "ЭЗС" },
-                new RadioOption { Id = "id4", Value = "C/Х" }
+                new RadioOption { Id = "id4", Value = "CХП" }
             };
         }
         private async Task<List<DropDown>> TopEntriesSelect()

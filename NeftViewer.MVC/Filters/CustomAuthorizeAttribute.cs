@@ -21,12 +21,15 @@ namespace NeftViewer.Core.ActionFilters
 
         private readonly string _selector;
         private readonly string _connectionString;
-      
+        private static bool result = false;
         public CustomAuthorizeAttribute()
         {
 
         }
-
+        public static void SetResult(bool flag) 
+        {
+            result = flag;
+        }
         public CustomAuthorizeAttribute(string selector)
         {
             _selector = selector;
@@ -98,6 +101,12 @@ namespace NeftViewer.Core.ActionFilters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+
+            if (!result)
+            {
+                context.Result = new RedirectToRouteResult(new { area = "Identity", page = "/Account/Login" });
+                return;
+            }
             if (!context.HttpContext.User.Identity.IsAuthenticated)
             {
                 // Если пользователь не авторизован, перенаправляем на страницу входа
@@ -118,12 +127,10 @@ namespace NeftViewer.Core.ActionFilters
                 var actionSelector = _selector ?? context.ActionDescriptor.AttributeRouteInfo?.Name;
                 if ((!string.IsNullOrEmpty(actionSelector) && CheckRoles(_selector, name)) || isAdmin)
                 {
-                    // Пропускаем пользователя дальше
                     return;
                 }
                 else
                 {
-                    // Пользователь не прошел проверку ролей, перенаправляем на страницу "Доступ запрещен"
                     context.Result = new RedirectToRouteResult(new { area = "Identity", page = "/Account/AccessDenied" });
                 }
 
